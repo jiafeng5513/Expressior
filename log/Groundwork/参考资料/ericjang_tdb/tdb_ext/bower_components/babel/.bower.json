@@ -1,0 +1,14 @@
+{
+  "name": "babel",
+  "homepage": "https://github.com/Micua/babel",
+  "_release": "d54d59ff74",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d54d59ff74b1d32ff678ae7f7edc554cba6cb58e"
+  },
+  "_source": "git://github.com/Micua/babel.git",
+  "_target": "*",
+  "_originalSource": "babel",
+  "_direct": true
+}

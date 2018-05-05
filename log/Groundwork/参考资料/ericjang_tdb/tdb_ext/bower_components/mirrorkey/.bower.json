@@ -1,0 +1,31 @@
+{
+  "name": "mirrorkey",
+  "main": "mirrorkey_browser.js",
+  "version": "1.2.0",
+  "homepage": "https://github.com/janhancic/mirrorkey",
+  "authors": [
+    "Jan Hancic <jan.hancic@gmail.com>"
+  ],
+  "description": "Simple utility to create a object literal which has the same values as the key names.",
+  "keywords": [
+    "mirror",
+    "key"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "spec"
+  ],
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.0",
+    "commit": "35d81f7d14f8e04054a629bec389b7490949774b"
+  },
+  "_source": "git://github.com/janhancic/mirrorkey.git",
+  "_target": "~1.2.0",
+  "_originalSource": "mirrorkey",
+  "_direct": true
+}

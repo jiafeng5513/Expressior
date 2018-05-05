@@ -1,0 +1,31 @@
+{
+  "name": "mirrorkey",
+  "version": "1.2.0",
+  "description": "Simple utility to create a object literal which has the same values as the key names.",
+  "main": "mirrorkey.js",
+  "scripts": {
+    "test": "jasmine-node spec/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janhancic/mirrorkey.git"
+  },
+  "keywords": [
+    "mirror",
+    "key",
+    "keys"
+  ],
+  "author": {
+    "name": "Jan Hancic",
+    "email": "jan.hancic@gmail.com",
+    "url": "http://hancic.info"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janhancic/mirrorkey/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-uglify": "~0.5.1"
+  }
+}

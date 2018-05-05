@@ -1,0 +1,21 @@
+1.在安装有tensorflow的机器上,powershell,直接执行:
+python -m tensorflow.python.debug.examples.debug_mnist
+代码见:本机:E:\Python\tensorflow-examples-tutorials-mnist\mnist_debug_with_tfdbg.py
+2.运行返回:
+---下载和解压---
+---gpu检测---
+Accuracy at step 0: 0.1113
+Accuracy at step 1: 0.3076
+Accuracy at step 2: 0.2486
+Accuracy at step 3: 0.098
+Accuracy at step 4: 0.098
+Accuracy at step 5: 0.098
+Accuracy at step 6: 0.098
+Accuracy at step 7: 0.098
+Accuracy at step 8: 0.098
+Accuracy at step 9: 0.098
+观察到从第三步开始,准确率不变了
+3.运行:
+python -m tensorflow.python.debug.examples.debug_mnist --debug
+有关该工具能使用的命令,官网上有个表格
+https://www.tensorflow.org/programmers_guide/debugger

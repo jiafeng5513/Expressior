@@ -176,13 +176,13 @@ namespace Dynamo.Applications
         ///for now, building an updatemanager instance requires finding Dynamo install location
         ///which if we are running on mac os or *nix will use different logic then SandboxLookup 
         /// </summary>
-        private static IUpdateManager InitializeUpdateManager()
-        {
-            var cfg = UpdateManagerConfiguration.GetSettings(new SandboxLookUp());
-            var um = new Dynamo.Updates.UpdateManager(cfg);
-            Debug.Assert(cfg.DynamoLookUp != null);
-            return um;
-        }
+        //private static IUpdateManager InitializeUpdateManager()
+        //{
+        //    var cfg = UpdateManagerConfiguration.GetSettings(new SandboxLookUp());
+        //    var um = new Dynamo.Updates.UpdateManager(cfg);
+        //    Debug.Assert(cfg.DynamoLookUp != null);
+        //    return um;
+        //}
 
         public static DynamoModel MakeModel(bool CLImode)
         {
@@ -197,7 +197,7 @@ namespace Dynamo.Applications
                       ProcessMode = TaskProcessMode.Asynchronous
                   };
 
-            config.UpdateManager = CLImode ? null : InitializeUpdateManager();
+            //config.UpdateManager = CLImode ? null : InitializeUpdateManager();
             config.StartInTestMode = CLImode ? true : false;
             config.PathResolver = CLImode ? new CLIPathResolver(preloaderLocation) as IPathResolver : new SandboxPathResolver(preloaderLocation) as IPathResolver ;
 

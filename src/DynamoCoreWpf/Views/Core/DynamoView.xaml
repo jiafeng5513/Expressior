@@ -5,7 +5,6 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:Dynamo.Controls"
         xmlns:uictrls="clr-namespace:Dynamo.UI.Controls"
-        xmlns:service="clr-namespace:Dynamo.Services"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModels="clr-namespace:Dynamo.ViewModels"
@@ -615,52 +614,37 @@
                         </MenuItem>
                     </MenuItem>
 
-                    <MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
+                    <!--<MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
                               Name="PackageManagerMenu"
                               Focusable="False"
                               IsEnabled="True">
-                        <MenuItem Focusable="False"
+                        --><!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuSearchPackage}"
                                   Command="{Binding Path=DataContext.ShowPackageManagerSearchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="showPMSearch" />
-                        <MenuItem Focusable="False"
+                                  Name="showPMSearch" />-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuManagePackage}"
                                   Command="{Binding Path=DataContext.ShowInstalledPackagesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="showPMInstalled" />
-                        <MenuItem Focusable="False"
+                                  Name="showPMInstalled" />-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuPublishPackage}"
                                   Command="{Binding Path=DataContext.PublishNewPackageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishNewPackage" />
-                        <MenuItem Focusable="False"
+                                  Name="publishNewPackage" />-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuPublishNodes}"
                                   Command="{Binding Path=DataContext.PublishSelectedNodesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishSelected" />
-                        <MenuItem Focusable="False"
+                                  Name="publishSelected" />-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuPublishWorkspace}"
                                   Command="{Binding Path=DataContext.PublishCurrentWorkspaceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishCurrent" />
-                    </MenuItem>
+                                  Name="publishCurrent" />--><!--
+                    </MenuItem>-->
                     <!--menu=>Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
                               Name="SettingsMenu"
                               Focusable="False"
                               IsEnabled="True"
                               SubmenuOpened="OnSettingsSubMenuOpened">
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReporting}"
-                                  Name="ToggleIsAnalyticsReportingApprovedCommand"
-                                  Command="{Binding Path=ToggleIsAnalyticsReportingApprovedCommand, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  IsChecked="{Binding Path=IsAnalyticsReportingApproved, Mode=OneWay, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  ToolTip="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReportingTooltip}"
-                                  Focusable="False"/>
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableDataReporting}"
-                                  Name="ToggleIsUsageReportingApprovedCommand"
-                                  Command="{Binding Path=ToggleIsUsageReportingApprovedCommand, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  IsChecked="{Binding Path=IsUsageReportingApproved, Mode=OneWay, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  ToolTip="{x:Static p:Resources.DynamoViewSettingMenuEnableDataReportingTooltip}"
-                                  Focusable="False" />
-                        <Separator />
                         <MenuItem Focusable="False" 
                                   Name="ShowNodeExecution" 
                                   IsCheckable="True" 
@@ -752,14 +736,6 @@
                     <!--menu->help-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenu}"
                               Focusable="False">
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.StartPageWhatsNew}"
-                                  Command="{Binding ShowGalleryCommand}">
-                            <MenuItem.Icon>
-                                <Image Source="/DynamoCoreWpf;component/UI/Images/icon-whats-new-small.png"
-                                       Width="13" Height="14" />
-                            </MenuItem.Icon>
-                        </MenuItem>-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewHepMenuSamples}"
                                   Name="SamplesMenu"
@@ -769,23 +745,9 @@
                                        Width="14" Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewHelpDictionary}"
-                                  Command="{Binding GoToDictionaryCommand}">
-                            <MenuItem.Icon>
-                                <Image Source="/DynamoCoreWpf;component/UI/Images/icon-dictionary-small.png"
-                                           Width="13" Height="14" />
-                            </MenuItem.Icon>
-                        </MenuItem>-->
-                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuReportBug}"
-                                  Command="{Binding ReportABugCommand}"
-                                  Focusable="False" />-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuGotoWebsite}"
                                   Command="{Binding GoToSourceCodeCommand}"
                                   Focusable="False" />
-                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuGotoWiki}"
-                                  Command="{Binding GoToWikiCommand}"
-                                  Focusable="False" />-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuDisplayStartPage}"
                                   Command="{Binding DisplayStartPageCommand}"
                                   Focusable="False" />
@@ -807,19 +769,7 @@
                                   IsCheckable="True"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuShowDebugAST}"
                                   IsChecked="{Binding ShowDebugASTs}"></MenuItem>
-                        <MenuItem Focusable="False"
-                                  Name="ForceReexec"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuForceReExecute}"
-                                  Command="{Binding ForceRunExpressionCommand}"
-                                  CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
-                                  IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
-                        <MenuItem Focusable="False"
-                                  Name="MutateTest"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuRunMutationTest}"
-                                  Command="{Binding MutateTestDelegateCommand}"
-                                  CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
-                                  IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Name="CheckDailyBuilds"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuCheckDailyBuild}"
                                   DataContext="{Binding Path=Model.UpdateManager}"
@@ -830,11 +780,7 @@
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuForceUpdate}"
                                   DataContext="{Binding Path=Model.UpdateManager}"
                                   IsCheckable="True"
-                                  IsChecked="{Binding Path=ForceUpdate, Mode=TwoWay}" />
-                        <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuDumpLibrary}"
-                                  Command="{Binding DumpLibraryToXmlCommand}"
-                                  IsEnabled="True" />
+                                  IsChecked="{Binding Path=ForceUpdate, Mode=TwoWay}" />-->
                     </MenuItem>
                 </Menu>
 

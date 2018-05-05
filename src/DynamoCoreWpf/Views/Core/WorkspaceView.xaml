@@ -330,7 +330,7 @@
         <Popup Name="InCanvasSearchBar"
                StaysOpen="True"
                AllowsTransparency="True"
-               IsOpen="False"
+               IsOpen="True"
                Placement="MousePoint"
                DataContext="{Binding InCanvasSearchViewModel}">
             <ui:InCanvasSearchControl RequestShowInCanvasSearch="ShowHideInCanvasControl" />

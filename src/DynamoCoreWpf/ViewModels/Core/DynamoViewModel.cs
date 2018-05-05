@@ -10,7 +10,6 @@ using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.PackageManager;
 using Dynamo.Selection;
-using Dynamo.Services;
 using Dynamo.UI;
 using Dynamo.Updates;
 using Dynamo.Utilities;
@@ -334,13 +333,13 @@ namespace Dynamo.ViewModels
             }
         }
 
-        public bool IsUsageReportingApproved
-        {
-            get
-            {
-                return UsageReportingManager.Instance.IsUsageReportingApproved;
-            }
-        }
+        //public bool IsUsageReportingApproved
+        //{
+        //    get
+        //    {
+        //        return UsageReportingManager.Instance.IsUsageReportingApproved;
+        //    }
+        //}
 
         private ObservableCollection<string> recentFiles =
             new ObservableCollection<string>();
@@ -371,14 +370,14 @@ namespace Dynamo.ViewModels
             get { return model.HostName; }
         }
 
-        public bool IsUpdateAvailable
-        {
-            get
-            {
-                var um = model.UpdateManager;
-                return um.IsUpdateAvailable;
-            }
-        }
+        //public bool IsUpdateAvailable
+        //{
+        //    get
+        //    {
+        //        var um = model.UpdateManager;
+        //        return um.IsUpdateAvailable;
+        //    }
+        //}
 
         public string LicenseFile
         {
@@ -511,7 +510,7 @@ namespace Dynamo.ViewModels
             this.model.CommandStarting += OnModelCommandStarting;
             this.model.CommandCompleted += OnModelCommandCompleted;
 
-            UsageReportingManager.Instance.InitializeCore(this);
+            //UsageReportingManager.Instance.InitializeCore(this);
             this.WatchHandler = startConfiguration.WatchHandler;
             var pmExtension = model.GetPackageManagerExtension();
             this.PackageManagerClientViewModel = new PackageManagerClientViewModel(this, pmExtension.PackageManagerClient);
@@ -537,7 +536,7 @@ namespace Dynamo.ViewModels
             SubscribeModelCleaningUpEvent();
             SubscribeModelUiEvents();
             SubscribeModelChangedHandlers();
-            SubscribeUpdateManagerHandlers();
+            //SubscribeUpdateManagerHandlers();
 
             InitializeAutomationSettings(startConfiguration.CommandFilePath);
 
@@ -547,7 +546,7 @@ namespace Dynamo.ViewModels
 
             InitializeRecentFiles();
 
-            UsageReportingManager.Instance.PropertyChanged += CollectInfoManager_PropertyChanged;
+            //UsageReportingManager.Instance.PropertyChanged += CollectInfoManager_PropertyChanged;
 
             WatchIsResizable = false;
 
@@ -628,14 +627,14 @@ namespace Dynamo.ViewModels
             UnsubscribeDispatcherEvents();
             UnsubscribeModelUiEvents();
             UnsubscribeModelChangedEvents();
-            UnsubscribeUpdateManagerEvents();
+            //UnsubscribeUpdateManagerEvents();
             UnsubscribeLoggerEvents();
             UnsubscribeModelCleaningUpEvent();
 
             model.WorkspaceAdded -= WorkspaceAdded;
             model.WorkspaceRemoved -= WorkspaceRemoved;
             DynamoSelection.Instance.Selection.CollectionChanged -= SelectionOnCollectionChanged;
-            UsageReportingManager.Instance.PropertyChanged -= CollectInfoManager_PropertyChanged;
+            //UsageReportingManager.Instance.PropertyChanged -= CollectInfoManager_PropertyChanged;
         }
 
         private void InitializeRecentFiles()
@@ -657,17 +656,17 @@ namespace Dynamo.ViewModels
             model.Logger.PropertyChanged -= Instance_PropertyChanged;
         }
 
-        private void SubscribeUpdateManagerHandlers()
-        {
-            model.UpdateManager.UpdateDownloaded += Instance_UpdateDownloaded;
-            model.UpdateManager.ShutdownRequested += UpdateManager_ShutdownRequested;
-        }
+        //private void SubscribeUpdateManagerHandlers()
+        //{
+        //    model.UpdateManager.UpdateDownloaded += Instance_UpdateDownloaded;
+        //    model.UpdateManager.ShutdownRequested += UpdateManager_ShutdownRequested;
+        //}
 
-        private void UnsubscribeUpdateManagerEvents()
-        {
-            model.UpdateManager.UpdateDownloaded -= Instance_UpdateDownloaded;
-            model.UpdateManager.ShutdownRequested -= UpdateManager_ShutdownRequested;
-        }
+        //private void UnsubscribeUpdateManagerEvents()
+        //{
+        //    model.UpdateManager.UpdateDownloaded -= Instance_UpdateDownloaded;
+        //    model.UpdateManager.ShutdownRequested -= UpdateManager_ShutdownRequested;
+        //}
 
         private void SubscribeModelUiEvents()
         {
@@ -759,18 +758,6 @@ namespace Dynamo.ViewModels
             CurrentSpaceViewModel.CancelActiveState();
         }
 
-        internal void ForceRunExprCmd(object parameters)
-        {
-            bool displayErrors = Convert.ToBoolean(parameters);
-            var command = new DynamoModel.ForceRunCancelCommand(displayErrors, false);
-            this.ExecuteCommand(command);
-        }
-
-        internal void MutateTestCmd(object parameters)
-        {
-            var command = new DynamoModel.MutateTestCommand();
-            this.ExecuteCommand(command);
-        }
 
         public void DisplayFunction(object parameters)
         {
@@ -781,16 +768,6 @@ namespace Dynamo.ViewModels
         {
             return Model.CustomNodeManager.Contains((Guid)parameters);
         }
-
-        //public static void ReportABug(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubBugReportingLink));
-        //}
-
-        //public static void ReportABug()
-        //{
-        //    ReportABug(null);
-        //}
 
         internal static void DownloadDynamo()
         {
@@ -815,31 +792,21 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        void Instance_UpdateDownloaded(object sender, UpdateDownloadedEventArgs e)
-        {
-            RaisePropertyChanged("Version");
-            RaisePropertyChanged("IsUpdateAvailable");
-        }
+        //void Instance_UpdateDownloaded(object sender, UpdateDownloadedEventArgs e)
+        //{
+        //    RaisePropertyChanged("Version");
+        //    RaisePropertyChanged("IsUpdateAvailable");
+        //}
 
-        void UpdateManager_ShutdownRequested(IUpdateManager updateManager)
-        {
-            PerformShutdownSequence(new ShutdownParams(
-                shutdownHost: true, allowCancellation: true));
-        }
-
-        void CollectInfoManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "CollectInfoOption":
-                    RaisePropertyChanged("CollectInfoOption");
-                    break;
-            }
-        }
+        //void UpdateManager_ShutdownRequested(IUpdateManager updateManager)
+        //{
+        //    PerformShutdownSequence(new ShutdownParams(
+        //        shutdownHost: true, allowCancellation: true));
+        //}
 
         private void SelectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            PublishSelectedNodesCommand.RaiseCanExecuteChanged();
+            //PublishSelectedNodesCommand.RaiseCanExecuteChanged();
             AlignSelectedCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             UngroupModelCommand.RaiseCanExecuteChanged();
@@ -870,8 +837,6 @@ namespace Dynamo.ViewModels
                     RaisePropertyChanged("BackgroundColor");
                     RaisePropertyChanged("CurrentWorkspaceIndex");
                     RaisePropertyChanged("ViewingHomespace");
-                    if (this.PublishCurrentWorkspaceCommand != null)
-                        this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
                     RaisePropertyChanged("IsPanning");
                     RaisePropertyChanged("IsOrbiting");
                     if (ChangeScaleFactorCommand != null)
@@ -1464,36 +1429,6 @@ namespace Dynamo.ViewModels
             }
 
             return false;
-        }
-
-        internal bool CanVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
-
-        internal bool CanUpstreamVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
-
-        internal void ShowPackageManagerSearch(object parameters)
-        {
-            OnRequestPackageManagerSearchDialog(this, EventArgs.Empty);
-        }
-
-        internal bool CanShowPackageManagerSearch(object parameters)
-        {
-            return true;
-        }
-
-        private void ShowInstalledPackages(object parameters)
-        {
-            OnRequestManagePackagesDialog(this, EventArgs.Empty);
-        }
-
-        private bool CanShowInstalledPackages(object parameters)
-        {
-            return true;
         }
 
         private void ManagePackagePaths(object parameters)
@@ -2098,16 +2033,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        //public void GoToWiki(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoWikiLink));
-        //}
-
-        //internal bool CanGoToWiki(object parameter)
-        //{
-        //    return true;
-        //}
-
         public void GoToSourceCode(object parameter)
         {
             Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubDynamoLink));
@@ -2118,15 +2043,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        //public void GoToDictionary(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoDictionary));
-        //}
-
-        //internal bool CanGoToDictionary(object parameter)
-        //{
-        //    return true;
-        //}
 
         private void DisplayStartPage(object parameter)
         {
@@ -2422,12 +2338,12 @@ namespace Dynamo.ViewModels
             BackgroundPreviewViewModel.Dispose();
 
             model.ShutDown(shutdownParams.ShutdownHost);
-            if (shutdownParams.ShutdownHost)
-            {
-                model.UpdateManager.HostApplicationBeginQuit();
-            }
+            //if (shutdownParams.ShutdownHost)
+            //{
+            //    model.UpdateManager.HostApplicationBeginQuit();
+            //}
 
-            UsageReportingManager.DestroyInstance();
+            //UsageReportingManager.DestroyInstance();
 
             return true;
         }

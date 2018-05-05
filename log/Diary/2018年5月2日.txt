@@ -1,0 +1,31 @@
+1.使用TEnsorFlowSharp验证图的可计算性和合理性;
+2.图->CS字符串,.NET编译,在TensorFlowSharp里面运行;
+3.图->python,不编译,在IronPython里面运行;
+4.图->python,不编译,在本地环境下运行;
+5.图->内置json->代码;
+
+
+
+
+问题:
+1.TensorFlowSharp不支持GPU
+2.IronPython不支持py3
+
+
+
+
+考虑采用:图->json->python在本地环境下执行这条线.
+
+
+进一步:语法检查,缺少包的问题怎么解决?控制台怎么实现?
+参考VSCode
+
+
+
+计划:
+1.在C#里面实现控制台,对标VSCode那样的.
+    问题:
+    a.并不能像Vscode里面的终端那样做成交互式的,也就是说:每次运行的明林之间不能有上下文关系,只能是独立的命令;
+2.在C#里面执行python,python运行在本地上,运行结果显示在c#里面.
+
+3.

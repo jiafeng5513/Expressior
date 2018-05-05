@@ -215,7 +215,7 @@ namespace Dynamo.Models
         /// <summary>
         /// UpdateManager to handle automatic upgrade to higher version.
         /// </summary>
-        public IUpdateManager UpdateManager { get; private set; }
+        //public IUpdateManager UpdateManager { get; private set; }
 
         /// <summary>
         ///     The path manager that configures path information required for
@@ -391,7 +391,7 @@ namespace Dynamo.Models
             ShutDownCore(shutdownHost);
             PostShutdownCore(shutdownHost);
 
-            AnalyticsService.ShutDown();
+            //AnalyticsService.ShutDown();
 
             OnShutdownCompleted(); // Notify possible event handlers.
         }
@@ -546,7 +546,7 @@ namespace Dynamo.Models
                 PreferenceSettings.PropertyChanged += PreferenceSettings_PropertyChanged;
             }
 
-            InitializeInstrumentationLogger();
+            //InitializeInstrumentationLogger();
 
             if (!IsTestMode && PreferenceSettings.IsFirstRun)
             {
@@ -627,7 +627,7 @@ namespace Dynamo.Models
 
             AuthenticationManager = new AuthenticationManager(config.AuthProvider);
 
-            UpdateManager = config.UpdateManager ?? new DefaultUpdateManager(null);
+            //UpdateManager = config.UpdateManager ?? new DefaultUpdateManager(null);
 
             // config.UpdateManager has to be cast to IHostUpdateManager in order to extract the HostVersion and HostName
             // see IHostUpdateManager summary for more details 
@@ -644,11 +644,11 @@ namespace Dynamo.Models
                 HostVersion = null;
             }
             
-            UpdateManager.Log += UpdateManager_Log;
-            if (!IsTestMode && !IsHeadless)
-            {
-                DefaultUpdateManager.CheckForProductUpdate(UpdateManager);
-            }
+            //UpdateManager.Log += UpdateManager_Log;
+            //if (!IsTestMode && !IsHeadless)
+            //{
+            //    DefaultUpdateManager.CheckForProductUpdate(UpdateManager);
+            //}
 
             Logger.Log(string.Format("Dynamo -- Build {0}",
                                         Assembly.GetExecutingAssembly().GetName().Version));
@@ -867,7 +867,7 @@ namespace Dynamo.Models
             LibraryServices.Dispose();
             LibraryServices.LibraryManagementCore.Cleanup();
 
-            UpdateManager.Log -= UpdateManager_Log;
+            //UpdateManager.Log -= UpdateManager_Log;
             Logger.Dispose();
 
             EngineController.Dispose();
@@ -1081,13 +1081,13 @@ namespace Dynamo.Models
             }
         }
 
-        private void InitializeInstrumentationLogger()
-        {
-            if (!IsTestMode && !IsHeadless)
-            {
-                AnalyticsService.Start(this);
-            }
-        }
+        //private void InitializeInstrumentationLogger()
+        //{
+        //    if (!IsTestMode && !IsHeadless)
+        //    {
+        //        AnalyticsService.Start(this);
+        //    }
+        //}
 
         private IPreferences CreateOrLoadPreferences(IPreferences preferences)
         {
@@ -1671,21 +1671,21 @@ namespace Dynamo.Models
 
         }
 
-        internal void DumpLibraryToXml(object parameter)
-        {
-            //构造dump文件的绝对路径名=log目录+filename
-            string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
-            string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
+        //internal void DumpLibraryToXml(object parameter)
+        //{
+        //    //构造dump文件的绝对路径名=log目录+filename
+        //    string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
+        //    string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
 
-            SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
+        //    SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
 
-            Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
-        }
+        //    Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
+        //}
 
-        internal bool CanDumpLibraryToXml(object obj)
-        {
-            return true;
-        }
+        //internal bool CanDumpLibraryToXml(object obj)
+        //{
+        //    return true;
+        //}
 
         #endregion
 

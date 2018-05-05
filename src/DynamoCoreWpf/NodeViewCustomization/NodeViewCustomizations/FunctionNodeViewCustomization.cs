@@ -59,7 +59,7 @@ namespace Dynamo.Wpf
             };
             nodeView.MainContextMenu.Items.Add(publishCustomNodeItem);
 
-            publishCustomNodeItem.Command = nodeView.ViewModel.DynamoViewModel.PublishSelectedNodesCommand;
+            //publishCustomNodeItem.Command = nodeView.ViewModel.DynamoViewModel.PublishSelectedNodesCommand;
             publishCustomNodeItem.CommandParameter = functionNodeModel;
 
             nodeView.UpdateLayout();
