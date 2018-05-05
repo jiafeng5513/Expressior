@@ -20,6 +20,9 @@ namespace Dynamo.Applications
 {
     public class StartupUtils
     {
+        /// <summary>
+        /// 在注册表中查找软件的安装位置
+        /// </summary>
         internal class SandboxLookUp : DynamoLookUp
         {
             public override IEnumerable<string> GetDynamoInstallLocations()
@@ -37,8 +40,7 @@ namespace Dynamo.Applications
         }
 
         /// <summary>
-        ///this class is left unimplemented,unclear how to
-        ///lookup installation locations on nix/mac
+        ///没写完,不知道在Unix类系统上查找方式(没有注册表)
         /// </summary>
         internal class CLILookUp : DynamoLookUp
         {
@@ -58,7 +60,9 @@ namespace Dynamo.Applications
                 return null;
             }
         }
-
+        /// <summary>
+        /// 定义命令行参数
+        /// </summary>
         public struct CommandLineArguments
         {
             public static CommandLineArguments Parse(string[] args)

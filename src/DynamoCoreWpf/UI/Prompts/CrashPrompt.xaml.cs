@@ -95,7 +95,8 @@ namespace Dynamo.Nodes.Prompts
 
         private void PostOnGithub_Click(object sender, RoutedEventArgs e)
         {
-            DynamoViewModel.ReportABug(null);
+            //DynamoViewModel.ReportABug(null);
+            //程序崩溃的时候需要给用户一点心理安慰,然而我并不想处理....
         }
 
         private void Details_Click(object sender, RoutedEventArgs e)

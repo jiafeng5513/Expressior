@@ -7,13 +7,13 @@ namespace Dynamo.Utilities
 {
     /// <summary>
     /// Helper methods for working with <see cref="Guid"/>.
+    /// GUID/UUID组件
     /// </summary>
     public static class GuidUtility
     {
         /// <summary>
-        /// attempts to parse a string into a guid - 
-        /// if this fails, uses the create method to create
-        /// a deterministic UUID.
+        /// 尝试将字符串解析为guid
+        /// 如果失败，则使用create方法创建一个确定性的UUID。
         /// </summary>
         /// <param name="idstring"></param>
         /// <returns></returns>

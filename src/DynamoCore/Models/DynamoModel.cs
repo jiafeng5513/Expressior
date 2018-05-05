@@ -1673,6 +1673,7 @@ namespace Dynamo.Models
 
         internal void DumpLibraryToXml(object parameter)
         {
+            //构造dump文件的绝对路径名=log目录+filename
             string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
             string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
 

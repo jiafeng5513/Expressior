@@ -17,21 +17,18 @@ namespace DynamoShapeManager
         public static readonly string PreloaderMethodName = "PreloadAsmLibraries";
 
         /// <summary>
-        /// Call this method to determine the version of ASM that is installed 
-        /// on the user machine. The method scans through a list of known Autodesk 
-        /// product folders for ASM binaries with the targeted version.
+        /// 调用此方法以确定安装在用户机器上的ASM版本。
+        /// 该方法通过遍历一个写有已知的Autodesk产品的文件夹列表进行扫描
+        /// 针对目标版本的ASM二进制文件列表扫描已知的Autodesk产品文件夹列表。
         /// </summary>
-        /// <param name="versions">A list of version numbers to check for in order 
-        /// of preference. This argument cannot be null or empty.</param>
-        /// <param name="location">The full path of the directory in which targeted
-        /// ASM binaries are found. This argument cannot be null.</param>
+        /// <param name="versions">按优先顺序检查的版本号列表。此参数不能为空</param>
+        /// <param name="location">ASM二进制文件的目录的完整路径。此参数不能为空</param>
         /// <param name="rootFolder">This method makes use of DynamoInstallDetective
         /// to determine the installation location of various Autodesk products. This 
         /// argument is not optional and must represent the full path to the folder 
         /// which contains DynamoInstallDetective.dll. An exception is thrown if the 
         /// assembly cannot be located.</param>
-        /// <returns>Returns LibraryVersion of ASM if any installed ASM is found, 
-        /// or None otherwise.</returns>
+        /// <returns>如果找到,返回版本号,否则返回空</returns>
         /// 
         public static LibraryVersion GetInstalledAsmVersion(List<LibraryVersion> versions, ref string location, string rootFolder)
         {

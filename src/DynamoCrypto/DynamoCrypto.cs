@@ -7,16 +7,14 @@ using System.Security.Cryptography.X509Certificates;
 namespace DynamoCrypto
 {
     /// <summary>
-    /// This class contains static methods for finding Dynamo certificates in 
-    /// a user, or a local machine's certificate store. It also has methods
-    /// for signing or verifying a file using public/private key pairs. These methods 
-    /// use the DSA algorithm for verification.
+    /// 该类包含用于在用户或本地证书存储中查找Dynamo证书的静态方法。
+    /// 还有使用公钥/私钥对文件进行签名或验证的方法。
+    /// 这些方法使用DSA算法进行验证。
     /// </summary>
     public class Utils
     {
         /// <summary>
-        /// Find a certificate in the key store and return the 
-        /// private key, if one is available.
+        /// 查找证书,并返回私钥
         /// </summary>
         /// <param name="keyContainerName">The key container name.</param>
         /// <param name="certificate">An X509Certificate2 object containing a private key.</param>
@@ -48,8 +46,7 @@ namespace DynamoCrypto
         }
 
         /// <summary>
-        /// Find a certificate in the key store and return the
-        /// public key, if one is available.
+        /// 在证书存储中查找证书并返回公钥
         /// </summary>
         /// <param name="keyContainerName">The key container name.</param>
         /// <param name="certificate">A X509Certificate2 object containing a public key.</param>
@@ -71,11 +68,11 @@ namespace DynamoCrypto
         }
 
         /// <summary>
-        /// Generate a signature file using a private key.
+        /// 使用私钥生成签名文件
         /// </summary>
-        /// <param name="filePath">The file whose contents will be hashed.</param>
-        /// <param name="signatureFilePath">The path of the generated signature file.</param>
-        /// <param name="privateBlob">The private key.</param>
+        /// <param name="filePath">目标文件</param>
+        /// <param name="signatureFilePath">将要生成的签名文件</param>
+        /// <param name="privateBlob">私钥</param>
         public static void SignFile(string filePath, string signatureFilePath, byte[] privateBlob)
         {  
             try
@@ -112,12 +109,12 @@ namespace DynamoCrypto
         }
 
         /// <summary>
-        /// Verify a file using a signature file and a public key.
+        /// 使用签名文件和公钥进行文件验证
         /// </summary>
-        /// <param name="filePath">The file whose contents will be hashed.</param>
-        /// <param name="signatureFilePath">The path of the signature file.</param>
-        /// <param name="publicBlob">The public key.</param>
-        /// <returns> True if the file is verified, otherwise false.</returns>
+        /// <param name="filePath">目标文件</param>
+        /// <param name="signatureFilePath">签名文件</param>
+        /// <param name="publicBlob">公钥</param>
+        /// <returns>验证是否通过</returns>
         public static bool VerifyFile(string filePath, string signatureFilePath, byte[] publicBlob)
         {
             if (publicBlob.Length == 0)
@@ -161,7 +158,7 @@ namespace DynamoCrypto
         }
 
         /// <summary>
-        /// Find a certificate in the key store.
+        /// 在密钥存储区中查找证书
         /// </summary>
         /// <param name="keyContainerName">The key container name.</param>
         /// <returns>An X509Certificate2 or null if no certificate can be found.</returns>
@@ -185,7 +182,7 @@ namespace DynamoCrypto
         }
 
         /// <summary>
-        /// Install a certificate in the local machine certificate store.
+        /// 在本地证书存储区中安装证书
         /// </summary>
         /// <param name="certPath">The installed certificate.</param>
         public static X509Certificate2 InstallCertificateForCurrentUser(string certPath)

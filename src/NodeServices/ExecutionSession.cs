@@ -5,6 +5,7 @@ namespace Dynamo.Session
 {
     /// <summary>
     /// Represents a session object for current execution.
+    /// 代表当前执行的会话对象。
     /// </summary>
     public interface IExecutionSession
     {

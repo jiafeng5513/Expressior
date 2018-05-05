@@ -302,7 +302,6 @@
     <Compile Include="Utilities\ResourceUtilities.cs" />
     <Compile Include="ViewModels\Core\Converters\SerializationConverters.cs" />
     <Compile Include="ViewModels\Core\DynamoViewModelBranding.cs" />
-    <Compile Include="ViewModels\Core\GalleryViewModel.cs" />
     <Compile Include="ViewModels\Core\HomeWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\Core\SerializationExtensions.cs" />
     <Compile Include="ViewModels\PackageManager\PackagePathViewModel.cs" />
@@ -328,9 +327,6 @@
     </Compile>
     <Compile Include="Views\CodeBlocks\CodeBlockEditor.cs" />
     <Compile Include="Views\Core\DynamoOpenFileDialog.cs" />
-    <Compile Include="Views\Gallery\GalleryView.xaml.cs">
-      <DependentUpon>GalleryView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CodeCompletion\CodeCompletionEditor.xaml.cs">
       <DependentUpon>CodeCompletionEditor.xaml</DependentUpon>
     </Compile>
@@ -1110,10 +1106,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Gallery\GalleryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CodeCompletion\CodeCompletionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1301,7 +1293,9 @@
     <Content Include="ViewModels\Watch3D\Shaders\Material.fx" />
     <Content Include="ViewModels\Watch3D\Shaders\Points.fx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Gallery\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <MakeDir Directories="$(OutputPath)\viewExtensions\" />

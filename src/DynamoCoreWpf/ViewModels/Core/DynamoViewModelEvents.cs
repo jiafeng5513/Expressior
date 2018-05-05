@@ -105,15 +105,6 @@ namespace Dynamo.ViewModels
             }
         }
 
-        public event RequestShowHideGalleryHandler RequestShowHideGallery;
-        public virtual void OnRequestShowHideGallery(bool showGallery)
-        {
-            if (RequestShowHideGallery != null)
-            {
-                RequestShowHideGallery(showGallery);
-            }
-        }
-
         internal event RequestViewOperationHandler RequestViewOperation;
         private void OnRequestViewOperation(ViewOperationEventArgs e)
         {

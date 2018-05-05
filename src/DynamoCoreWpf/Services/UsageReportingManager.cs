@@ -220,7 +220,10 @@ namespace Dynamo.Services
         {
             IsAnalyticsReportingApproved = approved;
         }
-
+        /// <summary>
+        /// 显示用户许可，询问是否允许发送用户信息
+        /// </summary>
+        /// <param name="ownerWindow"></param>
         private void ShowUsageReportingPrompt(Window ownerWindow)
         {
             // If an owner window is not supplied, then we will fallback onto 

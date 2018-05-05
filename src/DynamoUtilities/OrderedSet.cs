@@ -7,6 +7,7 @@ namespace Dynamo.Utilities
 {
     /// <summary>
     ///     A set of unique elements, with insertion order preserved.
+    ///     ÓÐÐò¼¯ºÏ
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class OrderedSet<T> : ISet<T>

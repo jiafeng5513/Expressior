@@ -7,6 +7,10 @@ using System.Text;
 
 namespace Dynamo.Applications
 {
+    /// <summary>
+    /// 为系统提供目录服务,查找启动点,用户文件夹,公用文件夹(程序文档位置)
+    /// 动态链接库列表
+    /// </summary>
     internal class SandboxPathResolver : IPathResolver
     {
         private readonly List<string> additionalResolutionPaths;
@@ -68,7 +72,9 @@ namespace Dynamo.Applications
             get { return string.Empty; }
         }
     }
-
+    /// <summary>
+    /// 为系统提供目录服务,查找CLI所在的位置,动态链接库列表
+    /// </summary>
     internal class CLIPathResolver : IPathResolver
     {
         private readonly List<string> additionalResolutionPaths;

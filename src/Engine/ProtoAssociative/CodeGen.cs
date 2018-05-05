@@ -134,6 +134,7 @@ namespace ProtoAssociative
 
         /// <summary>
         /// Pushes the symbol as a dependent to graphNode if codegeneration semantic conditions are met
+        /// 如果代码生成的语义条件得到满足,将符号作为一个蓝图节点的依赖
         /// </summary>
         /// <param name="symbol"></param>
         /// <param name="graphNode"></param>

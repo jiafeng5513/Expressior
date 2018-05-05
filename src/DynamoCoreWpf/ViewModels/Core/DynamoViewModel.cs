@@ -671,13 +671,13 @@ namespace Dynamo.ViewModels
 
         private void SubscribeModelUiEvents()
         {
-            model.RequestBugReport += ReportABug;
+            //model.RequestBugReport += ReportABug;
             model.RequestDownloadDynamo += DownloadDynamo;
         }
 
         private void UnsubscribeModelUiEvents()
         {
-            model.RequestBugReport -= ReportABug;
+            //model.RequestBugReport -= ReportABug;
             model.RequestDownloadDynamo -= DownloadDynamo;
         }
 
@@ -782,15 +782,15 @@ namespace Dynamo.ViewModels
             return Model.CustomNodeManager.Contains((Guid)parameters);
         }
 
-        public static void ReportABug(object parameter)
-        {
-            Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubBugReportingLink));
-        }
+        //public static void ReportABug(object parameter)
+        //{
+        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubBugReportingLink));
+        //}
 
-        public static void ReportABug()
-        {
-            ReportABug(null);
-        }
+        //public static void ReportABug()
+        //{
+        //    ReportABug(null);
+        //}
 
         internal static void DownloadDynamo()
         {
@@ -2098,15 +2098,15 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        public void GoToWiki(object parameter)
-        {
-            Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoWikiLink));
-        }
+        //public void GoToWiki(object parameter)
+        //{
+        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoWikiLink));
+        //}
 
-        internal bool CanGoToWiki(object parameter)
-        {
-            return true;
-        }
+        //internal bool CanGoToWiki(object parameter)
+        //{
+        //    return true;
+        //}
 
         public void GoToSourceCode(object parameter)
         {
@@ -2118,15 +2118,15 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        public void GoToDictionary(object parameter)
-        {
-            Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoDictionary));
-        }
+        //public void GoToDictionary(object parameter)
+        //{
+        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoDictionary));
+        //}
 
-        internal bool CanGoToDictionary(object parameter)
-        {
-            return true;
-        }
+        //internal bool CanGoToDictionary(object parameter)
+        //{
+        //    return true;
+        //}
 
         private void DisplayStartPage(object parameter)
         {

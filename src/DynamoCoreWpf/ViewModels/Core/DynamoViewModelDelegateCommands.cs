@@ -52,10 +52,10 @@ namespace Dynamo.ViewModels
             MutateTestDelegateCommand = new DelegateCommand(MutateTestCmd, RunSettingsViewModel.CanRunExpression);
             DisplayFunctionCommand = new DelegateCommand(DisplayFunction, CanDisplayFunction);
             SetConnectorTypeCommand = new DelegateCommand(SetConnectorType, CanSetConnectorType);
-            ReportABugCommand = new DelegateCommand(ReportABug, CanReportABug);
-            GoToWikiCommand = new DelegateCommand(GoToWiki, CanGoToWiki);
+            //ReportABugCommand = new DelegateCommand(ReportABug, CanReportABug);
+            //GoToWikiCommand = new DelegateCommand(GoToWiki, CanGoToWiki);
             GoToSourceCodeCommand = new DelegateCommand(GoToSourceCode, CanGoToSourceCode);
-            GoToDictionaryCommand = new DelegateCommand(GoToDictionary, CanGoToDictionary);
+            //GoToDictionaryCommand = new DelegateCommand(GoToDictionary, CanGoToDictionary);
             DisplayStartPageCommand = new DelegateCommand(DisplayStartPage, CanDisplayStartPage);
             ChangeScaleFactorCommand = new DelegateCommand(p => OnRequestScaleFactorDialog(this, EventArgs.Empty));
             ShowPackageManagerSearchCommand = new DelegateCommand(ShowPackageManagerSearch, CanShowPackageManagerSearch);
@@ -78,8 +78,6 @@ namespace Dynamo.ViewModels
             ShowAboutWindowCommand = new DelegateCommand(ShowAboutWindow, CanShowAboutWindow);
             SetNumberFormatCommand = new DelegateCommand(SetNumberFormat, CanSetNumberFormat);
             DumpLibraryToXmlCommand = new DelegateCommand(model.DumpLibraryToXml, model.CanDumpLibraryToXml);
-            ShowGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(true), o => true);
-            CloseGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(false), o => true);
             ShowNewPresetsDialogCommand = new DelegateCommand(ShowNewPresetStateDialogAndMakePreset, CanShowNewPresetStateDialog);
             NodeFromSelectionCommand = new DelegateCommand(CreateNodeFromSelection, CanCreateNodeFromSelection);
             // TODO: To be removed in Dynamo 2.0
@@ -134,9 +132,9 @@ namespace Dynamo.ViewModels
         public DelegateCommand MutateTestDelegateCommand { get; set; }
         public DelegateCommand DisplayFunctionCommand { get; set; }
         public DelegateCommand SetConnectorTypeCommand { get; set; }
-        public DelegateCommand ReportABugCommand { get; set; }
+        //public DelegateCommand ReportABugCommand { get; set; }
         public DelegateCommand GoToWikiCommand { get; set; }
-        public DelegateCommand GoToDictionaryCommand { get; set; }
+        //public DelegateCommand GoToDictionaryCommand { get; set; }
         public DelegateCommand GoToSourceCodeCommand { get; set; }
         public DelegateCommand DisplayStartPageCommand { get; set; }
         public DelegateCommand ChangeScaleFactorCommand { get; set; }
@@ -160,8 +158,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand OpenRecentCommand { get; set; }
         public DelegateCommand CheckForLatestRenderCommand { get; set; }
         public DelegateCommand DumpLibraryToXmlCommand { get; set; }
-        public DelegateCommand ShowGalleryCommand { get; set; }
-        public DelegateCommand CloseGalleryCommand { get; set; }
         public DelegateCommand ShowNewPresetsDialogCommand { get; set; }
         public DelegateCommand NodeFromSelectionCommand { get; set; }       
     }

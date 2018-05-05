@@ -4,6 +4,9 @@ using System.Security.AccessControl;
 
 namespace DynamoUtilities
 {
+    /// <summary>
+    /// 关于磁盘路径的基础操作
+    /// </summary>
     public class PathHelper
     {
         // This return an exception if any operation failed and the folder

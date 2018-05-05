@@ -640,7 +640,7 @@
                                   Command="{Binding Path=DataContext.PublishCurrentWorkspaceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   Name="publishCurrent" />
                     </MenuItem>
-
+                    <!--menu=>Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
                               Name="SettingsMenu"
                               Focusable="False"
@@ -749,17 +749,17 @@
                                   Header="{x:Static p:Resources.DynamoViewSettingEnableTSplineNodes}" />
                         </MenuItem>
                     </MenuItem>
-
+                    <!--menu->help-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenu}"
                               Focusable="False">
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.StartPageWhatsNew}"
                                   Command="{Binding ShowGalleryCommand}">
                             <MenuItem.Icon>
                                 <Image Source="/DynamoCoreWpf;component/UI/Images/icon-whats-new-small.png"
                                        Width="13" Height="14" />
                             </MenuItem.Icon>
-                        </MenuItem>
+                        </MenuItem>-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewHepMenuSamples}"
                                   Name="SamplesMenu"
@@ -769,23 +769,23 @@
                                        Width="14" Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewHelpDictionary}"
                                   Command="{Binding GoToDictionaryCommand}">
                             <MenuItem.Icon>
                                 <Image Source="/DynamoCoreWpf;component/UI/Images/icon-dictionary-small.png"
                                            Width="13" Height="14" />
                             </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuReportBug}"
+                        </MenuItem>-->
+                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuReportBug}"
                                   Command="{Binding ReportABugCommand}"
-                                  Focusable="False" />
+                                  Focusable="False" />-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuGotoWebsite}"
                                   Command="{Binding GoToSourceCodeCommand}"
                                   Focusable="False" />
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuGotoWiki}"
+                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuGotoWiki}"
                                   Command="{Binding GoToWikiCommand}"
-                                  Focusable="False" />
+                                  Focusable="False" />-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenuDisplayStartPage}"
                                   Command="{Binding DisplayStartPageCommand}"
                                   Focusable="False" />
@@ -793,7 +793,7 @@
                                   Command="{Binding ShowAboutWindowCommand}"
                                   Focusable="False" />
                     </MenuItem>
-
+                    <!--menu->debug-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewDebugMenu}"
                               Focusable="False"
                               Visibility="{Binding IsDebugBuild, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">

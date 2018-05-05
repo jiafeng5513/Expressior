@@ -4,8 +4,7 @@ using System.Collections;
 namespace Autodesk.DesignScript.Runtime
 {
     /// <summary>
-    /// This attribute is used to specify whether the item will be imported
-    /// into the VM.
+    /// 标识一个库是否引入到虚拟机
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class SupressImportIntoVMAttribute : Attribute
@@ -13,8 +12,7 @@ namespace Autodesk.DesignScript.Runtime
     }
 
     /// <summary>
-    /// This attribute is used to specify whether the item will be displayed
-    /// in the library.
+    /// 标识一个item是否显示到library视图中
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class IsVisibleInDynamoLibraryAttribute : Attribute

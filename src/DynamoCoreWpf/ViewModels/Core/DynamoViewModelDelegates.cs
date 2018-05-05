@@ -11,8 +11,6 @@ namespace Dynamo.ViewModels
 
     public delegate void RequestAboutWindowHandler(DynamoViewModel aboutViewModel);
 
-    public delegate void RequestShowHideGalleryHandler(bool showGallery);
-
     internal delegate void RequestViewOperationHandler(ViewOperationEventArgs e);
 
     public delegate void RequestBitmapSourceHandler(IconRequestEventArgs e);

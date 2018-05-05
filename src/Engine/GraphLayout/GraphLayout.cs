@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace GraphLayout
 {
     /// <summary>
-    /// Represents the graph object (a set of nodes and edges) in the GraphLayout algorithm.
+    /// 图类
+    /// 由节点和边构成
     /// </summary>
     public class Graph
     {
 
-        #region Graph properties
+        #region 图的属性字段
 
         private const int MaxLayerHeight = 20;
         private const double Infinite = 1000000;
@@ -22,12 +23,12 @@ namespace GraphLayout
         public readonly static double VerticalNoteDistance = 5;
 
         /// <summary>
-        /// Set of nodes in this graph.
+        /// 一个图中节点的集合
         /// </summary>
         public HashSet<Node> Nodes = new HashSet<Node>();
 
         /// <summary>
-        /// Set of edges relevant to this graph.
+        /// 图中的边
         /// </summary>
         public HashSet<Edge> Edges = new HashSet<Edge>();
 
@@ -35,37 +36,44 @@ namespace GraphLayout
         /// Layers 1 and onwards list the nodes in this graph ordered by layer,
         /// with smaller numbers to the right part of the graph.
         /// Layer 0 refers to outside nodes connected to the right of the first layer.
+        /// 图层
         /// </summary>
         public List<List<Node>> Layers = new List<List<Node>>();
 
         /// <summary>
         /// Edges connected to outside nodes to the left of this graph.
+        /// 连接此图左侧和外部节点的边
         /// </summary>
         public HashSet<Edge> AnchorLeftEdges = new HashSet<Edge>();
 
         /// <summary>
         /// Edges connected to outside nodes to the right of this graph.
+        /// 连接此图右侧和外部节点的边
         /// </summary>
         public HashSet<Edge> AnchorRightEdges = new HashSet<Edge>();
 
         /// <summary>
         /// Stores the GraphCenterX value before layout algorithm.
+        /// 在Layout算法启动之前保存GraphCenterX
         /// </summary>
         private double InitialGraphCenterX;
 
         /// <summary>
         /// Stores the GraphCenterY value before layout algorithm.
+        /// 在Layout算法启动之前保存GraphCenterY
         /// </summary>
         private double InitialGraphCenterY;
 
         /// <summary>
         /// Stores the vertical offset value to avoid subgraph overlap
         /// after running the layout algorithm.
+        /// 运行布局算法后，存储垂直偏移值以避免子图重叠。
         /// </summary>
         public double OffsetY = 0;
 
         /// <summary>
         /// Returns the x coordinate of the graph's center point.
+        /// 返回图形中心点的x坐标。
         /// </summary>
         public double GraphCenterX
         {
@@ -74,6 +82,7 @@ namespace GraphLayout
 
         /// <summary>
         /// Returns the y coordinate of the graph's center point.
+        /// 返回图形中心点的y坐标。
         /// </summary>
         public double GraphCenterY
         {
@@ -82,12 +91,12 @@ namespace GraphLayout
 
         #endregion
 
-        #region Helper methods
+        #region 节点和边的基本操作
 
         /// <summary>
-        /// Adds a new node to the graph object.
+        /// 向图中添加一个新的节点
         /// </summary>
-        /// <param name="guid">The guid as a unique identifier of the node.</param>
+        /// <param name="guid">节点的GUID唯一标识符</param>
         /// <param name="width">The width of the node view.</param>
         /// <param name="height">The height of the node view.</param>
         /// <param name="x">The x coordinate of the node view.</param>
@@ -100,10 +109,10 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Adds a new edge to the graph object.
+        /// 向图中添加一个新的边
         /// </summary>
-        /// <param name="startId">The guid of the starting node.</param>
-        /// <param name="endId">The guid of the ending node.</param>
+        /// <param name="startId">出发节点的GUID</param>
+        /// <param name="endId">终止节点的GUID</param>
         /// <param name="startX">The x coordinate of the connector's left end point.</param>
         /// <param name="startY">The y coordinate of the connector's left end point.</param>
         /// <param name="endX">The x coordinate of the connector's right end point.</param>
@@ -115,7 +124,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Finds a node from its unique guid.
+        /// 通过GUID查找节点(注意节点的存储是散列的,GUID是唯一能够找到他的线索)
         /// </summary>
         /// <param name="guid">The node's guid.</param>
         /// <returns>The node object.</returns>
@@ -132,7 +141,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Finds an active edge between two nodes.
+        /// 在两个节点之间找到一条活跃的边
         /// </summary>
         /// <param name="start">Start node.</param>
         /// <param name="end">End node.</param>
@@ -151,6 +160,7 @@ namespace GraphLayout
 
         /// <summary>
         /// Assigns a node into a vertical layer in the graph.
+        /// 将一个节点分配到图中的一个垂直层。
         /// </summary>
         /// <param name="n">The node.</param>
         /// <param name="currentLayer">The number of the layer, starting from 0 for the rightmost layer.</param>
@@ -165,6 +175,7 @@ namespace GraphLayout
 
         /// <summary>
         /// Assigns a list of nodes into a vertical layer in the graph.
+        /// 将一组节点添加到指定的层中
         /// </summary>
         /// <param name="list">The list of nodes.</param>
         /// <param name="currentLayer">The number of the layer, starting from 0 for the rightmost layer.</param>
@@ -232,6 +243,7 @@ namespace GraphLayout
 
         /// <summary>
         /// To assign all nodes back to layer -1.
+        /// 将所有的节点转移到-1层
         /// </summary>
         public void ResetLayers()
         {
@@ -246,12 +258,11 @@ namespace GraphLayout
 
         #endregion
 
-        #region Sugiyama algorithm methods
+        #region Sugiyama(杉山)算法(有向无环图自动布局算法)
 
         /// <summary>
-        /// Sugiyama step 1: Cycle Removal
-        /// This method implements an enhanced Greedy Cycle Removal heuristic
-        /// proposed by Eades et al, 1993.
+        /// Sugiyama step 1: 移除环路
+        /// 此处使用增强的启发式贪婪环路移除算法Eades et al, 1993.
         /// http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.7745
         /// </summary>
         public void RemoveCycles()
@@ -316,12 +327,11 @@ namespace GraphLayout
             foreach (Edge e in Edges)
                 e.Active = true;
         }
-        
+
         /// <summary>
-        /// Sugiyama step 2: Layering
-        /// This method implements Coffman-Graham layering algorithm.
-        /// Unconnected output nodes will be put on the rightmost layer and
-        /// they will be ordered based on their original vertical positions.
+        /// Sugiyama step 2: 分层
+        /// 此处使用Coffman-Graham分层算法
+        /// 未连接的输出节点将放置在最右侧的层上，并且将根据其原始垂直位置进行排序。
         /// </summary>
         public void AssignLayers()
         {
@@ -370,9 +380,10 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Sugiyama step 3: Node Ordering
+        /// Sugiyama step 3: 节点排序
         /// This method uses Median heuristic to determine the vertical node
         /// order for each layer.
+        /// 使用启发式中值排序决定每层的节点在垂直方向上的顺序
         /// </summary>
         public void OrderNodes()
         {
@@ -466,9 +477,8 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Sugiyama step 4: Assign Coordinates
-        /// Vertical coordinates for the nodes in a layer is assigned right after the
-        /// ordering of nodes in that particular layer is determined.
+        /// Sugiyama step 4: 指定坐标
+        /// 在确定特定层中的节点的排序之后立即分配层中的节点的垂直坐标。
         /// </summary>
         /// <param name="layer">The nodes in a layer to be assigned their coordinates.</param>
         public void AssignCoordinates(List<Node> layer)
@@ -530,10 +540,10 @@ namespace GraphLayout
 
         #endregion
 
-        #region Graph positioning methods
+        #region 操作整个图位置的方法
 
         /// <summary>
-        /// To save the initial center position of the graph.
+        ///保存图的初始中心位置。
         /// </summary>
         public void RecordInitialPosition()
         {
@@ -542,7 +552,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// To set spaces between the nodes based on the default node distance.
+        /// 根据默认节点距离设置节点之间的空间。
         /// </summary>
         public void DistributeNodePosition()
         {
@@ -581,7 +591,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// To shift the whole graph back to its original position.
+        /// 将整个图形移回原始位置。
         /// </summary>
         public void SetGraphPosition(bool isGroupLayout)
         {
@@ -635,37 +645,37 @@ namespace GraphLayout
     }
 
     /// <summary>
-    /// Represents a node/vertex object in the GraphLayout algorithm.
+    /// 节点类
     /// </summary>
     public class Node
     {
         /// <summary>
-        /// The graph object which owns the node.
+        /// 本节点属于哪张图
         /// </summary>
         private Graph OwnerGraph;
 
         /// <summary>
-        /// The unique identifier of the node.
+        /// GUID统一标识
         /// </summary>
         public Guid Id { get; private set; }
 
         /// <summary>
-        /// The width of the node view.
+        /// 节点的宽度
         /// </summary>
         public double Width { get; private set; }
 
         /// <summary>
-        /// The height of the node view and its linked notes.
+        /// 节点和note的总高度
         /// </summary>
         public double TotalHeight { get { return Height + NotesHeight; } }
 
         /// <summary>
-        /// The height of the node view only.
+        /// 节点自身的高度
         /// </summary>
         public double Height { get; private set; }
 
         /// <summary>
-        /// The x coordinate of the node view.
+        /// 节点的X坐标
         /// </summary>
         public double X;
 
@@ -675,27 +685,27 @@ namespace GraphLayout
         public double Y;
 
         /// <summary>
-        /// The initial Y coordinate of the node view.
+        /// 节点的初始Y坐标
         /// </summary>
         public double InitialY { get; private set; }
 
         /// <summary>
-        /// The layer of the node within the graph, starting from layer 0 for the rightmost layer.
+        /// 节点所在的层(从0开始)
         /// </summary>
         public int Layer = -1;
 
         /// <summary>
-        /// The set of edges connected to the input ports the node.
+        /// 连接到此节点的输入口上的边的集合
         /// </summary>
         public HashSet<Edge> LeftEdges = new HashSet<Edge>();
 
         /// <summary>
-        /// The set of edges connected to the output ports of the node.
+        /// 连接点此节点的输出口上的边的结合
         /// </summary>
         public HashSet<Edge> RightEdges = new HashSet<Edge>();
 
         /// <summary>
-        /// A list of note models which has this node as the closest node.
+        /// 邻接节点集合
         /// </summary>
         public List<Object> LinkedNotes = new List<Object>();
 
@@ -705,13 +715,12 @@ namespace GraphLayout
         public double NotesWidth { get; private set; }
 
         /// <summary>
-        /// The total height of all notes linked to this node,
-        /// including the vertical spaces.
+        /// 此节点和相关的note的总高度
         /// </summary>
         public double NotesHeight { get; private set; }
 
         /// <summary>
-        /// Marks a note as linked to this node.
+        /// 把一个note连接到本节点上
         /// </summary>
         /// <param name="note">Note to be linked.</param>
         /// <param name="noteWidth">The width of the note model.</param>
@@ -727,10 +736,20 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// True if the node is selected in the workspace.
+        /// 是否被选中
         /// </summary>
         public bool IsSelected;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="isSelected"></param>
+        /// <param name="ownerGraph"></param>
         public Node(Guid guid, double width, double height, double x, double y, bool isSelected, Graph ownerGraph)
         {
             Id = guid;
@@ -747,27 +766,27 @@ namespace GraphLayout
     }
 
     /// <summary>
-    /// Represents an edge/link object in the GraphLayout algorithm.
+    /// 边类
     /// </summary>
     public class Edge
     {
         /// <summary>
-        /// The graph object which owns the edge.
+        /// 此边所在的图
         /// </summary>
         private Graph OwnerGraph;
 
         /// <summary>
-        /// The node connected to the edge's left end.
+        /// 左端连接的节点(出发节点)
         /// </summary>
         public Node StartNode { get; private set; }
 
         /// <summary>
-        /// The node connected to the edge's right end.
+        /// 右侧连接的节点(终止节点)
         /// </summary>
         public Node EndNode { get; private set; }
 
         /// <summary>
-        /// Returns the x coordinate of the connector's start point.
+        /// 起点的X坐标
         /// </summary>
         public double StartX
         {
@@ -775,7 +794,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Returns the y coordinate of the connector's start point.
+        /// 起点的Y坐标 
         /// </summary>
         public double StartY
         {
@@ -783,7 +802,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Returns the x coordinate of the connector's end point.
+        /// 终点的X坐标
         /// </summary>
         public double EndX
         {
@@ -791,7 +810,7 @@ namespace GraphLayout
         }
 
         /// <summary>
-        /// Returns the y coordinate of the connector's end point.
+        /// 终点的Y坐标
         /// </summary>
         public double EndY
         {
@@ -822,9 +841,20 @@ namespace GraphLayout
 
         /// <summary>
         /// A flag for the GraphLayout algorithm.
+        /// 活跃标志(这是为布局算法设置的标志)
         /// </summary>
         public bool Active = true;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="startId"></param>
+        /// <param name="endId"></param>
+        /// <param name="startX"></param>
+        /// <param name="startY"></param>
+        /// <param name="endX"></param>
+        /// <param name="endY"></param>
+        /// <param name="ownerGraph"></param>
         public Edge(Guid startId, Guid endId, double startX, double startY, double endX, double endY, Graph ownerGraph)
         {
             OwnerGraph = ownerGraph;

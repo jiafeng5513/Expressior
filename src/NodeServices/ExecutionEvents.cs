@@ -6,6 +6,7 @@ namespace Dynamo.Events
     /// <summary>
     /// Communication bridge between Dynamo and client libraries to notify
     /// about changes to execution state
+    /// Dynamo和客户端的通信桥梁,用于通知有关执行状态的更改
     /// </summary>
     public static class ExecutionEvents
     {
