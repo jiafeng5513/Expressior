@@ -26,6 +26,7 @@ namespace Dynamo.ViewModels
         private DelegateCommand _pauseVisualizationManagerUpdateCommand;
         private DelegateCommand _unpauseVisualizationManagerUpdateCommand;
         private DelegateCommand _showHideAllGeometryPreviewCommand;
+        private DelegateCommand _showHideAllUpstreamPreviewCommand;
         private DelegateCommand _showInCanvasSearchCommand;
         private DelegateCommand _pasteCommand;
         private DelegateCommand _computeRunStateCommand;
@@ -205,7 +206,21 @@ namespace Dynamo.ViewModels
             }
         }
 
-       
+        [JsonIgnore]
+        public DelegateCommand ShowHideAllUpstreamPreviewCommand
+        {
+            get
+            {
+                if (_showHideAllUpstreamPreviewCommand == null)
+                {
+                    _showHideAllUpstreamPreviewCommand = new DelegateCommand(
+                        ShowHideAllUpstreamPreview);
+                }
+
+                return _showHideAllUpstreamPreviewCommand;
+            }
+        }
+
         [JsonIgnore]
         public DelegateCommand ShowInCanvasSearchCommand
         {
@@ -247,6 +262,16 @@ namespace Dynamo.ViewModels
             {
                 return DynamoSelection.Instance.Selection.
                     OfType<NodeModel>().Any(n => n.IsVisible);
+            }
+        }
+
+        [JsonIgnore]
+        public bool AnyNodeUpstreamVisible
+        {
+            get
+            {
+                return DynamoSelection.Instance.Selection.
+                    OfType<NodeModel>().Any(n => n.IsUpstreamVisible);
             }
         }
 

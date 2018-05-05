@@ -27,7 +27,6 @@ namespace Dynamo.Tests
         protected override void GetLibrariesToPreload(List<string> libraries)
         {
             libraries.Add("ProtoGeometry.dll");
-            libraries.Add("DesignScriptBuiltin.dll");
             libraries.Add("DSCoreNodes.dll");
             base.GetLibrariesToPreload(libraries);
         }
@@ -173,25 +172,26 @@ namespace Dynamo.Tests
             // Code blocks:
             //  
             //    a = 1;
-            //
             //    a = 2;
+            //
+            //    a = 3;
             OpenModel(@"core\node2code\sameNames2.dyn");
             var nodes = CurrentDynamoModel.CurrentWorkspace.Nodes;
             var engine = CurrentDynamoModel.EngineController;
 
             var result = engine.ConvertNodesToCode(nodes, nodes);
-            // We should get 2 ast nodes, but their order is not important. 
+            // We should get 3 ast nodes, but their order is not important. 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.AstNodes);
-            Assert.AreEqual(2, result.AstNodes.Count());
+            Assert.AreEqual(3, result.AstNodes.Count());
             Assert.True(result.AstNodes.All(n => n is BinaryExpressionNode));
 
             var exprs = String.Concat(result.AstNodes
                                             .Cast<BinaryExpressionNode>()
                                             .Select(e => e.ToString().Replace(" ", String.Empty)));
 
-            Assert.IsTrue(((exprs.Contains("a1=1") && exprs.Contains("a=2"))
-                || ((exprs.Contains("a=1") && exprs.Contains("a1=2")))));
+            Assert.IsTrue(((exprs.Contains("a1=1") && exprs.Contains("a1=2") && exprs.Contains("a=3"))
+                || ((exprs.Contains("a=1") && exprs.Contains("a=2") && exprs.Contains("a1=3")))));
         }
 
         [Test]
@@ -276,7 +276,7 @@ namespace Dynamo.Tests
             var result = engine.ConvertNodesToCode(nodes, nodes);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.AstNodes);
-            Assert.AreEqual(3, result.AstNodes.Count());
+            Assert.AreEqual(4, result.AstNodes.Count());
             Assert.True(result.AstNodes.All(n => n is BinaryExpressionNode));
 
             var exprs = String.Concat(result.AstNodes
@@ -839,7 +839,7 @@ namespace Dynamo.Tests
             NodeToCodeCompiler.ReplaceWithShortestQualifiedName(engine.LibraryServices.LibraryManagementCore.ClassTable, result.AstNodes);
             Assert.IsTrue(result != null && result.AstNodes != null);
 
-            var rhs = result.AstNodes.Skip(1).Select(b => (b as BinaryExpressionNode).RightNode.ToString().Contains("X"));
+            var rhs = result.AstNodes.Skip(1).Select(b => (b as BinaryExpressionNode).RightNode.ToString().Contains("get_X"));
             Assert.IsTrue(rhs.All(r => r));
         }
 
@@ -864,37 +864,7 @@ namespace Dynamo.Tests
             var rhs = result.AstNodes.Skip(1).Select(b => (b as BinaryExpressionNode).RightNode.ToString().EndsWith("ElementResolverTarget.StaticProperty"));
             Assert.IsTrue(rhs.All(r => r));
         }
-
-        [Test]
-        public void TestPropertyToStaticPropertyInvocation()
-        {
-            string libraryPath = "FFITarget.dll";
-            if (!CurrentDynamoModel.EngineController.LibraryServices.IsLibraryLoaded(libraryPath))
-            {
-                CurrentDynamoModel.EngineController.LibraryServices.ImportLibrary(libraryPath);
-            }
-
-            OpenModel(@"core\node2code\tostaticproperty.dyn");
-            var nodes = CurrentDynamoModel.CurrentWorkspace.Nodes;
-            var engine = CurrentDynamoModel.EngineController;
-
-            var result = engine.ConvertNodesToCode(nodes, nodes);
-            result = NodeToCodeCompiler.ConstantPropagationForTemp(result, Enumerable.Empty<string>());
-            NodeToCodeCompiler.ReplaceWithShortestQualifiedName(engine.LibraryServices.LibraryManagementCore.ClassTable, result.AstNodes);
-            Assert.IsTrue(result != null && result.AstNodes != null);
-
-            var rhs = result.AstNodes.Skip(1).Select(b => (b as BinaryExpressionNode).RightNode.ToString().Contains("ValueContainer.SomeValue"));
-            Assert.IsTrue(rhs.All(r => r));
-
-            CurrentDynamoModel.ForceRun();
-
-            var cbn = CurrentDynamoModel.CurrentWorkspace.Nodes.OfType<CodeBlockNodeModel>().FirstOrDefault();
-            Assert.IsNotNull(cbn);
-
-            var guid = cbn.GUID.ToString();
-            AssertPreviewValue(guid, 23);
-        }
-
+ 
 
         private void TestNodeToCodeUndoBase(string filePath)
         {
@@ -1041,7 +1011,7 @@ namespace Dynamo.Tests
             var binaryExpr = assignment as BinaryExpressionNode;
             Assert.IsNotNull(binaryExpr);
 
-            Assert.AreEqual("[t1, t2]", binaryExpr.RightNode.ToString());
+            Assert.AreEqual("{t1, t2}", binaryExpr.RightNode.ToString());
         }
 
         [Test]

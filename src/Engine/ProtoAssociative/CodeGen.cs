@@ -10,7 +10,6 @@ using ProtoCore.AssociativeGraph;
 using ProtoCore.BuildData;
 using System.Linq;
 using ProtoAssociative.Properties;
-using ProtoCore.CompilerDefinitions;
 
 namespace ProtoAssociative
 {
@@ -1001,13 +1000,13 @@ namespace ProtoAssociative
                                 int lefttype, 
                                 int depth, 
                                 GraphNode graphNode, 
-                                SubCompilePass subPass,
+                                ProtoCore.CompilerDefinitions.SubCompilePass subPass,
                                 BinaryExpressionNode bnode,
                                 ref ProtoCore.Type inferedType)
         {
             ProcedureNode procCallNode = null;
 
-            var dotCallType = TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.Var, 0);
+            var dotCallType = TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.Var, 0); ;
 
             bool isConstructor = false;
             bool isStaticCall = false;
@@ -1017,7 +1016,6 @@ namespace ProtoAssociative
             string className = string.Empty;
 
             var dotCall = new FunctionDotCallNode(node as FunctionDotCallNode);
-            // procName is get_X for dot-call node "a.X" and is X for "a.X()"
             var procName = dotCall.FunctionCall.Function.Name;
 
             var firstArgument = dotCall.Arguments[0];
@@ -1058,7 +1056,6 @@ namespace ProtoAssociative
 
                     if (procNode == null)
                     {
-                        // this means that the lhs is a variable (class instance)
                         toResolveMethodOnClass = false;
                         classIndex = Constants.kInvalidIndex;
                         className = string.Empty;
@@ -1079,7 +1076,7 @@ namespace ProtoAssociative
                     //
                     // Or
                     //    
-                    //    y = Bar.bar;   // static property or function pointer
+                    //    y = Bar.bar;   // static property or funciton pointer
                     //    Bar.bar_2 = z; // static property
                     // 
                     // For the latters, they are converted to getter/setter. 
@@ -1093,36 +1090,23 @@ namespace ProtoAssociative
                     var classes = core.ClassTable.ClassNodes;
                     var classNode = classes[classIndex];
 
-                    //    y = Bar.bar;   // static property getter OR function pointer
-                    //    Bar.bar_2 = z; // static property setter
-                    string property;
+                    var property = String.Empty;
                     if (CoreUtils.TryGetPropertyName(procName, out property))
                     {
-                        procCallNode = classNode.GetFirstStaticFunctionBy(procName);
-                        isStaticCall = procCallNode != null;
-
-                        // function pointer to non-static property, e.g. p = Point.X;
-                        int argCount = dotCall.FunctionCall.FormalArguments.Count;
-                        if (procCallNode != null && argCount == 0
-                            && CoreUtils.IsNonStaticPropertyLookupOnClass(procCallNode, className))
+                        if (procCallNode == null)
                         {
-                            if (subPass != SubCompilePass.None)
-                            {
-                                return null;
-                            }
-                            EmitFunctionPointer(procCallNode);
-
-                            return null;
+                            procCallNode = classNode.GetFirstStaticFunctionBy(procName);
+                            isStaticCall = procCallNode != null;
                         }
 
                         if (procCallNode == null)
                         {
-                            if (subPass != SubCompilePass.None)
+                            if (subPass != ProtoCore.CompilerDefinitions.SubCompilePass.None)
                             {
                                 return null;
                             }
 
-                            // Try static function first
+                            // Try static function firstly
                             procCallNode = classNode.GetFirstStaticFunctionBy(property);
                             if (procCallNode == null)
                             {
@@ -1141,15 +1125,15 @@ namespace ProtoAssociative
                             else
                             {
                                 string message = String.Format(ProtoCore.Properties.Resources.kCallingNonStaticProperty,
-                                    className,
-                                    property);
+                                                               className,
+                                                               property);
 
                                 buildStatus.LogWarning(WarningID.CallingNonStaticMethodOnClass,
-                                    message,
-                                    core.CurrentDSFileName,
-                                    dotCall.line,
-                                    dotCall.col, 
-                                    graphNode);
+                                                       message,
+                                                       core.CurrentDSFileName,
+                                                       dotCall.line,
+                                                       dotCall.col, 
+                                                       graphNode);
 
                                 EmitNullNode(new NullNode(), ref inferedType);
                             }
@@ -1171,16 +1155,7 @@ namespace ProtoAssociative
 
                         if (!isStaticCall && !isConstructor)
                         {
-                            // This checks if there is a static property like Point.X(arg) 
-                            // and if so renames it to Point.get_X(arg) so that it can be 
-                            // found as a static getter in the class declaration.
-                            if (argCount == 1)
-                            {
-                                procName = Constants.kGetterPrefix + procName;
-                                procCallNode = classNode.GetFirstStaticFunctionBy(procName);
-                                isStaticCall = procCallNode != null;
-                            }
-                            else if (subPass == ProtoCore.CompilerDefinitions.SubCompilePass.None)
+                            if (subPass == ProtoCore.CompilerDefinitions.SubCompilePass.None)
                             {
                                 string message = String.Format(ProtoCore.Properties.Resources.kStaticMethodNotFound,
                                                                className,
@@ -1194,10 +1169,9 @@ namespace ProtoAssociative
                                                        graphNode);
 
                                 EmitNullNode(new NullNode(), ref inferedType);
-
-                                return null;
                             }
-                            
+
+                            return null;
                         }
                     }
                 }
@@ -1466,7 +1440,7 @@ namespace ProtoAssociative
             int depth, 
             ref ProtoCore.Type inferedType,             
             GraphNode graphNode = null,
-            SubCompilePass subPass = SubCompilePass.None,                 
+            ProtoCore.CompilerDefinitions.SubCompilePass subPass = ProtoCore.CompilerDefinitions.SubCompilePass.None,                 
             ProtoCore.AST.Node bnode = null)
         {
             ProcedureNode procNode = null;
@@ -1865,22 +1839,17 @@ namespace ProtoAssociative
         /// <returns></returns>
         private List<AssociativeNode> GetReplicationGuides(AssociativeNode node)
         {
-            
             if (node is ArrayNameNode)
             {
-                var guides = ((ArrayNameNode) node).ReplicationGuides;
-                if (guides == null || guides.Count == 0)
-                {
-                    if (node is IdentifierListNode)
-                    {
-                        var identListNode = node as IdentifierListNode;
-                        return GetReplicationGuides(identListNode.RightNode);
-                    }
-                }
-                return guides;
+                var nodeWithReplication = node as ArrayNameNode;
+                return nodeWithReplication.ReplicationGuides;
             }
-            
-            if (node is FunctionDotCallNode)
+            else if (node is IdentifierListNode)
+            {
+                var identListNode = node as IdentifierListNode;
+                return GetReplicationGuides(identListNode.RightNode);
+            }
+            else if (node is FunctionDotCallNode)
             {
                 var dotCallNode = node as FunctionDotCallNode;
                 return GetReplicationGuides(dotCallNode.FunctionCall.Function);
@@ -2991,7 +2960,6 @@ namespace ProtoAssociative
                 thisClass.TypeSystem = core.TypeSystem;
                 thisClass.ClassAttributes = classDecl.ClassAttributes;
                 thisClass.IsStatic = classDecl.IsStatic;
-                thisClass.IsInterface = classDecl.IsInterface;
 
                 thisClass.ExternLib = classDecl.ExternLibName ?? Path.GetFileName(core.CurrentDSFileName);
 
@@ -3092,9 +3060,6 @@ namespace ProtoAssociative
                         }
                     }
                 }
-
-                // Verify and store the list of interfaces it inherits from
-                thisClass.Interfaces = classDecl.Interfaces.Select(iname => core.ClassTable.GetClassId(iname)).ToList();
             }
             else if (ProtoCore.CompilerDefinitions.CompilePass.ClassMemVar == compilePass)
             {
@@ -5174,7 +5139,6 @@ namespace ProtoAssociative
                         }
                         return;
                     }
-
                 }
             }
             else //(ProtoCore.DSASM.Operator.assign != b.Optr)
@@ -5510,9 +5474,7 @@ namespace ProtoAssociative
                     {
                         if (!isAllocated)
                         {
-                            symbolnode = Allocate(globalClassIndex, globalClassIndex, globalProcIndex, t.Name,
-                                inferedType, line: bnode.line, col: bnode.col);
-
+                            symbolnode = Allocate(globalClassIndex, globalClassIndex, globalProcIndex, t.Name, inferedType, line: bnode.line, col: bnode.col); 
                             if (core.Options.RunMode == ProtoCore.DSASM.InterpreterMode.Expression)
                             {
                                 core.watchSymbolList.Add(symbolnode);
@@ -5520,6 +5482,8 @@ namespace ProtoAssociative
 
                             if (dimensions > 0)
                             {
+                                string message = String.Format(ProtoCore.Properties.Resources.kUnboundIdentifierMsg, t.Value);
+                                buildStatus.LogUnboundVariableWarning(symbolnode, message, core.CurrentDSFileName, t.line, t.col, graphNode);
                                 symbolnode.datatype.rank = dimensions;
                             }
                         }

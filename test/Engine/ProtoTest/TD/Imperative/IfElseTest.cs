@@ -11,8 +11,10 @@ namespace ProtoTest.TD.Imperative
         [Category("SmokeTest")]
         public void T01_TestAllPassCondition()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"x;
+y;
+z;
+[Imperative]
 {
  a1 = 2 ;
  a2 = -1;
@@ -25,12 +27,12 @@ i = [Imperative]
  b4 = -101.99;
  b5 = 10.0009;
  
- c1 = [ 0, 1, 2, 3];
- c2 = [ 1, 0.2];
- c3 = [ 0, 1.4, true ];
- c4 = [[0,1], [2,3 ] ];
+ c1 = { 0, 1, 2, 3};
+ c2 = { 1, 0.2};
+ c3 = { 0, 1.4, true };
+ c4 = {{0,1}, {2,3 } };
  
- x = [0, 0, 0, 0];
+ x = {0, 0, 0, 0};
  if(a1 == 2 ) // pass condition
  {
      x[0] = 1;
@@ -49,7 +51,7 @@ i = [Imperative]
  }
  
  
- y = [0, 0, 0, 0, 0];
+ y = {0, 0, 0, 0, 0};
  if(b1 == 1.0 ) // pass condition
  {
      y[0] = 1;
@@ -72,7 +74,7 @@ i = [Imperative]
  }
  
  
- z = [0, 0, 0, 0];
+ z = {0, 0, 0, 0};
  if(c1[0] == 0 ) // pass condition
  {
      z[0] = 1;
@@ -89,20 +91,22 @@ i = [Imperative]
  {
      z[3] = 1;
  }
- return [x, y, z];
+ 
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", 
-                new object[] { new object[] { 1, 1, 1, 1 }, new object[] { 1, 1, 1, 1, 1 }, new object[] { 1, 1, 1, 1 } });
+            thisTest.Verify("x", new object[] { 1, 1, 1, 1 });
+            thisTest.Verify("y", new object[] { 1, 1, 1, 1, 1 });
+            thisTest.Verify("z", new object[] { 1, 1, 1, 1 });
         }
 
         [Test]
+        //[Category ("SmokeTest")]
         [Category("Warnings and Exceptions")]
         public void T02_IfElseIf()
         {
             string err = "1467181 - Sprint25 : rev 3152: Warning message of 'lack of returning statement' should display when not all paths returns value at compiling time ";
-            string src = @"
-temp1 = [Imperative]
+            string src = @"temp1;
+[Imperative]
 {
  a1 = 7.5;
  
@@ -121,7 +125,7 @@ temp1 = [Imperative]
  {
  temp1 = temp1 + 3;
  }
- return temp1;
+ 
   
  }";
             thisTest.VerifyRunScriptSource(src, err);
@@ -132,8 +136,8 @@ temp1 = [Imperative]
         [Category("SmokeTest")]
         public void T03_MultipleIfStatement()
         {
-            string src = @"
-temp = [Imperative]
+            string src = @"temp;
+[Imperative]
 {
  a=1;
  b=2;
@@ -144,7 +148,7 @@ temp = [Imperative]
  
  if(b==2)  //this if statement is ignored
  {temp=4;}
- return temp;
+ 
  }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp", 4);
@@ -154,8 +158,8 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T04_IfStatementExpressions()
         {
-            string src = @"
-temp1 = [Imperative]
+            string src = @"temp1;
+[Imperative]
 {
  a=1;
  b=2;
@@ -164,11 +168,9 @@ temp1 = [Imperative]
  {
   temp1=0;
   if((a*b)==2)
-  { 
-    temp1=2;
+  { temp1=2;
   }
- }
- return temp1; 
+ } 
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -179,37 +181,35 @@ temp1 = [Imperative]
         [Category("SmokeTest")]
         public void T05_InsideFunction()
         {
-            string src = @"
+            string src = @"temp;
+temp2;
 	def fn1:int(a:int)
 	{   
-        return [Imperative]
-        {
-		    if(a>=0)
-			    return = 1;
-		    else 
-			    return = 0;
-        }
+return = [Imperative]{
+		if(a>=0)
+			return = 1;
+		else 
+			return = 0;
+}
 	}
     def fn2:int(a:int)
 	{   
-        return [Imperative]
-        {	   
-		    if( a < 0 )
-		    {
-			    return 0;
-		    }
-		    elseif	( a == 2 )
-		    {
-			    return 2;
-		    }
-		    else
-		    {
-			    return 1;
-		    }
-        }
+return = [Imperative]{	   
+		if( a < 0 )
+		{
+			return = 0;
+		}
+		elseif	( a == 2 )
+		{
+			return = 2;
+		}
+		else
+		{
+			return = 1;
+		}
+}
 	}
-
-i = [Imperative]
+[Imperative]
 {
     temp = 0;
     temp2 = 0;
@@ -219,11 +219,10 @@ i = [Imperative]
 	
 	if(fn2(2)==2)
 	   temp2=fn2(1);
-    
-    return [temp, temp2];
 } ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 1});
+            thisTest.Verify("temp", 1);
+            thisTest.Verify("temp2", 1);
 
         }
 
@@ -234,15 +233,14 @@ i = [Imperative]
             string src = @"temp1;
 def fn1:int(a:int)
 {   
-    return [Imperative]
-    {
-         if( a >= 0 )
-		    return 1;
-	    else
-		    return 0;
-    }
+return = [Imperative]{
+     if( a >= 0 )
+		return = 1;
+	else
+		return = 0;
 }
-temp1 = [Imperative]
+}
+[Imperative]
 {
  a = 1;
  b = 2;
@@ -268,7 +266,6 @@ temp1 = [Imperative]
 	}
   }
  } 
- return temp1;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp1", 1);
@@ -278,9 +275,9 @@ temp1 = [Imperative]
         [Category("SmokeTest")]
         public void T07_ScopeVariableInBlocks()
         {
-            string src = @"
-
-i = [Imperative]
+            string src = @"temp;
+a;
+[Imperative]
 {
 	a = 4;
 	b = a*2;
@@ -295,22 +292,24 @@ i = [Imperative]
 		}
     }
 	a = temp;
-    return [temp, a];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {2, 2});
+            thisTest.Verify("temp", 2);
+            thisTest.Verify("a", 2);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T08_NestedBlocks()
         {
-            string src = @"
-x = [Associative]
+            string src = @"a;
+b;
+temp;
+[Associative]
 {
 	a = 4;
-
-	temp = [Imperative]
+	
+	[Imperative]
 	{
 		i=10;
 		temp=1;
@@ -318,65 +317,65 @@ x = [Associative]
 		{
 		  temp=2;
 		}
-		return temp;
     }
 	b=2*a;
 	a=2;
-	return [a, b, temp];
-};";
+              
+}";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("x", new[] {2, 4, 2});
+            thisTest.Verify("a", 2);
+            thisTest.Verify("b", 4);
+            thisTest.Verify("temp", 2);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T09_NestedIfElseInsideWhileStatement()
         {
-            string src = @"
-temp = [Imperative]
+            string src = @"temp;
+[Imperative]
 {
-	i=0;
-	temp=0;
-	while(i<=5)
-	{ 
-		i=i+1;
-		if(i<=3)
-		{
-			temp=temp+1;
-		}		  
-		elseif(i==4)
-		{
-			temp = temp+1;
-			if(temp==i) 
+		i=0;
+		temp=0;
+		while(i<=5)
+		{ 
+			i=i+1;
+			if(i<=3)
 			{
 				temp=temp+1;
-			}			
-		}
-		else 
-		{
-			if (i==5)
-			{ temp=temp+1;
+			}		  
+			elseif(i==4)
+			{
+				temp = temp+1;
+				if(temp==i) 
+				{
+					temp=temp+1;
+				}			
+			}
+			else 
+			{
+				if (i==5)
+				{ temp=temp+1;
+				}
 			}
 		}
-	}
-    return temp;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp", 6);
+
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T10_TypeConversion()
         {
-            string src = @"
-temp = [Imperative]
+            string src = @"temp;
+[Imperative]
 {
     temp = 0;
     a=4.0;
     if(a==4)
         temp=1;
-    return temp;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp", 1);
@@ -386,12 +385,13 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T11_TestIfElseUsingFunctionCall()
         {
-            string src = @"
+            string src = @"a;
+b;
  def add : double (a :double, b:double)
  {
      return  = a + b;
  }
-i = [Imperative]
+[Imperative]
 {
  a=4.0;
  b = 4.0;
@@ -412,10 +412,11 @@ i = [Imperative]
  {
      b = 0;
  }
- return [a,b];
+ 
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {0, 1});
+            thisTest.Verify("a", 0);
+            thisTest.Verify("b", 1);
         }
 
         [Test]
@@ -425,8 +426,11 @@ i = [Imperative]
         {
             string src = @"
 			import(""FFITarget.dll"");
-			
-	i = [Imperative]
+			x;
+y;
+	
+    
+	[Imperative]
 	{
 	    a1 = ClassFunctionality.ClassFunctionality(2);
         b1 = a1.intVal; 
@@ -449,20 +453,20 @@ i = [Imperative]
 		{
 			y = 0;
 		}
-        return [x, y];
 	}
                               
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 0});
+            thisTest.Verify("x", 1);
+            thisTest.Verify("y", 0);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T13_IfElseIf()
         {
-            string src = @"
-temp1 = [Imperative]
+            string src = @"temp1;
+[Imperative]
 {
  a1 = -7.5;
  
@@ -477,7 +481,7 @@ temp1 = [Imperative]
  {
  temp1 = temp1 + 2;
  }
- return temp1;
+ 
   
  }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -488,8 +492,8 @@ temp1 = [Imperative]
         [Category("SmokeTest")]
         public void T14_IfElseStatementExpressions()
         {
-            string src = @"
-temp1 = [Imperative]
+            string src = @"temp1;
+[Imperative]
 {
  a=1;
  b=2;
@@ -501,7 +505,7 @@ temp1 = [Imperative]
  elseif ((a*b)==2)
  { temp1=2;
  }
- return temp1;
+ 
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp1", 2);
@@ -512,18 +516,19 @@ temp1 = [Imperative]
         [Category("SmokeTest")]
         public void T15_TestEmptyIfStmt()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+[Imperative]
 {
  a = 0;
  b = 1;
  if(a == b);
  else a = 1;
- return [a,b];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
 
-            thisTest.Verify("i", new[] {1, 1});
+            thisTest.Verify("a", 1);
+            thisTest.Verify("b", 1);
 
         }
 
@@ -531,8 +536,9 @@ i = [Imperative]
         [Category("SmokeTest")]
         public void T16_TestIfConditionWithNegation_Negative()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+[Imperative]
 {
     a = 3;
     b = -3;
@@ -540,20 +546,21 @@ i = [Imperative]
 	{
 	    a = 4;
 	}
-	return [a, b];
+	
 }
  
  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {3, -3});
+            thisTest.Verify("a", 3);
+            thisTest.Verify("b", -3);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T17_WhileInsideElse()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"i;
+[Imperative]
 {
 	i=1;
 	a=3;
@@ -572,7 +579,6 @@ i = [Imperative]
 				i=i+1;
 		 }
 	}
-    return i;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("i", 5);
@@ -583,8 +589,8 @@ i = [Imperative]
         [Category("SmokeTest")]
         public void T18_WhileInsideIf()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"i;
+[Imperative]
 {
 	i=1;
 	a=3;
@@ -599,7 +605,6 @@ i = [Imperative]
 				i=i+1;
 		 }
 	}
-    return i;
 }
  
  ";
@@ -611,8 +616,11 @@ i = [Imperative]
         [Category("SmokeTest")]
         public void T19_BasicIfElseTestingWithNumbers()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+c;
+d;
+[Imperative]
 {
     a = 0;
     b = 0;
@@ -658,20 +666,28 @@ i = [Imperative]
 	{
 		d = 4;
 	}
-	return [a, b, c, d];
+		
 } 
  
  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 2, 3, 4});
+            thisTest.Verify("a", 1);
+            thisTest.Verify("b", 2);
+            thisTest.Verify("c", 3);
+            thisTest.Verify("d", 4);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T20_BasicIfElseTestingWithNumbers()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+c;
+d;
+e;
+f;
+[Imperative]
 {
     a = 0;
     b = 0;
@@ -733,22 +749,27 @@ i = [Imperative]
 	{
 		f = 6;
 	}
-	return [a, b, c, d, e, f];
+		
 } 
  
  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] { 1, 1, 3, 4, 5, 6 });
+            thisTest.Verify("a", 1);
+            thisTest.Verify("b", 1);
+            thisTest.Verify("c", 3);
+            thisTest.Verify("d", 4);
+            thisTest.Verify("e", 5);
+            thisTest.Verify("f", 6);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T21_IfElseWithArray_negative()
         {
-            string src = @"
-c = [Imperative]
+            string src = @"c;
+[Imperative]
 {
-    a = [ 0, 4, 2, 3 ];
+    a = { 0, 4, 2, 3 };
 	b = 1;
     c = 0;
 	if(a > b)
@@ -759,7 +780,6 @@ c = [Imperative]
 	{
 		c = 1;
 	}
-    return c;
 } 
  
  ";
@@ -771,10 +791,10 @@ c = [Imperative]
         [Category("SmokeTest")]
         public void T22_IfElseWithArrayElements()
         {
-            string src = @"c = 
+            string src = @"c;
 [Imperative]
 {
-    a = [ 0, 4, 2, 3 ];
+    a = { 0, 4, 2, 3 };
 	b = 1;
     c = 0;
 	if(a[0] > b)
@@ -785,7 +805,6 @@ c = [Imperative]
 	{
 		c = 1;
 	}
-    return c;
 } 
  
  ";
@@ -857,8 +876,8 @@ c = [Imperative]
         [Category("SmokeTest")]
         public void T26_IfElseWithNegatedCondition()
         {
-            string src = @"
-c = [Imperative]
+            string src = @"c;
+[Imperative]
 {
     a = 1;
 	b = 1;
@@ -871,7 +890,7 @@ c = [Imperative]
 	{
 		c = 2;
 	}
-	return c;
+		
 } 
  
  ";
@@ -1060,8 +1079,8 @@ c = [Imperative]
         [Category("SmokeTest")]
         public void T35_IfElseWithEmptyBody()
         {
-            string src = @"
-c = [Imperative]
+            string src = @"c;
+[Imperative]
 {
     c = 0;
     if(0)
@@ -1070,7 +1089,9 @@ c = [Imperative]
 	}
 	elseif (1) { c = 2; }
 	else { }
-	return c;
+	
+	
+		
 } 
  
  ";
@@ -1082,20 +1103,19 @@ c = [Imperative]
         [Category("SmokeTest")]
         public void T36_IfElseInsideFunctionScope()
         {
-            string src = @"
+            string src = @"temp;
  def crushcode:int (a:int, b:int)
  {
-    return [Imperative]
-    {
-        if(a<=b)
-            return = a+b;  
-        else 
-            return = 0;           
-    }
+return = [Imperative]{
+  if(a<=b)
+      return = a+b;  
+  else 
+     return = 0;           
+}
  }     
-temp = [Imperative]
+[Imperative]
 { 
- return crushcode(2,3);  
+ temp=crushcode(2,3);  
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             //defect 1451089
@@ -1106,8 +1126,10 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T37_Defect_1450920()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+c;
+[Imperative]
 {
     a = 0;
     b = 0;
@@ -1138,41 +1160,42 @@ i = [Imperative]
 	else
 	{
 		c =  3;
-	}	
-    return [a, b, c];	
+	}		
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 2, 3});
+            thisTest.Verify("a", 1);
+            thisTest.Verify("b", 2);
+            thisTest.Verify("c", 3);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T38_Defect_1450939()
         {
-            string src = @"
+            string src = @"c;
+d;
    	def test:int( a:int, b:int )
 	{
-        return [Imperative]
-        {
-		    c = 0;
-	        if( !(a == b) ) 
-		    {
-			    c = 0;
-		    }
-		    elseif ( !(a==b) )
-		    {
-			    c = 1;
-		    }
-		    else
-		    {
-			    c = 2;
-		    }
+    return = [Imperative]{
+		c = 0;
+	    if( !(a == b) ) 
+		{
+			c = 0;
+		}
+		elseif ( !(a==b) )
+		{
+			c = 1;
+		}
+		else
+		{
+			c = 2;
+		}
 		
-		    return c;
-        }
+		return = c;
+    }
     }
 	
-i = [Imperative]
+[Imperative]
 {
 	a = 1;
 	b = 1;
@@ -1200,19 +1223,23 @@ i = [Imperative]
 	{
 		c = 2;
 	}
-	return [c, d];
+		
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {2, 2});
+            thisTest.Verify("c", 2);
+            thisTest.Verify("d", 2);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T39_Defect_1450920_2()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+c;
+d;
+[Imperative]
 {
 a=0;
 b=0;
@@ -1249,18 +1276,21 @@ d=0;
 	{
 		c =  3;
 	}		
-    return [a, b, c, d];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 2, 3, 4});
+            thisTest.Verify("a", 1);
+            thisTest.Verify("b", 2);
+            thisTest.Verify("c", 3);
+            thisTest.Verify("d", 4);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T40_Defect_1450843()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"b2;
+b3;
+[Imperative]
 {
  a = null;
  b1 = 0;
@@ -1277,19 +1307,20 @@ i = [Imperative]
  if(a==1); 
  elseif(a ==3);
  else b3 = 2;
- return [b2, b3];
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {2, 2});
+            thisTest.Verify("b2", 2);
+            thisTest.Verify("b3", 2);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T41_Defect_1450778()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"c;
+d;
+[Imperative]
 {
  a=1;
  b=2;
@@ -1305,19 +1336,20 @@ i = [Imperative]
  {
      d = 1;
  }
- return [c, d];
+ 
  }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 1});
+            thisTest.Verify("c", 1);
+            thisTest.Verify("d", 1);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T42_Defect_1449707()
         {
-            string src = @"
-c = [Imperative]
+            string src = @"c;
+[Imperative]
 {
  a = 1;
  b = 1;
@@ -1330,7 +1362,6 @@ c = [Imperative]
  
  else
 	c = 4;
- return c;
 } ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("c", 4);
@@ -1340,8 +1371,9 @@ c = [Imperative]
         [Category("SmokeTest")]
         public void T43_Defect_1450706()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"temp1;
+temp2;
+[Imperative]
 {
  a1 = 7.3;
  a2 = -6.5 ;
@@ -1354,30 +1386,29 @@ i = [Imperative]
  
  if( a2 >= -9.5 )
 	temp2 = temp2 + 2;
- return [temp1, temp2];
  }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {12, 12});
+            thisTest.Verify("temp1", 12);
+            thisTest.Verify("temp2", 12);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T44_Defect_1450706_2()
         {
-            string src = @"
+            string src = @"x;
 	def float_fn:int(a:int)
 	{
-        return [Imperative]
-        {
-		    if( a < 2 )
-			    return 0;
-		    else
-			    return 1;
-        }
+return = [Imperative]{
+		if( a < 2 )
+			return = 0;
+		else
+			return = 1;
+}
 	}
-x = [Imperative]
+[Imperative]
 {
-	return float_fn(1);
+	x = float_fn(1);
  
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1388,8 +1419,8 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T45_Defect_1450506()
         {
-            string src = @"
-temp = [Imperative]
+            string src = @"temp;
+[Imperative]
 {
     i1 = 2;
     i2 = 3;
@@ -1407,7 +1438,6 @@ temp = [Imperative]
 	{
 	temp = temp + 1;
     }
-    return temp;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp", 4);
@@ -1417,8 +1447,10 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T46_TestIfWithNull()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+b;
+c;
+[Imperative]
 {
     a = null;
     c = null;
@@ -1435,19 +1467,21 @@ i = [Imperative]
 	{
 		a = 2;	
 	}	
-	return [a, c, b];
+	
 	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new object[] {2, 1, null});
+            thisTest.Verify("a", 2);
+            thisTest.Verify("c", 1);
+            thisTest.Verify("b", null);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T47_Defect_1450858()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"i;
+[Imperative]
 {	
 	i = 1;
 	a = 3;
@@ -1461,7 +1495,6 @@ i = [Imperative]
 		i = i + 1;
 		}
 	}
-    return i;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1472,29 +1505,28 @@ i = [Imperative]
         [Category("SmokeTest")]
         public void T48_Defect_1450858_2()
         {
-            string src = @"
+            string src = @"test;
 	def factorial:int(a:int)
 	{
-        return [Imperative]
-        {
-		     fact = 1;
+return = [Imperative]{
+		 fact = 1;
 		 
-		     if( a != 0)
-		     {
-			     while( a > 0 )
-			     { 
-				    fact = fact * a;
-				    a = a - 1;
-			     }
-		    }	 
+		 if( a != 0)
+		 {
+			 while( a > 0 )
+			 { 
+				fact = fact * a;
+				a = a - 1;
+			 }
+		}	 
 		
-		    return fact;
-        }
+		return = fact;
+}
 	}
 	
-test = [Imperative]
+[Imperative]
 {	
-	return factorial(4);
+	test = factorial(4);
 }	";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("test", 24);
@@ -1525,21 +1557,20 @@ test = [Imperative]
         [Category("SmokeTest")]
         public void T50_Defect_1450817()
         {
-            string src = @"
+            string src = @"temp;
 	def fn:int(a:int)
 	{
-        return [Imperative]
-        {
-		    if( a < 0 )
-		        if( a < -1 )
-		            return = 0;
-		        else
-		            return = -1;
+return = [Imperative]{
+		if( a < 0 )
+		if( a < -1 )
+		return = 0;
+		else
+		return = -1;
 		
-		    return 1;
-        }
+		return = 1;
+}
 	}
-temp = [Imperative]
+[Imperative]
 { 
 	x = fn(-1);
 	
@@ -1549,7 +1580,6 @@ temp = [Imperative]
 	{
 		temp = fn(5);
 	}
-    return temp;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("temp", 1);
@@ -1559,8 +1589,8 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T51_Defect_1452588()
         {
-            string src = @"
-a = [Imperative]
+            string src = @"a;
+[Imperative]
 {
     a = 0;
     
@@ -1569,7 +1599,6 @@ a = [Imperative]
 	    b = 2;
     }
     c = a;
-    return a;
 } 
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1581,15 +1610,14 @@ a = [Imperative]
         [Category("SmokeTest")]
         public void T52_Defect_1452588_2()
         {
-            string src = @"
-g1 = [Associative]
+            string src = @"g1;
+[Associative]
 { 
 	[Imperative]
 	{
-        g2 = g1;	
+            g2 = g1;	
 	}	
-	g1 = 3; 
-    return g1;     
+	g1 = 3;      
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1600,20 +1628,19 @@ g1 = [Associative]
         [Category("SmokeTest")]
         public void T53_Defect_1452575()
         {
-            string src = @"
+            string src = @"x;
 	def float_fn:int(a:double)
 	{
-        return [Imperative]
-        {
-		    if( a < 2.0 )
-			    return 0;
-		    else
-			    return 1;
-        }
+    return = [Imperative]{
+		if( a < 2.0 )
+			return = 0;
+		else
+			return = 1;
+    }
 	}
-x = [Imperative]
+[Imperative]
 { 
-	return float_fn(-1.5);
+	x = float_fn(-1.5);
      
 }
 ";
@@ -1625,20 +1652,19 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T54_Defect_1451089()
         {
-            string src = @"
+            string src = @"temp;
  def foo:double (a:int, b:int, c : double)
  {
-    return = [Imperative]
-    {
-      if(a<=b && b > c)
-          return = a+b+c;  
-      else 
-         return = 0;           
-    }
+return = [Imperative]{
+  if(a<=b && b > c)
+      return = a+b+c;  
+  else 
+     return = 0;           
+}
  }  
-temp = [Imperative]
+[Imperative]
 { 
- return foo(2,3,2.5);  
+ temp=foo(2,3,2.5);  
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1649,8 +1675,8 @@ temp = [Imperative]
         [Category("SmokeTest")]
         public void T55_Defect_1450506()
         {
-            string src = @"
-temp = [Imperative]
+            string src = @"temp;
+[Imperative]
 {
     i1 = 1.5;
     i2 = 3;
@@ -1660,7 +1686,7 @@ temp = [Imperative]
         temp = temp + 1;
 	    i2 = i2 - 1;
     }     
-    return temp;
+ 
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -1693,8 +1719,8 @@ def length:int  (pts : ClassFunctionality[])
 }
 pt1 = ClassFunctionality.ClassFunctionality( 0 );
 pt2 = ClassFunctionality.ClassFunctionality( 10 );
-pts1 = [pt1, pt2];
-pts2 = [pt1];
+pts1 = {pt1, pt2};
+pts2 = {pt1};
 numpts1 = length(pts1);
 numpts2 = length(pts2);
 ";
@@ -1707,27 +1733,30 @@ numpts2 = length(pts2);
         public void T57_Function_With_If_Else_But_No_Default_Return_Statement()
         {
             string code = @"
+x;
+y;
 	def even : int (a : int) 
 	{	
-        return [Imperative]
-        {
-		    if(( a % 2 ) > 0 )
-			    return = a + 1;
-		    else 
-			    return = a;
-        }
+    return = [Imperative]{
+		if(( a % 2 ) > 0 )
+			return = a + 1;
+		
+		else 
+			return = a;
+    }
 	}
-i = [Imperative]
+[Imperative]
 {
+
 	x = even(1);
 	y = even(2);
-    return [x, y];
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
 
             //Verification 
-            thisTest.Verify("i", new[] {2, 2});
+            thisTest.Verify("x", 2);
+            thisTest.Verify("y", 2);
         }
 
         [Test]
@@ -1735,9 +1764,12 @@ i = [Imperative]
         public void T58_Defect_1450932_comparing_collection_with_singleton_Imperative()
         {
             string code = @"
-i = [Imperative]
+c;
+d;
+f;
+[Imperative]
 {
-    a = [ 0, 1 ];
+    a = { 0, 1 };
 	b = 1;
 	c = -1;
 	if(a > b)
@@ -1748,16 +1780,18 @@ i = [Imperative]
 	{
 		c = 1;
 	}
-    d = a > b ? true : [ false, false];
+    d = a > b ? true : { false, false};
     f = a > b;
-	return [c, d, f];
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { false, false };
             Object v2 = null;
 
             //Verification 
-            thisTest.Verify("i", new object[] {1, v1, v2});
+            thisTest.Verify("c", 1);
+            thisTest.Verify("d", v1);
+            thisTest.Verify("f", v2);
         }
 
         [Test]
@@ -1768,9 +1802,9 @@ i = [Imperative]
 d2;
 [Associative]
 {
-    a2 = [ 0, 1 ];
+    a2 = { 0, 1 };
 	b2 = 1;
-	d2 = a2 > b2 ? true : [ false, false];
+	d2 = a2 > b2 ? true : { false, false};
     //f2 = a2 > b2;	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1788,7 +1822,7 @@ d2;
 f2;
 [Associative]
 {
-    a2 = [ 0, 1 ];
+    a2 = { 0, 1 };
     b2 = 1;	
     f2 = a2 > b2;	
 }";
@@ -1805,9 +1839,9 @@ f2;
             string src = @"f2;
 [Associative]
 {
-    a2 = [ 0, 1 ];
+    a2 = { 0, 1 };
     b2 = 1;
-    d2 = a2 > b2 ? true : [ false, false];
+    d2 = a2 > b2 ? true : { false, false};
     f2 = a2 > b2;	
 }";
             thisTest.VerifyRunScriptSource(src, err);
@@ -1820,9 +1854,10 @@ f2;
         public void T59_Defect_1453881()
         {
             string err = "1467248 - Sprint25 : rev 3452 : comparison with null should result to false in conditional statements";
-            string src = @"
+            string src = @"b;
+d;
 d2 = ( null == 0 ) ? 1 : 0; 
-i = [Imperative]
+[Imperative]
 {
 	a = false;
     b = 0.5;
@@ -1852,14 +1887,15 @@ i = [Imperative]
 	{
 	    b = b + 4;
 	}
-	return [b, d];
+	
 	
 }	
 ";
             thisTest.VerifyRunScriptSource(src, err);
 
             //Verification 
-            thisTest.Verify("i", new[] {5.5, 2});
+            thisTest.Verify("b", 5.5);
+            thisTest.Verify("d", 2);
             thisTest.Verify("d2", 0);
 
         }
@@ -1902,7 +1938,7 @@ def foo ()
 		{
 			b = b + 4;
 		}
-        return = [ b, d ];		
+        return = { b, d };		
 	}	
 	return = c;
 }
@@ -1961,20 +1997,20 @@ x1 = a1.IntVal == ClassFunctionality.ClassFunctionality(10).IntVal ? true : fals
         }
 
         [Test]
-        [Category("DSDefinedClass_Ported"), Category("Failure")]
+        [Category("DSDefinedClass_Ported")]
         public void T61_Accessing_non_existent_properties_of_array_elements()
         {
             // Assert.Fail("");
             string code = @"
 import (""FFITarget.dll"");
-c = [ ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) ];
-p = [];
+c = { ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) };
+p = {};
 d = [Imperative]
 {
     if(c[0].IntVal == 0 )
     {
         c[0] = 0;
-	    p[0] = 0;
+	p[0] = 0;
     }
     if(c[0].IntVal == 0 )
     {
@@ -1997,14 +2033,14 @@ t2 = c[1].IntVal;
         {
             string err = "1467170 Sprint 25 - Rev 3142 it must skip the else loop if the conditional cannot be evaluate to bool it must be skip both if and else";
             string src = @"
-A = [Imperative]
+A;
+[Imperative]
 {
     A = 1;
     if (0)       
  	   A = 2; 
     else 
 	  A= 3;
-    return A;
 }";
             thisTest.VerifyRunScriptSource(src, err);
             //Verification 
@@ -2016,21 +2052,20 @@ A = [Imperative]
         public void T63_return_in_if_1467073()
         {
             string err = "1467073 - sprint 23 rev 2651-328756 throws warning missing return statement ";
-            string src = @"
+            string src = @"c;
 def even : int (a : int)
-{ 
-    return = [Imperative]
-    {
-       if( ( a % 2 ) > 0 )
-            return = a + 1;
-       else 
-               return = a;
-    }
+ { 
+return = [Imperative]{
+   if( ( a % 2 ) > 0 )
+        return = a + 1;
+   else 
+           return = a;
 }
-c = [Imperative]
+}
+[Imperative]
 {
-    return even(1);
-}
+c = even(1);
+ }
 ";
             thisTest.VerifyRunScriptSource(src, err);
             thisTest.Verify("c", 2);
@@ -2140,21 +2175,24 @@ if(a)
         {
             String code =
 @"
-
+n;
 def foo(x:bool)
 {
-    return ""true"";
+    return = ""true"";
 }
-i = [Imperative]
+r = 
+[Imperative]
 {
-    a = A.A();
-    b:bool = A.A();
-    m = b;
-    return [foo(b), foo(a)];
+a = A.A();
+b:bool = A.A();
+m = b;
+n = foo(a);
+return = foo(b);
 }
 ";
             thisTest.RunScriptSource(code);
-            thisTest.Verify("i", new[] {"true", "true"});
+            thisTest.Verify("r", "true");
+            thisTest.Verify("n", "true");
         }
         //inline
 

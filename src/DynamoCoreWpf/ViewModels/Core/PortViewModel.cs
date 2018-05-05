@@ -220,13 +220,6 @@ namespace Dynamo.ViewModels
             _node.WorkspaceViewModel.PropertyChanged += Workspace_PropertyChanged;
         }
 
-        public override void Dispose()
-        {
-            _port.PropertyChanged -= _port_PropertyChanged;
-            _node.PropertyChanged -= _node_PropertyChanged;
-            _node.WorkspaceViewModel.PropertyChanged -= Workspace_PropertyChanged;
-        }
-
         private void Workspace_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -412,7 +405,5 @@ namespace Dynamo.ViewModels
         {
             ShowUseLevelMenu = false;
         }
-
-       
     }
 }

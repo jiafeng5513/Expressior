@@ -33,7 +33,6 @@ namespace Dynamo.Tests
             libraryCore.ParsingMode = ParseMode.AllowNonAssignment;
 
             var pathResolver = new TestPathResolver();
-            pathResolver.AddPreloadLibraryPath("DesignScriptBuiltin.dll");
             pathResolver.AddPreloadLibraryPath("DSCoreNodes.dll");
 
             var pathManager = new PathManager(new PathManagerParams
@@ -212,7 +211,7 @@ namespace Dynamo.Tests
 
             string xmlstring =@"<Dynamo.Nodes.DSFunction guid=""f05953f3-6ead-44f7-b872-1e0203c784cc""
             type=""Dynamo.Nodes.DSFunction"" nickname=""DateTime.Now"" x=""259.5"" y=""260.5"" 
-            isVisible=""true""  lacing=""Shortest""
+            isVisible=""true"" isUpstreamVisible=""true"" lacing=""Shortest""
             isSelectedInput=""False"" assembly=""DSCoreNodes.dll"" function=""DSCore.DateTime.Now"" />";
 
             XmlDocument doc = new XmlDocument();

@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <Grid Name="startPageGrid"
-          Background="White"
+          Background="#ADA7A7"
           AllowDrop="True"
           Drop="StartPage_OnDrop">
 
@@ -153,7 +153,7 @@
                     </ListBox>
 
                     <Grid Name="backupButtons"
-                          Background="White"
+                          Background="#ADA7A7"
                           HorizontalAlignment="Stretch">
 
                         <Grid.ColumnDefinitions>
@@ -246,7 +246,7 @@
                     </Border>
 
                     <TreeView x:Name="sampleFileTreeView"
-                              Background="#FFFFFF"
+                              Background="#ADA7A7"
                               Grid.Row="3"
                               Grid.ColumnSpan="2"
                               BorderThickness="0"

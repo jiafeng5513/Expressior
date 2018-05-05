@@ -10,8 +10,9 @@ namespace ProtoTest.TD.Imperative
         [Category("SmokeTest")]
         public void T01_WhileBreakContinue()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"x;
+y;
+[Imperative]
 {
     x = 0;
     y = 0;
@@ -26,19 +27,19 @@ i = [Imperative]
         
         y = y + 1;
     }
-    return [x, y];
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {11, 5});
+            thisTest.Verify("x", 11);
+            thisTest.Verify("y", 5);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T02_WhileBreakContinue()
         {
-            string src = @"
-sum = [Imperative]
+            string src = @"sum;
+[Imperative]
 {
     x = 0;
     sum = 0;
@@ -59,7 +60,6 @@ sum = [Imperative]
         sum = sum + y;
     }
     // sum == 40 
-    return sum;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -70,17 +70,16 @@ sum = [Imperative]
         [Category("SmokeTest")]
         public void T03_ForLoopBreakContinue()
         {
-            string src = @"
-sum = [Imperative]
+            string src = @"sum;
+[Imperative]
 {
     sum = 0;
-    for (x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+    for (x in {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13})
     {
         if (x >= 11)
             break;
         sum = sum + x;
     }
-    return sum;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -91,18 +90,17 @@ sum = [Imperative]
         [Category("SmokeTest")]
         public void T04_ForLoopBreakContinue()
         {
-            string src = @"
-sum = [Imperative]
+            string src = @"sum;
+[Imperative]
 {
     sum = 0;
-    for (x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    for (x in {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     {
         sum = sum + x;
         if (x <= 5)
             continue;
         sum = sum + 1;
     }
-    return sum;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -113,37 +111,40 @@ sum = [Imperative]
         [Category("SmokeTest")]
         public void T05_FunctionBreakContinue()
         {
-            string src = @"
+            string src = @"a;
+b;
+c;
+d;
     def ding:int(x:int)
     {
-        return [Imperative] 
-        {
-            if (x >= 5)
-                break;
-            return 2 * x;
-        }
+return = [Imperative] {
+        if (x >= 5)
+            break;
+        return = 2 * x;
+}
     }
     def dong:int(x: int)
     {
-        return [Imperative] 
-        {
-            if (x >= 5)
-                continue;
-            return 2 * x;
-        }
+return = [Imperative] {
+        if (x >= 5)
+            continue;
+        return = 2 * x;
+}
     }
-    i = [Imperative]
-    {
-        a = ding(1);
-        b = ding(6);
-        c = dong(2);
-        d = dong(7);
-        return [a, b, c, d];
-    }
+[Imperative]
+{
+    a = ding(1);
+    b = ding(6);
+    c = dong(2);
+    d = dong(7);
+}
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             TestFrameWork.VerifyBuildWarning(ProtoCore.BuildData.WarningID.FunctionAbnormalExit);
-            thisTest.Verify("i", new object[] {2, null, 4, null});
+            thisTest.Verify("a", 2);
+            thisTest.Verify("b", null);
+            thisTest.Verify("c", 4);
+            thisTest.Verify("d", null);
         }
     }
 }

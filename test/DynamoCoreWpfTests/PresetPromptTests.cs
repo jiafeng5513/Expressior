@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace DynamoCoreWpfTests
 {
-    [TestFixture,Ignore]
+    [TestFixture]
     public class PresetPromptTests
     {
         [Test]

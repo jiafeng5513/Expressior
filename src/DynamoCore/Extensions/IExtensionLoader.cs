@@ -19,10 +19,5 @@ namespace Dynamo.Extensions
         /// Extension method for loading assembly from a directory. Returns <see cref="IExtension"/>.
         /// </summary>
         IEnumerable<IExtension> LoadDirectory(string extensionsPath);
-
-        /// <summary>
-        /// An event that is raised when an extension starts loading.
-        /// </summary>
-        event Action<IExtension> ExtensionLoading;
     }
 }

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using CefSharp;
@@ -13,14 +12,12 @@ using Dynamo.Extensions;
 using Dynamo.LibraryUI.Handlers;
 using Dynamo.LibraryUI.ViewModels;
 using Dynamo.LibraryUI.Views;
-using Dynamo.Logging;
 using Dynamo.Models;
 using Dynamo.Search;
 using Dynamo.Search.SearchElements;
 using Dynamo.ViewModels;
 using Dynamo.Wpf.Interfaces;
 using Dynamo.Wpf.ViewModels;
-using Dynamo.Core;
 
 namespace Dynamo.LibraryUI
 {
@@ -88,10 +85,6 @@ namespace Dynamo.LibraryUI
         private FloatingLibraryTooltipPopup libraryViewTooltip;
         private ResourceHandlerFactory resourceFactory;
         private IDisposable observer;
-        private ChromiumWebBrowser browser;
-        private const string CreateNodeInstrumentationString = "Search-NodeAdded";
-        // TODO remove this when we can control the library state from Dynamo more precisely.
-        private bool disableObserver = false;
 
         /// <summary>
         /// Creates LibraryViewController
@@ -106,29 +99,6 @@ namespace Dynamo.LibraryUI
 
             this.commandExecutive = commandExecutive;
             InitializeResourceStreams(dynamoViewModel.Model, customization);
-            dynamoWindow.StateChanged += DynamoWindowStateChanged;
-            dynamoWindow.SizeChanged += DynamoWindow_SizeChanged;
-        }
-
-        //if the window is resized toggle visibility of browser to force redraw
-        private void DynamoWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            toggleBrowserVisibility(this.browser);
-        }
-
-        private void toggleBrowserVisibility(ChromiumWebBrowser browser)
-        {
-            if (browser != null)
-            {
-                browser.Visibility = Visibility.Hidden;
-                browser.Visibility = Visibility.Visible;
-            }
-        }
-
-        //if the dynamo window is minimized and then restored, force a layout update.
-        private void DynamoWindowStateChanged(object sender, EventArgs e)
-        {
-            toggleBrowserVisibility(this.browser);
         }
 
         /// <summary>
@@ -139,19 +109,9 @@ namespace Dynamo.LibraryUI
         {
             dynamoWindow.Dispatcher.BeginInvoke(new Action(() =>
             {
-                //if the node we're trying to create is a customNode, lets disable the eventObserver.
-                // this will stop the libraryController from refreshing the libraryView on custom node creation.
-                var resultGuid = Guid.Empty;
-                if (Guid.TryParse(nodeName, out resultGuid))
-                {
-                    this.disableObserver = true;
-                }
                 //Create the node of given item name
                 var cmd = new DynamoModel.CreateNodeCommand(Guid.NewGuid().ToString(), nodeName, -1, -1, true, false);
                 commandExecutive.ExecuteCommand(cmd, Guid.NewGuid().ToString(), ViewExtension.ExtensionName);
-                LogEventsToInstrumentation(CreateNodeInstrumentationString, nodeName);
-
-                this.disableObserver = false;
             }));
         }
 
@@ -163,18 +123,6 @@ namespace Dynamo.LibraryUI
             dynamoWindow.Dispatcher.BeginInvoke(new Action(() =>
                 dynamoViewModel.ImportLibraryCommand.Execute(null)
             ));
-        }
-        /// <summary>
-        /// This function logs events to instrumentation if it matches a set of known events
-        /// </summary>
-        /// <param name="eventName">Event Name that gets logged to instrumentation</param>
-        /// <param name="data"> Data that gets logged to instrumentation </param>
-        public void LogEventsToInstrumentation(string eventName, string data)
-        {
-            if (eventName == "Search" || eventName == "Filter-Categories" || eventName == "Search-NodeAdded")
-            {
-                Analytics.LogPiiInfo(eventName, data);
-            }
         }
 
         /// <summary>
@@ -188,38 +136,12 @@ namespace Dynamo.LibraryUI
             var view = new LibraryView(model);
 
             var browser = view.Browser;
-            this.browser = browser;
             sidebarGrid.Children.Add(view);
             browser.RegisterJsObject("controller", this);
-            //RegisterResources(browser);
+            RegisterResources(browser);
 
             view.Loaded += OnLibraryViewLoaded;
-            browser.SizeChanged += Browser_SizeChanged;
-            browser.LoadError += Browser_LoadError;
-            //wait for the browser to load before setting the resources
-            browser.LoadingStateChanged += (sender, args) =>
-            {
-                //Wait for the Page to finish loading
-                if (args.IsLoading == false)
-                {
-                    RegisterResources(browser);
-                }
-            };
-
             return view;
-        }
-
-        private void Browser_LoadError(object sender, LoadErrorEventArgs e)
-        {
-            System.Diagnostics.Trace.WriteLine("*****Chromium Browser Messages******");
-            System.Diagnostics.Trace.Write(e.ErrorText);
-            this.dynamoViewModel.Model.Logger.LogError(e.ErrorText);
-        }
-
-        //if the browser window itself is resized, toggle visibility to force redraw.
-        private void Browser_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            toggleBrowserVisibility(this.browser);
         }
 
         #region Tooltip
@@ -252,13 +174,8 @@ namespace Dynamo.LibraryUI
         {
             var sidebarGrid = dynamoWindow.FindName("sidebarGrid") as Grid;
 
-            var tooltipPopup = new FloatingLibraryTooltipPopup(200)
-            {
-                Name = "libraryToolTipPopup",
-                StaysOpen = true,
-                AllowsTransparency = true,
-                PlacementTarget = sidebarGrid
-            };
+            var tooltipPopup = new FloatingLibraryTooltipPopup(200){ Name = "libraryToolTipPopup",
+                                    StaysOpen = true, AllowsTransparency = true, PlacementTarget = sidebarGrid };
             sidebarGrid.Children.Add(tooltipPopup);
 
             return tooltipPopup;
@@ -272,7 +189,7 @@ namespace Dynamo.LibraryUI
         private void ShowTooltip(String nodeName, double y)
         {
             var nseViewModel = FindTooltipContext(nodeName);
-            if (nseViewModel == null)
+            if(nseViewModel == null)
             {
                 return;
             }
@@ -312,35 +229,25 @@ namespace Dynamo.LibraryUI
 
         internal static IDisposable SetupSearchModelEventsObserver(NodeSearchModel model, IEventController controller, ILibraryViewCustomization customization, int throttleTime = 200)
         {
-            customization.SpecificationUpdated += (o, e) => controller.RaiseEvent("libraryDataUpdated");
+            customization.SpecificationUpdated += (o,e) => controller.RaiseEvent("libraryDataUpdated");
 
             var observer = new EventObserver<NodeSearchElement, IEnumerable<NodeSearchElement>>(
                     elements => NotifySearchModelUpdate(customization, elements), CollectToList
                 ).Throttle(TimeSpan.FromMilliseconds(throttleTime));
 
-            Action<NodeSearchElement> handler = (searchElement) =>
-             {
-                 var libraryViewController = (controller as LibraryViewController);
-                 if ((libraryViewController != null) && (libraryViewController.disableObserver))
-                 {
-                     return;
-                 }
-
-                 observer.OnEvent(searchElement);
-             };
-            Action<NodeSearchElement> onRemove = e => handler(null);
+            Action<NodeSearchElement> onRemove = e => observer.OnEvent(null);
 
             //Set up the event callback
-            model.EntryAdded += handler;
+            model.EntryAdded += observer.OnEvent;
             model.EntryRemoved += onRemove;
-            model.EntryUpdated += handler;
+            model.EntryUpdated += observer.OnEvent;
 
             //Set up the dispose event handler
             observer.Disposed += () =>
             {
-                model.EntryAdded -= handler;
+                model.EntryAdded -= observer.OnEvent;
                 model.EntryRemoved -= onRemove;
-                model.EntryUpdated -= handler;
+                model.EntryUpdated -= observer.OnEvent;
             };
 
             return observer;
@@ -368,26 +275,19 @@ namespace Dynamo.LibraryUI
         /// <param name="elements">List of updated elements</param>
         private static void NotifySearchModelUpdate(ILibraryViewCustomization customization, IEnumerable<NodeSearchElement> elements)
         {
-            //elements might be null if we have removed an element.
-            if (elements != null)
-            {
-                var includes = elements
-               .Select(NodeItemDataProvider.GetFullyQualifiedName)
-               .Select(name => name.Split('.').First())
-               .Distinct()
-               .SkipWhile(s => s.Contains("://"))
-               .Select(p => new LayoutIncludeInfo() { path = p });
+            var includes = elements
+                .Select(NodeItemDataProvider.GetFullyQualifiedName)
+                .Select(name => name.Split('.').First())
+                .Distinct()
+                .SkipWhile(s => s.Contains("://"))
+                .Select(p => new LayoutIncludeInfo() { path = p });
 
-                customization.AddIncludeInfo(includes, "Add-ons");
-
-            }
+            customization.AddIncludeInfo(includes, "Add-ons");
         }
 
         private void InitializeResourceStreams(DynamoModel model, LibraryViewCustomization customization)
         {
-            //TODO: Remove the parameter after testing.
-            //For testing purpose.
-            resourceFactory = new ResourceHandlerFactory(model.Logger);
+            resourceFactory = new ResourceHandlerFactory();
 
             //Register the resource stream registered through the LibraryViewCustomization
             foreach (var item in customization.Resources)
@@ -398,7 +298,7 @@ namespace Dynamo.LibraryUI
             //Setup the event handler for resource registration
             customization.ResourceStreamRegistered += OnResourceStreamRegistered;
 
-            resourceFactory.RegisterProvider("/dist",
+            resourceFactory.RegisterProvider("/dist", 
                 new DllResourceProvider("http://localhost/dist",
                     "Dynamo.LibraryUI.web.library"));
 
@@ -459,19 +359,6 @@ namespace Dynamo.LibraryUI
 
             if (observer != null) observer.Dispose();
             observer = null;
-            if (this.dynamoWindow != null)
-            {
-                dynamoWindow.StateChanged -= DynamoWindowStateChanged;
-                dynamoWindow.SizeChanged -= DynamoWindow_SizeChanged;
-                dynamoWindow = null;
-            }
-            if (this.browser != null)
-            {
-                browser.SizeChanged -= Browser_SizeChanged;
-                browser.LoadError -= Browser_LoadError;
-                browser.Dispose();
-                browser = null;
-            }
         }
     }
 }

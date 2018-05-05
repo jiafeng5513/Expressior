@@ -24,7 +24,7 @@ namespace DSCoreNodesTests
                 Path.Combine(moduleRootFolder, "nodes")
             };
 
-            assemblyHelper = new AssemblyHelper(moduleRootFolder, resolutionPaths,true);
+            assemblyHelper = new AssemblyHelper(moduleRootFolder, resolutionPaths);
             AppDomain.CurrentDomain.AssemblyResolve += assemblyHelper.ResolveAssembly;
         }
 

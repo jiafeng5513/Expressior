@@ -8,7 +8,6 @@ using Dynamo.Selection;
 using NUnit.Framework;
 using System.Collections;
 using CoreNodeModels;
-using DesignScript.Builtin;
 using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Dynamo.Graph.Nodes.CustomNodes;
@@ -25,7 +24,6 @@ namespace Dynamo.Tests
         {
             libraries.Add("VMDataBridge.dll");
             libraries.Add("ProtoGeometry.dll");
-            libraries.Add("DesignScriptBuiltin.dll");
             libraries.Add("DSCoreNodes.dll");
             libraries.Add("FunctionObject.ds");
             libraries.Add("BuiltIn.ds");
@@ -573,8 +571,18 @@ namespace Dynamo.Tests
 
             var splitListVal = CurrentDynamoModel.CurrentWorkspace.FirstNodeFromWorkspace<Function>().CachedValue;
 
-            var val = Dictionary.ByKeysValues(new[] {"item", "rest"}, new object[] {0, new object[] {}});
-            AssertValue(splitListVal, val);
+            Assert.IsTrue(splitListVal.IsCollection);
+
+            var outs = splitListVal.GetElements().ToList();
+
+            Assert.AreEqual(2, outs.Count);
+
+            var out1 = outs[0];
+            Assert.AreEqual(0, out1.Data);
+
+            var out2 = outs[1];
+            Assert.IsTrue(out2.IsCollection);
+            Assert.IsFalse(out2.GetElements().Any());
         }
 
         [Test]
@@ -757,73 +765,20 @@ namespace Dynamo.Tests
 
             // check first input defaults
             string concreteType = (string)jObject.SelectToken("Nodes[1].ConcreteType");
-            string name = (string)jObject.SelectToken("Nodes[1].Parameter.Name");
-            string typeName = (string)jObject.SelectToken("Nodes[1].Parameter.TypeName");
-            int typeRank = (int)jObject.SelectToken("Nodes[1].Parameter.TypeRank");
+            string inputSymbol = (string)jObject.SelectToken("Nodes[1].InputSymbol");
             string defaultValue = (string)jObject.SelectToken("Nodes[1].Parameter.DefaultValue");
 
-            string type = cws.Nodes.Where(node => node.GUID.ToString("N") == "4b3ef2466ef649ea95db607b1f083d0c").ToArray().First().GetType().ToString();
-            Assert.IsTrue(concreteType.Contains(type));
-            Assert.IsTrue(name == "center");
-            Assert.IsTrue(typeName == "Autodesk.DesignScript.Geometry.Point");
-            Assert.IsTrue(typeRank == 0);
+            Assert.IsTrue(concreteType == "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore");
+            Assert.IsTrue(inputSymbol == "center: Point = Point.ByCoordinates(10,10,10);");
             Assert.IsTrue(defaultValue == "Autodesk.DesignScript.Geometry.Point.ByCoordinates(10, 10, 10)");
 
             // check second input defaults
-            type = cws.Nodes.Where(node => node.GUID.ToString("N") == "e2efe8b186cd477995f6fb4cf28038a5").ToArray().First().GetType().ToString();
             concreteType = (string)jObject.SelectToken("Nodes[2].ConcreteType");
-            name = (string)jObject.SelectToken("Nodes[2].Parameter.Name");
-            typeName = (string)jObject.SelectToken("Nodes[2].Parameter.TypeName");
-            typeRank = (int)jObject.SelectToken("Nodes[2].Parameter.TypeRank");
+            inputSymbol = (string)jObject.SelectToken("Nodes[2].InputSymbol");
             defaultValue = (string)jObject.SelectToken("Nodes[2].Parameter.DefaultValue");
 
-            Assert.IsTrue(concreteType.Contains(type));
-            Assert.IsTrue(name == "radius");
-            Assert.IsTrue(typeName == "double");
-            Assert.IsTrue(typeRank == 0);
-            Assert.IsTrue(defaultValue == "5.5");
-        }
-
-        [Test]
-        public void TestCustomNodeDefaultValueOpenedinJson()
-        {
-            // load json dyf test file
-            var dynFilePath = Path.Combine(TestDirectory, @"core\CustomNodes\CNDefault_json.dyf");
-            OpenModel(dynFilePath);
-
-            // get custom node ws as json
-            var cws = CurrentDynamoModel.Workspaces.FirstOrDefault(ws => ws is CustomNodeWorkspaceModel);
-            Assert.NotNull(cws);
-            var customNodeWorkspace = (CustomNodeWorkspaceModel)cws;
-            var json = customNodeWorkspace.ToJson(CurrentDynamoModel.EngineController);
-            var jObject = JObject.Parse(json);
-
-            // check first input defaults
-            string concreteType = (string)jObject.SelectToken("Nodes[1].ConcreteType");
-            string name = (string)jObject.SelectToken("Nodes[1].Parameter.Name");
-            string typeName = (string)jObject.SelectToken("Nodes[1].Parameter.TypeName");
-            int typeRank = (int)jObject.SelectToken("Nodes[1].Parameter.TypeRank");
-            string defaultValue = (string)jObject.SelectToken("Nodes[1].Parameter.DefaultValue");
-
-            string type = cws.Nodes.Where(node => node.GUID.ToString("N") == "4b3ef2466ef649ea95db607b1f083d0c").ToArray().First().GetType().ToString();
-            Assert.IsTrue(concreteType.Contains(type));
-            Assert.IsTrue(name == "center");
-            Assert.IsTrue(typeName == "Autodesk.DesignScript.Geometry.Point");
-            Assert.IsTrue(typeRank == 0);
-            Assert.IsTrue(defaultValue == "Autodesk.DesignScript.Geometry.Point.ByCoordinates(10, 10, 10)");
-
-            // check second input defaults
-            type = cws.Nodes.Where(node => node.GUID.ToString("N") == "e2efe8b186cd477995f6fb4cf28038a5").ToArray().First().GetType().ToString();
-            concreteType = (string)jObject.SelectToken("Nodes[2].ConcreteType");
-            name = (string)jObject.SelectToken("Nodes[2].Parameter.Name");
-            typeName = (string)jObject.SelectToken("Nodes[2].Parameter.TypeName");
-            typeRank = (int)jObject.SelectToken("Nodes[2].Parameter.TypeRank");
-            defaultValue = (string)jObject.SelectToken("Nodes[2].Parameter.DefaultValue");
-
-            Assert.IsTrue(concreteType.Contains(type));
-            Assert.IsTrue(name == "radius");
-            Assert.IsTrue(typeName == "double");
-            Assert.IsTrue(typeRank == 0);
+            Assert.IsTrue(concreteType == "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore");
+            Assert.IsTrue(inputSymbol == "radius: double = 5.5;");
             Assert.IsTrue(defaultValue == "5.5");
         }
 
@@ -1035,7 +990,7 @@ namespace Dynamo.Tests
             Assert.AreEqual("x2:var\n\nvar", customInstance.InPorts[2].ToolTip);
 
             Assert.AreEqual("x3", customInstance.InPorts[3].Name);
-            Assert.AreEqual("x3:var\n\nvar[]\nDefault value : [1]", customInstance.InPorts[3].ToolTip);
+            Assert.AreEqual("x3:var\n\nvar[]\nDefault value : {1}", customInstance.InPorts[3].ToolTip);
 
             Assert.AreEqual("x4", customInstance.InPorts[4].Name);
             Assert.AreEqual("comment1\ncomment2\ncomment3\n\nvar[]..[]", customInstance.InPorts[4].ToolTip);
@@ -1077,47 +1032,6 @@ namespace Dynamo.Tests
 
             var previewValue = GetPreviewValue(customInstance.GUID.ToString());
             Assert.AreEqual(21, previewValue);
-        }
-
-        [Test]
-        public void Regress3786_InputNodesDeserilization()
-        {
-            var filePath = Path.Combine(TestDirectory, @"core\CustomNodes\QNTM3786_InputNodes.dyf");
-            OpenModel(filePath);
-            var node = CurrentDynamoModel.CurrentWorkspace.Nodes.FirstOrDefault(x => x is Symbol) as Symbol;
-            Assert.IsNotNull(node);
-            Assert.AreEqual("var1: Autodesk.DesignScript.Geometry.Point", node.Parameter.ToNameString());
-        }
-
-        [Test]
-        public void Regress3872_InputNodesDeserilization()
-        {
-            var filePath = Path.Combine(TestDirectory, @"core\CustomNodes\QNTM3872_InputNodesUnknownTypes.dyf");
-            OpenModel(filePath);
-            var customNodeWs = CurrentDynamoModel.CurrentWorkspace as CustomNodeWorkspaceModel;
-            Assert.IsNotNull(customNodeWs);
-            Assert.AreEqual("Clockwork.Core.DateTime.Actions", customNodeWs.CustomNodeInfo.Category);
-            var node1 = CurrentDynamoModel.CurrentWorkspace.NodeFromWorkspace("ccf64b20-2625-4c98-a556-da8de12e81a4") as Symbol;
-            Assert.IsNotNull(node1);
-            Assert.AreEqual("var1: System.DateTime", node1.Parameter.ToNameString());
-            var node2 = CurrentDynamoModel.CurrentWorkspace.NodeFromWorkspace("6653114d-f6c0-4a90-af9a-848c142f0b9b") as Symbol;
-            Assert.IsNotNull(node2);
-            Assert.AreEqual("var2: xxx.yyy", node2.Parameter.ToNameString());
-        }
-
-        [Test]
-        public void Regress3872_XMLInputNodesDeserilization()
-        {
-            var filePath = Path.Combine(TestDirectory, @"core\custom_node_serialization\GraphFunction.dyf");
-            OpenModel(filePath);
-            var customNodeWs = CurrentDynamoModel.CurrentWorkspace as CustomNodeWorkspaceModel;
-            Assert.IsNotNull(customNodeWs);
-            var node1 = CurrentDynamoModel.CurrentWorkspace.NodeFromWorkspace("e058111a-0c58-4dbf-9293-6ab711f530bf") as Symbol;
-            Assert.IsNotNull(node1);
-            Assert.AreEqual("x-start: var[]..[]", node1.Parameter.ToNameString());
-            var node2 = CurrentDynamoModel.CurrentWorkspace.NodeFromWorkspace("2601b801-c8af-413b-9c58-f8b100d62ed8") as Symbol;
-            Assert.IsNotNull(node2);
-            Assert.AreEqual("x-step: var[]..[]", node2.Parameter.ToNameString());
         }
     }
 }

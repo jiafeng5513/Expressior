@@ -16,10 +16,10 @@ namespace Dynamo.Tests
             base.GetLibrariesToPreload(libraries);
         }
 
-        [Test, Category("Failure")]
+        [Test]
         public void TestSingleOutputNode()
         {
-            // TODO pratapa: Test goes into infinite loop after Dictionary changes
+            // Regress test for defect MAGN-9009
             RunModel(@"core\multiout\singleoutput.dyn");
             AssertPreviewValue("060e57e1-b889-4b94-a440-8adb0067ae79", null);
 

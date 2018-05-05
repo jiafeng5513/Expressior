@@ -154,7 +154,16 @@ namespace Dynamo.Updates
         /// </summary>
         /// <param name="id">int</param>
         void RegisterExternalApplicationProcessId(int id);
+    }
 
+    /// <summary>
+    /// HostUpdateManager to keep track of the latest host version (i.e. DynamoRevit/DynamoStudio)
+    /// This additional Interface is created to ensure backward compatibility when Host versions are older than Core versions
+    /// This Interface contains two getter/setter methods to update the Host Version and Name
+    /// This Interface should be removed and merged with UpdateManager in 2.0
+    /// </summary>
+    public interface IHostUpdateManager
+    {
         /// <summary>
         /// Get the current version of the Host
         /// </summary>
@@ -252,7 +261,7 @@ namespace Dynamo.Updates
         /// </summary>
         string Data { get; set; }
 
-        /// <summary>
+        // <summary>
         /// Any error information returned from the request.
         /// </summary>
         string Error { get; set; }
@@ -554,7 +563,7 @@ namespace Dynamo.Updates
     /// <summary>
     /// This class provides services for product update management.
     /// </summary>
-    internal sealed class UpdateManager : NotificationObject, IUpdateManager
+    internal sealed class UpdateManager : NotificationObject, IUpdateManager, IHostUpdateManager
     {
         #region Private Class Data Members
 

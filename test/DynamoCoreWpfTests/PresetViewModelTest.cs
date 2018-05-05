@@ -10,7 +10,7 @@ using Dynamo.Graph.Workspaces;
 
 namespace DynamoCoreWpfTests
 {
-    [TestFixture, Ignore]
+    [TestFixture]
     class PresetViewModelTest :  DynamoViewModelUnitTest
     {
         [Test]

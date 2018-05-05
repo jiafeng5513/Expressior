@@ -12,11 +12,6 @@ namespace CoreNodeModels
 {
     public abstract class EnumAsInt<T> : EnumBase<T>
     {
-        protected EnumAsInt() { }
-
-        [JsonConstructor]
-        protected EnumAsInt(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts) { }
-
         public override IEnumerable<AssociativeNode> BuildOutputAst(List<AssociativeNode> inputAstNodes)
         {
             var rhs = AstFactory.BuildIntNode(SelectedIndex);
@@ -41,9 +36,6 @@ namespace CoreNodeModels
     {
         protected EnumBase() : base(typeof(T).ToString()) { }
 
-        [JsonConstructor]
-        protected EnumBase(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(typeof(T).ToString(), inPorts, outPorts) { }
-
         protected override SelectionState PopulateItemsCore(string currentSelection)
         {
             Items.Clear();
@@ -63,15 +55,13 @@ namespace CoreNodeModels
     /// </summary>
     public abstract class AllChildrenOfType<T> : DSDropDownBase
     {
-        private const string outputName = "Types";
-
-        protected AllChildrenOfType() : base(outputName)
+        protected AllChildrenOfType() : base("Types")
         {
             RegisterAllPorts();
         }
 
         [JsonConstructor]
-        protected AllChildrenOfType(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(outputName, inPorts, outPorts)
+        protected AllChildrenOfType(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
         {
         }
 

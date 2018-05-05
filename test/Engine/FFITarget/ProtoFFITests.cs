@@ -424,24 +424,11 @@ namespace FFITarget
             return x.GetValue();
         }
 
-        [MultiReturn("color", "dict", "nums", "weight", "ok")]
-        public Dictionary<string, object> ReturnNestedDictionary()
-        {
-            return new Dictionary<string, object>() 
-            {
-                {"color", "green"},
-                {"weight", 42},
-                {"ok", false},
-                {"dict", new Dictionary<string, int> { {"foo", 123} } },
-                {"nums", new[] {101, 202}}
-            };
-        }
-
-        [MultiReturnAttribute(new string[] { "color", "weight", "ok" })]
+        [MultiReturnAttribute(new string[]{"color", "weight", "ok"})]
         [RuntimeRequirement(RequireTracing = true)]
         public Dictionary<string, object> GetDictionary()
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>() 
             {
                 {"color", "green"},
                 {"weight", 42},
@@ -656,8 +643,7 @@ namespace FFITarget
         {
             return value;
         }
-
-        public double SumAll1D(double[] arr)
+        public double SumAll(double[] arr)
         {
             var sum = 0.0;
             if (arr == null)
@@ -672,17 +658,23 @@ namespace FFITarget
             }
             return sum;
         }
-
-        public double SumAll2D(double[][] arr)
+        public double SumAll(double[][] arr)
         {
             var sum = 0.0;
             if (arr == null)
                 return sum;
             foreach (var item in arr)
-                sum += SumAll1D(item);
+                sum += SumAll(item);
             return sum;
         }
-       
+        //public double SumAll(double[,] arr)
+        //{
+        //    var sum = 0.0;
+        //    if(arr == null)
+        //        return sum;
+        //    foreach (var item in arr)
+        //        sum += SumAll(item);
+        //}
         public double[] Twice(double[] arr)
         {
             if (arr == null)

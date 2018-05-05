@@ -182,10 +182,11 @@ namespace Dynamo.Graph.Connectors
 
             return;
         }
-
+        
         /// <summary>
-        /// Delete the connector without raising port disconnection events.
+        /// Delete the connector.
         /// </summary>
+        /// without raising port disconnection events.</param>
         internal void Delete()
         {
             if (Start != null && Start.Connectors.Contains(this))

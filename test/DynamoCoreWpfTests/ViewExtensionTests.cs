@@ -13,10 +13,11 @@ namespace DynamoCoreWpfTests
         [Test]
         public void OnWorkspaceChangedExtensionIsNotified()
         {
-            RaiseLoadedEvent(this.View);
             var extensionManager = View.viewExtensionManager;
             extensionManager.Add(viewExtension);
-           
+            
+            RaiseLoadedEvent(View);
+
             // Open first file.
             Open(@"core\CustomNodes\add.dyf");
             // Open next file.
@@ -26,7 +27,7 @@ namespace DynamoCoreWpfTests
 
         }
 
-        public static void RaiseLoadedEvent(FrameworkElement element)
+        private static void RaiseLoadedEvent(FrameworkElement element)
         {
             MethodInfo eventMethod = typeof(FrameworkElement).GetMethod("OnLoaded",
                 BindingFlags.Instance | BindingFlags.NonPublic);

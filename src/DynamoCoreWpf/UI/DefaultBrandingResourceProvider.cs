@@ -71,7 +71,7 @@ namespace Dynamo.Wpf.UI
             return new AboutWindow(model);
         }
 
-        public string ProductName { get { return "Dynamo"; } }
+        public string ProductName { get { return "Expressior"; } }
 
         public string AdditionalPackagePublisherTermsOfUse
         {

@@ -66,7 +66,7 @@
                                                       Width="{Binding ElementName=ContextMenuPanel, Path=ActualWidth}" />
                             <Border BorderThickness="1"
                                     Name="MenuItems"
-                                    Background="White"
+                                    Background="Transparent"
                                     BorderBrush="#bbbbbb"
                                     Padding="0,3,0,3"
                                     CornerRadius="4">
@@ -148,7 +148,7 @@
         <controls:ZoomBorder x:Name="zoomBorder"
                              ClipToBounds="True"
                              BorderThickness="0"
-                             Background="Transparent"
+                             Background="#232323"
                              Cursor="{Binding CurrentCursor}"
                              ForceCursor="{Binding IsCursorForced}">
 
@@ -439,6 +439,8 @@
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodesFromSelection}"
                            Command="{Binding NodeFromSelectionCommand}" CommandTarget="{Binding ElementName=_this}" />
 
+                    <MenuItem  Header="{x:Static p:Resources.DynamoViewEditMenuCreatePreset}"
+                           Command="{Binding DynamoViewModel.ShowNewPresetsDialogCommand}" />
 
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodeToCode}"
                            Command="{Binding NodeToCodeCommand}"

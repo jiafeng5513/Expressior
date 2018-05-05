@@ -12,13 +12,11 @@ using PythonNodeModels;
 
 namespace Dynamo.Tests
 {
-    [Category("JsonTestExclude")]
     public class NodeMigrationTests : DynamoModelTestBase
     {
         protected override void GetLibrariesToPreload(List<string> libraries)
         {
             libraries.Add("ProtoGeometry.dll");
-            libraries.Add("DesignScriptBuiltin.dll");
             libraries.Add("DSCoreNodes.dll");
             libraries.Add("DSOffice.dll");
             libraries.Add("FunctionObject.ds");
@@ -145,12 +143,6 @@ namespace Dynamo.Tests
         public void TestMigration_InputOutput_File()
         {
             TestMigration("TestMigration_InputOutput_File.dyn");
-        }
-
-        [Test]
-        public void TestMigration_FileSystem()
-        {
-            TestMigration("TestMigration_Core_FileSystem.dyn");
         }
 
         [Test]
@@ -1217,7 +1209,7 @@ namespace Dynamo.Tests
         [Test]
         public void TestListFlatten()
         {
-            // This file contains a code block node with value [1,3,5,[2,4,[6],8],7,9,[[0]]],
+            // This file contains a code block node with value {1,3,5,{2,4,{6},8},7,9,{{0}}},
             // connected to List.Flatten(list) node and List.Flatten(list, amt) node with amt = 1.
             OpenModel(GetDynPath("TestListFlatten.dyn"));
 
@@ -2055,21 +2047,6 @@ namespace Dynamo.Tests
         public void TestMigration_BuiltIns_To_DSBuiltInClass()
         {
             TestMigration("TestMigrateBuiltIn.dyn");
-        }
-
-        [Test]
-        public void TestFunctionApplyAndCompose()
-        {
-            OpenModel(GetDynPath("TestMigration_FunctionApplyAndCompose.dyn"));
-
-            RunCurrentModel();
-
-            var workspace = CurrentDynamoModel.CurrentWorkspace;
-
-            AssertPreviewValue("95c607e2-7f1b-4ec7-ba1c-a34f9dcf23bc", 14);
-
-            Assert.AreEqual(6, workspace.Nodes.Count());
-            Assert.AreEqual(6, workspace.Connectors.Count());
         }
 
         #endregion

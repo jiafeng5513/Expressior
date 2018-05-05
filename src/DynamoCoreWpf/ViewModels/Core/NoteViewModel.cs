@@ -108,12 +108,6 @@ namespace Dynamo.ViewModels
             ZIndex = ++StaticZIndex; // places the note on top of all nodes/notes
         }
 
-        public override void Dispose()
-        {
-            _model.PropertyChanged -= note_PropertyChanged;
-            DynamoSelection.Instance.Selection.CollectionChanged -= SelectionOnCollectionChanged;
-        }
-
         private void SelectionOnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             CreateGroupCommand.RaiseCanExecuteChanged();

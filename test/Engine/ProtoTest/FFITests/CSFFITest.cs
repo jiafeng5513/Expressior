@@ -254,7 +254,7 @@ x;
             Type derived1 = typeof (FFITarget.Derived1);
             Type testdispose = typeof (FFITarget.TestDispose);
             Type dummydispose = typeof (FFITarget.DummyDispose);
-            code = string.Format("import(\"DesignScriptBuiltin.dll\");\r\nimport(\"{0}\");\r\nimport(\"{1}\");\r\nimport(\"{2}\");\r\nimport(\"{3}\");\r\n{4}",
+            code = string.Format("import(\"{0}\");\r\nimport(\"{1}\");\r\nimport(\"{2}\");\r\nimport(\"{3}\");\r\n{4}",
                 dummy.AssemblyQualifiedName, derived1.AssemblyQualifiedName, testdispose.AssemblyQualifiedName, dummydispose.AssemblyQualifiedName, code);
             ValidationData[] data = { new ValidationData { ValueName = "value", ExpectedValue = 128.0, BlockIndex = 0 } };
             ExecuteAndVerify(code, data);
@@ -277,14 +277,14 @@ x;
                b = GetAt(1);
                c = GetAt(2);
                d = GetAt(3);
-               x = [a.random123(), b.GetNumber(), c.Value, d.Value];
+               x = {a.random123(), b.GetNumber(), c.Value, d.Value};
                value = a.random123() - b.GetNumber() + c.Value + d.Value;
             ";
             Type dummy = typeof (FFITarget.DerivedDummy);
             Type derived1 = typeof (FFITarget.Derived1);
             Type testdispose = typeof (FFITarget.TestDispose);
             Type dummydispose = typeof (FFITarget.DummyDispose);
-            code = string.Format("import(\"DesignScriptBuiltin.dll\");\r\nimport(\"{0}\");\r\nimport(\"{1}\");\r\nimport(\"{2}\");\r\nimport(\"{3}\");\r\n{4}",
+            code = string.Format("import(\"{0}\");\r\nimport(\"{1}\");\r\nimport(\"{2}\");\r\nimport(\"{3}\");\r\n{4}",
                 dummy.AssemblyQualifiedName, derived1.AssemblyQualifiedName, testdispose.AssemblyQualifiedName, dummydispose.AssemblyQualifiedName, code);
             ValidationData[] data = { new ValidationData { ValueName = "value", ExpectedValue = 128.0, BlockIndex = 0 } };
             Assert.IsTrue(ExecuteAndVerify(code, data) == 0); //runs without any error
@@ -300,7 +300,7 @@ sum;
              {
                 dummy = Dummy.Dummy();
                 arr = 1..10.0;
-                sum = dummy.SumAll1D(arr);
+                sum = dummy.SumAll(arr);
              }
             ";
             Type dummy = typeof (FFITarget.Dummy);
@@ -320,7 +320,7 @@ sum;
                 dummy = Dummy.Dummy();
                 arr = 1..10.0;
                 arr_2 = dummy.Twice(arr);
-                sum = dummy.SumAll1D(arr_2);
+                sum = dummy.SumAll(arr_2);
              }
             ";
             Type dummy = typeof (FFITarget.Dummy);
@@ -451,7 +451,7 @@ sum;
             @"
                dummy = DerivedDummy.DerivedDummy();
                arr = 1..10.0;
-               sum = dummy.SumAll1D(arr);
+               sum = dummy.SumAll(arr);
             ";
             Type dummy = typeof (FFITarget.DerivedDummy);
             code = string.Format("import(\"{0}\");\r\n{1}", dummy.AssemblyQualifiedName, code);
@@ -672,10 +672,10 @@ sum;
             @"
            import(""FFITarget.dll"");
             pt = DummyPoint.ByCoordinates(1,2,3);
-            a = [ pt.X, pt.X];
+            a = { pt.X, pt.X};
             def test (pt : DummyPoint)
             {
-            return = [  pt.X];
+            return = {  pt.X};
             }
             b = test(pt);
             ";
@@ -693,7 +693,7 @@ sum;
             pt = DummyPoint.ByCoordinates(1,2,3);
             def test (pt : DummyPoint)
             {
-            return = [  pt.X,pt.Y];
+            return = {  pt.X,pt.Y};
             }
             b = test(pt);
             ";
@@ -707,7 +707,6 @@ sum;
         {
             String code =
             @"
-                import(""DesignScriptBuiltin.dll"");
                import(""FFITarget.dll"");
               
                pt1=DummyPoint.ByCoordinates(1,1,1);
@@ -720,28 +719,30 @@ a11;
 a12;
 b11;
 b12;
-               arr = [Imperative]
+               [Imperative]
                {
-                    a    = [ [pt1,pt2], [pt3,pt4] ];
-                    a11  = [a[0][0].X,a[0][0].Y,a[0][0].Z];
-                    a[1] = [pt5,pt6];
-                    a12  = [a[1][1].X,a[1][1].Y,a[1][1].Z];
+                    a    = { {pt1,pt2}, {pt3,pt4} };
+                    a11  = {a[0][0].X,a[0][0].Y,a[0][0].Z};
+                    a[1] = {pt5,pt6};
+                    a12  = {a[1][1].X,a[1][1].Y,a[1][1].Z};
                     d    = a[0];
-                    b    = [ pt1, pt2 ];
-                    b11  = [b[0].X,b[0].Y,b[0].Z];
-                    b[0] = [pt3,pt4,pt5];
-                    b12  = [b[0][0].X,b[0][0].Y,b[0][0].Z];
+                    b    = { pt1, pt2 };
+                    b11  = {b[0].X,b[0].Y,b[0].Z};
+                    b[0] = {pt3,pt4,pt5};
+                    b12  = {b[0][0].X,b[0][0].Y,b[0][0].Z};
                     e    = b[0];
-                    e12  = [e[0].X,e[0].Y,e[0].Z];
-                    
-                    return [a11, a12, b11, b12];
+                    e12  = {e[0].X,e[0].Y,e[0].Z};
                }
             ";
-            var c = new[] {1.0, 1.0, 1.0};
-            var e = new[] {3.0, 3.0, 3.0};
-            var f = new[] {6.0, 6.0, 6.0};
-            var res = new[] {c, f, c, e};
-            ValidationData[] data = { new ValidationData { ValueName = "arr", ExpectedValue = res, BlockIndex = 0 }};
+            object[] c = new object[] { 1.0, 1.0, 1.0 };
+            object[] d = new object[] { 4.0, 4.0, 4.0 };
+            object[] e = new object[] { 3.0, 3.0, 3.0 };
+            object[] f = new object[] { 6.0, 6.0, 6.0 };
+            ValidationData[] data = { new ValidationData { ValueName = "a11", ExpectedValue = c, BlockIndex = 0 },
+                                      new ValidationData { ValueName = "a12", ExpectedValue = f, BlockIndex = 0 },
+                                      new ValidationData { ValueName = "b11", ExpectedValue = c, BlockIndex = 0 },
+                                      new ValidationData { ValueName = "b12", ExpectedValue = e, BlockIndex = 0 },
+                                      new ValidationData { ValueName = "b12", ExpectedValue = e, BlockIndex = 0 }};
             ExecuteAndVerify(code, data);
         }
 
@@ -750,7 +751,6 @@ b12;
         {
             String code =
             @"
-                import(""DesignScriptBuiltin.dll"");
                 import(""FFITarget.dll"");
                 
                 pt1=DummyPoint.ByCoordinates(1,1,1);
@@ -758,25 +758,27 @@ b12;
                 pt3=DummyPoint.ByCoordinates(3,3,3);
 a11;
 a12;
-                arr = [Imperative]
+                [Imperative]
                 {
-                    a = [ pt1, pt2, pt3 ];
-                    a11=[a[0].X,a[0].Y,a[0].Z];
+                    a = { pt1, pt2, pt3 };
+                    a11={a[0].X,a[0].Y,a[0].Z};
                     x = 0;
  
                     for (y in a )
                     {
-                        a[x]=pt3;
-                        a12=[a[0].X,a[0].Y,a[0].Z];
-                        x=x+1;
+                    
+                    a[x]=pt3;
+                    a12={a[0].X,a[0].Y,a[0].Z};
+                    x=x+1;
                     }
-                    return [a11, a12];
+                    
                  } 
             ";
-            var c = new[] { 1.0, 1.0, 1.0 };
-            var e = new[] { 3.0, 3.0, 3.0 };
-            var res = new[] {c, e};
-            ValidationData[] data = { new ValidationData { ValueName = "arr", ExpectedValue = res, BlockIndex = 0 } };
+            object[] c = new object[] { 1.0, 1.0, 1.0 };
+            object[] e = new object[] { 3.0, 3.0, 3.0 };
+            ValidationData[] data = { new ValidationData { ValueName = "a11", ExpectedValue = c, BlockIndex = 0 },
+                                      new ValidationData { ValueName = "a12", ExpectedValue = e, BlockIndex = 0 }
+                                    };
             ExecuteAndVerify(code, data);
         }
 
@@ -792,7 +794,7 @@ a12;
                     return = a;
                 }
                 a = foo( pt1);
-                a11=[a.X,a.Y,a.Z];
+                a11={a.X,a.Y,a.Z};
             ";
             object[] c = new object[] { 1.0, 1.0, 1.0 };
             ValidationData[] data = { new ValidationData { ValueName = "a11", ExpectedValue = c, BlockIndex = 0 } };
@@ -806,32 +808,35 @@ a12;
             @"
                import(""FFITarget.dll"");
          
-                ptcoords;
-                i = [Imperative]
+a1;
+ptcoords;
+                [Imperative]
                 {
-                    pt1=DummyPoint.ByCoordinates(1,1,1);
-                    a1 = 10;
+                pt1=DummyPoint.ByCoordinates(1,1,1);
  
-                    if( a1>=10 )
-                    {
-                       pt1=DummyPoint.ByCoordinates(2,2,2);
-                       ptcoords=[pt1.X,pt1.Y,pt1.Z];
-                       a1=1;
-                    }
-                    elseif( a1<2 )
-                    {
-                       pt1=DummyPoint.ByCoordinates(3,3,3);
-                    }
-                    else 
-                    {
-                       pt1=DummyPoint.ByCoordinates(4,4,4);
-                    }
-                    return [a1, ptcoords];
+                 a1 = 10;
+ 
+                 if( a1>=10 )
+                 {
+                pt1=DummyPoint.ByCoordinates(2,2,2);
+                ptcoords={pt1.X,pt1.Y,pt1.Z};
+                a1=1;
+                 }
+ 
+                 elseif( a1<2 )
+                 {
+                 pt1=DummyPoint.ByCoordinates(3,3,3);
+                 }
+                 else 
+                 {
+                pt1=DummyPoint.ByCoordinates(4,4,4);
+                 }
                 }
         
             ";
-            var d = new object[] {1, new[] {2.0, 2.0, 2.0}};
-            ValidationData[] data = { new ValidationData { ValueName = "i", ExpectedValue = d, BlockIndex = 0 } };
+            object[] d = new object[] { 2.0, 2.0, 2.0 };
+            ValidationData[] data = { new ValidationData { ValueName = "a1", ExpectedValue = 1, BlockIndex = 0 } ,
+                                      new ValidationData { ValueName = "ptcoords", ExpectedValue = d, BlockIndex = 0 } };
             ExecuteAndVerify(code, data);
         }
 
@@ -843,24 +848,23 @@ a12;
                import(""FFITarget.dll"");
                 pt1=DummyPoint.ByCoordinates(1,1,1);
                 pt2=DummyPoint.ByCoordinates(2,2,2);
-
-                i = [Imperative]
+s11;
+l11;
+                [Imperative]
                 {
                     a	=	10;				
                     b	=	20;
                     smallest   =   a	<   b   ?   pt1	:	pt2;
                     largest	=   a	>   b   ?   pt1	:	pt2;
-                    s11=[smallest.X,smallest.Y,smallest.Z];
-                    l11=[largest.X,largest.Y,largest.Z];
-                    return [s11, l11];
+                    s11={smallest.X,smallest.Y,smallest.Z};
+                    l11={largest.X,largest.Y,largest.Z};
                  }
         
             ";
-            var c = new [] { 1.0, 1.0, 1.0 };
-            var d = new [] { 2.0, 2.0, 2.0 };
-            var e = new[] {c, d};
-
-            ValidationData[] data = { new ValidationData { ValueName = "i", ExpectedValue = e, BlockIndex = 0 } };
+            object[] c = new object[] { 1.0, 1.0, 1.0 };
+            object[] d = new object[] { 2.0, 2.0, 2.0 };
+            ValidationData[] data = { new ValidationData { ValueName = "s11", ExpectedValue = c, BlockIndex = 0 } ,
+                                      new ValidationData { ValueName = "l11", ExpectedValue = d, BlockIndex = 0 } };
             ExecuteAndVerify(code, data);
         }
 
@@ -869,22 +873,22 @@ a12;
         {
             String code =
             @"
-               import(""DesignScriptBuiltin.dll"");
                import(""FFITarget.dll"");
                  
-                a=1;
-                a12;
-                a = [Imperative]
-                {
-                    return 1/2..1/4..-1/4;
-                }
-                [Associative]
-                {
+                    a=1;
+a12;
+                    [Imperative]
+                    {
+                        a = 1/2..1/4..-1/4;
+                    }
+                    [Associative]
+                    {
                     pt=DummyPoint.ByCoordinates(a[0],0,0);
-                    a12=[pt.X,pt.Y,pt.Z];
-                }
+                    a12={pt.X,pt.Y,pt.Z};
+                    }
+        
             ";
-            var c = new[] { 0.5, 0.0, 0.0 };
+            object[] c = new object[] { 0.5, 0.0, 0.0 };
             ValidationData[] data = { new ValidationData { ValueName = "a12", ExpectedValue = c, BlockIndex = 0 } 
                                       };
             ExecuteAndVerify(code, data);
@@ -931,25 +935,24 @@ a12;
             String code =
             @"
                import(""FFITarget.dll"");
-               pt=[0,0,0,0,0,0];
-
-               x = [Imperative]
+               pt={0,0,0,0,0,0};
+p11;
+               [Imperative]
                {
-                    p11;
                     i=0;
                     temp=0;
                     while( i <= 5 )
                     { 
                         i = i + 1;
                         pt[i]=DummyPoint.ByCoordinates(i,1,1);
-                        p11=[pt[i].X,pt[i].Y,pt[i].Z];
+                        p11={pt[i].X,pt[i].Y,pt[i].Z};
                     }
-                    return p11;
+                    
                 }
             ";
             object[] a = new object[] { 6.0, 1.0, 1.0 };
             thisTest.RunScriptSource(code);
-            thisTest.Verify("x", a);
+            thisTest.Verify("p11", a);
         }
 
         [Test]
@@ -1057,7 +1060,7 @@ a12;
                             def foo : BClass(b : BClass)
                             {
                                 a1 = BClass.CreateObject(9);
-                                a2 = [ BClass.CreateObject(1), BClass.CreateObject(2), BClass.CreateObject(3), BClass.CreateObject(4) ];    
+                                a2 = { BClass.CreateObject(1), BClass.CreateObject(2), BClass.CreateObject(3), BClass.CreateObject(4) };    
                                 a4 = b;
                                 a3 = BClass.CreateObject(5);
                                 
@@ -1124,7 +1127,7 @@ a12;
                             a1 = AClass.CreateObject(3);
                             a2 = AClass.CreateObject(4);
                             a2 = a1;
-                            b = [ BClass.CreateObject(1), BClass.CreateObject(2), BClass.CreateObject(3) ];
+                            b = { BClass.CreateObject(1), BClass.CreateObject(2), BClass.CreateObject(3) };
                             b = a1;    
                             v = dv.GetValue();
                             ";
@@ -1146,7 +1149,7 @@ a12;
                             }
                             dv = DisposeVerify.CreateObject();
                             m = dv.SetValue(2);
-                            a = [AClass.CreateObject(1), AClass.CreateObject(2), AClass.CreateObject(3)];
+                            a = {AClass.CreateObject(1), AClass.CreateObject(2), AClass.CreateObject(3)};
                             b = foo(a);
                             c = dv.GetValue();
                             ";
@@ -1376,7 +1379,7 @@ import(UnknownPoint from ""FFITarget.dll"");
 p = DummyPoint.ByCoordinates(1, 2, 3);
 u = p.UnknownPoint();
 newPoint = u.Translate(1,2,3);
-value = [u.X, u.Y, u.Z];
+value = {u.X, u.Y, u.Z};
                  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("value", new double[] {1,2,3});
@@ -1392,7 +1395,7 @@ import(DummyPoint from ""FFITarget.dll"");
 p = DummyPoint.ByCoordinates(1, 2, 3);
 u = p.UnknownPoint();
 newPoint = u.Translate(1,2,3);
-value = [u.X, u.Y, u.Z];
+value = {u.X, u.Y, u.Z};
                  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("value", new double[] { 1, 2, 3 });

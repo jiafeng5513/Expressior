@@ -11,27 +11,32 @@ namespace ProtoTest.TD.MultiLangTests
         public void T01_Simple_1D_Collection_Assignment()
         {
             string code = @"
-i = 
+a;
+b;
+c;
+d;
+e;
 [Imperative]
 {
-	a = [ [1,2], [3,4] ];
+	a = { {1,2}, {3,4} };
 	
-	a[1] = [-1,-2,3];
+	a[1] = {-1,-2,3};
 	
 	c = a[1][1];
 	
 	d = a[0];
 	
-	b = [ 1, 2 ];
+	b = { 1, 2 };
 	
-	b[0] = [2,2];
+	b[0] = {2,2};
 	e = b[0];
-    return [c, d, e];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult2 = { 1, 2 };
             object[] expectedResult3 = { 2, 2 };
-            thisTest.Verify("i", new object[] { -2, expectedResult2, expectedResult3 });
+            thisTest.Verify("c", -2, 0);
+            thisTest.Verify("d", expectedResult2, 0);
+            thisTest.Verify("e", expectedResult3, 0);
         }
 
         [Test]
@@ -46,17 +51,17 @@ d;
 e;
 [Associative]
 {
-	a = [ [1,2], [3,4] ];
+	a = { {1,2}, {3,4} };
 	
-	a[1] = [-1,-2,3];
+	a[1] = {-1,-2,3};
 	
 	c = a[1][1];
 	
 	d = a[0];
 	
-	b = [ 1, 2 ];
+	b = { 1, 2 };
 	
-	b[0] = [2,2];
+	b[0] = {2,2};
 	e = b[0];
 }
 ";
@@ -73,24 +78,26 @@ e;
         public void T03_Collection_Assignment_Nested_Block()
         {
             string code = @"
-x = [Associative]
+c;
+d;
+e;
+[Associative]
 {
-	a = [ [1,2,3],[4,5,6] ];
+	a = { {1,2,3},{4,5,6} };
 	
-	i = [Imperative]
+	[Imperative]
 	{
 		c = a[0];
 		d = a[1][2];
-        return [c, d];
 	}
-	c = i[0];
-    d = i[1];
-	e = i[0];
-    return [c, d, e];
+	
+	e = c;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult2 = { 1, 2, 3 };
-            thisTest.Verify("x", new object[] { expectedResult2, 6, expectedResult2 });
+            thisTest.Verify("c", expectedResult2);
+            thisTest.Verify("d", 6);
+            thisTest.Verify("e", expectedResult2);
         }
 
         [Test]
@@ -103,15 +110,15 @@ d;
 e;
 [Associative]
 {
-	a = [ [1,2,3],[4,5,6] ];
+	a = { {1,2,3},{4,5,6} };
 	
-	b = [ a[0], 4 ];
+	b = { a[0], 4 };
 	
 	c = b[0];
 	
 	d = b[1];
 	
-	e = [ a[0][0], a[0][1], a[1][0] ];
+	e = { a[0][0], a[0][1], a[1][0] };
 	
 }
 	";
@@ -134,7 +141,7 @@ e;
 import(""FFITarget.dll"");
 d = [Imperative]
 {
-	c1 = ArrayMember.Ctor([ 1,2,3 ]);
+	c1 = ArrayMember.Ctor({ 1,2,3 });
 	return = c1.X;
 }
 		
@@ -155,15 +162,15 @@ def collection :int[] ( a :int[] , b:int , c:int )
 	a[2] = c;
 	return= a;
 }
-	a = [ 1,0,0 ];
-	i = [Imperative]
+	a = { 1,0,0 };
+	[Imperative]
 	{
-		return collection( a, 2, 3 );
+		a = collection( a, 2, 3 );
 	}
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult2 = { 1, 2, 3 };
-            thisTest.Verify("i", expectedResult2, 0);
+            thisTest.Verify("a", expectedResult2, 0);
         }
 
         [Test]
@@ -175,11 +182,11 @@ def foo ( a )
 {
 	return= a;
 }
-	a = [ 1, foo( 2 ) , 3 ];
-	b = 
+	a = { 1, foo( 2 ) , 3 };
+	b;
 	[Imperative]
 	{
-		return [ foo( 4 ), 5, 6 ];
+		b = { foo( 4 ), 5, 6 };
 	}
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -199,7 +206,7 @@ def foo ( a )
 		a[0][0] = 1;
 		return= a;
 	}
-	b = [ [0,2,3], [4,5,6] ];
+	b = { {0,2,3}, {4,5,6} };
 	d = foo( b );
 	c = d[0];
 		
@@ -221,19 +228,18 @@ def foo ( a )
         public void T11_2D_Collection_Assignment_Heterogeneous()
         {
             string code = @"
-b = i[0];
-c = i[1];
-d = i[2];
-i = [Imperative]
+b;
+c;
+d;
+[Imperative]
 {
-	a = [ [1,2,3], [4], [5,6] ];
+	a = { {1,2,3}, {4}, {5,6} };
 	b = a[1];
 	a[1] = 2;
 	a[1] = a[1] + 1;
-	a[2] = [7,8];
+	a[2] = {7,8};
 	c = a[1];
 	d = a[2][1];
-    return [b, c, d];
 }	";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult2 = { 4 };
@@ -247,15 +253,15 @@ i = [Imperative]
         public void T12_Collection_Assignment_Block_Return_Statement()
         {
             string code = @"
-x1 = x[0];
-x2 = x[1];
-x = [Associative]
+c1;
+c2;
+[Associative]
 {
 	a = 3;
 	
 	b = [Imperative]
 	{
-		c = [ 1,2,3 ];
+		c = { 1,2,3 };
 		if( c[1] <= 3 )
 		return= c;
 	}
@@ -264,13 +270,12 @@ x = [Associative]
 	a = b;
 	c1 = a[1];
 	c2 = a[2];
-    return [c1, c2];
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
 
-            thisTest.Verify("x1", 2);
-            thisTest.Verify("x2", 4);
+            thisTest.Verify("c1", 2, 0);
+            thisTest.Verify("c2", 4, 0);
         }
 
         [Test]
@@ -286,7 +291,7 @@ c2;
 	
 	b = [Imperative]
 	{
-		c = [ [ 1,2,3 ] , [ 4,5,6 ] ] ;
+		c = { { 1,2,3 } , { 4,5,6 } } ;
 		return= c;
 	}
 	
@@ -307,10 +312,10 @@ c2;
         public void T14_2D_Collection_Assignment_Using_For_Loop()
         {
             string code = @"
-pts = [[0,1,2],[0,1,2]];
-x = [1,2];
-y = [1,2,3];
-i = [Imperative]
+pts = {{0,1,2},{0,1,2}};
+x = {1,2};
+y = {1,2,3};
+[Imperative]
 {
     c1 = 0;
 	for ( i in x )
@@ -323,9 +328,9 @@ i = [Imperative]
 		}
 		c1 = c1 + 1;
 	}
-	return pts;
+	
 }
-p1 = i[1][1];
+p1 = pts[1][1];
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("p1", 4, 0);
@@ -337,11 +342,12 @@ p1 = i[1][1];
         public void T15_2D_Collection_Assignment_Using_While_Loop()
         {
             string code = @"
-p1 = [Imperative]
+p1;
+[Imperative]
 {
-	pts = [[0,1,2],[0,1,2]];
-	x = [1,2,3];
-	y = [1,2,3];
+	pts = {{0,1,2},{0,1,2}};
+	x = {1,2,3};
+	y = {1,2,3};
     i = 0;
 	while ( i < 2 )
 	{		
@@ -353,7 +359,7 @@ p1 = [Imperative]
 		}
 		i = i + 1;
 	}
-	return pts[1][1];
+	p1 = pts[1][1];
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -368,7 +374,7 @@ p1 = [Imperative]
             string error = "1467321 rev 3878: class property specified as an empty array with no rank is becoming null when assigned a collection to it ";
             string code = @"
 import(""FFITarget.dll"");
-a = ArrayMember.Ctor([1,2,3]);
+a = ArrayMember.Ctor({1,2,3});
 val = a.X;
 val[0] = 100;
 t = a.X[0];         
@@ -383,7 +389,7 @@ t = a.X[0];
         public void T17_Assigning_Collection_And_Updating()
         {
             string code = @"
-a = [1, 2, 3];
+a = {1, 2, 3};
 b = a;
 b[0] = 100;
 t = a[0];       // t = 100, as expected
@@ -402,7 +408,7 @@ def A (a: int [])
 {
     return = a;
 }
-val = [1,2,3];
+val = {1,2,3};
 b = A(val);
 t = b;
 t[0] = 100;    // 
@@ -424,7 +430,7 @@ def A (a: int [])
 {
     return = a;
 }
-val = [1,2,3];
+val = {1,2,3};
 b = A(val);
 b[0] = 100;     
 z = val[0];     
@@ -450,11 +456,10 @@ b = a[1];";
         }
 
         [Test]
-        [Category("DSDefinedClass_Ported"), Category("Failure")]
+        [Category("DSDefinedClass_Ported")]
         [Category("SmokeTest")]
         public void T20_Defect_1458567_2()
         {
-            // TODO pratapa: Regression after introducing Get.ValueAtIndex function
             string code = @"
 import(""FFITarget.dll"");
 startPt = DummyPoint.ByCoordinates(1, 1, 0);
@@ -476,11 +481,11 @@ x3 = line_0.Start.X;
         public void T21_Defect_1460891()
         {
             string code = @"
-a = i[0];
-c = i[1];
-i = [Imperative]
+a;
+c;
+[Imperative]
 {
-    b = [ ];
+    b = { };
     count = 0;
     a = 1..5..2;
     for ( i in a )
@@ -489,7 +494,6 @@ i = [Imperative]
         count = count + 1;
     }
 	c = b ;
-    return [a, c];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { 1, 3, 5 };
@@ -503,12 +507,13 @@ i = [Imperative]
         public void T22_Create_Multi_Dim_Dynamic_Array()
         {
             string code = @"
-test = [Imperative]
+test;
+[Imperative]
 {
-    d = [[]];
+    d = {{}};
     r = c = 0;
-    a = [ 0, 1, 2 ];
-	b = [ 3, 4, 5 ];
+    a = { 0, 1, 2 };
+	b = { 3, 4, 5 };
     for ( i in a )
     {
         c = 0;
@@ -519,7 +524,7 @@ test = [Imperative]
         }
 		r = r + 1;
     }
-	return d;
+	test = d;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { new Object[] { 3, 4, 5 }, new Object[] { 4, 5, 6 }, new Object[] { 5, 6, 7 } };
@@ -539,7 +544,7 @@ def CreateArray ( x : var[] , i )
     x[i] = i;
 	return = x;
 }
-b = [0, 1];
+b = {0, 1};
 count = 0..1;
 b = CreateArray ( b, count );
 ";
@@ -554,17 +559,18 @@ b = CreateArray ( b, count );
         public void T23_Create_Dynamic_Array_Using_Replication_In_Imperative_Scope()
         {
             string code = @"
+test;
 	def CreateArray ( x : var[] , i )
 	{
 		x[i] = i;
 		return = x;
 	}
-test = [Imperative]
+[Imperative]
 {
-	test = [ ];
+	test = { };
 	test = CreateArray ( test, 0 );
 	test = CreateArray ( test, 1 );
-	return test;
+	
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -580,10 +586,10 @@ test = [Imperative]
             string code = @"
 t = [Imperative]
 {
-    d = [ [ ] ];
+    d = { { } };
     r = c = 0;
-    a = [ 0, 1, 2 ];
-    b = [ 3, 4, 5 ];
+    a = { 0, 1, 2 };
+    b = { 3, 4, 5 };
     for ( i in a )
     {
         c = 0;
@@ -614,7 +620,7 @@ def createArray( p : int[] )
 {  
     a = [Imperative]  
     {    
-        collection = [];	
+        collection = {};	
 	lineCnt = 0;
 	while ( lineCnt < 2 )
 	{
@@ -625,7 +631,7 @@ def createArray( p : int[] )
     }
     return = a;
 }
-x = createArray ( [ 1, 2, 3, 4 ] );
+x = createArray ( { 1, 2, 3, 4 } );
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { -1, -2 };
@@ -644,18 +650,18 @@ def foo ( i : int )
     Y : var[];
     Count1;
 
-	Y = [Imperative]
+	[Imperative]
 	{
 	    Count1 = 0;	    
-	    y = [];
+	    y = {};
 	    for ( i in X ) 
 	    {
 	        y[Count1] = i * -1;
 		    Count1 = Count1+1;
 	    }          
-        return y;	    
+        Y = y;	    
 	}
-	return Y;
+	return = Y;
 }
 
 p = 3;
@@ -675,26 +681,25 @@ p = 4;
             string code = @"
 def foo ( d : var[] )
 {
-    return [Imperative]
+    [Imperative]
     {
-	    r = c = 0;
-	    a = [ 0, 1, 2 ];
-	    b1 = [ 3, 4, 5 ];
-	    for ( i in a )
+	r = c = 0;
+	a = { 0, 1, 2 };
+	b1 = { 3, 4, 5 };
+	for ( i in a )
+	{
+	    c = 0;
+	    for ( j in b1)
 	    {
-	        c = 0;
-	        for ( j in b1)
-	        {
-		        d[r][c] = i + j;
-		        c = c + 1;
-	        }
-	        r = r + 1;
-	    }	
-        return d;
+		d[r][c] = i + j;
+		c = c + 1;
+	    }
+	    r = r + 1;
+	}	
     }
-    
+    return = d;
 }
-b = [];
+b = {};
 b = foo ( b ) ;     
 a = b;
 ";
@@ -710,26 +715,25 @@ a = b;
             string code = @"
 def foo ( d : var[]..[] )
 {
-    return [Imperative]
+    [Imperative]
     {
-	    r = c = 0;
-	    a = [ 0, 1, 2 ];
-	b1 = [ 3, 4, 5 ];
-	    for ( i in a )
+	r = c = 0;
+	a = { 0, 1, 2 };
+	b1 = { 3, 4, 5 };
+	for ( i in a )
+	{
+	    c = 0;
+	    for ( j in b1)
 	    {
-	        c = 0;
-	        for ( j in b1)
-	        {
-		    d[r][c] = i + j;
-		    c = c + 1;
-	        }
-	        r = r + 1;
-	    }	
-        return = d;
+		d[r][c] = i + j;
+		c = c + 1;
+	    }
+	    r = r + 1;
+	}	
     }
-    
+    return = d;
 }
-b = [ [] ];
+b = { {} };
 b = foo ( b ) ;     
 a = b;
 ";
@@ -754,11 +758,11 @@ def  foo : int(i : int[])
 b1;b2;b3;
 [Associative]
 {
-    cy=[];
+    cy={};
     cy[0]=10;
     cy[1]=12;
     a=cy;
-    d=[cy[0],cy[1]];     
+    d={cy[0],cy[1]};     
     b1=foo(d);//works
     b2=foo(a); //does not work � error: Unknown Datatype Invalid
     b3=foo(cy); //does not work � error: Unknown Datatype Invalid
@@ -785,11 +789,11 @@ def  foo : double(i : var[])
 b1;b2;b3;
 [Associative]
 {
-    cy=[];
+    cy={};
     cy[0]=1;
     cy[1]=1.5;
     a=cy;
-    d=[cy[0],cy[1]];     
+    d={cy[0],cy[1]};     
     b1= foo(d);//works
     b2= foo(a); //does not work � error: Unknown Datatype Invalid
     b3= foo(cy); //does not work � error: Unknown Datatype Invalid
@@ -813,7 +817,7 @@ b1;b2;b3;
 b1;
 [Associative]
 {
-cy=[];
+cy={};
 cy[0]=10;
 cy[1]=12;
 b1=foo(cy);
@@ -834,7 +838,7 @@ b1=foo(cy);
 b1;
 [Associative]
 {
-cy=[];
+cy={};
 cy[0]=10;
 cy[1]=null;
 b1=foo(cy);
@@ -864,9 +868,9 @@ b1=foo(cy);
 a = 0..2;
 a[3] = 3;
 b = a;
-x = [ [ 0, 0 ] , [ 1, 1 ] ];
+x = { { 0, 0 } , { 1, 1 } };
 x[1][2] = 1;
-x[2] = [2,2,2,2];
+x[2] = {2,2,2,2};
 y = x;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -888,10 +892,10 @@ y = x;
 def add ( x : var[]..[] ) 
 {
     x[1][2] = 1;
-    x[2] = [ 2, 2, 2, 2 ];
+    x[2] = { 2, 2, 2, 2 };
     return = x;
 }
-x = [ [ 0, 0 ] , [ 1, 1 ] ];
+x = { { 0, 0 } , { 1, 1 } };
 x = add(x);
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -914,9 +918,9 @@ x = add(x);
 
 def add ( ) 
 {
-    x = [ [ 0, 0 ] , [ 1, 1 ] ];
+    x = { { 0, 0 } , { 1, 1 } };
     x[1][2] = 1;
-    x[2] = [ 2, 2, 2, 2 ];
+    x[2] = { 2, 2, 2, 2 };
     return = x;
 }
 x = add(); // expected { { 0,0 }, { 1, 1, 1 }, {2, 2, 2, 2} }
@@ -938,9 +942,9 @@ x = add(); // expected { { 0,0 }, { 1, 1, 1 }, {2, 2, 2, 2} }
             string code = @"
 def add ( )
 {
-    x = [ [ 0, 0 ] , [ 1, 1 ] ];
+    x = { { 0, 0 } , { 1, 1 } };
     x[1][2] = 1;
-    x[2] = [ 2, 2, 2, 2 ];
+    x[2] = { 2, 2, 2, 2 };
     return = x;
 }
 x = add(); //x = {{0,0},{1,1,1},{2,2,2,2}}
@@ -961,9 +965,9 @@ x = add(); //x = {{0,0},{1,1,1},{2,2,2,2}}
             string code = @"
 def add ( )
 {
-    x = [ [ 0, 0 ] , [ 1, 1 ] ];
+    x = { { 0, 0 } , { 1, 1 } };
     x[1][2] = 1;
-    x[2] = [ 2, false, [ 2, 2 ] ];
+    x[2] = { 2, false, { 2, 2 } };
         
     return = x;
 } 
@@ -986,9 +990,9 @@ x = add(); // expected { { 0,0 }, { 1, 1, 1 }, {2, false, {2, 2}} }
 
 def add ( )
 {
-    x = [ [ 0, 0 ] , [ 1, 1 ] ];
+    x = { { 0, 0 } , { 1, 1 } };
     x[1][2] = 1;
-    x[2] = [ 2, false,[ 2, 2] ];
+    x[2] = { 2, false,{ 2, 2} };
     return = x;
 }
 def test(x:var[]..[])
@@ -1023,10 +1027,10 @@ def remove (x:var[]..[])
 }
 def add(x:var[]..[])
 {
-    x[1] = [4,4];
+    x[1] = {4,4};
     return = x;
 }
-x = remove([ [ 0, 0 ] , [ 1, 1 ] ]); 
+x = remove({ { 0, 0 } , { 1, 1 } }); 
 z = add(x);
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1047,9 +1051,9 @@ z = add(x);
             string code = @"
     def add ( )
     {
-        x = [ [ 0, 0 ] , [ 1, 1 ] ];
+        x = { { 0, 0 } , { 1, 1 } };
         x[1][2] = 1;
-        x[2] = [ 2, false,[ 2, 2] ];
+        x[2] = { 2, false,{ 2, 2} };
         return = x;
     }
 x = [Imperative]
@@ -1075,7 +1079,7 @@ x = [Imperative]
     def add ( )
     {
 return = [Imperative]{
-        x = [ [ 0, 0 ] , [ 1, 1 ] ];
+        x = { { 0, 0 } , { 1, 1 } };
         z = 0..5;
         for(i in z)
         {
@@ -1104,7 +1108,7 @@ a = [Imperative]
     def add ( )
     {
     return = [Imperative]{
-        x = [ [ 0, 0 ] , [ 1, 1 ] ];
+        x = { { 0, 0 } , { 1, 1 } };
         z = 5;
         j = 0;
         while ( j<=z)
@@ -1134,9 +1138,9 @@ a = [Imperative]
             string code = @"
     def add ( )
     {
-        x = [ [ 0, 0 ] , [ 1, 1 ] ];
+        x = { { 0, 0 } , { 1, 1 } };
         x[1][2] = 1;
-        x[2] = [ null, false,[ 2, 2] ];
+        x[2] = { null, false,{ 2, 2} };
         return = x;
     }
 x = [Imperative]
@@ -1164,18 +1168,17 @@ def foo ( i : int )
     Y = null;
     Count1 : int;
     X = 0..i;
-    return [Imperative]
+    [Imperative]
     {
-	    Y = [0,0,0,0,0];
+	    Y = {0,0,0,0,0};
 	    Count1 = 0; 
 	    for ( i in X ) 
         {
 		    Y[Count1] = i * -1;
 		    Count1 = Count1 + 1;
 	    }
-        return Y;
     }
-    
+    return = Y;
 }
 p = 4;
 a = foo(p);
@@ -1193,7 +1196,7 @@ b1 = a;
         {
             string code = @"
 a=1;
-a=[a,2];";
+a={a,2};";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { 1, 2 };
             thisTest.Verify("a", v1);
@@ -1204,11 +1207,12 @@ a=[a,2];";
         public void T26_Defct_DNL_1459616_2()
         {
             string code = @"
-a=[1,2];
-b = [Imperative]
+a={1,2};
+[Imperative]
 {
-    return [a,2];
-}";
+    a={a,2};
+}
+b = a;";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { new Object[] { 1, 2 }, 2 };
             thisTest.Verify("b", v1);
@@ -1221,10 +1225,10 @@ b = [Imperative]
             string code = @"
 def foo (b:var[]..[])
 {
-    b =  [ b[1], b[1] ];
+    b =  { b[1], b[1] };
     return = b;
 }
-c = foo([1, 2]);
+c = foo({1, 2});
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { 2, 2 };
@@ -1239,19 +1243,19 @@ c = foo([1, 2]);
             string code = @"
 def foo1()
 {
-    a = [ a, a ];
+    a = { a, a };
     return = a;	
 }
 def foo2()
 {
-    b = [ b[0], b[0], b ];
+    b = { b[0], b[0], b };
 	return = b;
 }
 t1 = foo1();
 c = [Imperative]
 {
     t2  = foo2();
-    return = [ t1, t2 ];
+    return = { t1, t2 };
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1272,23 +1276,23 @@ c = [Imperative]
     x : var[]..[];
     constructor A ()
     {
-        a = [ a, a ];
+        a = { a, a };
         x = a;	
     }
     def foo ()
     {
-        b = [ b[0], b[0], b ];
+        b = { b[0], b[0], b };
 	return = b;
     }
 }
-a=[1,2];
+a={1,2};
 x1 = A.A();
 c = [Imperative]
 {
-    b = [ 0, 1 ];
+    b = { 0, 1 };
     t1 = x1.x;
     t2  = x1.foo();
-    return = [ t1, t2 ];
+    return = { t1, t2 };
 }
 ";
             thisTest.VerifyRunScriptSource(code, error);
@@ -1308,7 +1312,7 @@ def CreateArray ( x : var[] , i )
 x[i] = i;
 return = x;
 }
-b = [ ]; // Note : b = { 0, 0} works fine
+b = { }; // Note : b = { 0, 0} works fine
 count = 0..1;
 t2 = CreateArray ( b, count );
 t1=b;";
@@ -1334,7 +1338,7 @@ t1=b;";
 		return = x;
 	}
 
-b = [ ]; // Note : b = { 0, 0} works fine
+b = { }; // Note : b = { 0, 0} works fine
 count = 0..2;
 t2 = CreateArray( b, count );
 t1=b;";
@@ -1359,7 +1363,7 @@ t1=b;";
 		x[i] = smallest1;
 		return = x;
 	}
-b = [ ]; // Note : b = { 0, 0} works fine
+b = { }; // Note : b = { 0, 0} works fine
 count = 0..2;
 t2 = CreateArray( b, count );
 t1=b;";
@@ -1382,7 +1386,7 @@ def CreateArray ( x : var[] , i )
 x[i] = i;
 return = x;
 }
-b = [ ]; // Note : b = { 0, 0} works fine
+b = { }; // Note : b = { 0, 0} works fine
 count = 0..1;
 t2 = CreateArray ( b, count );
 t1=b;
@@ -1404,7 +1408,7 @@ count = -2..-1;";
             string code = @"
 def CreateArray (  i :int)
 {
-    y =[];
+    y ={};
 	y[i] = i;
 	return = y;
 }
@@ -1431,11 +1435,11 @@ def foo : int(i:int[])
 b1;b2;b31;
 [Associative]
 {
-cy=[];
+cy={};
 cy[0]=10;
 cy[1]=12;
 a=cy;
-d=[cy[0],cy[1]];
+d={cy[0],cy[1]};
 b1 = foo(cy);
 b2 = foo(d);
 b31 = foo(a);
@@ -1459,7 +1463,7 @@ b31 = foo(a);
 	}
 [Associative]
 {
-cy=[];
+cy={};
 cy[0]=10;
 cy[1]=null;
 b1=foo(cy);
@@ -1485,11 +1489,11 @@ b1=foo(cy);
 a1;b1;c1;
 [Associative]
 {
-cy=[];
+cy={};
 cy[0]=10;
 cy[1]=12;
 a=cy;
-d=[cy[0],cy[1]];
+d={cy[0],cy[1]};
 a1 = foo(cy);
 b1 = foo(d);
 c1 = foo(a);
@@ -1506,7 +1510,7 @@ c1 = foo(a);
         public void T27_DynamicArray_Invalid_Index_1465614_1()
         {
             string code = @"
-a=[];
+a={};
 b=a[2];
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1520,25 +1524,24 @@ b=a[2];
         {
             string code = @"
 import(""FFITarget.dll"");
-baseLineCollection = [ ];
-basePoint = [ ]; // replace this with ""basePoint = { 0, 0};"", and it works fine
+baseLineCollection = { };
+basePoint = { }; // replace this with ""basePoint = { 0, 0};"", and it works fine
 nsides = 2;
 a = 0..nsides - 1..1;
-basePnt = [Imperative]
+[Imperative]
 {
-    for(i in a)
-    {
-        basePoint[i] = DummyPoint.ByCoordinates(i, i, 0);
-    }
-    for(i in a)
-    {
-        baseLineCollection[i] = DummyLine.ByStartPointEndPoint(basePoint[i], basePoint[i+1]);
-    }
-    return basePoint;
+for(i in a)
+{
+basePoint[i] = DummyPoint.ByCoordinates(i, i, 0);
 }
-x=basePnt[0].X;
-y=basePnt[0].Y;
-z=basePnt[0].Z;";
+for(i in a)
+{
+baseLineCollection[i] = DummyLine.ByStartPointEndPoint(basePoint[i], basePoint[i+1]);
+}
+}
+x=basePoint[0].X;
+y=basePoint[0].Y;
+z=basePoint[0].Z;";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", 0.0);
             thisTest.Verify("y", 0.0);
@@ -1551,7 +1554,7 @@ z=basePnt[0].Z;";
         {
             string code = @"
 import(""FFITarget.dll"");
-pts = ClassFunctionality.ClassFunctionality( [ 1, 2] );
+pts = ClassFunctionality.ClassFunctionality( { 1, 2} );
 aa = pts[null].IntVal;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1569,13 +1572,13 @@ class Point
 x : var[];
 constructor Create(xx : double)
 {
-	x = [xx,1];
+	x = {xx,1};
 }
 }
 aa;
 [Imperative]
 {
-pts = Point.Create( [ 1, 2] );
+pts = Point.Create( { 1, 2} );
 aa = pts[null].x[null];
 }
 ";
@@ -1594,13 +1597,13 @@ class Point
 x : var[];
 constructor Create(xx : double)
 {
-	x = [xx,1];
+	x = {xx,1};
 }
 }
 aa;aa1;
 [Imperative]
 {
-	pts = Point.Create( [ 1, 2] );
+	pts = Point.Create( { 1, 2} );
 	aa = pts[null];
 	aa1 = pts[null].x[null];
 }
@@ -1628,17 +1631,17 @@ aa;aa1;
         public void T28_defect_1465706__DynamicArray_Imperative()
         {
             string code = @"
+test;
 def CreateArray ( x : var[] , i )
 {
 x[i] = i;
 return = x;
 }
-test = [Imperative]
+[Imperative]
 {
-test = [ ];
+test = { };
 test = CreateArray ( test, 0 );
 test = CreateArray ( test, 1 );
-return test;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1651,26 +1654,25 @@ return test;
         public void T28_defect_1465706__DynamicArray_Imperative_2()
         {
             string code = @"
-a = i[0];
-r = i[1];
+a;
+r;
     def test (i:int)
     {
-        return [Imperative]
+    return = [Imperative]{
+        loc = {};
+        for(j in i)
         {
-            loc = [];
-            for(j in i)
-            {
-                loc[j] = j;
-            }
-            return loc;
+            loc[j] = j;
         }
+        return = loc;
     }
-i = [Imperative]
+    }
+[Imperative]
 {
-    a=[3,4,5];
+    a={3,4,5};
     t = test(a);
-    r = [t[0][3], t[1][4], t[2][5]];
-    return [a, r];
+    r = {t[0][3], t[1][4], t[2][5]};
+    return = r;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1686,7 +1688,7 @@ i = [Imperative]
         {
             string code = @"
    
-    basePoint = [  ];
+    basePoint = {  };
     
     basePoint [ 4 ] =3;
     test = basePoint;
@@ -1695,29 +1697,28 @@ i = [Imperative]
     b = basePoint[ 4] + 1;
     c = basePoint [ 8 ] + 1;
     
-    d = [ 0,1 ];
+    d = { 0,1 };
     e1 = d [ 8] + 1;
     
-    x = [ ];
-    y = [ ];        
-    i = [Imperative]
+    x = { };
+    y = { };    
+    t = [Imperative]
     {
-        k = [ ];
-	    for ( i in 0..1 )
-	    {
-	        x[i] = i;
-	    }
-	    k[0] = 0;
-	    for ( i in x )
-	    {
-	        y[i] = x[i] + x[i+1];
-	        k[i+1] = x[i] + x[i+1];
+        k = { };
+	for ( i in 0..1 )
+	{
+	    x[i] = i;
+	}
+	k[0] = 0;
+	for ( i in x )
+	{
+	    y[i] = x[i] + x[i+1];
+	    k[i+1] = x[i] + x[i+1];
 	
-	    }
-	    return [y, k];
+	}
+	return = k;
     }
-    t = i[1];
-    z = i[0];
+    z = y;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             Object[] v1 = new Object[] { 0, 1, null };
@@ -1742,7 +1743,7 @@ def foo()
 {    
 return = 0;
 }
-x = [ 1, 2 ];
+x = { 1, 2 };
 x[foo()] = 3;
 y = x;";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1764,7 +1765,7 @@ def foo()
 	return = 0;
 }
 
-x = [ 1, 2 ];
+x = { 1, 2 };
 x[foo()] = 3;
 a = x;";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1787,7 +1788,7 @@ def foo()
 }
 x1 = [Imperative]
 {
-x = [ 1, 2 ];
+x = { 1, 2 };
 x[foo()] = 3;
 return = x;
 }";
@@ -1810,7 +1811,7 @@ def foo(y:int)
 
 x1 = [Imperative]
 {
-x = [ 1, 2 ];
+x = { 1, 2 };
 x[foo(1)] = 3;
 return = x;
 }
@@ -1845,7 +1846,7 @@ return = x;
         {
             string code = @"
 import(""FFITarget.dll"");
-c = [ TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1) ];
+c = { TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1) };
 d = c[1].a; 
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1862,7 +1863,7 @@ d = c[1].a;
         {
             string code = @"
 import(""FFITarget.dll"");
-c = [ TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1) ];
+c = { TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1) };
 c0 = c[0].a;//0
 d = c[1].a;//null
 ";
@@ -1879,7 +1880,7 @@ d = c[1].a;//null
         {
             string code = @"
 import(""FFITarget.dll"");
-c = [ TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1), 1 ];
+c = { TestObjectA.TestObjectA(0), TestObjectB.TestObjectB(1), 1 };
 e = c[2].IntVal;
 e1 = c[2].IntVal;
 ";
@@ -1911,7 +1912,7 @@ x2 = y;
 }
 }
 c = null;
-d=[A.A(0),null];
+d={A.A(0),null};
 e = c[0].x; // null
 e1 = c[1].x2;//null
 f = d[0].x;//0
@@ -1927,14 +1928,14 @@ f1 = d[1].x2;//null
 
         [Test]
         [Category("DSDefinedClass_Ported")]
-        [Category("Variable resolution"), Category("Failure")]
+        [Category("Variable resolution")]
         public void T61_Accessing_Non_Existent_Array_Properties_1467082()
         {
             //Assert.Fail("1467094 - Sprint 24 : Rev 2748 : in some cases if try to access nonexisting item in an array it does not return null ) ");
             string code = @"
 import(""FFITarget.dll"");
-c = [ ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) ];
-p = [];
+c = { ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) };
+p = {};
 d = p[1];
 d = [Imperative]
 {
@@ -1972,8 +1973,8 @@ t4 = p[1];
             // Assert.Fail("");
             string code = @"
 import(""FFITarget.dll"");
-c = [ ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) ];
-p = [];
+c = { ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) };
+p = {};
 q=p[0].IntVal;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -1990,8 +1991,8 @@ q=p[0].IntVal;
             // Assert.Fail("");
             string code = @"
 import(""FFITarget.dll"");
-c = [ ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) ];
-p = [];
+c = { ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) };
+p = {};
 q=p[0].IntVal;
 c[0]=0;
 p=c[0].IntVal; // access as if its propoerty of the class, but thevalue is not class 
@@ -2022,12 +2023,12 @@ s=c[0].IntVal[0];// access non array variable as if its array ";
         x = y;
     }
 }
-c = [ A.A([0,1]), A.A([2]) ];
-d = [ A.A([0,1]), A.A([2]) ];
-e = [ A.A([0,1]), A.A([2]) ];
-f = [ A.A([0,1]), A.A([2]) ];
+c = { A.A({0,1}), A.A({2}) };
+d = { A.A({0,1}), A.A({2}) };
+e = { A.A({0,1}), A.A({2}) };
+f = { A.A({0,1}), A.A({2}) };
 c[1].x=5;// wrong index 
-d[1].x=[0,1]; // entire row 
+d[1].x={0,1}; // entire row 
 e[1][1].x=5;// non existing index 
 f[1][0].x=5;// correct one 
 p = c[1].x; 
@@ -2053,8 +2054,8 @@ s = f[1][0].x;
             // Assert.Fail("");
             string code = @"
 import(""FFITarget.dll"");
-c = [ ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) ];
-p = [];
+c = { ClassFunctionality.ClassFunctionality(0), ClassFunctionality.ClassFunctionality(1) };
+p = {};
 d = [Imperative]
 {
 if(c[0].IntVal == 0 )
@@ -2082,22 +2083,23 @@ t4=p[1];
         }
 
         [Test]
-        [Category("SmokeTest"), Category("Failure")]
+        [Category("SmokeTest")]
         public void T62_Create_Dynamic_Array_OnTheFly01()
         {
             string code = @"
+i;
 b;
-x=[Imperative]
+z=[Imperative]
 {
-    for (i in 0..7)
-    {
-        b[i] = i;
-    }
-    return i;
+for (i in 0..7)
+{
+b[i] = i;
+}
+return=b;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
-            thisTest.Verify("x", 7);
+            thisTest.Verify("i", 7);
         }
 
         [Test]
@@ -2162,18 +2164,20 @@ b= func(c);
         public void T63_Dynamic_array_onthefly_1467066()
         {
             string code = @"
+b;
 z=[Imperative]
 {
-    b[5]=0;
-    for (i in 0..7)
-    {
-        b[i] = i;
-    }
-    return b;
+b[5]=0;
+for (i in 0..7)
+{
+b[i] = i;
+}
+return=b;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("z", new Object[] { 0, 1, 2, 3, 4, 5, 6, 7 });
+            thisTest.Verify("b", new Object[] { 0, 1, 2, 3, 4, 5, 6, 7 });
 
         }
 
@@ -2264,7 +2268,7 @@ def foo(a:int[])
 }
 x[0]=5;
 a = foo(x);
-c = [100];
+c = {100};
 t = x;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2277,7 +2281,7 @@ t = x;
             string code = @"
 z=true;
 b=z;
-z[0]=[1];
+z[0]={1};
 z=5;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2287,7 +2291,7 @@ z=5;
         public void T64_Modify_itemInAnArray_1467093()
         {
             string code = @"
-a = [1, 2, 3];
+a = {1, 2, 3};
 a[1] = a; 
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2298,17 +2302,14 @@ a[1] = a;
         public void T64_Modify_itemInAnArray_1467093_2()
         {
             string code = @"
-a = i[0];
-b = i[1];
-c = i[2];
-i = [Imperative]
+a;b;c;
+[Imperative]
 {
-    a = [];
-    b = a;
-    a[0] = b;
-    //hangs here
-    c = a;
-    return [a,b,c];
+a = {};
+b = a;
+a[0] = b;
+//hangs here
+c = a;
 }
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2321,7 +2322,7 @@ i = [Imperative]
         public void T65_Array_Alias_ByVal_1467165()
         {
             string code = @"
-a = [0,1,2,3];
+a = {0,1,2,3};
 b=a;
 a[0]=9;
 b[0]=10;
@@ -2337,7 +2338,7 @@ b[0]=10;
         {
             string code = @"
 import(""FFITarget.dll"");
-a = [TestObjectA.TestObjectA(),TestObjectB.TestObjectB()];
+a = {TestObjectA.TestObjectA(),TestObjectB.TestObjectB()};
 b=a;
 a[0].a = 100;
 b[0].a= 200;
@@ -2352,7 +2353,7 @@ d=b[0].a;";
         public void T65_Array_Alias_ByVal_1467165_3()
         {
             string code = @"
-a = [0,1,2,3];
+a = {0,1,2,3};
 b=a;
 a[0]=9;
 b[0]=false;
@@ -2371,7 +2372,7 @@ b[0]=false;
             //Assert.Fail("1467182 - Sprint 25 - [Design Decision] Rev 3163 - method resolution or type conversion is expected in following cases ");
             string code = @"
 import(""FFITarget.dll"");
-a = [TestObjectA.TestObjectA(),TestObjectB.TestObjectB()];
+a = {TestObjectA.TestObjectA(),TestObjectB.TestObjectB()};
 b=a;
 a[0].a = 100;
 b[0].a = ""false"";
@@ -2388,7 +2389,7 @@ d=b[0].a;";
         {
             string code = @"
 import(""FFITarget.dll"");
-a = [TestObjectA.TestObjectA(),TestObjectB.TestObjectB()];
+a = {TestObjectA.TestObjectA(),TestObjectB.TestObjectB()};
 b=a;
 a[0].IntVal = 100;
 b[0].IntVal = null;
@@ -2403,7 +2404,7 @@ d=b[0].IntVal;";
         public void T65_Array_Alias_ByVal_1467165_6()
         {
             string code = @"
-a = [0,1,2,3];
+a = {0,1,2,3};
 b=a;
 a[0]=null;
 b[0]=false;
@@ -2418,12 +2419,12 @@ b[0]=false;
         public void T66_Array_CannotBeUsedToIndex1467069()
         {
             string code = @"
-x = [Imperative]
+x;
+[Imperative]
 {
-    a = [3,1,2]; 
-    x = [10,11,12,13,14,15]; 
+    a = {3,1,2}; 
+    x = {10,11,12,13,14,15}; 
     x[a] = 2;
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", new Object[] { 10, 2, 2, 2, 14, 15 });
@@ -2434,12 +2435,12 @@ x = [Imperative]
         public void T66_Array_CannotBeUsedToIndex1467069_2()
         {
             string code = @"
-x=[Imperative]
+x;
+[Imperative]
 {
-    a = [3,1,2]; 
-    x = [10,11,12,13,14,15]; 
+    a = {3,1,2}; 
+    x = {10,11,12,13,14,15}; 
     x[a] = 2;
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", new Object[] { 10, 2, 2, 2, 14, 15 });
@@ -2449,7 +2450,7 @@ x=[Imperative]
         public void T67_Array_Remove_Item()
         {
             string code = @"
-a=[1,2,3,4,5,6,7];
+a={1,2,3,4,5,6,7};
 a=Remove(a,0);// expected :{2,3,4,5,6,7}
 a=Remove(a,4);//expected {1,2,3,4,6,7}
 ";
@@ -2461,7 +2462,7 @@ a=Remove(a,4);//expected {1,2,3,4,6,7}
         public void T67_Array_Remove_Item_2()
         {
             string code = @"
-a=[1,2,3,4,5,6,7];
+a={1,2,3,4,5,6,7};
 a=Remove(a,0);// expected :{2,3,4,5,6,7}
 a=Insert(a,4,6);//expected {1,2,3,4,6,7}";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2475,7 +2476,7 @@ a=Insert(a,4,6);//expected {1,2,3,4,6,7}";
 test;
 [Associative]
 {
-a = [ 1, 2, 3];
+a = { 1, 2, 3};
 b = a;
 b[0] = 10;
 test = a[0]; //= 10� i.e. a change in �b� causes a change to �a�
@@ -2490,7 +2491,7 @@ test = a[0]; //= 10� i.e. a change in �b� causes a change to �a�
         public void T43_Defect_1467234_negative_indexing()
         {
             String code =
-@"a = [ ];
+@"a = { };
 a[-1] = 1;
 b = a;
 ";
@@ -2506,7 +2507,7 @@ b = a;
             String code =
 @"
 import(""FFITarget.dll"");
-a1 = [ ArrayMember.Ctor(1..2), ArrayMember.Ctor(2..3) ];
+a1 = { ArrayMember.Ctor(1..2), ArrayMember.Ctor(2..3) };
 a = a1[0].X[0][1];
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -2519,7 +2520,7 @@ a = a1[0].X[0][1];
         public void T45_Defect_1467393()
         {
             String code =
-@"arr = [ [ ] ];
+@"arr = { { } };
 [Imperative]
 {
     numRings = 3;    
@@ -2549,7 +2550,7 @@ a= 1;
         public void T45_Defect_1467393_2()
         {
             String code =
-@"arr = [ [ ] ];
+@"arr = { { } };
 [Imperative]
 {
     numRings = 3;    
@@ -2581,7 +2582,7 @@ a= 1;
 @"
 def foo ()
 {
-    arr = [ [ ] ];
+    arr = { { } };
     [Imperative]
     {
         numRings = 3;    
@@ -2614,10 +2615,10 @@ test = foo();
 @"
 def foo ()
 {
-    arr = [ [ ] ];
+    arr = { { } };
     [Imperative]
     {
-        x = [0, 1];
+        x = {0, 1};
         for(i in x)
         {
             [Associative]
@@ -2670,16 +2671,16 @@ test = [Imperative]
         {
             String code =
 @"
+arr; //  declaring arr here works
 test = [Imperative]
 {
     // create arr
-    arr = {};
     for(i in (0..1))
     {
         arr[i] = i;
     }   
-    return arr;
 }
+test = arr;
 ";
             ProtoScript.Runners.ProtoScriptRunner fsr = new ProtoScript.Runners.ProtoScriptRunner();
             String errmsg = "";
@@ -2694,7 +2695,7 @@ test = [Imperative]
         {
             String code =
 @"
-arr = [ ]; 
+arr = { }; 
 test = [Imperative]
 {
     // create arr
@@ -2702,8 +2703,8 @@ test = [Imperative]
     {
         arr[i] = i;
     }   
-    return arr;
 }
+test = arr;
 ";
             ProtoScript.Runners.ProtoScriptRunner fsr = new ProtoScript.Runners.ProtoScriptRunner();
             String errmsg = "";
@@ -2720,7 +2721,7 @@ test = [Imperative]
 @"
 test = [Imperative]
 {
-    arr = [ ] ;
+    arr = { } ;
     // create arr
     for(i in (0..1))
     {
@@ -2744,7 +2745,7 @@ test = [Imperative]
 @"
 test = [Imperative]
 {
-    arr = [ ] ;    
+    arr = { } ;    
     for(i in (0..1))
     {
         arr[i][i] = i;
@@ -2790,15 +2791,17 @@ test = [Imperative]
         {
             String code =
 @"
-test = [Imperative]
+arr;
+[Imperative]
 {
-    arr = null ;    
+    //arr = null ;    
     for(i in (0..1))
     {
         arr[i][i] = i;
     }
-    return arr;   
+    //return = arr;   
 }
+test = arr;
 ";
             ProtoScript.Runners.ProtoScriptRunner fsr = new ProtoScript.Runners.ProtoScriptRunner();
             String errmsg = "";
@@ -2814,7 +2817,7 @@ test = [Imperative]
         {
             String code =
 @"
-arr = [ ];
+arr = { };
 test = [Imperative]
 {
     //arr = null ;    
@@ -2839,21 +2842,24 @@ test = [Imperative]
         {
             String code =
 @"
-arr = [ [], []];
-test = [Imperative]
+arr = { {}, {}};
+[Imperative]
 {
     //arr = null ;    
     for(i in (0..1))
     {
         arr[i][i] = i;
     }
-    return arr;   
+    return = arr;   
 }
+test = arr;
 ";
+            ProtoScript.Runners.ProtoScriptRunner fsr = new ProtoScript.Runners.ProtoScriptRunner();
             String errmsg = "";
             ExecutionMirror mirror = thisTest.VerifyRunScriptSource(code, errmsg);
             Object n1 = null;
             Object[] v1 = new Object[] { new Object[] { 0 }, new Object[] { n1, 1 } };
+            ;
             thisTest.Verify("test", v1);
         }
 
@@ -2925,7 +2931,7 @@ test = foo();
 @"
 def foo ()
 {
-    arr = [ [], []];
+    arr = { {}, {}};
     t = [Imperative]
     {
         //arr = null ;    
@@ -2987,7 +2993,7 @@ test = foo();
 import(""FFITarget.dll"");
 def foo ()
 {
-    arr = [ [], []];
+    arr = { {}, {}};
     t = [Imperative]
     {
         for(i in (0..1))
@@ -3084,7 +3090,7 @@ def foo ()
 {
     t = [Imperative]
     {
-        arr = [] ;    
+        arr = {} ;    
         for(i in (0..1))
         {
             if ( i < 3 )
@@ -3144,23 +3150,23 @@ test = foo().IntVal;
         {
             String code =
             @"
-                a = [1, 2, 3];
+                a = {1, 2, 3};
                 b=""x"";
                 a[b] = 4;
                 r = a [b];
             ";
 
-            //ExecutionMirror mirror = thisTest.RunScriptSource(code);
-            //thisTest.Verify("r", 4);
-            thisTest.RunAndVerifyRuntimeWarning(code, ProtoCore.Runtime.WarningID.InvalidArrayIndexType);
+            ExecutionMirror mirror = thisTest.RunScriptSource(code);
+            thisTest.Verify("r", 4);
         }
         [Test]
         public void T49_DictionaryvariableArray()
         {
             String code =
             @"
-                b=[""x"",""y""];
-                a = Dictionary.ByKeysValues(b, [4,7]);
+                a = {1, 2, 3};
+                b={""x"",""y""};
+                a[b] = {4,7};
                 r = a [b[0]];
                 r1 = a [b];
             ";
@@ -3174,8 +3180,9 @@ test = foo().IntVal;
         {
             String code =
             @"
+                a = {1, 2, 3};
                 b=""x"";
-                a = {""x"" : (b!=null)?4:-4};
+                a[b] =(b!=null)?4:-4;
                 r = a [b];
             ";
 
@@ -3187,8 +3194,8 @@ test = foo().IntVal;
         {
             String code =
             @"
-                a = [1, 2, 3];
-                b=[1,-1];
+                a = {1, 2, 3};
+                b={1,-1};
                 a[b] =(b>0)?4:-4;
                 r = a [b];
             ";
@@ -3196,28 +3203,45 @@ test = foo().IntVal;
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("r", new object[] { 4, -4 });
         }
+        [Test]
+        public void T52_DictionaryKeynull()
+        {
+            // as per spec this is null as key is supported
+            String code =
+            @"
+                a = {1, 2, 3};
+                b=null;
+                a[b] =4;
+                r = a [b];
+            ";
 
+            ExecutionMirror mirror = thisTest.RunScriptSource(code);
+            thisTest.Verify("r", 4);
+        }
         [Test]
         public void T53_DictionaryKeyUpdate()
         {
 
             String code =
             @"
+                a = {1, 2, 3};
+                 b=""x"";
+                 a[b] =4;
                 r = a[b];
                 b = ""y"";
-                a ={ ""y"": 10};
+                a[b] = 10;
             ";
 
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("r", 10);
         }
-
         [Test]
         public void T54_DictionaryKeyUpdate_2()
         {
+
             String code =
             @"
-               a = [1, 2, 3];
+               a = {1, 2, 3};
                  b=true;
                  a[b] =4;
                 r = a[b];
@@ -3238,7 +3262,9 @@ test = foo().IntVal;
             @"
             def test(c:int)
             {
-                a = {""x"" : c};
+                a = { 1, 2, 3 };
+                b = ""x"";
+                a[b] = c;
                 return = a;
             }
                 
@@ -3248,34 +3274,44 @@ test = foo().IntVal;
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("r", 5);
         }
-
         [Test]
         [Category("DSDefinedClass_Ported")]
         public void T60_DictionaryDotOperator()
         {
+
             String code =
             @"
 def foo(c:int)
 {
-    a = { ""x"" : c, ""y"" : c + 1};
+    a = { 1, 2, 3 };
+    b = {""x"",""y""};
+    a[b[0]] = c;
+    a[b[1]] = c+1;
     return = a;
 }
 y = foo(5);
-b = [""x"",""y""];
+b = {""x"",""y""};
 x = y[b];
             ";
 
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", new object[] { 5, 6 });
-        }
 
+        }
         [Test]
         public void T69_DictionaryDynamicArray()
         {
+
             String code =
             @"
-                b = [""x"",""y""];
-                a = {""x"": 5, ""y"" : 6};
+               
+          
+                a = { };
+                b = {""x"",""y""};
+                a[b[0]] = 5;
+                a[b[1]] = 6;
+                a[0]=1;
+                a[1]=2;
                 r = a[b];
             ";
 
@@ -3284,29 +3320,28 @@ x = y[b];
 
         }
         [Test]
-        public void T70_DictionaryImperativeWhile()
+        public void T70_DictionaryImeperativeWhile()
         {
 
             String code =
             @"
                
-           a = Dictionary.ByKeysValues([], []);                  
-i = [Imperative]
+            a={};                
+[Imperative]
 {
     i =0;
     while (i<5)
     {
-        a = a.SetValueAtKeys("""" + i, i);
+        a["""" + i] = i;
         i = i + 1;
     }
-    return a;
 }
-r0 = i[""0""];
-r1 = i[""1""];
-r2 = i[""2""];
-r3 = i[""3""];
-r4 = i[""4""];
-r5 = i[""5""];
+r0 = a[""0""];
+r1 = a[""1""];
+r2 = a[""2""];
+r3 = a[""3""];
+r4 = a[""4""];
+r5 = a[""5""];
 
                 
             ";
@@ -3327,27 +3362,26 @@ r5 = i[""5""];
             String code =
             @"
                
-a=Dictionary.ByKeysValues([], []);                   
-i=[Imperative]
+a={};                
+[Imperative]
 {
     i = 0;
-    b = [ ""x"",""true"",""1""];
+    b = { ""x"",true,1};
     for(i in b)
     {
-        a = a.SetValueAtKeys(i, i);
+        a[i] = i;
     }
-    return a;
 }
-r0 = i[""x""];
-r1 = i[""true""];
-r2 = i[""1""];
+r0 = a[""x""];
+r1 = a[true];
+r2 = a[1];
                 
             ";
 
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("r0", "x");
-            thisTest.Verify("r1", "true");
-            thisTest.Verify("r2", "1");
+            thisTest.Verify("r1", true);
+            thisTest.Verify("r2", 1);
 
 
         }
@@ -3390,46 +3424,89 @@ r2 = i[""1""];
         [Test]
         public void T72_Dictionarytypeconversion()
         {
-            // Dictionary expression keys not (yet) supported
+
             String code =
             @"
                
-            b = [""x"",""y""];
-
-            def foo(b1)
+            a = { 1, 2, 3 };
+            b = {""x"",""y""};
+                
+            def foo(a1 : var[], b1 : var[])
             {
-                return Dictionary.ByKeysValues(b1, true);
+
+                a1[b1] = true;
+                return =a1;
             }
-            z1 = foo(b);
+            z1 = foo(a, b);
             x = z1[b];
             ";
 
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", new object[] { true, true });
-        }
 
+
+
+        }
         [Test]
         public void T73_Dictionaryrepguideszip()
         {
-            // Dictionary expression keys not (yet) supported
+
             String code =
             @"
                
-            b = [""x"",""y""];
+            a = { { 1 }, { 2 }, { 3 } };
+            b = {""x"",""y""};
+                
+                def foo(a1 : var[], b1 : var)
+                            {
 
-            def foo(b1 : var)
-            {
-                return Dictionary.ByKeysValues(b1, true);
-            }
-            z1 = foo(b < 1 >);
-            x = z1[0][b];
-            x2 = z1[1][b];
+                                a1[b1] = true;
+                                return =a1;
+                            }
+                            z1 = foo(a<1>, b<1>);
+                x = z1[0][b];
+                x2 = z1[1][b];
             ";
 
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", new object[] { true, null });
             thisTest.Verify("x2", new object[] { null, true });
+
+
+
         }
-        
+        [Test]
+        public void T74_Dictionaryrepguidescartesian()
+        {
+
+            String code =
+            @"
+               
+            a = { { 1 }, { 2 }, { 3 } };
+            b = {""x"",""y""};
+                
+            def foo(a1 : var[], b1 : var)
+                        {
+
+                            a1[b1] = true;
+                            return =a1;
+                        }
+                        z1 = foo(a<1>, b<2>);
+            x = z1[0][0][b]; //true,null
+            x1 = z1[0][1][b]; //null ,true
+            x2 = z1[1][0][b];//true ,null
+            x3 = z1[0][1][b];//null,true
+
+            ";
+
+            ExecutionMirror mirror = thisTest.RunScriptSource(code);
+            thisTest.Verify("x", new object[] { true, null });
+            thisTest.Verify("x1", new object[] { null, true });
+            thisTest.Verify("x2", new object[] { true, null });
+            thisTest.Verify("x3", new object[] { null, true });
+
+
+
+        }
     }
 }

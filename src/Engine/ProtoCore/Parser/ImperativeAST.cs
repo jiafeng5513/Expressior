@@ -8,22 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace ProtoCore.AST
-{
-    public static class NodeEnumerableExtensions
-    {
-        public static IEnumerable<Node> AsEnumerable(this Node item)
-        {
-            return item != null ? new List<Node>() { item } : new List<Node>();
-        }
-
-        public static IEnumerable<Node> Concat(this IEnumerable<Node> list, Node item)
-        {
-            return (list ?? new List<Node>()).Concat(item.AsEnumerable());
-        }
-    }
-}
-
 namespace ProtoCore.AST.ImperativeAST
 {
     public enum AstKind
@@ -160,11 +144,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitLanguageBlockNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Attributes.Concat(this.CodeBlockNode);
-        }
     }
 
     public class ArrayNameNode : ImperativeNode
@@ -227,11 +206,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitArrayNameNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.ArrayDimensions.AsEnumerable();
-        }
     }
 
     public class GroupExpressionNode : ArrayNameNode
@@ -281,6 +255,7 @@ namespace ProtoCore.AST.ImperativeAST
             DataType = TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.InvalidType, 0);
             Value = Name = identName;
         }
+
 
         public IdentifierNode(IdentifierNode rhs) : base(rhs)
         {
@@ -333,11 +308,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitIdentifierNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
-        }
     }
 
     public class TypedIdentifierNode: IdentifierNode
@@ -353,11 +323,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitTypedIdentifierNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -405,10 +370,6 @@ namespace ProtoCore.AST.ImperativeAST
             return visitor.VisitIntNode(this);
         }
 
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
-        }
     }
 
     public class DoubleNode : ImperativeNode
@@ -456,11 +417,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitDoubleNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -512,11 +468,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitBooleanNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
-        }
     }
 
     public class CharNode : ImperativeNode
@@ -564,11 +515,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitCharNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -619,11 +565,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitStringNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
-        }
     }
 
     public class NullNode : ImperativeNode
@@ -654,11 +595,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitNullNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -740,14 +676,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitArrayNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node>
-            {
-                this.Expr, this.Type
-            };
         }
     }
 
@@ -872,11 +800,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitFunctionCallNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node>() { this.Function }.Concat(this.FormalArguments);
-        }
     }
 
     public class ExprListNode : ArrayNameNode
@@ -885,6 +808,7 @@ namespace ProtoCore.AST.ImperativeAST
         {
             Exprs = new List<ImperativeNode>();
         }
+
 
         public ExprListNode(ExprListNode rhs)
             : base(rhs)
@@ -917,7 +841,7 @@ namespace ProtoCore.AST.ImperativeAST
         {
             StringBuilder buf = new StringBuilder();
 
-            buf.Append("[");
+            buf.Append("{");
             if (Exprs != null)
             {
                 for (int i = 0; i < Exprs.Count; ++i)
@@ -927,7 +851,7 @@ namespace ProtoCore.AST.ImperativeAST
                         buf.Append(", ");
                 }
             }
-            buf.Append("]");
+            buf.Append("}");
             buf.Append(base.ToString());
 
             return buf.ToString();
@@ -944,11 +868,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitExprListNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Exprs;
         }
     }
 
@@ -1006,11 +925,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitCodeBlockNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Body;
         }
     }
 
@@ -1083,11 +997,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitInlineConditionalNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node>() {this.ConditionExpression, this.TrueExpression, this.FalseExpression};
         }
     }
 
@@ -1179,11 +1088,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitBinaryExpressionNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node>() { this.LeftNode, this.RightNode };
-        }
     }
 
 
@@ -1267,13 +1171,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitElseIfNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Expr.AsEnumerable()
-                .Concat(this.Body)
-                .Concat(this.ElseIfBodyPosition);
-        }
     }
 
     public class IfStmtPositionNode: ImperativeNode
@@ -1297,11 +1194,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitIfStmtPositionNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -1441,16 +1333,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitIfStatementNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.IfExprNode.AsEnumerable()
-                .Concat(this.IfBody)
-                .Concat(this.IfBodyPosition)
-                .Concat(this.ElseIfList)
-                .Concat(this.ElseBody)
-                .Concat(this.ElseBodyPosition);
-        }
     }
 
     public class WhileStmtNode : ImperativeNode
@@ -1527,12 +1409,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitWhileStatementNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Expr.AsEnumerable()
-                .Concat(this.Body);
-        }
     }
 
     public class UnaryExpressionNode : ImperativeNode
@@ -1584,11 +1460,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitUnaryExpressionNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return this.Expression.AsEnumerable();
         }
     }
 
@@ -1692,11 +1563,6 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitRangeExprNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node> {this.From, this.To, this.Step };
-        }
     }
 
     public class ForLoopNode : ImperativeNode
@@ -1793,14 +1659,9 @@ namespace ProtoCore.AST.ImperativeAST
         {
             return visitor.VisitForLoopNode(this);
         }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node> {this.LoopVariable, this.Expression}.Concat(this.Body);
-        }
     }
 
-    public class IdentifierListNode : ArrayNameNode
+    public class IdentifierListNode : ImperativeNode
     {
         public ImperativeNode LeftNode { get; set; }
         public Operator Optr { get; set; }
@@ -1852,14 +1713,10 @@ namespace ProtoCore.AST.ImperativeAST
             }
         }
 
+
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitIdentifierListNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return new List<Node> {this.LeftNode, this.RightNode};
         }
     }
 
@@ -1881,14 +1738,10 @@ namespace ProtoCore.AST.ImperativeAST
             }
         }
 
+
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitBreakNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
         }
     }
 
@@ -1913,36 +1766,6 @@ namespace ProtoCore.AST.ImperativeAST
         public override TResult Accept<TResult>(IAstVisitor<TResult> visitor)
         {
             return visitor.VisitContinueNode(this);
-        }
-
-        public override IEnumerable<Node> Children()
-        {
-            return Enumerable.Empty<Node>();
-        }
-    }
-
-    public static class AstFactory
-    {
-        public static ImperativeNode BuildIndexExpression(ImperativeNode value, ImperativeNode index)
-        {
-            var node = BuildFunctionCall(Node.BuiltinGetValueAtIndexTypeName, Node.BuiltinValueAtIndexMethodName, 
-                new List<ImperativeNode>() { value, index });
-            NodeUtils.SetNodeLocation(node, value, index);
-            return node;
-        }
-
-        public static ImperativeNode BuildFunctionCall(string className, string functionName, List<ImperativeNode> args)
-        {
-            return new IdentifierListNode
-            {
-                LeftNode = new IdentifierNode(className),
-                Optr = Operator.dot,
-                RightNode = new FunctionCallNode
-                {
-                    Function = new IdentifierNode(functionName),
-                    FormalArguments = args
-                }
-            };
         }
     }
 }

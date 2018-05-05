@@ -641,6 +641,7 @@ namespace ProtoCore
             public string LibraryName { get; set; }
 
             private List<ClassMirror> classMirrors = null;
+            private List<MethodMirror> globalMethods = null;
 
             public LibraryMirror(string libName, ProtoCore.Core core)
                 : base(core, libName)

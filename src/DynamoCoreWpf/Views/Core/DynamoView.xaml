@@ -195,7 +195,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="500"
-                              MinWidth="1"
+                              MinWidth="204"
                               Name="LibraryViewColumn">
                 <ColumnDefinition.Width>
                     <Binding Path="LibraryWidth"
@@ -418,6 +418,29 @@
                                   InputGestureText="Ctrl + V" />
                         <Separator />
 
+                       
+                        <MenuItem Header="{x:Static p:Resources.DynamoViewEditMenuPresetsMenu}"
+                              Name = "PresetsMenu"
+                              Focusable= "False"
+                              IsEnabled="True">
+                            <MenuItem Header="{x:Static p:Resources.DynamoViewEditMenuCreatePreset}"
+                                      Command="{Binding ShowNewPresetsDialogCommand}"
+                                      Name="newPreset"
+                                      Focusable="False"
+                                      InputGestureText="Ctrl + T"/>
+                            <MenuItem Header="{x:Static p:Resources.DynamoViewEditMenuRestorePreset}"
+                                      MouseEnter="LoadPresetsMenus"
+                                      Name="RestorePresetMenu"
+                                      ItemContainerStyle="{StaticResource SubMenuItemOverride}"
+                                      Focusable="False" IsEnabled="{Binding EnablePresetOptions}" />
+                            <MenuItem Header="{x:Static p:Resources.DynamoViewEditMenuDeletePreset}"
+                                      MouseEnter="LoadPresetsMenus"
+                                      Name="DeletePresetMenu"
+                                      ItemContainerStyle="{StaticResource SubMenuItemOverride}"
+                                      Focusable="False" IsEnabled="{Binding EnablePresetOptions}" />                                                          
+                        </MenuItem>
+                        <Separator />
+                        
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewEditMenuCreateNote}"
                                   Command="{Binding AddNoteCommand}"
@@ -1488,9 +1511,9 @@
                     Background="#222222"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Margin="0,120,0,0">
-            <Grid Background="#353535"
-                  Width="80"
+                    Margin="0,120,0,0"
+                    Visibility="Hidden">
+            <Grid Background="#222222"
                   Cursor="Hand">
                 <Button Click="OnCollapsedSidebarClick"
                         Template="{DynamicResource BackgroundButton}">
@@ -1513,29 +1536,23 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" 
-                                    HorizontalAlignment="Center">
-                            <TextBlock Grid.Column="0"
-                                   Name="LibrarySidebarText"
-                                   VerticalAlignment="Center"
-                                   Foreground="#aaaaaa"
-                                   FontWeight="Normal"
-                                   Margin="10,0,0,5"
-                                   Text="{x:Static p:Resources.LibraryViewTitle}">
-                            </TextBlock>
-                            <Image Grid.Column="0"
-                               Name="LibrarySidebarIcon"
+                        <Image Grid.Column="1"
                                Source="/DynamoCoreWpf;component/UI/Images/expand_normal.png"
                                Visibility="Visible"
-                               Width="10"
-                               Height="10"
-                               Margin="5,5,5,5"
+                               Width="20"
+                               Height="20"
                                RenderTransformOrigin="0.5, 0.5">
-                                <Image.RenderTransform>
-                                    <RotateTransform Angle="-90" />
-                                </Image.RenderTransform>
-                            </Image>
-                        </StackPanel>
+                            <Image.RenderTransform>
+                                <RotateTransform Angle="90" />
+                            </Image.RenderTransform>
+                        </Image>
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Stretch"
+                                   Foreground="#aaaaaa"
+                                   FontWeight="Normal"
+                                   Margin="5 0 5 0"
+                                   Text="{x:Static p:Resources.LibraryViewTitle}">                         
+                        </TextBlock>
                     </Grid>
                 </Button>
             </Grid>
@@ -1588,7 +1605,8 @@
               Visibility="Visible"
               Grid.Row="2"
               Grid.Column="0"
-              Grid.RowSpan="2">
+              Grid.RowSpan="2"
+              Background="Black">
         </Grid>
 
         <WrapPanel Orientation="Horizontal"

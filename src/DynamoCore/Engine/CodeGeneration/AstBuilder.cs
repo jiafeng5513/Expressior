@@ -270,8 +270,13 @@ namespace Dynamo.Engine.CodeGeneration
 
             var inputAstNodes = new List<AssociativeNode>();
             var inPortsCount = node.InPorts.Count;
-            
-            for (int index = 0; index < inPortsCount; index++)
+            var inPortDataCount = node.InPorts.Count;
+
+            //TODO: inputsCount should be removed in future. 
+            // InPortData won't be used anymore, so we shouldn't take into account InPortData.Count.
+            int inputsCount = inPortsCount > inPortDataCount ? inPortsCount : inPortDataCount;
+
+            for (int index = 0; index < inputsCount; index++)
             {
                 Tuple<int, NodeModel> inputTuple;
 
@@ -281,10 +286,10 @@ namespace Dynamo.Engine.CodeGeneration
                     NodeModel inputModel = inputTuple.Item2;
                     AssociativeNode inputNode = inputModel.GetAstIdentifierForOutputIndex(outputIndexOfInput);
 
-                    // If there are any null AST's (for e.g. if there's an error in the input node),
-                    // graph update for the given node is skipped.
-                    Validity.Assert(inputNode != null, "Shouldn't have null nodes in the AST list");
-
+#if DEBUG
+                    Validity.Assert(inputNode != null,
+                        "Shouldn't have null nodes in the AST list");
+#endif
                     inputAstNodes.Add(inputNode);
                 }
                 else
@@ -443,28 +448,31 @@ namespace Dynamo.Engine.CodeGeneration
             var outputs = outputNodes.ToList();
             if (outputs.Count > 1)
             {
-                /* rtn_dict = Dictionary.ByKeysValues({key0, ..., keyn}, {out0, ..., outn});
-                 * return = rtn_dict;
+                /* rtn_array = {};
+                 * rtn_array[key0] = out0;
+                 * rtn_array[key1] = out1;
+                 * ...
+                 * return = rtn_array;
                  */
 
-                // return dictionary, holds all outputs
+                // return array, holds all outputs
                 string rtnName = "__temp_rtn_" + functionId.ToString().Replace("-", String.Empty);
+                functionBody.Body.Add(
+                    AstFactory.BuildAssignment(
+                        AstFactory.BuildIdentifier(rtnName),
+                        AstFactory.BuildExprList(new List<string>())));
 
-                //// indexers for each output
-                var indexers = returnKeys != null
+                // indexers for each output
+                IEnumerable<AssociativeNode> indexers = returnKeys != null
                     ? returnKeys.Select(AstFactory.BuildStringNode) as IEnumerable<AssociativeNode>
                     : Enumerable.Range(0, outputs.Count).Select(AstFactory.BuildIntNode);
 
-                // Create AST for Dictionary initialization
-                var kvps = outputs.Zip(indexers, (outputId, indexer) =>
-                    new KeyValuePair<AssociativeNode, AssociativeNode>(indexer, outputId));
-                var dict = new DictionaryExpressionBuilder();
-                foreach (var kvp in kvps)
-                {
-                    dict.AddKey(kvp.Key);
-                    dict.AddValue(kvp.Value);
-                }
-                functionBody.Body.Add(AstFactory.BuildAssignment(AstFactory.BuildIdentifier(rtnName), dict.ToFunctionCall()));
+                functionBody.Body.AddRange(
+                    outputs.Zip(
+                        indexers,
+                        (outputId, indexer) => // for each outputId and return key
+                            // pack the output into the return array
+                            AstFactory.BuildAssignment(AstFactory.BuildIdentifier(rtnName, indexer), outputId)));
 
                 // finally, return the return array
                 functionBody.Body.Add(AstFactory.BuildReturnStatement(AstFactory.BuildIdentifier(rtnName)));

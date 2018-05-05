@@ -247,7 +247,6 @@ namespace ProtoCore
         internal ContextDataManager ContextDataManager { get; set; }
 
         public ParseMode ParsingMode { get; set; }
-        public bool ParseDeprecatedListSyntax = false;
 
         /// <summary>
         /// 

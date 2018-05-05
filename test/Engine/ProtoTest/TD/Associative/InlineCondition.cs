@@ -45,7 +45,7 @@ namespace ProtoTest.TD.Associative
 	Rameshwar = 80;
 	Jun = 68;
 	Roham = 50;
-	Smartness = [ BenBarnes, BenGoh, Jun, Rameshwar, Roham ]; // { 1, 0, 1, 1, 0 }
+	Smartness = { BenBarnes, BenGoh, Jun, Rameshwar, Roham }; // { 1, 0, 1, 1, 0 }
 	Results = Smartness > Einstein ? Passed : Failed;
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -94,9 +94,9 @@ namespace ProtoTest.TD.Associative
 	d = ((c - c / 2 * 2) > 0)? c : c+1 ; //5 
 	e1 = ((b>(d-b+d))) ? d : (d+1); //5
 	//inline conditional, returning different sized collections
-	c1 = [1,2,3];
-	c2 = [1,2];
-	a1 = [1, 2, 3, 4];
+	c1 = {1,2,3};
+	c2 = {1,2};
+	a1 = {1, 2, 3, 4};
 	b1 = a1>3?true:a1; // expected : {1, 2, 3, true}
 	b2 = a1>3?true:c1; // expected : {1, 2, 3}
 	b3 = a1>3?c1:c2;   // expected : {1, 2}
@@ -139,8 +139,8 @@ namespace ProtoTest.TD.Associative
         {
             //Assert.Fail("1456751 - Sprint16 : Rev 990 : Inline conditions not working with replication over collections"); 
             string src = @"
-	a = [ 0, 1, 2, 4];
-	x = a > 1 ? 0 : [1,1]; // { 1, 1} ? 
+	a = { 0, 1, 2, 4};
+	x = a > 1 ? 0 : {1,1}; // { 1, 1} ? 
 	x_0 = x[0];
 	x_1 = x[1];
 ";
@@ -186,13 +186,13 @@ x1;
 x2;
 x3;
 x4;
-i=[Imperative]
+[Imperative]
 {
-	a = [ 0, 1, 2];
-	b = [ 3, 11 ];
+	a = { 0, 1, 2};
+	b = { 3, 11 };
 	c = 5;
-	d = [ 6, 7, 8, 9];
-	e = [ 10 ];
+	d = { 6, 7, 8, 9};
+	e = { 10 };
 	xx = 1 < a ? a : 5; // expected:5 
         yy = 0;
 	if( 1 < a )
@@ -207,7 +207,7 @@ i=[Imperative]
 	{
 		c1 = c1 + 1;
 	}
-	x2 = 5 > b ? b : 5; // expected:5
+	x2 = 5 > b ? b : 5; // expected:f
 	t3 = x2[0];
 	t4 = x2[1];
 	c2 = 0;
@@ -222,14 +222,13 @@ i=[Imperative]
 	{
 		c3 = c3 + 1;
 	}
-	x4 = b > e ? d : [ 0, 1]; // expected {0,1}
+	x4 = b > e ? d : { 0, 1}; // expected {0,1}
 	t7 = x4[0]; 
 	c4 = 0;
 	for (i in x4)
 	{
 		c4 = c4 + 1;
 	}
-    return [xx,x1,x2,x3,x4];
 }
 /*
 Expected : 
@@ -247,7 +246,11 @@ thisTest.Verification(mirror, ""t7"", 0, 1);
 thisTest.Verification(mirror, ""c4"", 1, 1);*/
 ";
             thisTest.VerifyRunScriptSource(src, errmsg);
-            thisTest.Verify("i", new object[] {5, 5, 5, new object[] {10}, new object[] {0, 1}});
+            thisTest.Verify("xx", 5);
+            thisTest.Verify("x1", 5);
+            thisTest.Verify("x2", 5);
+            thisTest.Verify("x3", new object[] { 10 });
+            thisTest.Verify("x4", new object[] { 0, 1 });
         }
 
 
@@ -279,12 +282,12 @@ x = 1 > 2 ? foo(a) + 1 : foo(a) + 2;
         {
             // Tracked by http://adsk-oss.myjetbrains.com/youtrack/issue/MAGN-3941
             string code =
-               @"x = 2 == [ ]; 
-                 y = []==null;
-                 z = [[1]]==[1];
-                 z2 = [ [ 1 ] ] == 1;
-                 z3=1==[[1]];
-                 z4=[1]==[[1]];";
+               @"x = 2 == { }; 
+                 y = {}==null;
+                 z = {{1}}=={1};
+                 z2 = { { 1 } } == 1;
+                 z3=1=={{1}};
+                 z4={1}=={{1}};";
             thisTest.RunScriptSource(code);
             thisTest.SetErrorMessage("MAGN-3941 [Design Issue] Errors with conditionals with empty arrays and ararys with different ranks");
             thisTest.Verify("x", false); //WAITING FOR DESIGN DECISION
@@ -301,7 +304,7 @@ x = 1 > 2 ? foo(a) + 1 : foo(a) + 2;
         {
             string code =
 @"c = 0;
-a = [ 0, 1, 2 ];
+a = { 0, 1, 2 };
 a = c > 1 ? a : a + 1;
 //expected : { 1, 2, 3 }";
             string errmsg = "";
@@ -321,7 +324,7 @@ def foo (c)
     return = a;
 }
 
-test = foo([1,2]);
+test = foo({1,2});
 ";
             string errmsg = "";
 
@@ -341,9 +344,9 @@ x = c > 1 ? 3 : 4;
     c = 3;            
 }
 test = x;";
-            string errmsg = "";
+            string errmsg = "";//1467290 sprint25: rev 3731 : REGRESSION : Update with inline condition across multiple language blocks is not working as expected";
             thisTest.VerifyRunScriptSource(code, errmsg);
-            thisTest.Verify("x", 4);
+            thisTest.Verify("x", 3);
         }
 
 
@@ -354,7 +357,7 @@ test = x;";
 @"c = 0;
 x = 10;
 a = 1;
-b = [1,2];
+b = {1,2};
 x = c > 1 ? a : b;
 [Imperative]
 {
@@ -362,9 +365,9 @@ x = c > 1 ? a : b;
     a = 2;           
 }
 test = x;";
-            string errmsg = "";
+            string errmsg = "";//1467290 sprint25: rev 3731 : REGRESSION : Update with inline condition across multiple language blocks is not working as expected";
             thisTest.VerifyRunScriptSource(code, errmsg);
-            thisTest.Verify("x", new object[] {1, 2});
+            thisTest.Verify("x", new object[] {2, 2});
         }
 
 
@@ -375,7 +378,7 @@ test = x;";
 @"c = 0;
 x = 10;
 a = 1;
-b = [1,2];
+b = {1,2};
 x = c > 1 ? a : b;
 [Imperative]
 {
@@ -384,7 +387,7 @@ x = c > 1 ? a : b;
     [Associative]
     {
         c = -1;
-        b = [ 2,3];
+        b = { 2,3};
     }           
 }
 test = x;";
@@ -400,22 +403,22 @@ test = x;";
             string code =
 @"c = 0;
 x = 10;
-a = [1,2];
+a = {1,2};
 x = c > 1 ? a : a +1;
 [Imperative]
 {
     c = 3; 
-    a = [2,3];
+    a = {2,3};
     [Associative]
     {
         c = -1;
-        a = [ 0,1];
+        a = { 0,1};
     }           
 }
 test = x;";
-            string errmsg = "";
+            string errmsg = "";//1467290 sprint25: rev 3731 : REGRESSION : Update with inline condition across multiple language blocks is not working as expected";
             thisTest.VerifyRunScriptSource(code, errmsg);
-            thisTest.Verify("x", new Object[] { 2, 3 });
+            thisTest.Verify("x", new Object[] { 1, 2 });
         }
 
 
@@ -532,11 +535,11 @@ d = c!= true;
         public void T017_conditionequalto_1467482_3()
         {
             string code = @"
-d=[Imperative]
+d;
+[Imperative]
 {
     c = true;
     d = c== true;
-    return d;
 }
 ";
             string errmsg = "";
@@ -550,11 +553,11 @@ d=[Imperative]
         public void T018_conditionequalto_1467482_4()
         {
             string code = @"
-            d=[Imperative]
+            d;
+            [Imperative]
             {
                 c = false;
                 d = c!= true;
-                return d;
             }
             ";
             string errmsg = "";
@@ -674,11 +677,11 @@ d=[Imperative]
         public void T018_conditionequalto_1467403_11()
         {
             string code = @"
-            d=[Imperative]
+            d;
+            [Imperative]
             {
                 c = null;
                 d = c== null;
-                return d;
             }
         ";
             string errmsg = "";
@@ -692,11 +695,11 @@ d=[Imperative]
         public void T018_conditionequalto_1467403_12()
         {
             string code = @"
-            d=[Imperative]
+            d;
+            [Imperative]
             {
                 c = null;
                 d = c!= null;
-                return d;
             }
         ";
             string errmsg = "1467403 -in conditional it throws error could not decide which function to execute , for valid code a,d gives the correct result as well ";
@@ -712,7 +715,7 @@ d=[Imperative]
             string code = @"
             e;
                 c : int = 1;
-                d : int[] = [ 1, 0 ];
+                d : int[] = { 1, 0 };
                 e = c == d;
         ";
             string errmsg = "";
@@ -726,12 +729,12 @@ d=[Imperative]
         public void T018_conditionequalto_1467504_14()
         {
             string code = @"
-            e=[Imperative]
+            e;
+            [Imperative]
             {
                 c : int = 1;
-                d : int[] = [ 1, 0 ];
+                d : int[] = { 1, 0 };
                 e = c == d;
-                return e;
             }
         ";
             string errmsg = "1467504-conditonal - comparison with an single vs array returns null in imperative block ";
@@ -868,7 +871,7 @@ def foo ( x : bool)
 {
     return = 1;
 }
-a = [-1, 1];
+a = {-1, 1};
 z = foo ( a > 0 ? 1.4 : false  );
 ";
             string errmsg = "";
@@ -892,7 +895,7 @@ def foo ( x : bool)
     return = 1;
 }
 
-a = [-1, 1];
+a = {-1, 1};
 z = foo ( a > 0 ? 1.4 : false );
 ";
             string errmsg = "";
@@ -913,7 +916,7 @@ def foo2 ( x )
 {
     return = x;
 }
-a = [-1, 1];
+a = {-1, 1};
 z = foo2 ( a > 0 ? foo(1) : foo(2)  );
 ";
             string errmsg = "";
@@ -934,20 +937,19 @@ def foo2 ( x )
 {
     return = x;
 }
-a = [-1, 1];
+a = {-1, 1};
 z;
-i=[Imperative]
+[Imperative]
 {
     for ( i in 0..1 )
     {
         z[i] = foo2 ( a[i] > 0 ? foo(1) : foo(2)  );
     }
-    return z;
 }
 ";
             string errmsg = "";
             thisTest.VerifyRunScriptSource(code, errmsg);
-            thisTest.Verify("i", new Object[] { 2, 1 });
+            thisTest.Verify("z", new Object[] { 2, 1 });
         }
     }
 }

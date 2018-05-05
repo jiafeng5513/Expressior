@@ -18,7 +18,6 @@ using DSColor = DSCore.Color;
 using Autodesk.DesignScript.Runtime;
 using Dynamo.Graph.Workspaces;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.IO;
 
 namespace CoreNodeModels.Input
@@ -34,8 +33,6 @@ namespace CoreNodeModels.Input
     public class ColorPalette : NodeModel
     {
         private DSColor dscolor = DSColor.ByARGB(255, 0, 0, 0);
-
-        [JsonProperty(PropertyName = "InputValue")]
         public DSColor DsColor
         {
             get { return dscolor; }
@@ -46,16 +43,6 @@ namespace CoreNodeModels.Input
                 RaisePropertyChanged("DsColor");
             }
         }
-
-        //override ExtensionNode NodeType from NodeModel base class
-        public override string NodeType
-        {
-            get
-            {
-                return "ColorInputNode";
-            }
-        }
-
         public override NodeInputData InputData
         {
             get
@@ -80,22 +67,6 @@ namespace CoreNodeModels.Input
         public ColorPalette()
         {
             RegisterAllPorts();
-        }
-        
-        [JsonConstructor]
-        public ColorPalette(JObject InputValue, IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
-        {
-            // RGBA to ARGB
-            try
-            {
-                this.DsColor = DSColor.ByARGB((int)InputValue["A"], (int)InputValue["R"], (int)InputValue["G"], (int)InputValue["B"]);
-            }
-
-            catch
-            {
-                this.DsColor = DSColor.ByARGB(255, 0, 0, 0);
-            }
-
         }
 
         protected override bool UpdateValueCore(UpdateValueParams updateValueParams)
@@ -180,8 +151,7 @@ namespace CoreNodeModels.Input
         }
 
         /// <summary>
-        ///     Indicates whether node is input node. 
-        ///     Used to bind visibility of UI for user selection.
+        ///     Indicates whether node is input node
         /// </summary>
         public override bool IsInputNode
         {

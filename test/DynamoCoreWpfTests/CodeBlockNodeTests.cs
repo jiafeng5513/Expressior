@@ -29,13 +29,12 @@ namespace DynamoCoreWpfTests
     {
         protected override void GetLibrariesToPreload(List<string> libraries)
         {
-            libraries.Add("DesignScriptBuiltin.dll");
             libraries.Add("DSCoreNodes.dll");
             base.GetLibrariesToPreload(libraries);
         }
 
         //Run the CBN without an input to get the error message
-        //Connect an input to the CBN and run
+        //Connent a input to the CBN and run
         //Change the value of the input and run 
         //  : the result will not be updated
 

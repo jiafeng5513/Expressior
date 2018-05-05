@@ -128,19 +128,14 @@ namespace Dynamo.Views
             }
         }
 
-        private void removeViewModelsubscriptions(WorkspaceViewModel ViewModel)
-        {
-            ViewModel.RequestShowInCanvasSearch -= ShowHideInCanvasControl;
-            ViewModel.DynamoViewModel.PropertyChanged -= ViewModel_PropertyChanged;
-        }
-
         void OnWorkspaceViewUnloaded(object sender, RoutedEventArgs e)
         {
             DynamoSelection.Instance.Selection.CollectionChanged -= OnSelectionCollectionChanged;
 
             if (ViewModel != null)
             {
-                removeViewModelsubscriptions(ViewModel);
+                ViewModel.RequestShowInCanvasSearch -= ShowHideInCanvasControl;
+                ViewModel.DynamoViewModel.PropertyChanged -= ViewModel_PropertyChanged;
             }
 
             infiniteGridView.DetachFromZoomBorder(zoomBorder);
@@ -334,7 +329,6 @@ namespace Dynamo.Views
                 oldViewModel.RequestAddViewToOuterCanvas -= vm_RequestAddViewToOuterCanvas;
                 oldViewModel.WorkspacePropertyEditRequested -= VmOnWorkspacePropertyEditRequested;
                 oldViewModel.RequestSelectionBoxUpdate -= VmOnRequestSelectionBoxUpdate;
-                this.removeViewModelsubscriptions(oldViewModel);
             }
 
             if (ViewModel != null)

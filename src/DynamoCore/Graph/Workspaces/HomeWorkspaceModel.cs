@@ -54,7 +54,7 @@ namespace Dynamo.Graph.Workspaces
         ///     are not left in run-auto upon reopening.  
         /// </summary>
         [JsonIgnore]
-        public bool HasRunWithoutCrash { get; set; }
+        public bool HasRunWithoutCrash { get; private set; }
 
         /// <summary>
         ///     Before the Workspace has been built the first time, we do not respond to 
@@ -73,7 +73,7 @@ namespace Dynamo.Graph.Workspaces
         /// how execution is carried out.
         /// </summary>
         [JsonIgnore]
-        public RunSettings RunSettings { get; set; }
+        public readonly RunSettings RunSettings;
 
         /// <summary>
         /// Evaluation count is incremented whenever the graph is evaluated. 

@@ -26,6 +26,11 @@ namespace FFITarget
 
     public class TestOverloadB : TestOverloadA
     {
+        public int execute(TestOverloadB b)
+        {
+            return 2;
+        }
+
         public int execute(TestOverloadB[] bs)
         {
             return 3;

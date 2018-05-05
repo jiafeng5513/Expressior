@@ -5,7 +5,6 @@ using System.Text;
 using ProtoCore.DSASM;
 using ProtoCore.Utils;
 using System.Linq;
-using ProtoCore.DSDefinitions;
 using ProtoCore.Runtime;
 using ProtoCore.Properties;
 
@@ -38,7 +37,6 @@ namespace ProtoCore
             RangeExpressionOutOfMemory,
             MoreThanOneDominantList,
             RunOutOfMemory,
-            InvalidArrayIndexType,
         }
 
         public struct WarningEntry
@@ -350,8 +348,7 @@ namespace ProtoCore
         }
 
 
-        public void LogMethodResolutionWarning(FunctionGroup funcGroup, 
-                                               string methodName,
+        public void LogMethodResolutionWarning(string methodName,
                                                int classScope = Constants.kGlobalScope,
                                                List<StackValue> arguments = null)
         {
@@ -359,36 +356,12 @@ namespace ProtoCore
             string propertyName;
             Operator op;
 
-            var qualifiedMethodName = methodName;
-
-            var className = string.Empty;
-            var classNameSimple = string.Empty;
-
-            if (classScope != Constants.kGlobalScope)
-            {
-                var classNode = runtimeCore.DSExecutable.classTable.ClassNodes[classScope];
-                className = classNode.Name;
-                classNameSimple = className.Split('.').Last();
-                qualifiedMethodName = classNameSimple + "." + methodName;
-            }
-
             if (CoreUtils.TryGetPropertyName(methodName, out propertyName))
             {
                 if (classScope != Constants.kGlobalScope)
                 {
-                    if (arguments != null && arguments.Any())
-                    {
-                        qualifiedMethodName = classNameSimple + "." + propertyName;
-
-                        // if the property is found on the class, it must be a static getter being called on 
-                        // an instance argument type not matching the property
-                        message = string.Format(Resources.NonOverloadMethodResolutionError, qualifiedMethodName,
-                            className, GetTypeName(arguments[0]));
-                    }
-                    else
-                    {
-                        message = string.Format(Resources.kPropertyOfClassNotFound, propertyName, className);
-                    }
+                    string classname = runtimeCore.DSExecutable.classTable.ClassNodes[classScope].Name;
+                    message = string.Format(Resources.kPropertyOfClassNotFound, propertyName, classname);
                 }
                 else
                 {
@@ -397,45 +370,30 @@ namespace ProtoCore
             }
             else if (CoreUtils.TryGetOperator(methodName, out op))
             {
-                var strOp = Op.GetOpSymbol(op);
+                string strOp = Op.GetOpSymbol(op);
                 message = String.Format(Resources.kMethodResolutionFailureForOperator,
                                         strOp,
-                                        GetTypeName(arguments[0]),
-                                        GetTypeName(arguments[1]));
+                                        runtimeCore.DSExecutable.TypeSystem.GetType(arguments[0].metaData.type),
+                                        runtimeCore.DSExecutable.TypeSystem.GetType(arguments[1].metaData.type));
             }
-            else if (funcGroup.FunctionEndPoints.Count == 1) // non-overloaded case
+            else
             {
-                var argsJoined = string.Join(", ", arguments.Select(GetTypeName));
-                
-                var fep = funcGroup.FunctionEndPoints[0];
-                var formalParamsJoined = string.Join(", ", fep.FormalParams.Select(x => x.ToShortString()));
+                StringBuilder sb = new StringBuilder();
+                sb.Append("(");
+                foreach (StackValue sv in arguments)
+                {
+                    sb.Append(runtimeCore.DSExecutable.TypeSystem.GetType(sv.metaData.type));
+                    sb.Append(",");
+                }
+                String outString = sb.ToString();
+                String typesList = outString.Substring(0, outString.Length - 1); //Drop trailing ','
+                typesList = typesList + ")";
 
-                message = string.Format(Resources.NonOverloadMethodResolutionError, qualifiedMethodName, formalParamsJoined, argsJoined);
-            }
-            else // overloaded case
-            {
-                var argsJoined = string.Join(", ", arguments.Select(GetTypeName));
-                message = string.Format(Resources.kMethodResolutionFailureWithTypes, qualifiedMethodName, argsJoined);
+
+                message = string.Format(Resources.kMethodResolutionFailureWithTypes, methodName, typesList);
             }
 
             LogWarning(WarningID.MethodResolutionFailure, message);
-        }
-
-        private string GetTypeName(StackValue v)
-        {
-            var type = runtimeCore.DSExecutable.TypeSystem.GetType(v.metaData.type);
-            if (type != Keyword.Array)
-            {
-                return type;
-            }
-
-            var c = ArrayUtils.GetGreatestCommonSubclassForArray(v, runtimeCore);
-            if (c == null) // empty array case
-            {
-                return "var[]";
-            }
-
-            return c.Name + "[]";
         }
 
         public void LogMethodNotAccessibleWarning(string methodName)

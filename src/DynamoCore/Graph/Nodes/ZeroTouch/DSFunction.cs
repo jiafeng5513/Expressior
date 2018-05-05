@@ -35,7 +35,6 @@ namespace Dynamo.Graph.Nodes.ZeroTouch
 
         /// <summary>
         ///     Indicates whether Node is input or not.
-        ///     Used to bind visibility of UI for user selection.
         /// </summary>
         public override bool IsInputNode
         {

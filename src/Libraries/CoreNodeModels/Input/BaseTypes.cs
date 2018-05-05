@@ -162,7 +162,7 @@ namespace CoreNodeModels.Input
 
         public DoubleInput()
         {
-            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("", "Double")));
+            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("", "")));
             RegisterAllPorts();
 
             ShouldDisplayPreviewCore = false;
@@ -751,13 +751,13 @@ namespace CoreNodeModels.Input
 
             public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
             {
-                return ((double)reader.Value).ToString(CultureInfo.InvariantCulture);
+                return reader.Value.ToString();
             }
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
                 double d = 0.0;
-                double.TryParse((string)value, NumberStyles.Any, CultureInfo.InvariantCulture, out d);
+                double.TryParse((string)value, out d);
                 writer.WriteValue(d);
             }
         }

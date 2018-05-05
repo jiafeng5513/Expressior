@@ -335,7 +335,9 @@ namespace Dynamo.Graph.Nodes.ZeroTouch
                     {
                         model.UseLevelAndReplicationGuide(inputAstNodes);
                         rhs = AstFactory.BuildFunctionCall(
-                            Definition.ClassName, Definition.FunctionName, inputAstNodes);
+                            Definition.ClassName,
+                            ProtoCore.DSASM.Constants.kGetterPrefix + Definition.FunctionName,
+                            inputAstNodes);
                     }
                     break;
 

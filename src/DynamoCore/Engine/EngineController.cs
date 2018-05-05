@@ -151,8 +151,7 @@ namespace Dynamo.Engine
 
         #region Function Groups
 
-        /// <summary>
-        /// Import Library
+        /// Import library.
         /// </summary>
         /// <param name="library"></param>
         internal void ImportLibrary(string library)

@@ -21,7 +21,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo_square_32x32.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\logo_square_32x32.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <UseVSHostingProcess>false</UseVSHostingProcess>

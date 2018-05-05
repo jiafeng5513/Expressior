@@ -18,21 +18,19 @@ namespace Dynamo.Extensions
     /// *Extension.dll and type name of IExtension inheritor.
     /// 
     /// Example:
-    /// <ExtensionDefinition>
+    /// <ViewExtensionDefinition>
     ///   <AssemblyPath>..\ExtansionName.dll</AssemblyPath>
     ///   <TypeName>Dynamo.ExtansionName.ExtansionTypeName</TypeName>
-    /// </ExtensionDefinition>
+    /// </ViewExtensionDefinition>
     /// </summary>
     public class ExtensionLoader: IExtensionLoader, ILogSource
     {
         private IExtension Load(ExtensionDefinition extension)
         {
-            
             try
             {
                 var assembly = Assembly.LoadFrom(extension.AssemblyPath);
                 var result = assembly.CreateInstance(extension.TypeName) as IExtension;
-                ExtensionLoading?.Invoke(result);
                 return result;
             }
             catch(Exception ex)
@@ -124,10 +122,5 @@ namespace Dynamo.Extensions
         {
             Log(LogMessage.Info(msg));
         }
-
-        /// <summary>
-        /// An event that is raised when an extension starts loading.
-        /// </summary>
-        public event Action<IExtension> ExtensionLoading;
     }
 }

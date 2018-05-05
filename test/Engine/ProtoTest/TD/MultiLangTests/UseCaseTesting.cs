@@ -57,38 +57,41 @@ a = a + 2;	// I am assuming that this statement (on line 27) is executed after t
             //Assert.Fail("1460139 - Sprint 18 : Rev 1580 : Update going into infinite loop for valid case ");
 
             string code = @"
+// no paradigm specified, so assume associative
+// some associative code ....
 a = 10;
 b = a*2;
-a = a +1;
-
+a = a +1; 	// expanded modifier, therefore the statement on line 7 is calculated after the statement on line 6 is excuted
 c = 0;
-i = [Imperative]
+//some imperative code ....
+[Imperative]
 {
 	if (a>10) 	// explicit switch to imperative paradigm
 	{
-		c = b;
- 	
-		b=b/2;
-	
+		c = b; 	// so statements are treated in lexical order, therefore the statement on line 13
+		b=b/2;	// is executed before the statement on line 14 [as would be expected]
 	}
 	else
 	{
-		[Associative] 	// explicit switch to associative paradigm 
+		[Associative] 	// explicit switch to associative paradigm [overrides the imperative paradigm]
 		{
-			c = b;
-    	
-			b = b*2;
-	
+			c = b;    	// c references the final state of b, therefore [because we are in an associative paradigm] 
+			b = b*2;	// the statement on line 21 is executed before the statement on line 20
 		}
 	}
-	return [b,c];
 }
- 
-a = a + 2;
+// some more associative code ....
+a = a + 2;	// I am assuming that this statement (on line 27) is executed after the if..else has been evaluated and executed, because...
+			// effectively, when a imperative block is nested within an associative block, lexical order plays a role
+			// in that the execution order is:
+			//			the part of the associative graph before the imperative block
+			//			the imperative block
+			//			the part of the associative graph after the imperative block
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("a", 13);
-            thisTest.Verify("i", new[] {13.0, 26});
+            thisTest.Verify("b", 13.0);
+            thisTest.Verify("c", 26);
 
         }
 
@@ -167,7 +170,8 @@ b  = b2 + 2;    // 5";
         public void T010_imperative_if_inside_for_loop_1_Robert()
         {
             string code = @"
-x = [Imperative]
+x;
+[Imperative]
 {
 	x = 0;
 	
@@ -177,7 +181,6 @@ x = [Imperative]
 		if(i>5) x = i*2; // tis is ignored
 		// if(i<5) x = i*2; // this causes a crash
 	}
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", 18);

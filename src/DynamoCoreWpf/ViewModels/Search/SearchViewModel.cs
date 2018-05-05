@@ -432,7 +432,6 @@ namespace Dynamo.ViewModels
 
         internal void UpdateEntry(NodeSearchElement entry)
         {
-            //look for the viewModel which should own this nodeSearchElement entry.
             var rootNode = libraryRoot;
             foreach (var categoryName in entry.Categories)
             {

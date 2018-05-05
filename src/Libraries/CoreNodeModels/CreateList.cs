@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 
 namespace CoreNodeModels
 {
-    [NodeName("List Create")]
+    [NodeName("List.Create")]
     [NodeDescription("ListCreateDescription", typeof(Resources))]
     [NodeSearchTags("ListCreateSearchTags", typeof(Resources))]
     [NodeCategory(BuiltinNodeCategories.CORE_LISTS_CREATE)]
     [IsDesignScriptCompatible]
-    [AlsoKnownAs("DSCoreNodesUI.CreateList", "List.Create")]
+    [AlsoKnownAs("DSCoreNodesUI.CreateList")]
     public class CreateList : VariableInputNode
     {
         /// <summary>

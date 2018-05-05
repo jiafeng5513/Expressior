@@ -1144,7 +1144,7 @@ namespace ProtoScript.Runners
             {
                 if (runnerCore != null)
                 {
-                    runnerCore.Cleanup();
+                    runtimeCore.Cleanup();
                     runnerCore = null;
                 }
 

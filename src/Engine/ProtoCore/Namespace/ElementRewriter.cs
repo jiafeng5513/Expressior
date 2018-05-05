@@ -15,12 +15,6 @@ namespace ProtoCore.Namespace
         private readonly ClassTable classTable;
         private readonly ElementResolver elementResolver;
         private readonly SymbolConflictWarningHandler symbolConflictHandler;
-         
-        // List of reserved method names who's AST's should not be rewritten
-        private static readonly string[] ReservedMethods =
-        {
-            Node.BuiltinGetValueAtIndexTypeName + '.' + Node.BuiltinValueAtIndexMethodName
-        };
 
         public delegate void SymbolConflictWarningHandler(string symbolName, string[] collidingSymbolNames);
 
@@ -95,18 +89,10 @@ namespace ProtoCore.Namespace
 
         public override AssociativeNode VisitIdentifierListNode(IdentifierListNode node)
         {
-            // If node is a reserved method call, skip rewriting it.
-            if (ReservedMethods.Any(reservedMethod => node.ToString().Contains(reservedMethod)))
-            {
-                return node;
-            }
-            
             // First pass attempt to resolve the node before traversing it deeper
             AssociativeNode newIdentifierListNode = null;
             if (IsMatchingResolvedName(node, out newIdentifierListNode))
-            {
                 return newIdentifierListNode;
-            }
 
             var rightNode = node.RightNode;
             var leftNode = node.LeftNode;
@@ -120,7 +106,6 @@ namespace ProtoCore.Namespace
                 RightNode = rightNode,
                 Optr = Operator.dot
             };
-            
             return RewriteIdentifierListNode(node);
         }
 

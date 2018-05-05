@@ -22,7 +22,7 @@ namespace DSCore
     public static class List
     {
         /// <summary>
-        ///     Returns an Empty List.
+        ///     An Empty List.
         /// </summary>
         /// <returns name="list">Empty list.</returns>
         /// <search>empty list, emptylist,[]</search>
@@ -69,7 +69,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">List to be checked if it's homogeneous.</param>
         /// <returns name="bool">Whether the list is homogeneous.</returns>
-        /// <search>homogeneous,allequal,same,type</search>
+        /// <search>homogeneous,ishomogeneous,same,type</search>
         [IsVisibleInDynamoLibrary(true)]
         public static bool IsHomogeneous(IList list)
         {
@@ -113,7 +113,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">List to be checked if the items have the same depth.</param>
         /// <returns name="bool">Whether the depth of the list is uniform.</returns>
-        /// <search>depth,uniform,isuniformdepth,sublist,jagged</search>
+        /// <search>depth,uniform,isuniformdepth,sublist</search>
         [IsVisibleInDynamoLibrary(true)]
         public static bool IsUniformDepth(IList list)
         {
@@ -145,7 +145,7 @@ namespace DSCore
         /// <param name="list1">List of objects to be compared with list2.</param>
         /// <param name="list2">List of objects to be compared with list1.</param>
         /// <returns name="newList">The new list that contains objects that are in both List1 and List2.</returns>
-        /// <search>intersection,setintersection,set,overlap</search>
+        /// <search>intersection,setintersection,set</search>
         [IsVisibleInDynamoLibrary(true)]
         public static IList SetIntersection(IList<object> list1, IList<object> list2)
         {
@@ -183,7 +183,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">The list find the false boolean values.</param>
         /// <returns name="int">The number of false boolean values in the list.</returns>
-        /// <search>false,count</search>
+        /// <search>false,countfalse</search>
         [IsVisibleInDynamoLibrary(true)]
         public static int CountFalse(IList list)
         {
@@ -195,7 +195,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">The list find the true boolean values.</param>
         /// <returns name="int">The number of true boolean values in the list.</returns>
-        /// <search>true,count</search>
+        /// <search>true,counttrue</search>
         [IsVisibleInDynamoLibrary(true)]
         public static int CountTrue(IList list)
         {
@@ -246,7 +246,6 @@ namespace DSCore
         /// </summary>
         /// <param name="list">The list of items to be sorted.</param>
         /// <returns name="newList">The indices of the items in the sorted list.</returns>
-        /// <search>sort,index,value</search>
         [IsVisibleInDynamoLibrary(true)]
         public static IEnumerable SortIndexByValue(List<double> list)
         {
@@ -266,7 +265,6 @@ namespace DSCore
         /// <param name="list">The list whose depth is to be normalized according to the rank.</param>
         /// <param name="rank">The rank the list is to be normalized to. Default value is 1.</param>
         /// <returns name="list">The list with the normalized rank.</returns>
-        /// <search>depth,normalize</search>
         [IsVisibleInDynamoLibrary(true)]
         public static IList NormalizeDepth(IList list, int rank = 1)
         {
@@ -778,7 +776,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">List to be checked on whether all items are true.</param>
         /// <returns name="bool">Whether all items are true.</returns>
-        /// <search>test,all,true,istrue</search>
+        /// <search>test,all,true</search>
         [IsVisibleInDynamoLibrary(true)]
         public static bool AllTrue(IList list)
         {
@@ -803,7 +801,7 @@ namespace DSCore
         /// </summary>
         /// <param name="list">List to be checked on whether all items are false.</param>
         /// <returns name="bool">Whether all items are false.</returns>
-        /// <search>test,all,false,isfalse</search>
+        /// <search>test,all,false</search>
         [IsVisibleInDynamoLibrary(true)]
         public static bool AllFalse(IList list)
         {
@@ -1288,7 +1286,6 @@ namespace DSCore
         /// </summary>
         /// <param name="list">List to flatten.</param>
         /// <param name="amt">Layers of nesting to remove.</param>
-        /// <search>flatten,completely</search>
         [IsVisibleInDynamoLibrary(true)]
         public static IList Flatten(IList list, int amt = -1)
         {

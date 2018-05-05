@@ -26,10 +26,10 @@ using Newtonsoft.Json;
 using Dynamo.Wpf.ViewModels.Core;
 using System.Diagnostics;
 using Dynamo.Engine;
-using System.Globalization;
 
 namespace Dynamo.ViewModels
 {
+
     public delegate void NoteEventHandler(object sender, EventArgs e);
     public delegate void ViewEventHandler(object sender, EventArgs e);
     public delegate void SelectionEventHandler(object sender, SelectionBoxUpdateArgs e);
@@ -182,46 +182,14 @@ namespace Dynamo.ViewModels
         public bool IsSnapping { get; set; }
 
         /// <summary>
-        /// Gets the collection of Dynamo-specific preferences.
-        /// This is used when serializing Dynamo preferences in the View block of Graph.Json.
-        /// </summary>
-        [JsonProperty("Dynamo")]
-        public DynamoPreferencesData DynamoPreferences
-        {
-            get
-            {
-              bool hasRunWithoutCrash = false;
-              string runType = RunType.Manual.ToString();
-              string runPeriod = RunSettings.DefaultRunPeriod.ToString();
-              HomeWorkspaceModel homeWorkspace = Model as HomeWorkspaceModel;
-              if (homeWorkspace != null)
-              {
-                hasRunWithoutCrash = homeWorkspace.HasRunWithoutCrash;
-                runType = homeWorkspace.RunSettings.RunType.ToString();
-                runPeriod = homeWorkspace.RunSettings.RunPeriod.ToString();
-              }
-
-              bool isVisibleInDynamoLibrary = true;
-              CustomNodeWorkspaceModel customNodeWorkspace = Model as CustomNodeWorkspaceModel;
-              if (customNodeWorkspace != null)
-                isVisibleInDynamoLibrary = customNodeWorkspace.IsVisibleInDynamoLibrary;
-
-              return new DynamoPreferencesData(
-                Model.ScaleFactor,
-                hasRunWithoutCrash,
-                isVisibleInDynamoLibrary,
-                AssemblyHelper.GetDynamoVersion().ToString(),
-                runType,
-                runPeriod);
-            }
-        }
-
-        /// <summary>
         /// Gets the Camera Data. This is used when serializing Camera Data in the View block
         /// of Graph.Json.
         /// </summary>
         [JsonProperty("Camera")]
-        public CameraData Camera => DynamoViewModel.BackgroundPreviewViewModel.GetCameraInformation() ?? new CameraData();
+        public CameraData Camera
+        {
+            get { return DynamoViewModel.BackgroundPreviewViewModel.GetCameraInformation(); }
+        }
 
         /// <summary>
         /// ViewModel that is used in InCanvasSearch in context menu and called by Shift+DoubleClick.
@@ -263,9 +231,8 @@ namespace Dynamo.ViewModels
         [JsonProperty("NodeViews")]
         public ObservableCollection<NodeViewModel> Nodes { get { return _nodes; } }
 
-        // Do not serialize notes, they will be converted to annotations during serialization
         ObservableCollection<NoteViewModel> _notes = new ObservableCollection<NoteViewModel>();
-        [JsonIgnore]
+        [JsonProperty("Notes")]
         public ObservableCollection<NoteViewModel> Notes { get { return _notes; } }
 
         ObservableCollection<InfoBubbleViewModel> _errors = new ObservableCollection<InfoBubbleViewModel>();
@@ -452,9 +419,9 @@ namespace Dynamo.ViewModels
             Model.ConnectorAdded += Connectors_ConnectorAdded;
             Model.ConnectorDeleted += Connectors_ConnectorDeleted;
             Model.PropertyChanged += ModelPropertyChanged;
-            Model.PopulateJSONWorkspace += Model_PopulateJSONWorkspace;
-            
-            DynamoSelection.Instance.Selection.CollectionChanged += RefreshViewOnSelectionChange;
+
+            DynamoSelection.Instance.Selection.CollectionChanged +=
+                (sender, e) => RefreshViewOnSelectionChange();
 
             DynamoViewModel.CopyCommand.CanExecuteChanged += CopyPasteChanged;
             DynamoViewModel.PasteCommand.CanExecuteChanged += CopyPasteChanged;
@@ -468,52 +435,6 @@ namespace Dynamo.ViewModels
 
             InCanvasSearchViewModel = new SearchViewModel(DynamoViewModel);
             InCanvasSearchViewModel.Visible = true;
-        }
-        /// <summary>
-        /// This event is triggred from Workspace Model. Used in instrumentation
-        /// </summary>
-        /// <param name="modelData"> Workspace model data as JSON </param>
-        /// <returns>workspace model with view block in string format</returns>
-        private string Model_PopulateJSONWorkspace(JObject modelData)
-        {
-             var jsonData = AddViewBlockToJSON(modelData);
-             return jsonData.ToString();
-        }
-
-        public override void Dispose()
-        {
-            Model.NodeAdded -= Model_NodeAdded;
-            Model.NodeRemoved -= Model_NodeRemoved;
-            Model.NodesCleared -= Model_NodesCleared;
-
-            Model.NoteAdded -= Model_NoteAdded;
-            Model.NoteRemoved -= Model_NoteRemoved;
-            Model.NotesCleared -= Model_NotesCleared;
-
-            Model.AnnotationAdded -= Model_AnnotationAdded;
-            Model.AnnotationRemoved -= Model_AnnotationRemoved;
-            Model.AnnotationsCleared -= Model_AnnotationsCleared;
-
-            Model.ConnectorAdded -= Connectors_ConnectorAdded;
-            Model.ConnectorDeleted -= Connectors_ConnectorDeleted;
-            Model.PropertyChanged -= ModelPropertyChanged;
-            Model.PopulateJSONWorkspace -= Model_PopulateJSONWorkspace;
-
-            DynamoSelection.Instance.Selection.CollectionChanged -= RefreshViewOnSelectionChange;
-
-            DynamoViewModel.CopyCommand.CanExecuteChanged -= CopyPasteChanged;
-            DynamoViewModel.PasteCommand.CanExecuteChanged -= CopyPasteChanged;
-
-            var nodeViewModels = Nodes.ToList();
-            nodeViewModels.ForEach(nodeViewModel => nodeViewModel.Dispose());
-            nodeViewModels.ForEach(nodeViewModel => this.unsubscribeNodeEvents(nodeViewModel));
-
-            Notes.ToList().ForEach(noteViewModel => noteViewModel.Dispose());
-            Connectors.ToList().ForEach(connectorViewmModel => connectorViewmModel.Dispose());
-            Nodes.Clear();
-            Notes.Clear();
-            Connectors.Clear();
-            
         }
 
         internal void ZoomInInternal()
@@ -537,7 +458,7 @@ namespace Dynamo.ViewModels
         /// <param name="filePath"></param>
         /// <param name="engine"></param>
         /// <exception cref="ArgumentNullException">Thrown when the file path is null.</exception>
-        internal void Save(string filePath, bool isBackup = false, EngineController engine = null)
+        internal void Save(string filePath, EngineController engine = null)
         {
             if (String.IsNullOrEmpty(filePath))
             {
@@ -546,42 +467,25 @@ namespace Dynamo.ViewModels
 
             try
             {
-                //set the name before serializing model.
-                this.Model.setNameBasedOnFileName(filePath, isBackup);
                 // Stage 1: Serialize the workspace.
                 var json = Model.ToJson(engine);
-                var json_parsed = JObject.Parse(json);
 
                 // Stage 2: Add the View.
-                var jo = AddViewBlockToJSON(json_parsed);
+                var jo = JObject.Parse(json);
+                var token = JToken.Parse(this.ToJson());
+                jo.Add("View", token);
 
                 // Stage 3: Save
                 File.WriteAllText(filePath, jo.ToString());
 
-                // Handle Workspace or CustomNodeWorkspace related non-serialization internal logic
-                // Only for actual save, update file path and recent file list
-                if (!isBackup)
-                {
-                    Model.FileName = filePath;
-                    Model.OnSaved();
-                }
+                Model.FileName = filePath;
+                Model.OnSaved();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw (ex);
             }
-        }
-        /// <summary>
-        /// This function appends view block to the model json
-        /// </summary>
-        /// <param name="modelData">Workspace Model data in JSON format</param>
-        private JObject AddViewBlockToJSON(JObject modelData)
-        {
-            var token = JToken.Parse(this.ToJson());
-            modelData.Add("View", token);
-
-            return modelData;
         }
 
         /// <summary>
@@ -593,8 +497,6 @@ namespace Dynamo.ViewModels
             JsonReader reader = new JsonTextReader(new StringReader(json));
             var obj = JObject.Load(reader);
             var viewBlock = obj["View"];
-            if (viewBlock == null)
-              return null;
            
             var settings = new JsonSerializerSettings
             {
@@ -605,8 +507,7 @@ namespace Dynamo.ViewModels
                 },
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.Auto,
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                Culture = CultureInfo.InvariantCulture
+                Formatting = Newtonsoft.Json.Formatting.Indented
             };
 
             return JsonConvert.DeserializeObject<ExtraWorkspaceViewInfo>(viewBlock.ToString(), settings);
@@ -629,10 +530,7 @@ namespace Dynamo.ViewModels
         {
             var connector = _connectors.FirstOrDefault(x => x.ConnectorModel == c);
             if (connector != null)
-            {
                 _connectors.Remove(connector);
-                connector.Dispose();
-            }
         }
 
         private void Model_NoteAdded(NoteModel note)
@@ -643,17 +541,11 @@ namespace Dynamo.ViewModels
 
         private void Model_NoteRemoved(NoteModel note)
         {
-            var matchingNoteViewModel = _notes.First(x => x.Model == note);
-            _notes.Remove(matchingNoteViewModel);
-            matchingNoteViewModel.Dispose();
+            _notes.Remove(_notes.First(x => x.Model == note));
         }
 
         private void Model_NotesCleared()
         {
-            foreach (var noteViewModel in _notes)
-            {
-                noteViewModel.Dispose();
-            }
             _notes.Clear();
         }
 
@@ -675,21 +567,9 @@ namespace Dynamo.ViewModels
 
         void Model_NodesCleared()
         {
-            foreach(var nodeViewModel in _nodes)
-            {
-                this.unsubscribeNodeEvents(nodeViewModel);
-                nodeViewModel.Dispose();
-            }
             _nodes.Clear();
             Errors.Clear();
-
             PostNodeChangeActions();
-        }
-
-        private void unsubscribeNodeEvents(NodeViewModel nodeViewModel)
-        {
-            nodeViewModel.SnapInputEvent -= nodeViewModel_SnapInputEvent;
-            nodeViewModel.NodeLogic.Modified -= OnNodeModified;
         }
 
         void Model_NodeRemoved(NodeModel node)
@@ -697,9 +577,6 @@ namespace Dynamo.ViewModels
             NodeViewModel nodeViewModel = _nodes.First(x => x.NodeLogic == node);
             Errors.Remove(nodeViewModel.ErrorBubble);
             _nodes.Remove(nodeViewModel);
-            //unsub the events we attached below in NodeAdded.
-            this.unsubscribeNodeEvents(nodeViewModel);
-            nodeViewModel.Dispose();
 
             PostNodeChangeActions();
         }
@@ -1102,7 +979,22 @@ namespace Dynamo.ViewModels
                 modelGuids, "IsVisible", (string) parameter);
 
             DynamoViewModel.Model.ExecuteCommand(command);
-            RefreshViewOnSelectionChange(this,null);
+            RefreshViewOnSelectionChange();
+        }
+
+        private void ShowHideAllUpstreamPreview(object parameter)
+        {
+            var modelGuids = DynamoSelection.Instance.Selection.
+                OfType<NodeModel>().Select(n => n.GUID);
+
+            if (!modelGuids.Any())
+                return;
+
+            var command = new DynamoModel.UpdateModelValueCommand(Guid.Empty,
+                modelGuids, "IsUpstreamVisible", (string) parameter);
+
+            DynamoViewModel.Model.ExecuteCommand(command);
+            RefreshViewOnSelectionChange();
         }
 
         private void SetArgumentLacing(object parameter)
@@ -1371,9 +1263,10 @@ namespace Dynamo.ViewModels
             this.OnZoomChanged(this, new ZoomEventArgs(this.Zoom));
         }
 
-        private void RefreshViewOnSelectionChange(object sender, NotifyCollectionChangedEventArgs args)
+        private void RefreshViewOnSelectionChange()
         {
             AlignSelectedCommand.RaiseCanExecuteChanged();
+            ShowHideAllUpstreamPreviewCommand.RaiseCanExecuteChanged();
             ShowHideAllGeometryPreviewCommand.RaiseCanExecuteChanged();
             SetArgumentLacingCommand.RaiseCanExecuteChanged();           
             RaisePropertyChanged("HasSelection");

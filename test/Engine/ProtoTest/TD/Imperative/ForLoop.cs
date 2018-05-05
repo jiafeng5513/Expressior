@@ -89,19 +89,18 @@ namespace ProtoTest.TD.Imperative
         [Category("SmokeTest")]
         public void T05_TestForLoopInsideNestedBlocks()
         {
-            string src = @"
-x = [Associative]
+            string src = @"x;
+[Associative]
 {
-	a = [ 4, 5 ];
-	return [Imperative]
+	a = { 4, 5 };
+	[Imperative]
 	{
 		x = 0;
-		b = [ 2,3 ];
+		b = { 2,3 };
 		for( y in b )
 		{
 			x = y + x;
 		}
-        return x;
 	}
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -115,7 +114,7 @@ x = [Associative]
             string src = @"b;
 [Associative]
 {
-	a = [ 4,5 ];
+	a = { 4,5 };
 	b =[Imperative]
 	{
 	
@@ -135,10 +134,10 @@ x = [Associative]
         [Category("SmokeTest")]
         public void T07_TestForLoopUsingLocalVariable()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1, 2, 3, 4, 5 ];
+	a = { 1, 2, 3, 4, 5 };
 	x = 0;
 	for( y in a )
 	{
@@ -146,7 +145,6 @@ x = [Imperative]
         x = local_var + y;		
 	}
 	z = local_var;
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 30);
@@ -157,11 +155,13 @@ x = [Imperative]
         public void T08_TestForLoopInsideFunctionDeclaration()
         {
             string src = @"
+y;
+z;
 def sum : double ( a : double, b : double, c : double )
 {   
     return = [Imperative] {
 		x = 0;
-	    z = [a, b, c];
+	    z = {a, b, c};
 		for(y in z)
 		{
 			x = x + y;
@@ -169,31 +169,30 @@ def sum : double ( a : double, b : double, c : double )
 		return = x;
     }
 }
-i = [Imperative]
+[Imperative]
 {
 	y = sum ( 1.0, 2.5, -3.5 );
 	z = sum ( -4.0, 5.0, 6.0 );
-    return [y, z];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {0, 7});
+            thisTest.Verify("y", 0);
+            thisTest.Verify("z", 7);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T09_TestForLoopWithBreakStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,2,3 ];
+	a = { 1,2,3 };
 	x = 0;
 	for( i in a )
 	{
 		x = x + 1;
 		break;
 	}	
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 1);
@@ -203,10 +202,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T10_TestNestedForLoops()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,2,3 ];
+	a = { 1,2,3 };
 	x = 0;
 	for ( i in a )
 	{
@@ -215,7 +214,6 @@ x = [Imperative]
 			x = x + j;
 		}
 	}
-    return x;
 }	";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 18);
@@ -225,10 +223,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T11_TestForLoopWithSingleton()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [1];
+	a = {1};
 	b = 1;
 	x = 0;
  
@@ -241,7 +239,6 @@ x = [Imperative]
 	{
 		x = x + 1;
 	}
-    return x;
 } ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 2);
@@ -251,10 +248,11 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T12_TestForLoopWith2DCollection()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"x;
+z;
+[Imperative]
 {
-	a = [[1],[2,3],[4,5,6]];
+	a = {{1},{2,3},{4,5,6}};
 	x = 0;
 	i = 0;
     for (y in a)
@@ -270,22 +268,24 @@ i = [Imperative]
 		    z = z + j1;
 		}
 	}
-	return [x, z];	
+			
 	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {10, 21});
+            thisTest.Verify("x", 10);
+            thisTest.Verify("z", 21);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T13_TestForLoopWithNegativeAndDecimalCollection()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"x;
+y;
+[Imperative]
 {
-	a = [ -1,-3,-5 ];
-	b = [ 2.5,3.5,4.2 ];
+	a = { -1,-3,-5 };
+	b = { 2.5,3.5,4.2 };
 	x = 0;
 	y = 0;
     for ( i in a )
@@ -297,10 +297,11 @@ i = [Imperative]
 	{
 		y = y + i;
 	}
-	return [x, y];
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {-9, 10.2});
+            thisTest.Verify("x", -9);
+            thisTest.Verify("y", 10.2);
         }
 
         [Test]
@@ -310,7 +311,7 @@ i = [Imperative]
             string src = @"x;
 [Imperative]
 { 
-	a = [ true, false, true, true ];
+	a = { true, false, true, true };
 	x = false;
 	
 	for( i in a )
@@ -326,37 +327,39 @@ i = [Imperative]
         [Category("SmokeTest")]
         public void T15_TestForLoopWithMixedCollection()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"x;
+y;
+[Imperative]
 {
-	a = [ -2, 3, 4.5 ];
+	a = { -2, 3, 4.5 };
 	x = 1;
 	for ( y in a )
 	{
 		x = x * y;       
     }
 	
-	a = [ -2, 3, 4.5, true ];
+	a = { -2, 3, 4.5, true };
 	y = 1;
 	for ( i in a )
 	{
 		y = i * y;       
     }
-	return [x, y];
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new object[] {-27, null});
+            thisTest.Verify("x", -27);
+            thisTest.Verify("y", null);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T16_TestForLoopInsideIfElseStatement()
         {
-            string src = @"
-a = [Imperative]
+            string src = @"a;
+[Imperative]
 {
 	a = 1;
-	b = [ 2,3,4 ];
+	b = { 2,3,4 };
 	if( a == 1 )
 	{
 		for( y in b )
@@ -364,6 +367,7 @@ a = [Imperative]
 			a = a + y;
 		}
 	}
+	
 	else if( a !=1)
 	{
 		for( y in b )
@@ -371,7 +375,6 @@ a = [Imperative]
 			a = a + 1;
 		}
 	}
-    return a;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("a", 10);
@@ -381,11 +384,11 @@ a = [Imperative]
         [Category("SmokeTest")]
         public void T17_TestForLoopInsideNestedIfElseStatement()
         {
-            string src = @"
-a = [Imperative]
+            string src = @"a;
+[Imperative]
 {
 	a = 1;
-	b = [ 2,3,4 ];
+	b = { 2,3,4 };
 	c = 1;
 	if( a == 1 )
 	{
@@ -397,6 +400,7 @@ a = [Imperative]
 			}
 		}	
 	}
+	
 	else if( a !=1)
 	{
 		for( y in b )
@@ -404,7 +408,6 @@ a = [Imperative]
 			a = a + 1;
 		}
 	}
-    return a;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("a", 10);
@@ -414,11 +417,11 @@ a = [Imperative]
         [Category("SmokeTest")]
         public void T18_TestForLoopInsideWhileStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
 	a = 1;
-	b = [ 1,1,1 ];
+	b = { 1,1,1 };
 	x = 0;
 	
 	if( a == 1 )
@@ -432,7 +435,6 @@ x = [Imperative]
 			a = a + 1;
 		}
 	}
-    return x;
 }
 			";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -443,11 +445,11 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T19_TestForLoopInsideNestedWhileStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
 	i = 1;
-	a = [1,2,3,4,5];
+	a = {1,2,3,4,5};
 	x = 0;
 	
 	while( i <= 5 )
@@ -463,7 +465,6 @@ x = [Imperative]
 		}
 		i = i + 1;
 	}
-    return x;
 }	
 		
 			";
@@ -475,15 +476,14 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T20_TestForLoopWithoutBracket()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1, 2, 3 ];
+	a = { 1, 2, 3 };
     x = 0;
 	
 	for( y in a )
 	    x = y;
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 3);
@@ -493,10 +493,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T21_TestIfElseStatementInsideForLoop()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,2,3,4,5 ];
+	a = { 1,2,3,4,5 };
 	x = 0;
 	
 	for ( i in a )
@@ -510,7 +510,6 @@ x = [Imperative]
 		else
 			x = x + 1;
 	}
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 10);
@@ -520,10 +519,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T22_TestWhileStatementInsideForLoop()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,2,3 ];
+	a = { 1,2,3 };
 	x = 0;
 	
 	for( y in a )
@@ -540,7 +539,6 @@ x = [Imperative]
 		i = i + 1;
 		}
 	}
-    return x;
 }
 	";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -551,11 +549,16 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T23_TestForLoopWithDummyCollection()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a1;
+a2;
+a3;
+a4;
+a5;
+a6;
+[Imperative]
 {
-	a = [0, 0, 0, 0, 0, 0];
-	b = [5, 4, 3, 2, 1, 0, -1, -2];
+	a = {0, 0, 0, 0, 0, 0};
+	b = {5, 4, 3, 2, 1, 0, -1, -2};
 	i = 5;
 	for( x in b )
 	{
@@ -571,20 +574,25 @@ i = [Imperative]
 	a4 = a[3];
 	a5 = a[4];
 	a6 = a[5];
-    return [a6, a5, a4, a3, a2, a1];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {5, 4, 3, 2, 1, 0});
+            thisTest.Verify("a6", 5);
+            thisTest.Verify("a5", 4);
+            thisTest.Verify("a4", 3);
+            thisTest.Verify("a3", 2);
+            thisTest.Verify("a2", 1);
+            thisTest.Verify("a1", 0);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T24_TestForLoopToModifyCollection()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a6;
+a7;
+[Imperative]
 {
-	a = [1,2,3,4,5,6,7];
+	a = {1,2,3,4,5,6,7};
 	i = 0;
 	for( x in a )
 	{
@@ -600,26 +608,26 @@ i = [Imperative]
 	a5 = a[4];
 	a6 = a[5];
 	a7 = a[6];
-    return [a6, a7];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {7, 8});
+            thisTest.Verify("a6", 7);
+            thisTest.Verify("a7", 8);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T25_TestForLoopEmptyCollection()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [];
+	a = {};
 	x = 0;
 	for( i in a )
 	{
 		x = x + 1;
 	}
-	return x;
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 0);
@@ -629,8 +637,8 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T26_TestForLoopOnNullObject()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
 	x = 0;
 	
@@ -638,7 +646,6 @@ x = [Imperative]
 	{
 		x = x + 1;
 	}
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 0);
@@ -648,14 +655,14 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T27_TestCallingFunctionInsideForLoop()
         {
-            string src = @"
+            string src = @"x;
 	def function1 : double ( a : double )
 	{		
 		return = a + 0.7;
 	}
-x = [Imperative]
+[Imperative]
 {
-	a = [ 1.3, 2.3, 3.3, 4.3 ];
+	a = { 1.3, 2.3, 3.3, 4.3 };
 	
 	x = 3;
 	
@@ -663,7 +670,6 @@ x = [Imperative]
 	{	
 		x = x + function1( i );
 	}
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 17);
@@ -673,10 +679,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T28_Defect_1452966()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,2,3 ];
+	a = { 1,2,3 };
 	x = 0;
 	for ( i in a )
 	{
@@ -685,7 +691,6 @@ x = [Imperative]
 			x = x + j;
 		}
 	}
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 18);
@@ -695,10 +700,10 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T29_Defect_1452966_2()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [[6],[5,4],[3,2,1]];
+	a = {{6},{5,4},{3,2,1}};
 	x = 0;
 	
     for ( i in a )
@@ -708,7 +713,6 @@ x = [Imperative]
 			x = x + j;
 		}
 	}		
-    return x;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("x", 21);
@@ -718,17 +722,16 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T30_ForLoopNull()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"x;
+[Imperative]
 {
-	a = [ 1,null,null ];
+	a = { 1,null,null };
 	x = 1;
 	
 	for( i in a )
 	{
 		x = x + 1;
 	}
-    return x;
 }
 	";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -784,13 +787,13 @@ x = [Imperative]
         public void T33_ForLoopToReplaceReplicationGuides()
         {
             string code = @"
-a = [ 1, 2 ];
-b = [ 3, 4 ];
+a = { 1, 2 };
+b = { 3, 4 };
 //c = a<1> + b <2>;
-dummyArray = [ [ 0, 0 ], [ 0, 0 ] ];
+dummyArray = { { 0, 0 }, { 0, 0 } };
 counter1 = 0;
 counter2 = 0;
-dummyArr = [Imperative]
+[Imperative]
 {
 	for ( i in a )
 	{
@@ -804,12 +807,12 @@ dummyArr = [Imperative]
 		}
 		counter1 = counter1 + 1;
 	}
-	return dummyArray;
+	
 }
-a1 = dummyArr[0][0];
-a2 = dummyArr[0][1];
-a3 = dummyArr[1][0];
-a4 = dummyArr[1][1];";
+a1 = dummyArray[0][0];
+a2 = dummyArray[0][1];
+a3 = dummyArray[1][0];
+a4 = dummyArray[1][1];";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("a1", 4, 0);
             thisTest.Verify("a2", 5, 0);
@@ -822,9 +825,10 @@ a4 = dummyArr[1][1];";
         public void T34_Defect_1452966()
         {
             string code = @"
-sum = [Imperative]
+sum;
+[Imperative]
 {
-	a = [ 1, 2, 3, 4 ];
+	a = { 1, 2, 3, 4 };
 	sum = 0;
 	
 	for(i in a )
@@ -834,7 +838,6 @@ sum = [Imperative]
 			sum = sum + i;
 		}
 	}
-    return sum;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("sum", 40, 0);
@@ -845,9 +848,10 @@ sum = [Imperative]
         public void T35_Defect_1452966_2()
         {
             string code = @"
-sum = [Imperative]
+sum;
+[Imperative]
 {
-	a = [ [1, 2, 3], [4], [5,6] ];
+	a = { {1, 2, 3}, {4}, {5,6} };
 	sum = 0;
 	
 	for(i in a )
@@ -857,7 +861,6 @@ sum = [Imperative]
 			sum = sum + j;
 		}
 	}
-    return sum;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("sum", 21, 0);
@@ -869,7 +872,7 @@ sum = [Imperative]
         {
             string code = @"
 b;
-a = [ [1, 2, 3], [4], [5,6] ];
+a = { {1, 2, 3}, {4}, {5,6} };
 
 def forloop :int ( a: int[]..[] )
 {
@@ -900,7 +903,7 @@ def forloop :int ( a: int[]..[] )
         public void T37_Defect_1454517()
         {
             string code = @"
-	a = [ 4,5 ];
+	a = { 4,5 };
 	
 	b =[Imperative]
 	{
@@ -922,15 +925,16 @@ def forloop :int ( a: int[]..[] )
         public void T38_Defect_1454517_2()
         {
             string code = @"
-	a = [ 4,5 ];
-	x = [Imperative]
+	a = { 4,5 };
+	x = 0;
+	
+	[Imperative]
 	{
 		x = 0;
 		for( y in a )
 		{
 			x = x + y;
 		}
-        return x;
 	}";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("x", 9, 0);
@@ -950,14 +954,15 @@ def foo ( a : int [] )
 		{
 			x = x + y;
 		}
-		return x;
+		return =x;
 	}
-	return x;
+	return = x;
 }
-a = [ 4,5 ];
-b = [Imperative]
+a = { 4,5 };	
+b;
+[Imperative]
 {
-	return foo(a);
+	b = foo(a);
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("b", 9);
@@ -969,19 +974,19 @@ b = [Imperative]
         public void T39_Defect_1452951()
         {
             string code = @"
-x = [Associative]
+x;
+[Associative]
 {
-	a = [ 4,5 ];
+	a = { 4,5 };
    
-	return [Imperative]
+	[Imperative]
 	{
-	    //a = { 4,5 }; // works fine
+	       //a = { 4,5 }; // works fine
 		x = 0;
 		for( y in a )
 		{
 			x = x + y;
 		}
-        return x;
 	}
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -995,50 +1000,55 @@ x = [Associative]
         public void T39_Defect_1452951_1()
         {
             string code = @"
-def foo ( a : int[])
-{
-    a[1] = 4;
-	return a;
-}
-x = [Imperative]
-{
-	a = [ 4,5 ];
-
-	return [Associative]
+x;
+	def foo ( a : int[])
 	{
-	   return foo(a);
+	    a[1] = 4;
+		return = a;
 	}
-
-};";
+[Imperative]
+{
+	a = { 4,5 };
+   
+	[Associative]
+	{
+	   x = foo(a);
+	}
+}";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult = { 4, 4 };
             thisTest.Verify("x", expectedResult);
         }
 
-        [Test]
+  [Test]
         [Category("DSDefinedClass_Ported")]
         [Category("SmokeTest")]
         public void T39_Defect_1452951_2()
         {
             string code = @"
+
+	
 	def foo :int[] (a1:int[])
 	{
 	    count = 0;
-		return [Imperative]
+		[Imperative]
 		{
 			for ( i in a1 )
 			{
 				a1[count]  = i + 1;
 				count = count + 1;
 			}
-            return a1;
 		}
+		return = a1;
 	}
-   a = [ 10, 4 ];
-    a3 = [Imperative]
-    {
-    	return foo(a);
-    }";
+	
+
+a = { 10, 4 };
+a3;
+[Imperative]
+{
+	a3 = foo(a);
+}";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             object[] expectedResult = { 11, 5 };
             thisTest.Verify("a3", expectedResult);
@@ -1049,10 +1059,10 @@ x = [Imperative]
         public void T40_Create_3_Dim_Collection_Using_For_Loop()
         {
             string code = @"
-x = [ [ [ 0, 0] , [ 0, 0] ], [ [ 0, 0 ], [ 0, 0] ]];
-a = [ 0, 1 ];
-b = [ 2, 3];
-c = [ 4, 5 ];
+x = { { { 0, 0} , { 0, 0} }, { { 0, 0 }, { 0, 0} }};
+a = { 0, 1 };
+b = { 2, 3};
+c = { 4, 5 };
 y = [Imperative]
 {
 	c1 = 0;
@@ -1093,7 +1103,7 @@ p9 = x [1][1][1];";
             thisTest.Verify("p6", 8, 0);
             thisTest.Verify("p7", 8, 0);
             thisTest.Verify("p8", 9, 0);
-            thisTest.Verify("p9", 0, 0);
+            thisTest.Verify("p9", 9, 0);
 
         }
 
@@ -1106,7 +1116,7 @@ def foo :int[]..[]( a : int[], b:int[], c :int[])
 {
 	y = [Imperative]
 	{
-		x = [ [ [ 0, 0] , [ 0, 0] ], [ [ 0, 0 ], [ 0, 0] ]];
+		x = { { { 0, 0} , { 0, 0} }, { { 0, 0 }, { 0, 0} }};
 		c1 = 0;
 		for ( i in a)
 		{
@@ -1127,9 +1137,9 @@ def foo :int[]..[]( a : int[], b:int[], c :int[])
 	}
 	return = y;
 }
-a = [ 0, 1 ];
-b = [ 2, 3];
-c = [ 4, 5 ];
+a = { 0, 1 };
+b = { 2, 3};
+c = { 4, 5 };
 y = foo ( a, b, c );
 p1 = y[0][0][0];
 p2 = y[0][0][1];
@@ -1162,7 +1172,7 @@ p8 = y[1][1][1];
 	{
 		y = [Imperative]
 		{
-			x = [ [ [ 0, 0] , [ 0, 0] ], [ [ 0, 0 ], [ 0, 0] ]];
+			x = { { { 0, 0} , { 0, 0} }, { { 0, 0 }, { 0, 0} }};
 			c1 = 0;
 			for ( i in a)
 			{
@@ -1183,9 +1193,9 @@ p8 = y[1][1][1];
 		}
 		return = y;
 	};
-a = [ 0, 1 ];
-b = [ 2, 3];
-c = [ 4, 5 ];
+a = { 0, 1 };
+b = { 2, 3};
+c = { 4, 5 };
 y = foo(a,b,c);
 
 p1 = y[0][0][0];
@@ -1221,7 +1231,7 @@ def foo :int[]..[]( a : int[], b:int[])
 {
 y = [Imperative]
 {
-x = [ [ 0,0,0 ], [0,0,0] , [0,0,0] ];
+x = { { 0,0,0 }, {0,0,0} , {0,0,0} };
 c1 = 0;
 for ( i in a)
 {
@@ -1238,8 +1248,8 @@ return = x;
 return = y;
 }
 
-a = [ 0, 1, 2 ];
-b = [ 3, 4, 5 ];
+a = { 0, 1, 2 };
+b = { 3, 4, 5 };
 y = foo( a, b);
 p1 = y[0][0];
 p2 = y[0][1];
@@ -1275,7 +1285,7 @@ def foo :int[]..[]( a : int[], b:int[], c :int[])
 {
 y = [Imperative]
 {
-x = [ [ [ 0, 0] , [ 0, 0] ], [ [ 0, 0 ], [ 0, 0] ]];
+x = { { { 0, 0} , { 0, 0} }, { { 0, 0 }, { 0, 0} }};
 c1 = 0;
 for ( i in a)
 {
@@ -1297,9 +1307,9 @@ return = x;
 return = y;
 }
 
-a = [ 0, 1 ];
-b = [ 2, 3];
-c = [ 4, 5 ];
+a = { 0, 1 };
+b = { 2, 3};
+c = { 4, 5 };
 y = foo( a, b , c);
 
 p1 = y[0][0][0]; //6
@@ -1327,12 +1337,12 @@ p8 = y[1][1][1];//9
         public void T44_Use_Bracket_Around_Range_Expr_In_For_Loop()
         {
             string code = @"
-s = [Imperative] {
-    s = 0;
-    for (i in (0..10)) {
-	    s = s + i;
-    }
-    return s;
+s;
+[Imperative] {
+s = 0;
+for (i in (0..10)) {
+	s = s + i;
+}
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
             thisTest.Verify("s", 55);
@@ -1366,7 +1376,7 @@ pt2 = Point.ByCoordinates(5,0,0);
 pt3 = Point.ByCoordinates(10,0,0);
 pt4 = Point.ByCoordinates(15,0,0);
 pt5 = Point.ByCoordinates(20,0,0);
-pts = [pt1, pt2, pt3, pt4, pt5];
+pts = {pt1, pt2, pt3, pt4, pt5};
 
 numpts = length(pts);
 

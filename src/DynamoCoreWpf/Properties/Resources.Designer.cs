@@ -802,7 +802,7 @@ namespace Dynamo.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add-ons Category.
+        ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string CustomNodePropertyWindowCategory {
             get {
@@ -825,15 +825,6 @@ namespace Dynamo.Wpf.Properties {
         public static string CustomNodePropertyWindowDescriptionHint {
             get {
                 return ResourceManager.GetString("CustomNodePropertyWindowDescriptionHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Custom Nodes will be placed in the Add-Ons section of the library..
-        /// </summary>
-        public static string CustomNodePropertyWindowLocationNote {
-            get {
-                return ResourceManager.GetString("CustomNodePropertyWindowLocationNote", resourceCulture);
             }
         }
         
@@ -3013,7 +3004,7 @@ namespace Dynamo.Wpf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We can&apos;t save &quot;{0}&quot; because the file is read-only or contains unresolved XML nodes. To keep changes, would you like to &quot;Save As...&quot; with a different name or path?.
+        ///   Looks up a localized string similar to We can&apos;t save &quot;{0}&quot; because the file is read only. To keep your changes, you&apos;ll need to save it with a new name or in a different location..
         /// </summary>
         public static string MessageConfirmToSaveReadOnlyCustomNode {
             get {
@@ -3092,6 +3083,15 @@ namespace Dynamo.Wpf.Properties {
         public static string MessageFailedToAttachToRowColumn {
             get {
                 return ResourceManager.GetString("MessageFailedToAttachToRowColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to perform code block autocomplete with exception:.
+        /// </summary>
+        public static string MessageFailedToAutocomple {
+            get {
+                return ResourceManager.GetString("MessageFailedToAutocomple", resourceCulture);
             }
         }
         
@@ -3365,15 +3365,6 @@ namespace Dynamo.Wpf.Properties {
         public static string NodeContextMenuIsInput {
             get {
                 return ResourceManager.GetString("NodeContextMenuIsInput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is Output.
-        /// </summary>
-        public static string NodeContextMenuIsOutput {
-            get {
-                return ResourceManager.GetString("NodeContextMenuIsOutput", resourceCulture);
             }
         }
         
@@ -3701,33 +3692,6 @@ namespace Dynamo.Wpf.Properties {
         public static string PackageNotExisted {
             get {
                 return ResourceManager.GetString("PackageNotExisted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The import path &quot;{0}&quot; was added to &quot;Manage Node and Package Paths&quot;. If you want to update or remove this path, please open &quot;Settings &gt; Manage Node and Package Paths...&quot;.
-        /// </summary>
-        public static string PackagePathAutoAddNotificationDetailedDescription {
-            get {
-                return ResourceManager.GetString("PackagePathAutoAddNotificationDetailedDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A library (*.dll, *.ds) was recently imported into Dynamo. Its path was automatically added to &quot;Settings &gt; Manage Node and Package Paths...&quot;.
-        /// </summary>
-        public static string PackagePathAutoAddNotificationShortDescription {
-            get {
-                return ResourceManager.GetString("PackagePathAutoAddNotificationShortDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Package Path Added.
-        /// </summary>
-        public static string PackagePathAutoAddNotificationTitle {
-            get {
-                return ResourceManager.GetString("PackagePathAutoAddNotificationTitle", resourceCulture);
             }
         }
         

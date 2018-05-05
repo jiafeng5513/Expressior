@@ -206,10 +206,9 @@ namespace Dynamo
 
             var versionList = DynamoMigratorBase.GetInstalledVersions(null, mockLookup.Object).ToList();
             VerifySortedOrder(versionList);
-            Assert.AreEqual(5, versionList.Count);
-            Assert.AreEqual(TempFolder, versionList[0].UserDataRoot);
-            Assert.AreEqual(Path.Combine(TempFolder, "Test"), versionList[1].UserDataRoot);
-            Assert.AreEqual(TempFolder, versionList[2].UserDataRoot);
+            Assert.AreEqual(4, versionList.Count);
+            Assert.AreEqual(Path.Combine(TempFolder, "Test"), versionList[0].UserDataRoot);
+            Assert.AreEqual(TempFolder, versionList[1].UserDataRoot);
         }
 
         [Test, Category("UnitTests")]
@@ -272,7 +271,6 @@ namespace Dynamo
             yield return Path.Combine(TempFolder, "0.8");
             yield return Path.Combine(TempFolder, "1.0");
             yield return Path.Combine(TempFolder, "0.9");
-            yield return Path.Combine(TempFolder, "2.0");
         }
 
         private static void CreateMockPreferenceSettingsFile(string filePath, string packageDir)
@@ -294,36 +292,36 @@ namespace Dynamo
         {
             userDataDir = Path.Combine(TempFolder, "DynamoMigration");
 
-            var tempFolder = Path.Combine(userDataDir, "1.3");
+            var tempFolder = Path.Combine(userDataDir, "0.8");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
-            tempFolder = Path.Combine(userDataDir, "1.3", "packages");
+            tempFolder = Path.Combine(userDataDir, "0.8", "packages");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
             using(File.Create(Path.Combine(tempFolder, "package1.dll"))) { }
 
-            tempFolder = Path.Combine(userDataDir, "1.3", "definitions");
+            tempFolder = Path.Combine(userDataDir, "0.8", "definitions");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
             using(File.Create(Path.Combine(tempFolder, "definition1.dyn"))) { }
 
-            tempFolder = Path.Combine(userDataDir, "2.0");
+            tempFolder = Path.Combine(userDataDir, "0.9");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
-            tempFolder = Path.Combine(userDataDir, "2.0", "packages");
+            tempFolder = Path.Combine(userDataDir, "0.9", "packages");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
-            tempFolder = Path.Combine(userDataDir, "2.0", "definitions");
+            tempFolder = Path.Combine(userDataDir, "0.9", "definitions");
 
             if (!Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
@@ -334,20 +332,20 @@ namespace Dynamo
         [Category("UnitTests")]
         public void TestMigration()
         {
-            // Create 1.3, and 2.0 version user data directories in Temp folder
+            // Create 0.8, and 0.9 version user data directories in Temp folder
             string userDataDir;
             CreateMockDirectoriesAndFiles(out userDataDir);
 
-            var sourceVersionDir = Path.Combine(userDataDir, "1.3");
+            var sourceVersionDir = Path.Combine(userDataDir, "0.8");
             var settingsFilePath = Path.Combine(sourceVersionDir, "DynamoSettings.xml");
 
-            // Create PreferenceSettings.xml file in 1.3 
+            // Create PreferenceSettings.xml file in 0.8 
             CreateMockPreferenceSettingsFile(settingsFilePath, sourceVersionDir);
 
             // Create mock objects for IPathManager and IPathResolver
             var mockPathManager = new Mock<IPathManager>();
             
-            var currentVersionDir = Path.Combine(userDataDir, "2.0");
+            var currentVersionDir = Path.Combine(userDataDir, "0.9");
 
             mockPathManager.Setup(x => x.UserDataDirectory).Returns(() => currentVersionDir);
 
@@ -355,8 +353,23 @@ namespace Dynamo
             var targetMigrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(
                 mockPathManager.Object);
 
+            // Assert that both 0.8 and 0.9 dirs are the same after migration
+            var sourcePackageDir = Path.Combine(sourceVersionDir, "packages");
+            var currentPackageDir = Path.Combine(currentVersionDir, "packages");
+
+            bool areDirectoriesEqual = Directory.EnumerateFiles(sourcePackageDir).Select(Path.GetFileName).
+                SequenceEqual(Directory.EnumerateFiles(currentPackageDir).Select(Path.GetFileName));
+            Assert.IsTrue(areDirectoriesEqual);
+
+            var sourceDefinitionDir = Path.Combine(sourceVersionDir, "definitions");
+            var currentDefinitionDir = Path.Combine(currentVersionDir, "definitions");
+
+            areDirectoriesEqual = Directory.EnumerateFiles(sourceDefinitionDir).Select(Path.GetFileName).
+                SequenceEqual(Directory.EnumerateFiles(currentDefinitionDir).Select(Path.GetFileName));
+            Assert.IsTrue(areDirectoriesEqual);
+
             // Assert that new CustomePackageFolders in preference settings
-            // for 2.0 version points to user data dir for 2.0
+            // for 0.9 version points to user data dir for 0.9
             Assert.AreEqual(currentVersionDir,
                 targetMigrator.PreferenceSettings.CustomPackageFolders[0]);
         }

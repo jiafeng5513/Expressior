@@ -89,24 +89,23 @@ while( i < 5 )
         [Category("SmokeTest")]
         public void T05_WithinFunction()
         {
-            string src = @"
+            string src = @"testvar;
 	def fn1 : int (a : int)
 	{   
-        return [Imperative]
-        {
-		    i = 0;
-		    temp = 1;
-		    while ( i < a )
-		    {
-		        temp = temp + 1;
-		        i = i + 1;
-		    }
-		    return temp;
-        }
+return = [Imperative]{
+		i = 0;
+		temp = 1;
+		while ( i < a )
+		{
+		    temp = temp + 1;
+		    i = i + 1;
+		}
+		return = temp;
+}
 	}
-testvar = [Imperative]
+[Imperative]
 {
-	return fn1(5);
+	testvar = fn1(5);
 } 
 	
 	";
@@ -118,83 +117,91 @@ testvar = [Imperative]
         [Category("SmokeTest")]
         public void T06_InsideNestedBlock()
         {
-            string src = @"
-x = [Associative]
+            string src = @"temp;
+a;
+b;
+[Associative]
 {
 	a = 4;
 	b = a*2;
 	temp = 0;
-	temp = [Imperative]
+	[Imperative]
 	{
 		i=0;
 		temp=1;
 		while(i<=5)
 		{
 	      i=i+1;
-		  temp = temp+1;
+		  temp=temp+1;
 		}
-        return temp;
     }
 	a = temp;
-    return [temp, a, b];
+      
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("x", new[] {7, 7, 14});
+            thisTest.Verify("temp", 7);
+            thisTest.Verify("a", 7);
+            thisTest.Verify("b", 14);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T07_BreakStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"temp;
+i;
+[Imperative]
 {
-	i=0;
-	temp=0;
-	while( i <= 5 )
-	{ 
-	    i = i + 1;
-		if ( i == 3 )
-		    break;
-		temp=temp+1;
-	}
-    return [temp, i];
+		i=0;
+		temp=0;
+		while( i <= 5 )
+		{ 
+	      i = i + 1;
+		  if ( i == 3 )
+		      break;
+		  temp=temp+1;
+		}
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("x", new[] {2, 3});
+            thisTest.Verify("temp", 2);
+            thisTest.Verify("i", 3);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T08_ContinueStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"temp;
+i;
+[Imperative]
 {
-	i = 0;
-	temp = 0;
-	while ( i <= 5 )
-	{
-		i = i + 1;
-		if( i <= 3 )
+		i = 0;
+		temp = 0;
+		while ( i <= 5 )
 		{
-		    continue;
-	    }
-		temp=temp+1;
+		  i = i + 1;
+		  if( i <= 3 )
+		  {
+		      continue;
+	      }
+		  temp=temp+1;
 		 
-	}
-    return [temp, i];
+		}
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("x", new[] { 3, 6 });
+            thisTest.Verify("temp", 3);
+            thisTest.Verify("i", 6);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T09_NestedWhileStatement()
         {
-            string src = @"
-x = [Imperative]
+            string src = @"temp;
+i;
+a;
+p;
+[Imperative]
 {
 	i = 1;
 	a = 0;
@@ -217,10 +224,12 @@ x = [Imperative]
 		}
 		i = i + 1;
 	}
-    return [temp, i, a, p];
 }  ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("x", new[] {125, 6, 6, 6});
+            thisTest.Verify("temp", 125);
+            thisTest.Verify("i", 6);
+            thisTest.Verify("a", 6);
+            thisTest.Verify("p", 6);
         }
 
         [Test]
@@ -247,8 +256,8 @@ x = [Imperative]
         [Category("SmokeTest")]
         public void T11_WhilewithLogicalOperators()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"temp1;temp2;temp3;temp4;
+[Imperative]
 {
 		i1 = 5;
 		temp1 = 1;
@@ -283,33 +292,35 @@ i = [Imperative]
             i1 = i1 - 1;		
             temp4 = 4;
         }       
-        return [temp1, temp2, temp3, temp4];
+ 
 }		
 ";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {1, 5, 3, 4});
+            thisTest.Verify("temp1", 1);
+            thisTest.Verify("temp2", 5);
+            thisTest.Verify("temp3", 3);
+            thisTest.Verify("temp4", 4);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T12_WhileWithFunctionCall()
         {
-            string src = @"
+            string src = @"testvar;
 	def fn1 :int ( a : int )
 	{   
-        return [Imperative]
-        {
-		    i = 0;
-		    temp = 1;
-		    while ( i < a )
-		    {
-			    temp = temp + 1;
-			    i = i + 1;
-		    }
-		    return temp;
-        }
+    return = [Imperative]{
+		i = 0;
+		temp = 1;
+		while ( i < a )
+		{
+			temp = temp + 1;
+			i = i + 1;
+		}
+		return = temp;
+    }
 	}
-testvar = [Imperative]
+[Imperative]
 { 
 	testvar = 8;
 	
@@ -317,7 +328,6 @@ testvar = [Imperative]
 	{ 
 		testvar=testvar-1;
 	}
-    return testvar;
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
             thisTest.Verify("testvar", 7);
@@ -349,8 +359,9 @@ testvar = [Imperative]
         [Category("SmokeTest")]
         public void T14_TestFactorialUsingWhileStmt()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;
+factorial_a;
+[Imperative]
 {
     a = 1;
 	b = 1;
@@ -360,18 +371,18 @@ i = [Imperative]
 		b = b * (a-1) ;		
 	}
 	factorial_a = b * a;
-    return [a, factorial_a];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {6, 720});
+            thisTest.Verify("a", 6);
+            thisTest.Verify("factorial_a", 720);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T15_TestWhileWithDecimalvalues()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;b;
+[Imperative]
 {
     a = 1.5;
 	b = 1;
@@ -380,18 +391,19 @@ i = [Imperative]
 		a = a + 1;
 		b = b * (a-1) ;		
 	}
-	return [a, b];
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {6.5, 324.84375});
+            thisTest.Verify("a", 6.5);
+            thisTest.Verify("b", 324.84375);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T16_TestWhileWithLogicalOperators()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;b;
+[Imperative]
 {
     a = 1.5;
 	b = 1;
@@ -400,26 +412,26 @@ i = [Imperative]
 		a = a + 1;
 		b = b * (a-1) ;		
 	}	
-return [a, b];
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
 
-            thisTest.Verify("i", new[] {5.5, 59.0625});
+            thisTest.Verify("a", 5.5);
+            thisTest.Verify("b", 59.0625);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T17_TestWhileWithBool()
         {
-            string src = @"
-a = [Imperative]
+            string src = @"a;
+[Imperative]
 {
     a = 0;	
     while(a == false)
 	{
 		a = 1;	
 	}	
-	return a;
+	
 	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
@@ -431,8 +443,8 @@ a = [Imperative]
         [Category("SmokeTest")]
         public void T18_TestWhileWithNull()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;b;c;
+[Imperative]
 {
     a = null;
     c = null;
@@ -449,19 +461,21 @@ i = [Imperative]
 	{
 		a = 2;	
 	}	
-	return [a, c, b];
+	
 	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new object[] {2, 1, null});
+            thisTest.Verify("a", 2);
+            thisTest.Verify("c", 1);
+            thisTest.Verify("b", null);
         }
 
         [Test]
         [Category("SmokeTest")]
         public void T19_TestWhileWithIf()
         {
-            string src = @"
-i = [Imperative]
+            string src = @"a;b;
+[Imperative]
 {
     a = 2;
 	b = a;
@@ -478,10 +492,11 @@ i = [Imperative]
 		a = a + 1;
 	}
 	
-	return [a, b];
+	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(src);
-            thisTest.Verify("i", new[] {5, 15});
+            thisTest.Verify("a", 5);
+            thisTest.Verify("b", 15);
 
         }
 
@@ -505,11 +520,11 @@ def Create2DArray( col : int)
 {
 	result = [Imperative]
     {
-		array = [ 1, 2 ];
+		array = { 1, 2 };
 		counter = 0;
 		while( counter < col)
 		{
-			array[counter] = [ 1, 2];
+			array[counter] = { 1, 2};
 			counter = counter + 1;
 		}
 		return = array;
@@ -595,7 +610,7 @@ x = test();";
             string code = @"
 def foo ()
 {
-	return 1;
+	return = 1;
 }
 
 	
@@ -613,17 +628,18 @@ def foo ()
 			{
 				t1 = t1 ;
 			}
-			return t1;		
+			return = t1;		
 		}
-		return temp;
+		return = temp;
 	}
 
 
 x = test();
 
-y = [Imperative]
+y;y1;y2;
+[Imperative]
 {
-	return test();
+	y = test();
 	
 }";
             ExecutionMirror mirror = thisTest.RunScriptSource(code);
@@ -642,7 +658,7 @@ y = [Imperative]
             string src = @"
 def foo ()
 {
-	return = [ 0, 1, 2 ];
+	return = { 0, 1, 2 };
 }
 def test ()
 {
@@ -669,9 +685,10 @@ def test ()
 }
 
 x = test();
-y = [Imperative]
+y;
+[Imperative]
 {
-	return test();
+	y = test();
 }";
             thisTest.VerifyRunScriptSource(src, errmsg);
             Object[] v1 = new Object[] { 1, 3, 4 };

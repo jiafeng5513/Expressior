@@ -267,8 +267,6 @@ namespace ProtoCore
                 }
             }
 
-            public bool IsDictionary => Data is DesignScript.Builtin.Dictionary;
-
             /// <summary>
             /// Determines if this data is a pointer
             /// </summary>

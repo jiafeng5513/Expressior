@@ -26,17 +26,6 @@ namespace ProtoCore
         }
 
         /// <summary>
-        /// Constructor of Type using Short string
-        /// </summary>
-        /// <param name="displayTypeName"> Serialized Short String</param>
-        public Type(string TypeName, int TypeRank)
-        {
-            UID = Constants.kInvalidIndex;
-            rank = TypeRank;
-            Name = TypeName;
-        }
-
-        /// <summary>
         /// Comment Jun: Initialize a type to the default values
         /// </summary>
         public void Initialize()

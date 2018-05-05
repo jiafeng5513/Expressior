@@ -784,6 +784,7 @@ namespace ProtoCore.DSASM
             sv = callsite.JILDispatch(argumentAtLevels.Arguments, replicationGuides, argumentAtLevels.DominantStructure, stackFrame, runtimeCore, runtimeContext);
             if (sv.IsExplicitCall)
             {
+                //
                 // Set the interpreter properties for function calls
                 // These are used when performing GC on return 
                 // The GC occurs: 
