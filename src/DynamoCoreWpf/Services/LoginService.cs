@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Reflection;
-using Shapeways=ShapewaysClient.ShapewaysClient;
+//using Shapeways=ShapewaysClient.ShapewaysClient;
 using Dynamo.Wpf.Properties;
 
 namespace Dynamo.Wpf.Authentication
@@ -67,38 +67,38 @@ namespace Dynamo.Wpf.Authentication
             return navigateSuccess;
         }
 
-        internal void ShowShapewaysLogin(Shapeways client) 
-        {
-            context.Send((_) =>
-            {
+        //internal void ShowShapewaysLogin(Shapeways client) 
+        //{
+        //    context.Send((_) =>
+        //    {
 
-                var window = new BrowserWindow(new Uri(client.LoginUrl))
-                {
-                    Title = "Shapeways",
-                    Owner = parent,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    Height = 500,
-                    Width = 1000
-                };
+        //        var window = new BrowserWindow(new Uri(client.LoginUrl))
+        //        {
+        //            Title = "Shapeways",
+        //            Owner = parent,
+        //            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+        //            Height = 500,
+        //            Width = 1000
+        //        };
 
-                window.Browser.LoadCompleted += (sender, args) => 
-                {
-                    if (args.Uri.AbsolutePath == "/callbackDynamoShapeways") 
-                    {
-                        client.SetToken(args.Uri.PathAndQuery);
-                        window.Close();
-                    }
-                };
+        //        window.Browser.LoadCompleted += (sender, args) => 
+        //        {
+        //            if (args.Uri.AbsolutePath == "/callbackDynamoShapeways") 
+        //            {
+        //                client.SetToken(args.Uri.PathAndQuery);
+        //                window.Close();
+        //            }
+        //        };
 
-                window.Browser.Loaded += (sender, args) =>
-                {
-                    HideScriptErrors(window.Browser, true);
-                };
+        //        window.Browser.Loaded += (sender, args) =>
+        //        {
+        //            HideScriptErrors(window.Browser, true);
+        //        };
 
-                window.ShowDialog();
+        //        window.ShowDialog();
 
-            }, null);
-        }
+        //    }, null);
+        //}
 
         /// <summary>
         /// Hides or allows displaying of script errors in WebBrowser control

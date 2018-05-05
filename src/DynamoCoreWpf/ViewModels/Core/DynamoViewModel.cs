@@ -1928,7 +1928,12 @@ namespace Dynamo.ViewModels
         {
             return true;
         }
-
+        /// <summary>
+        /// 保存成图片
+        /// 当parameter=null的时候，保存工作区
+        /// = p:Resources.ScreenShotFrom3DParameter的时候保存3D预览
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ShowSaveImageDialogAndSaveResult(object parameter)
         {
             FileDialog _fileDialog = null;
@@ -1957,13 +1962,13 @@ namespace Dynamo.ViewModels
 
             if (parameter == null)
             {
-                SaveImage(_fileDialog.FileName);
+                SaveImage(_fileDialog.FileName);//保存工作区截图
                 return;
             }
 
             if (parameter.ToString() == Resources.ScreenShotFrom3DParameter)
             {
-                Save3DImage(_fileDialog.FileName);
+                Save3DImage(_fileDialog.FileName);//保存3D预览
             }
             else if (parameter.ToString() == Resources.ScreenShotFrom3DShortcutParameter)
             {
