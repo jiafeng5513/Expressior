@@ -1,4 +1,4 @@
-![image](https://github.com/AngelaViVi/Expressior/blob/master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png) 
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png) 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ke5nv5l0d33w5tl2/branch/Expressior_master?svg=true)](https://ci.appveyor.com/project/AngelaViVi/expressior/branch/Expressior_master)
 
