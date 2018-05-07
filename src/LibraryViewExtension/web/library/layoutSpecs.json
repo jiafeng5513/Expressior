@@ -1028,17 +1028,6 @@
                 }
               ],
               "childElements": [ ]
-            },
-            {
-              "text": "Web",
-              "iconUrl": "",
-              "elementType": "group",
-              "include": [
-                {
-                  "path": "Core.Web.Web Request"
-                }
-              ],
-              "childElements": [ ]
             }
           ]
         },
