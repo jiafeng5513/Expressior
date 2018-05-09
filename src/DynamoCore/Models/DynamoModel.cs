@@ -617,6 +617,7 @@ namespace Dynamo.Models
             libraryCore.Compilers.Add(Language.Imperative, new ProtoImperative.Compiler(libraryCore));
             libraryCore.ParsingMode = ParseMode.AllowNonAssignment;
 
+            //全体注意,开始从dll导入库
             LibraryServices = new LibraryServices(libraryCore, pathManager, PreferenceSettings);
             LibraryServices.MessageLogged += LogMessage;
             LibraryServices.LibraryLoaded += LibraryLoaded;

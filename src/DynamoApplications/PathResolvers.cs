@@ -32,7 +32,7 @@ namespace Dynamo.Applications
             preloadedLibraryPaths = new List<string>
             {
                 "VMDataBridge.dll",
-                "ProtoGeometry.dll",
+                //"ProtoGeometry.dll",
                 "DSCoreNodes.dll",
                 "DSOffice.dll",
                 "DSIronPython.dll",
@@ -40,9 +40,9 @@ namespace Dynamo.Applications
                 "BuiltIn.ds",
                 "DynamoConversions.dll",
                 "DynamoUnits.dll",
-                "Tessellation.dll",
+                //"Tessellation.dll",
                 "Analysis.dll",
-                "GeometryColor.dll"
+                //"GeometryColor.dll"
             };
 
         }
