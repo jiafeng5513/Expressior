@@ -31,14 +31,14 @@ namespace Dynamo.LibraryUI.Handlers
     }
 
     /// <summary>
-    /// Provides json resource data for all the loaded nodes
+    /// 为所有已经加载的节点提供json资源
     /// </summary>
     class NodeItemDataProvider : ResourceProviderBase
     {
         protected NodeSearchModel model;
 
         /// <summary>
-        /// Constructor
+        /// 构造函数
         /// </summary>
         /// <param name="items"></param>
         public NodeItemDataProvider(NodeSearchModel model) : base(false)
@@ -67,7 +67,7 @@ namespace Dynamo.LibraryUI.Handlers
         }
 
         /// <summary>
-        /// Create a LoadedTypeData object for serialization
+        /// 构造LoadedTypeData对象用于序列化
         /// </summary>
         /// <param name="searchEntries"></param>
         /// <returns></returns>
@@ -81,16 +81,17 @@ namespace Dynamo.LibraryUI.Handlers
         }
 
         /// <summary>
-        /// Gets fully qualified name for the given node search element
+        /// 获取正在搜索的元素的全名(用于模糊搜索)
         /// </summary>
         public static string GetFullyQualifiedName(NodeSearchElement element)
         {
-            //If the node search element is part of a package, then we need to prefix pkg:// for it
+            //如果正在搜索的是包名(),则在前面加上pkg://前缀
             if (element.ElementType.HasFlag(ElementTypes.Packaged))
             {
                 //Use FullCategory and name as read from _customization.xml file
                 return string.Format("{0}{1}.{2}", "pkg://", element.FullCategoryName, element.Name);
             }
+            //如果是一个自定义节点的名字
             else if (element.ElementType.HasFlag(ElementTypes.CustomNode))
             {
                 //Use FullCategory and name as read from _customization.xml file

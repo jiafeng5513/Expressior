@@ -4,12 +4,12 @@ using Microsoft.Practices.Prism.ViewModel;
 namespace Dynamo.LibraryUI.ViewModels
 {
     /// <summary>
-    /// Package Manager View Loader
+    /// 包管理视图启动
     /// </summary>
     public class LibraryViewModel : NotificationObject
     {
         /// <summary>
-        /// Constructor
+        /// 构造函数
         /// </summary>
         /// <param name="address"></param>
         /// <param name="commandExecutive"></param>
