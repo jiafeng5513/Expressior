@@ -80,6 +80,7 @@ namespace Dynamo.LibraryUI.Handlers
             return data;
         }
 
+        /// <summary>
         /// Gets fully qualified name for the given node search element
         /// </summary>
         public static string GetFullyQualifiedName(NodeSearchElement element)
