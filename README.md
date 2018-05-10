@@ -34,3 +34,9 @@
 2. 由于最终目标不同,这个程序在Dynamo的基础上进行了大幅度的删改,基础版本是Dynamo的RC2.0.0分支.<br>
 3. 如果您对这个程序有兴趣,在查阅文档的时候请注意,由于2的缘故,Dynamo的文档可能并不不适用于本程序,您可以向开发者询问感兴趣的问题.<br>
 4. 后续开发的默认分支是Expressior_master分支.<br>
+
+### 分支说明
+1. Expressior_0.0.2分支是ProtoGeometry.dll,Tessellation.dll,GeometryColor.dll被引用的最后一个分支<br>
+2. PathResolvers.cs控制内置节点的引入<br>
+3. layoutSpecs.json还保持原样,js没有更改<br>
+4. GeometryColor代码还没删,Tessellation的来源还没找到<br>
