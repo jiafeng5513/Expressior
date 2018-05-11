@@ -44,7 +44,11 @@ namespace Dynamo.LibraryUI.Handlers
         {
             //Create IconUrl to parse the request.Url to icon name and path.
             var icon = new IconUrl(new Uri(request.Url));
-            
+            if (request.Url.Contains("Geometry"))
+            {
+                System.Diagnostics.Trace.WriteLine("请看大宝贝儿");
+                System.Diagnostics.Trace.WriteLine(request.Url);
+            }
             var stream = GetIconStream(icon, out extension);
             if (stream == null)
                 stream = GetDefaultIconStream(out extension);

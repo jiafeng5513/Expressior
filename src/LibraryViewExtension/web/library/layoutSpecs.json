@@ -1145,33 +1145,27 @@
           ]
         },
         {
-          "text": "Geometry",
-          "iconUrl": "./dist/resources/Category.Geometry.svg",
+          "text": "ImageProc",
+          "iconUrl": "./dist/resources/Category.ImageProc.svg",
           "elementType": "category",
           "include": [ ],
           "childElements": [
             {
-              "text": "Modifiers",
-              "iconUrl": "",
-              "elementType": "group",
-              "include": [ ],
-              "childElements": [
-                {
-                  "text": "Geometry Color",
-                  "iconUrl": "",
-                  "elementType": "group",
-                  "include": [
-                    {
-                      "path": "GeometryColor.Modifiers.GeometryColor.ByGeometryColor"
-                    },
-                    {
-                      "path": "GeometryColor.Modifiers.GeometryColor.BySurfaceColors"
-                    }
-                  ],
-                  "childElements": [ ]
-                }
-              ]
-            },
+              
+                "text": "Geometry Color",
+                "iconUrl": "",
+                "elementType": "group",
+                "include": [
+                  {
+                    "path": "GeometryColor.Modifiers.GeometryColor.ByGeometryColor"
+                  },
+                  {
+                    "path": "GeometryColor.Modifiers.GeometryColor.BySurfaceColors"
+                  }
+                ],
+                "childElements": [ ]
+              },
+            
             {
               "text": "TSpline",
               "iconUrl": "",
