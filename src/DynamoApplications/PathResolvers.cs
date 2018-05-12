@@ -42,7 +42,7 @@ namespace Dynamo.Applications
                 "DynamoUnits.dll",
                 //"Tessellation.dll",
                 "Analysis.dll",
-                "GeometryColor.dll"
+                "GeometryColor.dll"//注意这个dll的名字
             };
 
         }

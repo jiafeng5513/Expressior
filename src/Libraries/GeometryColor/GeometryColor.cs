@@ -136,7 +136,16 @@ namespace Modifiers
 
             return new GeometryColor(surface, colors);
         }
-
+        /// <summary>
+        /// 计算两个数的和
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static int Add(int a, int b)
+        {
+            return a + b;
+        }
         /// <summary>
         /// Create a colored mesh using points and colors.
         /// 
