@@ -112,6 +112,7 @@ namespace Dynamo.LibraryUI.Handlers
                 fullyQualifiedName = GetFullyQualifiedName(element),
                 contextData = element.CreationName,
                 iconUrl = new IconUrl(element.IconName, element.Assembly).Url,
+
                 parameters = element.Parameters,
                 itemType = element.Group.ToString().ToLower(),
                 description = element.Description,
