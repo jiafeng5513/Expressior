@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Analysis;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
 using GeometryColor.Properties;
-using DSCore;
 using Dynamo.Graph.Nodes;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using Color = DSCore.Color;
 using Math = DSCore.Math;
+using Point = Autodesk.DesignScript.Geometry.Point;
 
 namespace Modifiers
 {
@@ -136,7 +140,48 @@ namespace Modifiers
 
             return new GeometryColor(surface, colors);
         }
-
+        /// <summary>
+        /// 计算两个数的和
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static int Add(int a, int b)
+        {
+            return a + b;
+        }
+        /// <summary>
+        /// 利用Emgu的Image转换构造函数将bitmap转换为mat
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
+        public static Mat Bitmap2Mat(Bitmap bitmap)
+        {
+            Image<Bgr, Byte> currentFrame = new Image<Bgr, Byte>(bitmap);
+            Mat invert = new Mat();
+            CvInvoke.BitwiseAnd(currentFrame, currentFrame, invert);
+            return invert;
+        }
+        /// <summary>
+        /// Mat转换为BitMap
+        /// </summary>
+        /// <param name="mat"></param>
+        /// <returns></returns>
+        public static Bitmap Mat2Bitmap(Mat mat)
+        {
+            return mat.Bitmap;
+        }
+        /// <summary>
+        /// sobel边缘检测
+        /// </summary>
+        /// <param name="mat"></param>
+        /// <returns></returns>
+        public static Mat Sobel(Mat mat)
+        {
+            Mat outMat=new Mat();
+            CvInvoke.Canny(mat, outMat, 90, 120, 3);
+            return outMat;
+        }
         /// <summary>
         /// Create a colored mesh using points and colors.
         /// 

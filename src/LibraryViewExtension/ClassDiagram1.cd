@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Dynamo.LibraryUI.EventObserver&lt;TValue, TResult&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAAACACIAAABEAgAAQAAAAAAEBAAEAAAAACAAA=</HashCode>
+      <FileName>EventObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.AnonymousDisposable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.EventController" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAEAAAIA=</HashCode>
+      <FileName>LibraryViewController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.LibraryViewController" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAJAEABMCABABAAAAmMQAAAAgAAwAAIAAAAAAFQAEQ=</HashCode>
+      <FileName>LibraryViewController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.LibraryViewCustomization" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAICCAACAQAAAgAAgABCAjAAQAABAAAAIAEAA=</HashCode>
+      <FileName>LibraryViewCustomization.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.ViewExtension" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgBACEAAAEAAAAAAQQAgAAAIAAAAAAAAAAAQAA=</HashCode>
+      <FileName>LibraryViewExtension.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.DynamoModelExtensions" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LibraryViewExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.FloatingLibraryTooltipPopup" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQACAAACgA=</HashCode>
+      <FileName>LibraryViewToolTip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.DllResourceProvider" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAIIgAAAACAAAAAA=</HashCode>
+      <FileName>Handlers\DllResourceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.IconResourceProvider" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAoAAAAAgAAAAAACAAAAAAAAAACACAAAA=</HashCode>
+      <FileName>Handlers\IconResourceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.IconUrl" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAIAAAAAAAQIAAAAAAAACgAIAAAAAAA=</HashCode>
+      <FileName>Handlers\IconUrl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.LayoutSpecProvider" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgCAAAAAAAAAAAAAgAIAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Handlers\LayoutSpecProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.NodeData" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAg=</HashCode>
+      <FileName>Handlers\NodeItemDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.LoadedTypeItem" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAIAAAIAAAAAAAABQAAAAAAAACAACAAAA=</HashCode>
+      <FileName>Handlers\NodeItemDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.LoadedTypeData&lt;T&gt;" Collapsed="true">
+    <Position X="10" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\NodeItemDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.NodeItemDataProvider" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACIAAAAAAAAAAAAAQQAAAAAAAACAAIAAA=</HashCode>
+      <FileName>Handlers\NodeItemDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.ResourceHandlerFactory" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAEAAAAAAAAAAAAABAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Handlers\ResourceHandlerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.ResourceProviderBase" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Handlers\ResourceProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.LoadedTypeItemExtended" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\SearchResultDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Handlers.SearchResultDataProvider" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAQAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Handlers\SearchResultDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Properties.Resources" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.ViewModels.DetailsViewModel" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\DetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.ViewModels.LibraryViewModel" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAEAAAAAAAAAAAAAIAAAACAAAAAABAAAA=</HashCode>
+      <FileName>ViewModels\LibraryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Views.DetailsView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAQAAAAAAAAAAAAACACAAAAAAAA=</HashCode>
+      <FileName>Views\DetailsView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Dynamo.LibraryUI.Views.LibraryView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\LibraryView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Dynamo.LibraryUI.IEventController" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAIA=</HashCode>
+      <FileName>LibraryViewController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Dynamo.LibraryUI.Handlers.IResourceProvider" Collapsed="true">
+    <Position X="11.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Handlers\ResourceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

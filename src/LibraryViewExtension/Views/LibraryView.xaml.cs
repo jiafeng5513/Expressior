@@ -13,7 +13,7 @@ using Dynamo.Models;
 namespace Dynamo.LibraryUI.Views
 {
     /// <summary>
-    /// Interaction logic for LibraryView.xaml
+    /// LibraryView.xamlµÄ½»»¥Âß¼­
     /// </summary>
     public partial class LibraryView : UserControl
     {

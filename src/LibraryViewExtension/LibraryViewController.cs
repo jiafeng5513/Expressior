@@ -102,7 +102,7 @@ namespace Dynamo.LibraryUI
         }
 
         /// <summary>
-        /// Call this method to create a new node in Dynamo canvas.
+        /// 在画布上创建一个新的节点
         /// </summary>
         /// <param name="nodeName">Node creation name</param>
         public void CreateNode(string nodeName)
@@ -115,8 +115,8 @@ namespace Dynamo.LibraryUI
             }));
         }
 
-        /// Call this method to import a zero touch library. It will prompt
-        /// user to select the zero touch dll.
+        /// <summary>
+        /// 导入一个zero touch library,提示用户选择dll
         /// </summary>
         public void ImportLibrary()
         {
@@ -126,7 +126,7 @@ namespace Dynamo.LibraryUI
         }
 
         /// <summary>
-        /// Creates and add the library view to the WPF visual tree
+        /// 创建节点树视图
         /// </summary>
         /// <returns>LibraryView control</returns>
         internal LibraryView AddLibraryView()
@@ -147,7 +147,7 @@ namespace Dynamo.LibraryUI
         #region Tooltip
 
         /// <summary>
-        /// Call this method to create a new node in Dynamo canvas.
+        /// 显示节点的Tooltip
         /// </summary>
         /// <param name="nodeName">Node creation name</param>
         /// <param name="y">The y position</param>
@@ -160,7 +160,7 @@ namespace Dynamo.LibraryUI
         }
 
         /// <summary>
-        /// Call this method to create a new node in Dynamo canvas.
+        /// 关闭节点的Tooltip
         /// </summary>
         public void CloseNodeTooltip(bool closeImmediately)
         {
@@ -211,7 +211,11 @@ namespace Dynamo.LibraryUI
             var textStream = assembly.GetManifestResourceStream(url);
             return textStream;
         }
-
+        /// <summary>
+        /// LibraryView加载事件处理(只有调试模式才起作用)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnLibraryViewLoaded(object sender, RoutedEventArgs e)
         {
             var libraryView = sender as LibraryView;
@@ -220,13 +224,25 @@ namespace Dynamo.LibraryUI
             browser.ConsoleMessage += OnBrowserConsoleMessage;
 #endif
         }
-
+        /// <summary>
+        /// 在LibraryView加载的时候向调试控制台输出信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBrowserConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
             System.Diagnostics.Trace.WriteLine("*****Chromium Browser Messages******");
+            System.Diagnostics.Trace.WriteLine("!!!!!!!!!!!!!请看法宝!!!!!!!!!!!!!!!");
             System.Diagnostics.Trace.Write(e.Message);
         }
-
+        /// <summary>
+        /// 关联与搜索有关的观察者
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="controller"></param>
+        /// <param name="customization"></param>
+        /// <param name="throttleTime"></param>
+        /// <returns></returns>
         internal static IDisposable SetupSearchModelEventsObserver(NodeSearchModel model, IEventController controller, ILibraryViewCustomization customization, int throttleTime = 200)
         {
             customization.SpecificationUpdated += (o,e) => controller.RaiseEvent("libraryDataUpdated");
@@ -254,7 +270,7 @@ namespace Dynamo.LibraryUI
         }
 
         /// <summary>
-        /// Returns a new list by adding the given element to the given list
+        /// 返回一个list,这个list是通过把给定的元素添加到给定的list中构成
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list">This old list of elements</param>

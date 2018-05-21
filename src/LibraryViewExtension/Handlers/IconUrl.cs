@@ -15,6 +15,7 @@ namespace Dynamo.LibraryUI.Handlers
 
         /// <summary>
         /// Creates IconUrl object by extracting parameters from the given Uri
+        /// 
         /// </summary>
         /// <param name="url">Uri representing the url string</param>
         public IconUrl(Uri url)

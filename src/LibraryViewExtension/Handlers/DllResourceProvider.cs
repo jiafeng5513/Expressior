@@ -8,14 +8,14 @@ using CefSharp;
 namespace Dynamo.LibraryUI.Handlers
 {
     /// <summary>
-    /// A simple DllResourceProvider, which provides embeded resources from the dll.
+    /// 一个简单的DllResourceProvider，它提供来自DLL的资源。
     /// </summary>
     public class DllResourceProvider : ResourceProviderBase
     {
         /// <summary>
-        /// Creates a resource provider to get embedded resources from a given assembly.
+        /// 构造函数
         /// </summary>
-        /// <param name="baseUrl">The base url from where the request is served.</param>
+        /// <param name="baseUrl">请求提供服务的base url.</param>
         /// <param name="rootNamespace">Root namespace for this resource provider.</param>
         /// <param name="assembly">Assembly from where the resources are to be obtained.</param>
         public DllResourceProvider(string baseUrl, string rootNamespace, Assembly assembly = null)
@@ -28,16 +28,16 @@ namespace Dynamo.LibraryUI.Handlers
         }
 
         /// <summary>
-        /// Root namespace for this resource provider. For an example, if this provider
-        /// serves resources at "Dynamo.LibraryUI.Web.Xxxx" (where "Xxxx" is the actual
-        /// name of the resource), then root namespace would be "Dynamo.LibraryUI.Web".
+        /// 资源提供者的根命名空间
+        /// 例如,如果资源提供者是"Dynamo.LibraryUI.Web.Xxxx"("Xxxx" 是资源的实际名字),
+        /// 那么根命名空间就是"Dynamo.LibraryUI.Web".
         /// </summary>
         public string RootNamespace { get; private set; }
 
         /// <summary>
-        /// The base url from where the request is served. For example, if this provider 
-        /// serves requests at http://localhost/dist/v0.0.1/Xxxx (where "Xxxx" is the name
-        /// of the request), then the base url is "http://localhost/dist/v0.0.1".
+        /// 提供服务的根URL
+        /// 例如服务提供者是http://localhost/dist/v0.0.1/Xxxx
+        /// 则跟URL是http://localhost/dist/v0.0.1
         /// </summary>
         public string BaseUrl { get; private set; }
 
@@ -47,13 +47,11 @@ namespace Dynamo.LibraryUI.Handlers
         public Assembly Assembly { get; private set; }
 
         /// <summary>
-        /// Call this method to get the stream for a given requested resource.
+        /// 通过此方法获取要请求的资源的流
         /// </summary>
-        /// <param name="request">The request object.</param>
-        /// <param name="extension">Output parameter whose value is the extension
-        /// of the requested resource. This extension does not contain "." character.</param>
-        /// <returns>Returns the stream if the requested resource can be found, or null 
-        /// otherwise.</returns>
+        /// <param name="request">要请求的对象</param>
+        /// <param name="extension">输出参数，其值是请求资源的扩展名.此扩展名不包含"."</param>
+        /// <returns>Returns the stream if the requested resource can be found, or null otherwise.</returns>
         public override Stream GetResource(IRequest request, out string extension)
         {
             extension = "txt";

@@ -95,7 +95,6 @@
     <Compile Include="Watch.cs" />
     <Compile Include="WatchImageCore.cs" />
     <Compile Include="String.cs" />
-    <Compile Include="WebRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DynamoCore\DynamoCore.csproj">
