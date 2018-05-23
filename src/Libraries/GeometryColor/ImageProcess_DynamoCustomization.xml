@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>ImageProcessor</name>
+        <name>Processor</name>
     </assembly>
     <namespaces>
       <namespace name="Modifiers">

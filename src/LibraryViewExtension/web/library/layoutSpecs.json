@@ -1156,22 +1156,22 @@
               "elementType": "group",
               "include": [
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.ByGeometryColor"
+                  "path": "ImageProcess.Modifiers.Processor.ByGeometryColor"
                 },
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.BySurfaceColors"
+                  "path": "ImageProcess.Modifiers.Processor.BySurfaceColors"
                 },
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.Test"
+                  "path": "ImageProcess.Modifiers.Processor.Test"
                 },
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.Bitmap2Mat"
+                  "path": "ImageProcess.Modifiers.Processor.Bitmap2Mat"
                 },
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.Mat2Bitmap"
+                  "path": "ImageProcess.Modifiers.Processor.Mat2Bitmap"
                 },
                 {
-                  "path": "GeometryColor.Modifiers.ImageProcessor.Sobel"
+                  "path": "ImageProcess.Modifiers.Processor.Sobel"
                 }
               ],
               "childElements": [ ]

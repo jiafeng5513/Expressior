@@ -11,8 +11,8 @@
     <ProjectGuid>{A50C198C-DA6E-4081-BC53-0F44D287F207}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeometryColor</RootNamespace>
-    <AssemblyName>GeometryColor</AssemblyName>
+    <RootNamespace>ImageProcess</RootNamespace>
+    <AssemblyName>ImageProcess</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\bin\AnyCPU\Debug\GeometryColor.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\bin\AnyCPU\Debug\ImageProcess.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -38,7 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>..\..\..\bin\AnyCPU\Release\GeometryColor.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\bin\AnyCPU\Release\ImageProcess.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
@@ -70,7 +70,7 @@
     <Compile Include="..\..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="ImageProcessor.cs" />
+    <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -100,7 +100,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\GeometryColor.resx">
+    <EmbeddedResource Include="Resources\ImageProcess.resx">
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,7 +109,7 @@
     <EmbeddedResource Include="Properties\Resources.en-US.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GeometryColor_DynamoCustomization.xml">
+    <Content Include="ImageProcess_DynamoCustomization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="License-LGPL.txt" />
@@ -131,8 +131,8 @@
       <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
     </GetAssemblyIdentity>
     <!-- Generate customization dll -->
-    <GenerateResource UseSourcePath="true" Sources="$(ProjectDir)Resources\GeometryColor.resx" OutputResources="$(ProjectDir)Resources\GeometryColorImages.resources" References="$(FrameworkAssembliesPath)System.Drawing.dll" />
-    <AL TargetType="library" EmbedResources="$(ProjectDir)Resources\GeometryColorImages.resources" OutputAssembly="$(OutDir)GeometryColor.customization.dll" Version="%(AssemblyInfo.Version)" />
+    <GenerateResource UseSourcePath="true" Sources="$(ProjectDir)Resources\ImageProcess.resx" OutputResources="$(ProjectDir)Resources\ImageProcessImages.resources" References="$(FrameworkAssembliesPath)System.Drawing.dll" />
+    <AL TargetType="library" EmbedResources="$(ProjectDir)Resources\ImageProcessImages.resources" OutputAssembly="$(OutDir)ImageProcess.customization.dll" Version="%(AssemblyInfo.Version)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -6,7 +6,7 @@ using Analysis;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
-using GeometryColor.Properties;
+using ImageProcess.Properties;
 using Dynamo.Graph.Nodes;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -27,7 +27,7 @@ using Point = Autodesk.DesignScript.Geometry.Point;
  */
 namespace Modifiers
 {
-    public class ImageProcessor :  IGraphicItem
+    public class Processor :  IGraphicItem
     {
         #region private members
 
@@ -41,13 +41,13 @@ namespace Modifiers
 
         #region private constructors
 
-        private ImageProcessor(Geometry geometry, Color color)
+        private Processor(Geometry geometry, Color color)
         {
             this.geometry = geometry;
             this.singleColor = color;
         }
 
-        private ImageProcessor(Surface surface, Color[][] colors)
+        private Processor(Surface surface, Color[][] colors)
         {
             geometry = surface;
 
@@ -73,7 +73,7 @@ namespace Modifiers
             } 
         }
 
-        private ImageProcessor(Point[] vertices, Color[] colors)
+        private Processor(Point[] vertices, Color[] colors)
         {
             this.vertices = vertices;
             meshVertexColors = colors;
@@ -90,7 +90,7 @@ namespace Modifiers
         /// <param name="geometry">The geometry to which you would like to apply color.</param>
         /// <param name="color">The color.</param>
         /// <returns>A Display object.</returns>
-        public static ImageProcessor ByGeometryColor([KeepReferenceAttribute]Geometry geometry, Color color)
+        public static Processor ByGeometryColor([KeepReferenceAttribute]Geometry geometry, Color color)
         {
             if (geometry == null)
             {
@@ -102,12 +102,12 @@ namespace Modifiers
                 throw new ArgumentNullException("color");
             }
 
-            return new ImageProcessor(geometry, color);
+            return new Processor(geometry, color);
         }
 
-        public static ImageProcessor Test(Point[] vertices, Color[] colors)
+        public static Processor Test(Point[] vertices, Color[] colors)
         {
-            return new ImageProcessor(vertices, colors);
+            return new Processor(vertices, colors);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Modifiers
         /// The list of colors must be square. Attempting to pass a jagged array
         /// will result in an exception. </param>
         /// <returns>A Display object.</returns>
-        public static ImageProcessor BySurfaceColors([KeepReferenceAttribute]Surface surface,
+        public static Processor BySurfaceColors([KeepReferenceAttribute]Surface surface,
             [DefaultArgument("{{Color.ByARGB(255,255,0,0),Color.ByARGB(255,255,255,0)},{Color.ByARGB(255,0,255,255),Color.ByARGB(255,0,0,255)}};")] Color[][] colors)
         {
             if (surface == null)
@@ -156,7 +156,7 @@ namespace Modifiers
                 }
             }
 
-            return new ImageProcessor(surface, colors);
+            return new Processor(surface, colors);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Modifiers
 
         public override string ToString()
         {
-            return string.Format("ImageProcessor" + "(Geometry = {0}, Appearance = {1})", geometry, singleColor != null ? singleColor.ToString() : "Multiple colors.");
+            return string.Format("Processor" + "(Geometry = {0}, Appearance = {1})", geometry, singleColor != null ? singleColor.ToString() : "Multiple colors.");
         }
 
         #endregion

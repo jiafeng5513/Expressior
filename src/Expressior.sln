@@ -117,7 +117,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoManipulation", "Dynam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryViewExtension", "LibraryViewExtension\LibraryViewExtension.csproj", "{8EACBFD1-1CD4-4519-A5FC-215D40A67204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryColor", "Libraries\GeometryColor\GeometryColor.csproj", "{A50C198C-DA6E-4081-BC53-0F44D287F207}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcess", "Libraries\GeometryColor\ImageProcess.csproj", "{A50C198C-DA6E-4081-BC53-0F44D287F207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
