@@ -1151,27 +1151,29 @@
           "include": [ ],
           "childElements": [
             {
-              "text": "Mat Conversion",
+              "text": "Processor",
               "iconUrl": "",
               "elementType": "group",
               "include": [
                 {
-                  "path": "ImageProcess.Modifiers.Processor.ByGeometryColor"
+                  "path": "ImageProcess.ImageProc.Processor.Sobel"
                 },
                 {
-                  "path": "ImageProcess.Modifiers.Processor.BySurfaceColors"
+                  "path": "ImageProcess.ImageProc.Processor.GaussianBlur"
+                }
+              ],
+              "childElements": [ ]
+            },
+            {
+              "text": "Converter",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "ImageProcess.ImageProc.Converter.BitmapToMat"
                 },
                 {
-                  "path": "ImageProcess.Modifiers.Processor.Test"
-                },
-                {
-                  "path": "ImageProcess.Modifiers.Processor.Bitmap2Mat"
-                },
-                {
-                  "path": "ImageProcess.Modifiers.Processor.Mat2Bitmap"
-                },
-                {
-                  "path": "ImageProcess.Modifiers.Processor.Sobel"
+                  "path": "ImageProcess.ImageProc.Converter.MatToBitmap"
                 }
               ],
               "childElements": [ ]

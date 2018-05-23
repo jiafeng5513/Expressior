@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Modifiers.Processor.ByGeometryColor.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.ByGeometryColor.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAB8QSURBVHhe7Z13UNTZtu/PX/dhOMZRyTnHpqFpQtN0
@@ -257,7 +257,7 @@
         /wcLUyIhdlt/pAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Modifiers.Processor.ByGeometryColor.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.ByGeometryColor.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUvSURBVFhH7ZbrUxNXGMb90A/BztionUqCCkKSqiRc
@@ -285,7 +285,7 @@
         czVjE6nc95qnyXg1laeH/vdsY+h9SBHF74y81l/xW/7nzJr1G0LFP/cTkFjWAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Modifiers.Processor.BySurfaceColors.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.BySurfaceColors.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAABQ8SURBVHhe7dz5V5PXugfw8yfwJ/hjICQkxLYQSMjA
@@ -378,7 +378,7 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Modifiers.Processor.BySurfaceColors.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.BySurfaceColors.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUOSURBVFhH7ZbrUxNXGIf9E/jS735cNuRGOkqubBKu
@@ -406,7 +406,7 @@
         LFv2L9iiiDtaKi+4AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Modifiers.Processor.Sobel.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.Sobel.Large" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAWpSURBVHhe7ZzNilxVFIX7EfII8QVCpuokA9GBkyA6
@@ -436,7 +436,7 @@
         UrBlRFwFP2dKwRFRySI8RWcymUwmk8lkMplMJpPJZDKZzIJlael/GDACX61DpQQAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Modifiers.Processor.Sobel.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ImageProc.Processor.Sobel.Small" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGiSURBVFhH7ZbBSgJRFIZ9hB6hXkDaRpt2LdpE1Cqo

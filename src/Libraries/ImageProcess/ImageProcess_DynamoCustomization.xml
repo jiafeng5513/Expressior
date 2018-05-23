@@ -4,8 +4,8 @@
         <name>Processor</name>
     </assembly>
     <namespaces>
-      <namespace name="Modifiers">
-        <category>Modifiers</category>
+      <namespace name="ImageProc">
+        <category>ImageProc</category>
       </namespace>
     </namespaces>
 </doc>
