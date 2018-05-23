@@ -13,10 +13,21 @@ using Emgu.CV.Structure;
 using Color = DSCore.Color;
 using Math = DSCore.Math;
 using Point = Autodesk.DesignScript.Geometry.Point;
-
+/*
+ * 内置节点API
+ * 1.public函数可见，标记为 [IsVisibleInDynamoLibrary(false)]的不可见。
+ * 2.非静态方法需要一个额外的参数this
+ * 3.静态构造器在构造器组里面显示，图标是加号
+ * 4.普通静态函数在普通方法中显示，图标是笔
+ * 5.layoutSpecs.json引用路径：dll名.命名空间名.类名.方法名
+ * 6.添加图标：对应的resx中，嵌入，
+ *      命名规则：类名.方法名.Large/类名.方法名.Small
+ *      大图标：96×96像素，位深32，Alpha,png
+ *      小图标：32×32像素，位深32，Alpna,png
+ */
 namespace Modifiers
 {
-    public class GeometryColor :  IGraphicItem
+    public class ImageProcessor :  IGraphicItem
     {
         #region private members
 
@@ -30,13 +41,13 @@ namespace Modifiers
 
         #region private constructors
 
-        private GeometryColor(Geometry geometry, Color color)
+        private ImageProcessor(Geometry geometry, Color color)
         {
             this.geometry = geometry;
             this.singleColor = color;
         }
 
-        private GeometryColor(Surface surface, Color[][] colors)
+        private ImageProcessor(Surface surface, Color[][] colors)
         {
             geometry = surface;
 
@@ -62,7 +73,7 @@ namespace Modifiers
             } 
         }
 
-        private GeometryColor(Point[] vertices, Color[] colors)
+        private ImageProcessor(Point[] vertices, Color[] colors)
         {
             this.vertices = vertices;
             meshVertexColors = colors;
@@ -74,11 +85,12 @@ namespace Modifiers
 
         /// <summary>
         /// Display geometry using a color.
+        /// 参考价值：如何加载属于这个模块的图标
         /// </summary>
         /// <param name="geometry">The geometry to which you would like to apply color.</param>
         /// <param name="color">The color.</param>
         /// <returns>A Display object.</returns>
-        public static GeometryColor ByGeometryColor([KeepReferenceAttribute]Geometry geometry, Color color)
+        public static ImageProcessor ByGeometryColor([KeepReferenceAttribute]Geometry geometry, Color color)
         {
             if (geometry == null)
             {
@@ -90,12 +102,18 @@ namespace Modifiers
                 throw new ArgumentNullException("color");
             }
 
-            return new GeometryColor(geometry, color);
+            return new ImageProcessor(geometry, color);
+        }
+
+        public static ImageProcessor Test(Point[] vertices, Color[] colors)
+        {
+            return new ImageProcessor(vertices, colors);
         }
 
         /// <summary>
         /// Display color values on a surface.
-        /// 
+        /// 参考价值：[KeepReferenceAttribute]
+        ///           [DefaultArgument]
         /// The colors provided are converted internally to an image texture which is
         /// mapped to the surface. 
         /// </summary>
@@ -106,7 +124,7 @@ namespace Modifiers
         /// The list of colors must be square. Attempting to pass a jagged array
         /// will result in an exception. </param>
         /// <returns>A Display object.</returns>
-        public static GeometryColor BySurfaceColors([KeepReferenceAttribute]Surface surface,
+        public static ImageProcessor BySurfaceColors([KeepReferenceAttribute]Surface surface,
             [DefaultArgument("{{Color.ByARGB(255,255,0,0),Color.ByARGB(255,255,255,0)},{Color.ByARGB(255,0,255,255),Color.ByARGB(255,0,0,255)}};")] Color[][] colors)
         {
             if (surface == null)
@@ -138,18 +156,9 @@ namespace Modifiers
                 }
             }
 
-            return new GeometryColor(surface, colors);
+            return new ImageProcessor(surface, colors);
         }
-        /// <summary>
-        /// 计算两个数的和
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static int Add(int a, int b)
-        {
-            return a + b;
-        }
+
         /// <summary>
         /// 利用Emgu的Image转换构造函数将bitmap转换为mat
         /// </summary>
@@ -181,57 +190,6 @@ namespace Modifiers
             Mat outMat=new Mat();
             CvInvoke.Canny(mat, outMat, 90, 120, 3);
             return outMat;
-        }
-        /// <summary>
-        /// Create a colored mesh using points and colors.
-        /// 
-        /// The list of points supplied is used to construct a triangulated mesh, with
-        /// non-joined vertices.
-        /// </summary>
-        /// <param name="points">A list of Points. 
-        /// 
-        /// Only triangular meshes are currently supported. Each triplet of points in the list will form one 
-        /// triangle in the mesh. Points should be ordered CCW. 
-        /// Attempting to pass a list of vertices whose count is not divisble by 3 will throw an exception.</param>
-        /// <param name="colors">A list of colors. 
-        /// 
-        /// The number of colors must match the number of vertices. Attempting pass a list of colors which does not
-        /// have the same number of Colors as the list of points will throw an exception.</param>
-        /// <returns>A Display object.</returns>
-        [IsVisibleInDynamoLibrary(false)]
-        public static GeometryColor ByPointsColors([KeepReferenceAttribute]Point[] points, Color[] colors)
-        {
-            if(points == null)
-            {
-                throw new ArgumentNullException("points");
-            }
-
-            if (!points.Any())
-            {
-                throw new ArgumentException(Resources.NoVertexExceptionMessage, "points");
-            }
-
-            if (points.Count() %3 != 0)
-            {
-                throw new ArgumentException(Resources.VerticesDivisibleByThreeExceptionMessage);
-            }
-
-            if(colors == null)
-            {
-                throw new ArgumentNullException("colors");
-            }
-
-            if (!colors.Any())
-            {
-                throw new ArgumentException(Resources.NoColorsExceptionMessage, "colors");
-            }
-
-            if (colors.Count() != points.Count())
-            {
-                throw new ArgumentException(Resources.VertexColorCountMismatchExceptionMessage, "colors");
-            }
-
-            return new GeometryColor(points, colors);
         }
 
         #endregion
@@ -267,21 +225,12 @@ namespace Modifiers
 
         public override string ToString()
         {
-            return string.Format("GeometryColor" + "(Geometry = {0}, Appearance = {1})", geometry, singleColor != null ? singleColor.ToString() : "Multiple colors.");
+            return string.Format("ImageProcessor" + "(Geometry = {0}, Appearance = {1})", geometry, singleColor != null ? singleColor.ToString() : "Multiple colors.");
         }
 
         #endregion
 
         #region private helper methods
-
-        /// <summary>
-        /// Compute a set of color maps from a set of SurfaceData objects.
-        /// </summary>
-        /// <returns></returns>
-        private static Color[][] ComputeColorMap(Surface surface, IEnumerable<UV> uvs, Color[] colors, int samplesU, int samplesV)
-        {
-            return Utils.CreateGradientColorMap(colors, uvs, samplesU, samplesV);
-        }
 
         private void CreateColorMapOnSurface(Color[][] colorMap , IRenderPackage package, TessellationParameters parameters)
         {
@@ -381,19 +330,6 @@ namespace Modifiers
                 arr[i + 3] = alpha;
             }
             return arr;
-        }
-
-        /// <summary>
-        /// This method remaps a number between 0.0 and 1.0 to an integer value between lowestPower and highestPower
-        /// </summary>
-        private static int ComputeSamplesFromNormalizedValue(double value, int lowestPower, int highestPower)
-        {
-            // Calculate the size of the image
-            // Samples range from 2^2 (4) - 2^9 (512)
-            var expRange = highestPower - lowestPower;
-            var t = expRange*value;
-            var finalExp = (int)Math.Pow(2, (int)(lowestPower + t));
-            return finalExp;
         }
 
         private static void CreateVertexColoredMesh(Point[] vertices, Color[] colors, IRenderPackage package, TessellationParameters parameters)

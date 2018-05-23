@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>GeometryColor</name>
+        <name>ImageProcessor</name>
     </assembly>
     <namespaces>
       <namespace name="Modifiers">
