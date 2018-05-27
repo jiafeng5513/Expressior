@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autodesk.DesignScript.Geometry;
 using Autodesk.DesignScript.Interfaces;
 using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Point = Autodesk.DesignScript.Geometry.Point;
@@ -16,6 +17,7 @@ using Point = Autodesk.DesignScript.Geometry.Point;
  */
 namespace ImageProc
 {
+
     public class Converter 
     {
         private Converter(){}
