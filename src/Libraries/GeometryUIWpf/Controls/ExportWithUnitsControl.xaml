@@ -29,11 +29,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock 
+        <!--<TextBlock 
             Text=""
             Grid.Row="0"
             Margin="0,0,0,0"
@@ -49,9 +47,9 @@
             VerticalAlignment="Center"
             FontSize="12"
             FontFamily="{StaticResource OpenSansSemibold}"
-            Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>
+            Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>-->
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -73,11 +71,11 @@
             <ComboBox Name="SelectExportedUnit"
                 Grid.Column="1"
                 Height ="{x:Static configuration:Configurations.PortHeightInPixels}"
-                SelectedItem="{Binding SelectedExportedUnit}">
+                SelectedItem="{Binding SelectedExportedUnit}" Margin="0,2,6,3">
                 
             </ComboBox>
         </Grid>
-        <Grid Grid.Row="3" HorizontalAlignment="Right" Width="250">
+        <Grid Grid.Row="1" HorizontalAlignment="Right" Width="250">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
