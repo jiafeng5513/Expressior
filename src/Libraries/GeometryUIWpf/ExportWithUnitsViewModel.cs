@@ -17,23 +17,6 @@ namespace Dynamo.Wpf
         private readonly NodeViewModel nodeViewModel;
         private readonly NodeModel nodeModel;
 
-        public ConversionUnit SelectedExportedUnit
-        {
-            get { return exportWithUnitsModel.SelectedExportedUnit; }
-            set
-            {
-                exportWithUnitsModel.SelectedExportedUnit = value;                             
-            }
-        }
-
-        public List<ConversionUnit> SelectedExportedUnitsSource
-        {
-            get { return exportWithUnitsModel.SelectedExportedUnitsSource; }
-            set
-            {
-                exportWithUnitsModel.SelectedExportedUnitsSource = value;               
-            }
-        }
 
         public int SliderValue
         {
@@ -53,12 +36,6 @@ namespace Dynamo.Wpf
         {
             switch (e.PropertyName)
             {
-                case "SelectedExportedUnit":
-                    RaisePropertyChanged("SelectedExportedUnit");
-                    break;
-                case "SelectedExportedUnitsSource":
-                    RaisePropertyChanged("SelectedExportedUnitsSource");
-                    break;
                 case "ValueofsliderOfSlider":
                     RaisePropertyChanged("ValueofsliderOfSlider");
                     break;

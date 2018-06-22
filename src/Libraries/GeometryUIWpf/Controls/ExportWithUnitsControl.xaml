@@ -71,7 +71,7 @@
             <ComboBox Name="SelectExportedUnit"
                 Grid.Column="1"
                 Height ="{x:Static configuration:Configurations.PortHeightInPixels}"
-                SelectedItem="{Binding SelectedExportedUnit}" Margin="0,2,6,3">
+                Margin="0,2,6,3">
 
             </ComboBox>
         </Grid>

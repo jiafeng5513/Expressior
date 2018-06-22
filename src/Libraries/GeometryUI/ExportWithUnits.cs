@@ -26,24 +26,15 @@ using Newtonsoft.Json;
 namespace GeometryUI
 {
     //[NodeCategory(BuiltinNodeCategories.GEOMETRY)]
-    [NodeName("MUL")]
-    [NodeDescription("ExportToSATDescripiton", typeof(GeometryUI.Properties.Resources))]
-    [NodeSearchTags("ExportWithUnitsSearchTags", typeof(GeometryUI.Properties.Resources))]
+    [NodeName("UINodeExample")]
+    [NodeDescription("UINodeExampleDescripiton", typeof(GeometryUI.Properties.Resources))]
+    [NodeSearchTags("UINodeExampleSearchTags", typeof(GeometryUI.Properties.Resources))]
     [IsDesignScriptCompatible]
     public class ExportWithUnits : NodeModel
     {
-        private ConversionUnit selectedExportedUnit;
-        private List<ConversionUnit> selectedExportedUnitsSource;
+
         private int valueofslider = 50;
-        public List<ConversionUnit> SelectedExportedUnitsSource
-        {
-            get { return selectedExportedUnitsSource; }
-            set
-            {
-                selectedExportedUnitsSource = value;
-                RaisePropertyChanged("SelectedExportedUnitsSource");
-            }
-        }
+        
 
         public int ValueofsliderOfSlider
         {
@@ -55,37 +46,23 @@ namespace GeometryUI
                 RaisePropertyChanged("ValueofsliderOfSlider");
             }
         }
-        public ConversionUnit SelectedExportedUnit
-        {
-            get { return selectedExportedUnit; }
-            set
-            {
-                selectedExportedUnit = (ConversionUnit)Enum.Parse(typeof(ConversionUnit), value.ToString());
-                this.OnNodeModified();
-                RaisePropertyChanged("SelectedExportedUnit");
-            }
-        }
+
 
         [JsonConstructor]
-        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts):
-            base(inPorts, outPorts)
+        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts):base(inPorts, outPorts)
         {
-            SelectedExportedUnit = ConversionUnit.Feet;
-            SelectedExportedUnitsSource =
-                Conversions.ConversionMetricLookup[ConversionMetricUnit.Length];
+            //TODO:内部变量的初始化
             ShouldDisplayPreviewCore = true;
         }
 
         public ExportWithUnits()
         {
-            SelectedExportedUnit = ConversionUnit.Feet;
-            SelectedExportedUnitsSource =
-                Conversions.ConversionMetricLookup[ConversionMetricUnit.Length];
+            //TODO:内部变量初始化
 
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("geometry", Resources.ExportToSatGeometryInputDescription)));
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("filePath", Resources.ExportToSatFilePathDescription, new StringNode())));
-            //OutPorts.Add(new PortModel(PortType.Output, this, new PortData("string", Resources.ExportToSatFilePathOutputDescription)));
-            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("Test", "看到就是成功")));
+            //构造输入输出端口
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("InputPort1", Resources.InputPort1Description)));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("InputPort2", Resources.InputPort2Description, new StringNode())));
+            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("OutputPort1", Resources.OutputPort1Description)));
 
             ShouldDisplayPreviewCore = true;
             RegisterAllPorts();
@@ -100,49 +77,44 @@ namespace GeometryUI
         {
             if (!InPorts[0].IsConnected || !InPorts[1].IsConnected)
             {
-                var rhs = AstFactory.BuildIntNode(valueofslider);//这里是突破口,可以注入外部类型
+                //如果在没有连接输入节点的情况下连接了输出节点,应当有默认输出
+                var rhs = AstFactory.BuildIntNode(valueofslider);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
                 var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
-                
                 return new[] { assignment };
-                //return new[] {AstFactory.BuildAssignment(new ArgumentSignatureNode(), new ArgumentSignatureNode())};
-                //return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), AstFactory.BuildNullNode()) };
             }
 
-            double unitsMM = Conversions.ConversionDictionary[SelectedExportedUnit]*1000.0;
-
+            //取输入端口值
             var geometryListNode = inputAstNodes[0];
             var filePathNode = inputAstNodes[1];
-            var unitsMMNode = AstFactory.BuildDoubleNode(unitsMM);
-            
-            AssociativeNode node = null;
-
-            node = AstFactory.BuildIntNode(ValueofsliderOfSlider);
+            AssociativeNode node = AstFactory.BuildStringNode(
+                "In1:" + ((StringNode)geometryListNode).Value+"\n"+
+                "In2:" + ((StringNode)filePathNode).Value+"\n"+
+                "Slider:"+ValueofsliderOfSlider);
 
             //node = AstFactory.BuildFunctionCall(
             //            new Func<IEnumerable<Geometry>, string, double, string>(Geometry.ExportToSAT),
             //            new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
 
+            //注意观察多输出怎么写
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node)};
         }
 
-        #region Serialization/Deserialization Methods
-
+        #region 重载:序列化和解序列化方法
         protected override void SerializeCore(XmlElement element, SaveContext context)
         {
             base.SerializeCore(element, context); // Base implementation must be called.
 
             var helper = new XmlElementHelper(element);
-            helper.SetAttribute("exportedUnit", SelectedExportedUnit.ToString());
+            helper.SetAttribute("UINodeExample", valueofslider.ToString());//把slider的值存起来
         }
 
         protected override void DeserializeCore(XmlElement element, SaveContext context)
         {
             base.DeserializeCore(element, context); //Base implementation must be called.
             var helper = new XmlElementHelper(element);
-            var exportedUnit = helper.ReadString("exportedUnit");
+            var exportedUnit = helper.ReadString("UINodeExample");
 
-            SelectedExportedUnit = Enum.Parse(typeof(ConversionUnit), exportedUnit) is ConversionUnit ?
-                                (ConversionUnit)Enum.Parse(typeof(ConversionUnit), exportedUnit) : ConversionUnit.Feet;
+            valueofslider =  int.Parse(exportedUnit) is int ? int.Parse(exportedUnit) : 0; 
         }
 
         #endregion

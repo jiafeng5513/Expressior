@@ -117,20 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ExportToSATDescripiton" xml:space="preserve">
-    <value>Exports the specified geometry to the given SAT  file path.</value>
+  <data name="InputPort1Description" xml:space="preserve">
+    <value>输入端口1</value>
   </data>
-  <data name="ExportToSatFilePathDescription" xml:space="preserve">
-    <value>File to export the geometry to.</value>
+  <data name="InputPort2Description" xml:space="preserve">
+    <value>输入端口2</value>
   </data>
-  <data name="ExportToSatFilePathOutputDescription" xml:space="preserve">
-    <value>The file path of the exported file. Note this may change from the input in it contains non-ASCII characters.</value>
+  <data name="OutputPort1Description" xml:space="preserve">
+    <value>输出端口1</value>
   </data>
-  <data name="ExportToSatGeometryInputDescription" xml:space="preserve">
-    <value>Geometry to export into a SAT file.</value>
+  <data name="UINodeExampleDescripiton" xml:space="preserve">
+    <value>实验性节点:带有自定义UI的内置节点</value>
   </data>
-  <data name="ExportWithUnitsSearchTags" xml:space="preserve">
-    <value>Export;SAT</value>
+  <data name="UINodeExampleSearchTags" xml:space="preserve">
+    <value>UI;Example</value>
     <comment>Search tags for ExportWithUnits node. During translation, localized keywords can be appended to the end of these tags to provide localized search terms in addition to the existing ones.</comment>
   </data>
 </root>

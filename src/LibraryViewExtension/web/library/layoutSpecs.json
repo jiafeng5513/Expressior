@@ -1179,6 +1179,34 @@
               "childElements": [ ]
             }
           ]
+        },
+        {
+          "text": "ExampleNode",
+          "iconUrl": "./dist/resources/Category.ImageProc.svg",
+          "elementType": "category",
+          "include": [ ],
+          "childElements": [
+            {
+              "text": "Inner Node With UI",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "GeometryUI.GeometryUI.UINodeExample"
+                }
+              ],
+              "childElements": [ ]
+            },
+            {
+              "text": "Inner Node",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                
+              ],
+              "childElements": [ ]
+            }
+          ]
         }
       ]
     },
