@@ -35,6 +35,12 @@ namespace Dynamo.Wpf
             }
         }
 
+        public int SliderValue
+        {
+            get { return exportWithUnitsModel.ValueofsliderOfSlider; }
+            set { exportWithUnitsModel.ValueofsliderOfSlider = value; }
+        }
+
         public ExportWithUnitsViewModel(ExportWithUnits model, NodeView nodeView)
         {
             exportWithUnitsModel = model;           
@@ -52,6 +58,9 @@ namespace Dynamo.Wpf
                     break;
                 case "SelectedExportedUnitsSource":
                     RaisePropertyChanged("SelectedExportedUnitsSource");
+                    break;
+                case "ValueofsliderOfSlider":
+                    RaisePropertyChanged("ValueofsliderOfSlider");
                     break;
             }
         }

@@ -34,7 +34,7 @@ namespace GeometryUI
     {
         private ConversionUnit selectedExportedUnit;
         private List<ConversionUnit> selectedExportedUnitsSource;
-
+        private int valueofslider = 50;
         public List<ConversionUnit> SelectedExportedUnitsSource
         {
             get { return selectedExportedUnitsSource; }
@@ -45,6 +45,16 @@ namespace GeometryUI
             }
         }
 
+        public int ValueofsliderOfSlider
+        {
+            get { return valueofslider; }
+            set
+            {
+                valueofslider = value;
+                this.OnNodeModified();
+                RaisePropertyChanged("ValueofsliderOfSlider");
+            }
+        }
         public ConversionUnit SelectedExportedUnit
         {
             get { return selectedExportedUnit; }
@@ -80,14 +90,19 @@ namespace GeometryUI
             ShouldDisplayPreviewCore = true;
             RegisterAllPorts();
         }
-
+        /// <summary>
+        /// 构建输出节点
+        /// 这个函数的触发条件是输入节点发生了变化,即this.OnNodeModified();
+        /// </summary>
+        /// <param name="inputAstNodes"></param>
+        /// <returns></returns>
         public override IEnumerable<AssociativeNode> BuildOutputAst(List<AssociativeNode> inputAstNodes)
         {
             if (!InPorts[0].IsConnected || !InPorts[1].IsConnected)
             {
-                var rhs = AstFactory.BuildIntNode(5);//这里是突破口,可以注入外部类型
+                var rhs = AstFactory.BuildIntNode(valueofslider);//这里是突破口,可以注入外部类型
                 var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
-
+                
                 return new[] { assignment };
                 //return new[] {AstFactory.BuildAssignment(new ArgumentSignatureNode(), new ArgumentSignatureNode())};
                 //return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), AstFactory.BuildNullNode()) };
@@ -101,9 +116,11 @@ namespace GeometryUI
             
             AssociativeNode node = null;
 
-            node = AstFactory.BuildFunctionCall(
-                        new Func<IEnumerable<Geometry>, string, double, string>(Geometry.ExportToSAT),
-                        new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
+            node = AstFactory.BuildIntNode(ValueofsliderOfSlider);
+
+            //node = AstFactory.BuildFunctionCall(
+            //            new Func<IEnumerable<Geometry>, string, double, string>(Geometry.ExportToSAT),
+            //            new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
 
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node)};
         }
