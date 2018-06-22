@@ -25,7 +25,7 @@ using Newtonsoft.Json;
  */
 namespace GeometryUI
 {
-    //[NodeCategory(BuiltinNodeCategories.GEOMETRY)]
+    [NodeCategory(BuiltinNodeCategories.CORE_VIEW)]
     [NodeName("UINodeExample")]
     [NodeDescription("UINodeExampleDescripiton", typeof(GeometryUI.Properties.Resources))]
     [NodeSearchTags("UINodeExampleSearchTags", typeof(GeometryUI.Properties.Resources))]

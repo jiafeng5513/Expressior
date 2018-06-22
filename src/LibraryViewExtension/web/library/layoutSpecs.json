@@ -1187,22 +1187,13 @@
           "include": [ ],
           "childElements": [
             {
-              "text": "Inner Node With UI",
+              "text": "InnerNodeWithUI",
               "iconUrl": "",
               "elementType": "group",
               "include": [
                 {
-                  "path": "GeometryUI.GeometryUI.UINodeExample"
+                  "path": "Core.View.UINodeExample"
                 }
-              ],
-              "childElements": [ ]
-            },
-            {
-              "text": "Inner Node",
-              "iconUrl": "",
-              "elementType": "group",
-              "include": [
-                
               ],
               "childElements": [ ]
             }
