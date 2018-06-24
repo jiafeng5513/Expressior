@@ -36,15 +36,15 @@ namespace Dynamo.Wpf.NodeViewCustomizations
             exporterViewModel = exporterControl.DataContext as ExportWithUnitsViewModel;
             nodeView.inputGrid.Children.Add(exporterControl);
             exporterControl.Loaded += converterControl_Loaded;
-            exporterControl.SelectExportedUnit.PreviewMouseUp += SelectExportedUnit_PreviewMouseUp;
+            //exporterControl.SelectExportedUnit.PreviewMouseUp += SelectExportedUnit_PreviewMouseUp;
         }
 
-        private void SelectExportedUnit_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            nodeViewModel.WorkspaceViewModel.HasUnsavedChanges = true;
-            var undoRecorder = nodeViewModel.WorkspaceViewModel.Model.UndoRecorder;
-            WorkspaceModel.RecordModelForModification(nodeModel, undoRecorder);
-        }
+        //private void SelectExportedUnit_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        //{
+        //    nodeViewModel.WorkspaceViewModel.HasUnsavedChanges = true;
+        //    var undoRecorder = nodeViewModel.WorkspaceViewModel.Model.UndoRecorder;
+        //    WorkspaceModel.RecordModelForModification(nodeModel, undoRecorder);
+        //}
 
         private void converterControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -52,7 +52,7 @@ namespace Dynamo.Wpf.NodeViewCustomizations
 
         public void Dispose()
         {
-            exporterControl.SelectExportedUnit.PreviewMouseUp -= SelectExportedUnit_PreviewMouseUp;
+            //exporterControl.SelectExportedUnit.PreviewMouseUp -= SelectExportedUnit_PreviewMouseUp;
         }
     }
 }

@@ -17,23 +17,28 @@ namespace Dynamo.Wpf
         private readonly NodeViewModel nodeViewModel;
         private readonly NodeModel nodeModel;
 
-        public ConversionUnit SelectedExportedUnit
+        public int SliderValue
         {
-            get { return exportWithUnitsModel.SelectedExportedUnit; }
-            set
-            {
-                exportWithUnitsModel.SelectedExportedUnit = value;                             
-            }
+            get { return exportWithUnitsModel.ValueofsliderOfSlider; }
+            set { exportWithUnitsModel.ValueofsliderOfSlider = value; }
         }
+        //public ConversionUnit SelectedExportedUnit
+        //{
+        //    get { return exportWithUnitsModel.SelectedExportedUnit; }
+        //    set
+        //    {
+        //        exportWithUnitsModel.SelectedExportedUnit = value;                             
+        //    }
+        //}
 
-        public List<ConversionUnit> SelectedExportedUnitsSource
-        {
-            get { return exportWithUnitsModel.SelectedExportedUnitsSource; }
-            set
-            {
-                exportWithUnitsModel.SelectedExportedUnitsSource = value;               
-            }
-        }
+        //public List<ConversionUnit> SelectedExportedUnitsSource
+        //{
+        //    get { return exportWithUnitsModel.SelectedExportedUnitsSource; }
+        //    set
+        //    {
+        //        exportWithUnitsModel.SelectedExportedUnitsSource = value;               
+        //    }
+        //}
 
         public ExportWithUnitsViewModel(ExportWithUnits model, NodeView nodeView)
         {
@@ -52,6 +57,9 @@ namespace Dynamo.Wpf
                     break;
                 case "SelectedExportedUnitsSource":
                     RaisePropertyChanged("SelectedExportedUnitsSource");
+                    break;
+                case "ValueofsliderOfSlider":
+                    RaisePropertyChanged("ValueofsliderOfSlider");
                     break;
             }
         }

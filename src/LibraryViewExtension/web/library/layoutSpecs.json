@@ -1183,6 +1183,20 @@
       ]
     },
     {
+      "text": "Example",
+      "iconUrl": "",
+      "elementType": "category",
+      "include": [
+        {
+          "path": "ImageProcess.ImageProc.Converter.BitmapToMat"
+        },
+        {
+          "path": "Geometry.Geometry.MUL"
+        }
+      ],
+      "childElements": [ ]
+    },
+    {
       "text": "Miscellaneous",
       "elementType": "section",
       "showHeader": true,
