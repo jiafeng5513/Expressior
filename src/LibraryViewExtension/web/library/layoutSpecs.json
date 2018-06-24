@@ -1179,27 +1179,22 @@
               "childElements": [ ]
             }
           ]
-        },
-        {
-          "text": "ExampleNode",
-          "iconUrl": "./dist/resources/Category.ImageProc.svg",
-          "elementType": "category",
-          "include": [ ],
-          "childElements": [
-            {
-              "text": "InnerNodeWithUI",
-              "iconUrl": "",
-              "elementType": "group",
-              "include": [
-                {
-                  "path": "Core.View.UINodeExample"
-                }
-              ],
-              "childElements": [ ]
-            }
-          ]
         }
       ]
+    },
+    {
+      "text": "Example",
+      "iconUrl": "",
+      "elementType": "category",
+      "include": [ 
+        {
+          "path": "ImageProcess.ImageProc.Converter.MatToBitmap"
+        },
+        {
+          "path": "Geometry.Geometry.MUL"
+        }
+      ],
+      "childElements": []
     },
     {
       "text": "Miscellaneous",
