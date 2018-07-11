@@ -55,9 +55,6 @@ namespace Dynamo.Wpf
                 case "ValueofsliderOfSlider":
                     RaisePropertyChanged("ValueofsliderOfSlider");
                     break;
-                case "ValueofsliderOfSlider":
-                    RaisePropertyChanged("ValueofsliderOfSlider");
-                    break;
             }
         }
     }

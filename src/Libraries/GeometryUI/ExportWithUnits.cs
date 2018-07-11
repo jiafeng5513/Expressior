@@ -27,7 +27,7 @@ namespace GeometryUI
 {
     [NodeCategory(BuiltinNodeCategories.GEOMETRY)]
     [NodeName("MUL")]
-    [InPortTypes("string")]
+    //[InPortTypes("string")]
     [NodeDescription("ExportToSATDescripiton", typeof(GeometryUI.Properties.Resources))]
     [NodeSearchTags("ExportWithUnitsSearchTags", typeof(GeometryUI.Properties.Resources))]
     [IsDesignScriptCompatible]
@@ -59,9 +59,9 @@ namespace GeometryUI
         {
 
 
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("output1", Resources.ExportToSatGeometryInputDescription)));
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("filePath", Resources.ExportToSatFilePathDescription, new StringNode())));
-            //OutPorts.Add(new PortModel(PortType.Output, this, new PortData("string", Resources.ExportToSatFilePathOutputDescription)));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("output1", Resources.InputPort1Description)));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("filePath", Resources.InputPort2Description, new StringNode())));
+            //OutPorts.Add(new PortModel(PortType.Output, this, new PortData("string", Resources.OutputPort1Description)));
             OutPorts.Add(new PortModel(PortType.Output, this, new PortData("Test", "看到就是成功")));
 
             ShouldDisplayPreviewCore = true;
