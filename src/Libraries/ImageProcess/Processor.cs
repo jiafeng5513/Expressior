@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Analysis;
-using Autodesk.DesignScript.Geometry;
-using Autodesk.DesignScript.Interfaces;
-using Autodesk.DesignScript.Runtime;
-using ImageProcess.Properties;
-using Dynamo.Graph.Nodes;
+﻿using System.Drawing;
 using Emgu.CV;
-using Emgu.CV.Structure;
-using Color = DSCore.Color;
-using Math = DSCore.Math;
-using Point = Autodesk.DesignScript.Geometry.Point;
 /*
  * 内置节点API
  * 1.public函数可见，标记为 [IsVisibleInDynamoLibrary(false)]的不可见。
@@ -55,5 +42,24 @@ namespace ImageProc
             CvInvoke.GaussianBlur(mat, outMat,new Size(3,3),0.5,0.5);
             return outMat;
         }
+
+        /*
+         * dcm file name ->Mat
+         * 二值化
+         *
+         * clear_border
+         *
+         * label
+         *
+         * 保留两个最大联通
+         *
+         * 半径为2的腐蚀
+         *
+         * 半径为10的闭
+         *
+         * 填充小洞
+         *
+         * 掩码提取
+         */
     }
 }
