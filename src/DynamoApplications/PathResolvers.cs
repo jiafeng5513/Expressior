@@ -42,7 +42,8 @@ namespace Dynamo.Applications
                 "DynamoUnits.dll",
                 //"Tessellation.dll",
                 "Analysis.dll",
-                "ImageProcess.dll"//注意这个dll的名字
+                "ImageProcess.dll",//注意这个dll的名字
+                "DicomTools.dll"
             };
 
         }
