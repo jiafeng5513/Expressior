@@ -72,13 +72,13 @@
                 Grid.Column="1"
                 Height ="{x:Static configuration:Configurations.PortHeightInPixels}"
                 Margin="0,2,6,3">
-                
             </ComboBox>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Right" Width="250">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="83*"/>
+                <ColumnDefinition Width="117*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Num: "
                        Grid.Column="0"
@@ -91,10 +91,12 @@
             <Slider 
                 Grid.Column="1" 
                 Grid.ColumnSpan="2" 
+                Value="{Binding SliderValue}"
                 Maximum="100"
                 Minimum="0"
-                Value="{Binding SliderValue}"
-                Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>
+                IsSnapToTickEnabled="True"
+                TickPlacement="Both"
+                Height ="{x:Static configuration:Configurations.PortHeightInPixels}" Margin="0,2,0,3"/>
         </Grid>
     </Grid>
 </UserControl>

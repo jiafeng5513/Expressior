@@ -61,47 +61,47 @@ namespace GeometryUI.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Exports the specified geometry to the given SAT  file path. 的本地化字符串。
+        ///   查找类似 输入端口1 的本地化字符串。
         /// </summary>
-        internal static string ExportToSATDescripiton {
+        internal static string InputPort1Description {
             get {
-                return ResourceManager.GetString("ExportToSATDescripiton", resourceCulture);
+                return ResourceManager.GetString("InputPort1Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 File to export the geometry to. 的本地化字符串。
+        ///   查找类似 输入端口2 的本地化字符串。
         /// </summary>
-        internal static string ExportToSatFilePathDescription {
+        internal static string InputPort2Description {
             get {
-                return ResourceManager.GetString("ExportToSatFilePathDescription", resourceCulture);
+                return ResourceManager.GetString("InputPort2Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 The file path of the exported file. Note this may change from the input in it contains non-ASCII characters. 的本地化字符串。
+        ///   查找类似 输出端口1 的本地化字符串。
         /// </summary>
-        internal static string ExportToSatFilePathOutputDescription {
+        internal static string OutputPort1Description {
             get {
-                return ResourceManager.GetString("ExportToSatFilePathOutputDescription", resourceCulture);
+                return ResourceManager.GetString("OutputPort1Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 输入端口 的本地化字符串。
+        ///   查找类似 实验性节点:带有自定义UI的内置节点 的本地化字符串。
         /// </summary>
-        internal static string ExportToSatGeometryInputDescription {
+        internal static string UINodeExampleDescripiton {
             get {
-                return ResourceManager.GetString("ExportToSatGeometryInputDescription", resourceCulture);
+                return ResourceManager.GetString("UINodeExampleDescripiton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Export;SAT 的本地化字符串。
+        ///   查找类似 UI;Example 的本地化字符串。
         /// </summary>
-        internal static string ExportWithUnitsSearchTags {
+        internal static string UINodeExampleSearchTags {
             get {
-                return ResourceManager.GetString("ExportWithUnitsSearchTags", resourceCulture);
+                return ResourceManager.GetString("UINodeExampleSearchTags", resourceCulture);
             }
         }
     }

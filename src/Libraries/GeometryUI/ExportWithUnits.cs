@@ -48,10 +48,10 @@ namespace GeometryUI
         }
 
 
-
         [JsonConstructor]
         private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts):base(inPorts, outPorts)
         {
+            //TODO:内部变量的初始化
             ShouldDisplayPreviewCore = true;
         }
 
@@ -67,14 +67,19 @@ namespace GeometryUI
             ShouldDisplayPreviewCore = true;
             RegisterAllPorts();
         }
-
+        /// <summary>
+        /// 构建输出节点
+        /// 这个函数的触发条件是输入节点发生了变化,即this.OnNodeModified();
+        /// </summary>
+        /// <param name="inputAstNodes"></param>
+        /// <returns></returns>
         public override IEnumerable<AssociativeNode> BuildOutputAst(List<AssociativeNode> inputAstNodes)
         {
             if (!InPorts[0].IsConnected || !InPorts[1].IsConnected)
             {
-                var rhs = AstFactory.BuildIntNode(ValueofsliderOfSlider);//这里是突破口,可以注入外部类型
+                //如果在没有连接输入节点的情况下连接了输出节点,应当有默认输出
+                var rhs = AstFactory.BuildIntNode(valueofslider);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
                 var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
-
                 return new[] { assignment };
                 
                 //return new[] {AstFactory.BuildAssignment(new ArgumentSignatureNode(), new ArgumentSignatureNode())};
@@ -97,11 +102,11 @@ namespace GeometryUI
             //            new Func<IEnumerable<Geometry>, string, double, string>(Geometry.ExportToSAT),
             //            new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
 
+            //注意观察多输出怎么写
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node)};
         }
 
-        #region Serialization/Deserialization Methods
-
+        #region 重载:序列化和解序列化方法
         protected override void SerializeCore(XmlElement element, SaveContext context)
         {
             base.SerializeCore(element, context); // Base implementation must be called.

@@ -52,11 +52,8 @@ namespace Dynamo.Wpf
         {
             switch (e.PropertyName)
             {
-                case "SelectedExportedUnit":
-                    RaisePropertyChanged("SelectedExportedUnit");
-                    break;
-                case "SelectedExportedUnitsSource":
-                    RaisePropertyChanged("SelectedExportedUnitsSource");
+                case "ValueofsliderOfSlider":
+                    RaisePropertyChanged("ValueofsliderOfSlider");
                     break;
                 case "ValueofsliderOfSlider":
                     RaisePropertyChanged("ValueofsliderOfSlider");

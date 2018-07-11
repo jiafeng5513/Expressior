@@ -1186,15 +1186,25 @@
       "text": "Example",
       "iconUrl": "",
       "elementType": "category",
+<<<<<<< HEAD
       "include": [
         {
           "path": "ImageProcess.ImageProc.Converter.BitmapToMat"
+=======
+      "include": [ 
+        {
+          "path": "ImageProcess.ImageProc.Converter.MatToBitmap"
+>>>>>>> 9c6fc2adab1d3fa84c72f67c8dc69a25b80013aa
         },
         {
           "path": "Geometry.Geometry.MUL"
         }
       ],
+<<<<<<< HEAD
       "childElements": [ ]
+=======
+      "childElements": []
+>>>>>>> 9c6fc2adab1d3fa84c72f67c8dc69a25b80013aa
     },
     {
       "text": "Miscellaneous",
