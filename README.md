@@ -38,3 +38,5 @@
 ### New Features
 1. 现在支持Dicom图像的读取了:<br>
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/DicomReading.png) 
+2. 现在支持阈值处理:<br>
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Threshold.gif)
