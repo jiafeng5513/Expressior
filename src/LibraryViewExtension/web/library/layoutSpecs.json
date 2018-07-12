@@ -1160,6 +1160,9 @@
                 },
                 {
                   "path": "ImageProcess.ImageProc.Processor.GaussianBlur"
+                },
+                {
+                  "path": "ImageProcess.ImageProc.Processor.Binnary"
                 }
               ],
               "childElements": [ ]
@@ -1182,7 +1185,7 @@
         },
         {
           "text": "Dicom Tools",
-          "iconUrl":"",
+          "iconUrl":"./dist/resources/Category.DicomTools.svg",
           "elementType":"category",
           "include":[],
           "childElements":[

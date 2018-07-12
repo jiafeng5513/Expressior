@@ -42,7 +42,18 @@ namespace ImageProc
             CvInvoke.GaussianBlur(mat, outMat,new Size(3,3),0.5,0.5);
             return outMat;
         }
-
+        /// <summary>
+        /// 二值化
+        /// </summary>
+        /// <param name="inMat"></param>
+        /// <param name="Threshold"></param>
+        /// <returns></returns>
+        public static Mat Binnary(Mat inMat,double Threshold)
+        {
+            Mat outMat =new Mat();
+            CvInvoke.Threshold(inMat, outMat, Threshold, 255.0, Emgu.CV.CvEnum.ThresholdType.Binary);
+            return outMat;
+        }
         /*
          * dcm file name ->Mat
          * 二值化
