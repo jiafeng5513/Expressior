@@ -44,6 +44,7 @@ namespace DicomTools
 
             DicomImage _image = new DicomImage(_file.Dataset);
             _image.WindowWidth = 4096;
+            
             _image.WindowCenter = 1024;
             _grayscale = !_image.PhotometricInterpretation.IsColor;
             if (_grayscale)

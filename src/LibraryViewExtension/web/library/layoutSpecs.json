@@ -1163,6 +1163,9 @@
                 },
                 {
                   "path": "ImageProcess.ImageProc.Processor.Binnary"
+                },
+                {
+                  "path": "ImageProcess.ImageProc.Processor.ClearBorder"
                 }
               ],
               "childElements": [ ]
