@@ -40,3 +40,5 @@
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/DicomReading.png) 
 2. 现在支持阈值处理:<br>
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Threshold.gif)
+3. 现在支持clear_border:<br>
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/clear_border.png) 
