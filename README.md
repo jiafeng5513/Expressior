@@ -42,3 +42,5 @@
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Threshold.gif)
 3. 现在支持clear_border:<br>
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/clear_border.png) 
+4. 连续操作<br>
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/连续操作.gif)
