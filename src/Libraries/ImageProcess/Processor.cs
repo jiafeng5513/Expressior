@@ -6,6 +6,7 @@ using Autodesk.DesignScript.Runtime;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Emgu.CV.Util;
 using Color = DSCore.Color;
 
 /*
@@ -80,6 +81,16 @@ namespace ImageProc
             return new float[1];
         }
     }
+    /// <summary>
+    /// 轮廓对象
+    /// </summary>
+    struct ContourItem
+    {
+        [IsVisibleInDynamoLibrary(false)]
+        public VectorOfPoint vp;//轮廓点集
+        [IsVisibleInDynamoLibrary(false)]
+        public double area;     //面积
+    }
     public class Processor 
     {
         /// <summary>
@@ -128,24 +139,165 @@ namespace ImageProc
             return outMat;
         }
 
-        /*
-         * dcm file name ->Mat
-         * 二值化
-         *
-         * clear_border
-         *
-         * label
-         *
-         * 保留两个最大联通
-         *
-         * 半径为2的腐蚀
-         *
-         * 半径为10的闭
-         *
-         * 填充小洞
-         *
-         * 掩码提取
-         */
+
+        /// <summary>
+        /// 形态学:腐蚀
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="Size">内核尺寸:int</param>
+        /// <returns></returns>
+        public static Mat Erode(Mat inMat, int Size)
+        {
+            Mat outMat = new Mat();
+            //构造内核
+            int KernelSize = Math.Max(3, Size);
+            int anchorPoint = (KernelSize % 2 == 0 ? KernelSize : KernelSize + 1) / 2;
+            Mat StructingElement = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(KernelSize, KernelSize),
+                new Point(anchorPoint, anchorPoint));
+            CvInvoke.Erode(inMat,
+                outMat,
+                StructingElement,
+                new Point(-1, -1),
+                1,
+                BorderType.Default,
+                new MCvScalar(0));
+            return outMat;
+        }
+
+        /// <summary>
+        /// 形态学:膨胀
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="Size">内核尺寸:int</param>
+        /// <returns></returns>
+        public static Mat Dilate(Mat inMat, int Size)
+        {
+            Mat outMat = new Mat();
+            //构造内核
+            int KernelSize = Math.Max(3, Size);
+            int anchorPoint = (KernelSize % 2 == 0 ? KernelSize : KernelSize + 1) / 2;
+            Mat StructingElement = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(KernelSize, KernelSize),
+                new Point(anchorPoint, anchorPoint));
+            CvInvoke.Dilate(inMat, outMat, StructingElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+
+            return outMat;
+        }
+
+
+        /// <summary>
+        /// 形态学:开
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="Size">内核尺寸:int</param>
+        /// <returns></returns>
+        public static Mat Open(Mat inMat, int Size)
+        {
+            Mat outMat = new Mat();
+            Mat intermMat = new Mat();
+            //构造内核
+            int KernelSize = Math.Max(3, Size);
+            int anchorPoint = (KernelSize % 2 == 0 ? KernelSize : KernelSize + 1) / 2;
+            Mat StructingElement = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(KernelSize, KernelSize),
+                new Point(anchorPoint, anchorPoint));
+            //先腐蚀
+            CvInvoke.Erode(inMat, intermMat, StructingElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            //再膨胀        
+            CvInvoke.Dilate(intermMat, outMat, StructingElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+
+            return outMat;
+        }
+
+        /// <summary>
+        /// 形态学:闭
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="Size">内核尺寸:int</param>
+        /// <returns></returns>
+        public static Mat Close(Mat inMat, int Size)
+        {
+            Mat outMat = new Mat();
+            Mat intermMat = new Mat();
+            //构造内核
+            int KernelSize = Math.Max(3, Size);
+            int anchorPoint = (KernelSize % 2 == 0 ? KernelSize : KernelSize + 1) / 2;
+            Mat StructingElement = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(KernelSize, KernelSize),
+                new Point(anchorPoint, anchorPoint));
+            //先膨胀        
+            CvInvoke.Dilate(inMat, intermMat, StructingElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            //再腐蚀
+            CvInvoke.Erode(intermMat, outMat, StructingElement, new Point(-1, -1), 1, BorderType.Default, new MCvScalar(0));
+            return outMat;
+        }
+
+        /// <summary>
+        /// 保留最大联通
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="Num">要保留的最大区域数量</param>
+        /// <returns></returns>
+        public static Mat MaxRegion(Mat inMat, int Num)
+        {
+            Image<Bgr, byte> src = new Image<Bgr, byte>(inMat.Size);
+            src = inMat.ToImage<Bgr, byte>();
+
+            Image<Gray, byte> edges = new Image<Gray, byte>(src.Width, src.Height);
+            Image<Gray, byte> hierarchy = new Image<Gray, byte>(src.Width, src.Height);
+
+            CvInvoke.Canny(src, edges, 100, 60);
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            //轮廓寻找
+            CvInvoke.FindContours(edges, contours, hierarchy, RetrType.External, ChainApproxMethod.ChainApproxNone);
+            //轮廓检出到数组,计算面积准备排序
+            ContourItem[] ContourArray = new ContourItem[contours.Size];
+            for (int i = 0; i < contours.Size; i++)
+            {
+                ContourArray[i].vp = contours[i];
+                ContourArray[i].area = CvInvoke.ContourArea(ContourArray[i].vp);
+            }
+            //排序
+            for (int i = 1; i < ContourArray.Length - 1; i++)
+            {
+                bool flag = true;
+                for (int j = 0; j < ContourArray.Length - 1 - i; j++)
+                {
+                    if (ContourArray[j].area < ContourArray[j + 1].area)
+                    {
+                        ContourItem temp = ContourArray[j];
+                        ContourArray[j] = ContourArray[j + 1];
+                        ContourArray[j + 1] = temp;
+                        flag = false;
+                    }
+                }
+                if (flag)
+                {
+                    break;
+                }
+            }
+            //保留前N个轮廓,把剩下的填充
+            if (ContourArray.Length == contours.Size)
+            {
+                Console.WriteLine("相等" + contours.Size);
+            }
+
+            for (int i = Num; i < ContourArray.Length; i++)
+            {
+                //只填充面积>0的轮廓
+                if (ContourArray[i].area > 0)
+                {
+                    VectorOfVectorOfPoint tempVectorOfPoint = new VectorOfVectorOfPoint();
+                    tempVectorOfPoint.Push(ContourArray[i].vp);
+                    CvInvoke.FillPoly(src, tempVectorOfPoint, new MCvScalar(255, 0, 255, 255));
+                }
+            }
+            return src.Mat;
+        }
+
+        /// <summary>
+        /// 移除与图像边缘联通的区域
+        /// </summary>
+        /// <param name="inMat">输入图片:Mat</param>
+        /// <param name="color">填充颜色</param>
+        /// <returns></returns>
         public static Mat ClearBorder(Mat inMat,Color color)
         {
             Image<Gray, byte> src = new Image<Gray, byte>(inMat.Size);
@@ -174,5 +326,24 @@ namespace ImageProc
             src = src - cannyOut;
             return src.Mat;
         }
+        /*
+         * dcm file name ->Mat
+         * 二值化
+         *
+         * clear_border
+         *
+         * label
+         *
+         * 保留两个最大联通
+         *
+         * 半径为2的腐蚀
+         *
+         * 半径为10的闭
+         *
+         * 填充小洞
+         *
+         * 掩码提取
+         */
+        
     }//end of class
 }//end of namespace

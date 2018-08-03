@@ -1167,6 +1167,26 @@
                 {
                   "path": "ImageProcess.ImageProc.Processor.ClearBorder"
                 }
+                ,
+                {
+                  "path": "ImageProcess.ImageProc.Processor.Erode"
+                }
+                ,
+                {
+                  "path": "ImageProcess.ImageProc.Processor.Dilate"
+                }
+                ,
+                {
+                  "path": "ImageProcess.ImageProc.Processor.Open"
+                }
+                ,
+                {
+                  "path": "ImageProcess.ImageProc.Processor.Close"
+                }
+                ,
+                {
+                  "path": "ImageProcess.ImageProc.Processor.MaxRegion"
+                }
               ],
               "childElements": [ ]
             },
