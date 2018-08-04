@@ -39,4 +39,5 @@
 1. dcm预处理:<br>
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/肺部图像预处理-1.gif) 
 2. 添加了测试数据<br>
-3. 准备迁移到VS2017 and .net4.7
+3. 已经迁移到VS2017,正在测试.
+4. 准备迁移到.NET 4.7
