@@ -1,9 +1,9 @@
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png) 
 ====================================
 
-|分支|Expressior_master|Expressior_slim|
-|:--------:|:----------:|:-------------:|
-|构建状态|[![Build status](https://ci.appveyor.com/api/projects/status/ke5nv5l0d33w5tl2/branch/Expressior_master?svg=true)](https://ci.appveyor.com/project/AngelaViVi/expressior/branch/Expressior_master)| 尚未构建|
+|分支|Expressior_master|Expressior_slim|RC2.0.0_master
+|:--------:|:----------:|:-------------:|-------------:|
+|构建状态|[![Build status](https://ci.appveyor.com/api/projects/status/ke5nv5l0d33w5tl2/branch/Expressior_master?svg=true)](https://ci.appveyor.com/project/AngelaViVi/expressior/branch/Expressior_master)| 尚未构建|stopped
 
 ### 这是一个可视化编程环境
 
@@ -36,11 +36,7 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### New Features
-1. 现在支持Dicom图像的读取了:<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/DicomReading.png) 
-2. 现在支持阈值处理:<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Threshold.gif)
-3. 现在支持clear_border:<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/clear_border.png) 
-4. 连续操作<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/连续操作.gif)
+1. dcm预处理:<br>
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/肺部图像预处理-1.gif) 
+2. 添加了测试数据<br>
+3. 准备迁移到VS2017 and .net4.7
