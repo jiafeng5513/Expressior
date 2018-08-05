@@ -14,8 +14,9 @@ namespace ProtoCore.DesignScriptParser {
 
 
 public class Parser {
-	public const int _EOF = 0;
-	public const int _ident = 1;
+#pragma warning disable CS3008 // 标识符不符合 CLS
+    public const int _EOF = 0;
+    public const int _ident = 1;
 	public const int _number = 2;
 	public const int _float = 3;
 	public const int _textstring = 4;
@@ -61,8 +62,8 @@ public class Parser {
 	public const int maxT = 64;
 	public const int _inlinecomment = 65;
 	public const int _blockcomment = 66;
-
-	const bool T = true;
+#pragma warning restore CS3008 // 标识符不符合 CLS
+        const bool T = true;
 	const bool x = false;
 	const int minErrDist = 2;
 	
@@ -1770,9 +1771,9 @@ langblock.codeblock.Language == ProtoCore.Language.NotSpecified) {
 			   }
 			   else
 			   {
-			       string rhsName = null;
-			       ProtoCore.AST.AssociativeAST.ExprListNode dimList = null;
-			       int dim = 0;
+			       //string rhsName = null;
+			       //ProtoCore.AST.AssociativeAST.ExprListNode dimList = null;
+			       //int dim = 0;
 			       if (rnode is ProtoCore.AST.AssociativeAST.FunctionCallNode)
 			       {
 			           ProtoCore.AST.AssociativeAST.FunctionCallNode rhsFNode = rnode as ProtoCore.AST.AssociativeAST.FunctionCallNode;
