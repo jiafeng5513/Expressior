@@ -20,9 +20,9 @@
 4. 维持原有程序框架的可扩展性,并针对深度学习任务进行定制,实现对用户可扩展.<br>
 
 ### build
-1. Microsoft Visual Studio 2015<br>
+1. Microsoft Visual Studio 2017<br>
 2. GitHub for Windows<br>
-3. Microsoft .NET Framework 4.5.<br>
+3. Microsoft .NET Framework 4.5.2<br>
 4. Microsoft DirectX (install from %GitHub%\Expressior\tools\install\Extra\DirectX\DXSETUP.exe)<br>
 
 ### 配置
@@ -39,5 +39,4 @@
 1. dcm预处理:<br>
 ![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/肺部图像预处理-1.gif) 
 2. 添加了测试数据<br>
-3. 已经迁移到VS2017,正在测试.
-4. 准备迁移到.NET 4.7
+3. 已经迁移到VS2017
