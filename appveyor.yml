@@ -20,8 +20,7 @@ on_success:
     if(-not $env:APPVEYOR_PULL_REQUEST_NUMBER) {	
       git config --global user.name $env:APPVEYOR_REPO_COMMIT_AUTHOR
       git config --global credential.helper store
-      c:\projects\dynamo\DynamoAPI 2>&1 | % { $_.ToString() }
     }  
 
-  
+
 test: off
