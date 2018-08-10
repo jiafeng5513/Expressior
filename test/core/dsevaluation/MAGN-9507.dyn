@@ -1,0 +1,170 @@
+{
+  "Uuid": "037714fc-7757-461f-a6d1-0d7117accd6b",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Home",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "[1,2,3];",
+      "Id": "2ac2cd517fd940aaa70ecbf8fe96762a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1deccfb8717d4970b937ffda6aee57bd",
+          "Name": "",
+          "Description": "t6BBA4B28C5E54CF89F300D510499A00E_0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "x= y;\nz = Count(x);",
+      "Id": "a3d712af3e734c538001055b4c0b78fb",
+      "Inputs": [
+        {
+          "Id": "647610cae00d46b4ba70bc2f2a3ded8e",
+          "Name": "y",
+          "Description": "y",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "dc9a4339786c449babf6558ceac7c50c",
+          "Name": "",
+          "Description": "x",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7595827c817b48f39c9e716243d8aa02",
+          "Name": "",
+          "Description": "z",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "3bf992ebecc94fcca90b9b1ee7e925e9",
+      "Inputs": [
+        {
+          "Id": "281a773d9cb046e0ba07aa14abb12060",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0c8a5d0373e74aca806ef596f9657665",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "1deccfb8717d4970b937ffda6aee57bd",
+      "End": "647610cae00d46b4ba70bc2f2a3ded8e",
+      "Id": "dbe900cb47a6447eb5faef18479fa726"
+    },
+    {
+      "Start": "7595827c817b48f39c9e716243d8aa02",
+      "End": "281a773d9cb046e0ba07aa14abb12060",
+      "Id": "9d6b0f024d934b59899d16cf9f2e3fea"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.0.2121",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "2ac2cd517fd940aaa70ecbf8fe96762a",
+        "IsUpstreamVisible": true,
+        "Excluded": false,
+        "X": 88.0,
+        "Y": 170.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "a3d712af3e734c538001055b4c0b78fb",
+        "IsUpstreamVisible": true,
+        "Excluded": false,
+        "X": 286.0,
+        "Y": 175.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "3bf992ebecc94fcca90b9b1ee7e925e9",
+        "IsUpstreamVisible": true,
+        "Excluded": false,
+        "X": 497.0,
+        "Y": 184.0
+      }
+    ],
+    "Notes": [],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

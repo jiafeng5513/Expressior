@@ -118,6 +118,7 @@ limitations under the License.
     <Compile Include="Configuration\Context.cs" />
     <Compile Include="Core\DynamoMigrator.cs" />
     <Compile Include="Exceptions\LibraryLoadFailedException.cs" />
+    <Compile Include="Graph\Nodes\NodeOutputData.cs" />
     <Compile Include="Graph\Nodes\NodeInputData.cs" />
     <Compile Include="Graph\Workspaces\LayoutExtensions.cs" />
     <Compile Include="Graph\Workspaces\NodesToCodeExtensions.cs" />
@@ -126,6 +127,7 @@ limitations under the License.
     <Compile Include="Graph\Workspaces\SerializationExtensions.cs" />
     <Compile Include="Graph\Workspaces\UndoRedo.cs" />
     <Compile Include="Extensions\IServiceManager.cs" />
+    <Compile Include="Logging\AnalyticsService.cs" />
     <Compile Include="Logging\DynamoAnalyticsClient.cs" />
     <Compile Include="Logging\IAnalyticsSession.cs" />
     <Compile Include="Logging\NotificationMessage.cs" />
@@ -283,6 +285,7 @@ limitations under the License.
     </Compile>
     <Compile Include="Search\SearchDictionary.cs" />
     <Compile Include="Utilities\ResourceLoader.cs" />
+    <Compile Include="Visualization\RenderPackageCache.cs" />
     <EmbeddedResource Include="BuiltInAndOperators\BuiltInImages.resx">
       <LastGenOutput>OperatorsImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -309,6 +312,10 @@ limitations under the License.
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DesignScriptBuiltin\DesignScriptBuiltin.csproj">
+      <Project>{c0d6dee5-5532-4345-9c66-4c00d7fdb8be}</Project>
+      <Name>DesignScriptBuiltin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Engine\GraphLayout\GraphLayout.csproj">
       <Project>{c2595b04-856d-40ae-8b99-4804c7a70708}</Project>
       <Name>GraphLayout</Name>
@@ -370,6 +377,7 @@ limitations under the License.
       <ExternLibG221 Include="$(SolutionDir)..\extern\LibG_221\*" />
       <ExternLibG222 Include="$(SolutionDir)..\extern\LibG_222\*" />
       <ExternLibG223 Include="$(SolutionDir)..\extern\LibG_223\*" />
+      <ExternLibG224 Include="$(SolutionDir)..\extern\LibG_224\*" />
       <ExternSimplexNoise Include="$(SolutionDir)..\extern\SimplexNoise\*" />
       <SampleFiles Include="$(SolutionDir)..\doc\distrib\Samples\**\*.*" />
       <GalleryFiles Include="$(SolutionDir)..\extern\gallery\**\*.*" />
@@ -389,6 +397,7 @@ limitations under the License.
     <Copy SourceFiles="@(ExternLibG221)" DestinationFolder="$(OutputPath)libg_221\" />
     <Copy SourceFiles="@(ExternLibG222)" DestinationFolder="$(OutputPath)libg_222\" />
     <Copy SourceFiles="@(ExternLibG223)" DestinationFolder="$(OutputPath)libg_223\" />
+    <Copy SourceFiles="@(ExternLibG224)" DestinationFolder="$(OutputPath)libg_224\" />
     <Copy SourceFiles="@(ExternSimplexNoise)" DestinationFolder="$(OutputPath)" />
     <Copy SourceFiles="@(ExternAnalytics)" DestinationFolder="$(OutputPath)" />
     <Copy SourceFiles="@(SampleFiles)" DestinationFolder="$(OutputPath)samples\%(RecursiveDir)" />

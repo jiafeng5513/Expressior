@@ -6,9 +6,6 @@ using System.Text;
 
 namespace Dynamo.Utilities
 {
-    /// <summary>
-    /// 矩形结构体
-    /// </summary>
     // From: https://github.com/mono/mono/blob/master/mcs/class/WindowsBase/System.Windows/Rect.cs
 	public struct Rect2D : IFormattable
 	{

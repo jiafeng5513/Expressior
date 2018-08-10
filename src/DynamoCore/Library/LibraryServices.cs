@@ -28,7 +28,6 @@ namespace Dynamo.Engine
     /// <summary>
     ///     LibraryServices is a singleton class which manages builtin libraries
     ///     as well as imported libraries. It is across different sessions.
-    /// LibraryServices是一个用来管理内置库和导入库的单例类
     /// </summary>
     public class LibraryServices : LogSourceBase, IDisposable
     {
@@ -38,17 +37,17 @@ namespace Dynamo.Engine
         private readonly Dictionary<string, Dictionary<string, FunctionGroup>> importedFunctionGroups =
             new Dictionary<string, Dictionary<string, FunctionGroup>>(new LibraryPathComparer());
 
-        // 这个list中存放所有的预载入的库,从user文件夹package下加载的库和从自定义dll加载的ZERO-touch库
+        // This list includes all preloaded libraries, packaged libraries, and zero-touch imported libraries
         private readonly List<string> importedLibraries = new List<string>();
 
-        //这个list存放所有在package文件夹下加载上的库
+        // This list includes all libraries loaded from package folders
         private readonly List<string> packagedLibraries = new List<string>();
 
         private readonly IPathManager pathManager;
         private readonly IPreferences preferenceSettings;
 
         /// <summary>
-        /// 返回用于解析代码和加载库的 core
+        /// Returns core which is used for parsing code and loading libraries
         /// </summary>
         public ProtoCore.Core LibraryManagementCore { get; private set; }
         private ProtoCore.Core liveRunnerCore = null;
@@ -76,9 +75,10 @@ namespace Dynamo.Engine
 
         private readonly Dictionary<string, UpgradeHint> priorNameHints =
             new Dictionary<string, UpgradeHint>();
-
+        
         /// <summary>
-        /// 从活动的 core拷贝properties到LibraryManagementCore
+        /// Copy properties from the liveCore
+        /// The properties to copy are only those used by the library core
         /// </summary>
         internal void UpdateLibraryCoreData()
         {
@@ -91,7 +91,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 初始化(注意这是一个单例类)
+        /// Initializes a new instance of the <see cref="LibraryServices"/> class.
         /// </summary>
         /// <param name="libraryManagementCore">Core which is used for parsing code and loading libraries</param>
         /// <param name="pathManager">Instance of IPathManager containing neccessary Dynamo paths</param>
@@ -99,11 +99,11 @@ namespace Dynamo.Engine
             : this(libraryManagementCore, pathManager, null) { }
 
         /// <summary>
-        /// 初始化
+        /// Initializes a new instance of the <see cref="LibraryServices"/> class.
         /// </summary>
-        /// <param name="libraryManagementCore">用来解析代码和加载libraries的core</param>
-        /// <param name="pathManager">IPathManager型对象,用于获取必要的路径</param>
-        /// <param name="preferences">IPreferences型对象,用于获取首选项</param>
+        /// <param name="libraryManagementCore">Core which is used for parsing code and loading libraries</param>
+        /// <param name="pathManager">Instance of IPathManager containing neccessary Dynamo paths</param>
+        /// <param name="preferences">The preference settings of the Dynamo instance</param>
         public LibraryServices(ProtoCore.Core libraryManagementCore, IPathManager pathManager, IPreferences preferences)
         {
             LibraryManagementCore = libraryManagementCore;
@@ -118,7 +118,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 释放空间
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources
         /// </summary>
         public void Dispose()
         {
@@ -128,7 +128,7 @@ namespace Dynamo.Engine
         }
         
         /// <summary>
-        /// 返回已导入库列表
+        ///     Returns a list of imported libraries.
         /// </summary>
         public IEnumerable<string> ImportedLibraries
         {
@@ -136,7 +136,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 返回内置函数group
+        ///     Returns built-in function groups.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<FunctionGroup> BuiltinFunctionGroups
@@ -145,7 +145,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 返回所有的已导入函数group
+        ///     Returns all imported function groups.
         /// </summary>
         public IEnumerable<FunctionGroup> ImportedFunctionGroups
         {
@@ -153,97 +153,40 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 在加载library之前发生
+        /// Occurs before a library is loaded
         /// </summary>
-        public class LibraryLoadingEventArgs : EventArgs
-        {
-            public LibraryLoadingEventArgs(string libraryPath)
-            {
-                LibraryPath = libraryPath;
-            }
-
-            public string LibraryPath { get; private set; }
-        }
         public event EventHandler<LibraryLoadingEventArgs> LibraryLoading;
-        private void OnLibraryLoading(LibraryLoadingEventArgs e)
-        {
-            string library = e.LibraryPath;
-
-            // Assembly, that is located in package directory, considered as part of package.
-            if (pathManager.PackagesDirectories.Any(
-                directory => library.StartsWith(directory)))
-            {
-                packagedLibraries.Add(library);
-            }
-
-            EventHandler<LibraryLoadingEventArgs> handler = LibraryLoading;
-            if (handler != null)
-                handler(this, e);
-        }
+        
         /// <summary>
-        /// 在无法加载library时发生
+        /// Occurs if a library cannot be loaded
         /// </summary>
-        public class LibraryLoadFailedEventArgs : EventArgs
-        {
-            public LibraryLoadFailedEventArgs(string libraryPath, string reason)
-            {
-                LibraryPath = libraryPath;
-                Reason = reason;
-            }
-
-            public string LibraryPath { get; private set; }
-            public string Reason { get; private set; }
-        }
         public event EventHandler<LibraryLoadFailedEventArgs> LibraryLoadFailed;
+        
+        /// <summary>
+        /// Occurs after a library is successfully loaded
+        /// </summary>
+        public event EventHandler<LibraryLoadedEventArgs> LibraryLoaded;
+
         private void LibraryLoadFailureHandler(object sender, LibraryLoadFailedEventArgs args)
         {
             LibraryLoadFailedException ex = new LibraryLoadFailedException(args.LibraryPath, args.Reason);
             Log(ex.Message, WarningLevel.Moderate);
-            throw ex;
-        }
-        private void OnLibraryLoadFailed(LibraryLoadFailedEventArgs e)
-        {
-            EventHandler<LibraryLoadFailedEventArgs> handler = LibraryLoadFailed;
-            if (handler != null)
-                handler(this, e);
-        }
-        /// <summary>
-        /// 在一个library加载成功的时候发生
-        /// </summary>
-        public class LibraryLoadedEventArgs : EventArgs
-        {
-            public LibraryLoadedEventArgs(string libraryPath)
-            {
-                LibraryPath = libraryPath;
-            }
 
-            public string LibraryPath { get; private set; }
+            // NOTE: We do not want to throw an exception here if the failure was due
+            // to a missing library that was explicitly (attempted to be) loaded
+            // but was moved or deleted OR if a .DS file with syntax error(s) is loaded
+            if (args.ThrowOnFailure)
+                throw ex;
         }
-        public event EventHandler<LibraryLoadedEventArgs> LibraryLoaded;
-        private void OnLibraryLoaded(LibraryLoadedEventArgs e)
-        {
-            importedLibraries.Add(e.LibraryPath);
 
-            EventHandler<LibraryLoadedEventArgs> handler = LibraryLoaded;
-            if (handler != null)
-                handler(this, e);
-        }
-        /// <summary>
-        /// 进行libraries的预加载
-        /// </summary>
-        /// <param name="preloadLibraries">预加载库列表</param>
         private void PreloadLibraries(IEnumerable<string> preloadLibraries)
         {
-            importedLibraries.AddRange(preloadLibraries);//这里面是一些dll的名字
+            importedLibraries.AddRange(preloadLibraries);
 
             foreach (var library in importedLibraries)
                 CompilerUtils.TryLoadAssemblyIntoCore(LibraryManagementCore, library);
         }
-        /// <summary>
-        /// 查看函数签名是否需要附加Attributes
-        /// </summary>
-        /// <param name="functionSignature">函数签名</param>
-        /// <returns></returns>
+
         internal bool FunctionSignatureNeedsAdditionalAttributes(string functionSignature)
         {
             if (functionSignature == null)
@@ -256,11 +199,18 @@ namespace Dynamo.Engine
             return priorNameHints[functionSignature].AdditionalAttributes.Count > 0;
         }
 
-        /// <summary>
-        /// 给节点添加附加Attributes
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <param name="nodeElement"></param>
+        internal bool FunctionSignatureNeedsAdditionalElements(string functionSignature)
+        {
+            if (functionSignature == null)
+            {
+                return false;
+            }
+            if (!priorNameHints.ContainsKey(functionSignature))
+                return false;
+
+            return priorNameHints[functionSignature].AdditionalElements.Count > 0;
+        }
+
         internal void AddAdditionalAttributesToNode(string functionSignature, XmlElement nodeElement)
         {
             var shortKey = GetQualifiedFunction(functionSignature);
@@ -285,28 +235,6 @@ namespace Dynamo.Engine
             }
         }
 
-        /// <summary>
-        /// 查看函数签名是否需要附加Elements
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <returns></returns>
-        internal bool FunctionSignatureNeedsAdditionalElements(string functionSignature)
-        {
-            if (functionSignature == null)
-            {
-                return false;
-            }
-            if (!priorNameHints.ContainsKey(functionSignature))
-                return false;
-
-            return priorNameHints[functionSignature].AdditionalElements.Count > 0;
-        }
-
-        /// <summary>
-        /// 给节点添加附加Elements
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <param name="nodeElement"></param>
         internal void AddAdditionalElementsToNode(string functionSignature, XmlElement nodeElement)
         {
             var shortKey = GetQualifiedFunction(functionSignature);
@@ -324,11 +252,6 @@ namespace Dynamo.Engine
             }
         }
 
-        /// <summary>
-        /// 从函数签名中获取 Name(ZERO-touch library)
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <returns></returns>
         internal string NameFromFunctionSignature(string functionSignature)
         {
             string[] splitted = null;
@@ -373,11 +296,6 @@ namespace Dynamo.Engine
             return splitted[splitted.Length - 2] + "." + splitted[splitted.Length - 1];
         }
 
-        /// <summary>
-        /// 从函数签名Hint中获取函数签名
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <returns></returns>
         internal string FunctionSignatureFromFunctionSignatureHint(string functionSignature)
         {
             // if the hint is explicit, we can simply return the mapped function
@@ -400,11 +318,6 @@ namespace Dynamo.Engine
             return newName + "@" + splitted[1];
         }
 
-        /// <summary>
-        /// 获取函数的短名,去掉参数
-        /// </summary>
-        /// <param name="functionSignature"></param>
-        /// <returns></returns>
         private string GetQualifiedFunction(string functionSignature)
         {
             // get a short name representation of the function without parameters
@@ -422,7 +335,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 获取library中的函数列表
+        ///     Returns function groups from an imported library.
         /// </summary>
         /// <param name="library">Library path</param>
         /// <returns></returns>
@@ -456,7 +369,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 返回所有的function groups.
+        /// Returns all function groups.
         /// </summary>
         internal IEnumerable<FunctionGroup> GetAllFunctionGroups()
         {
@@ -464,7 +377,8 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 获取函数描述符(zero-touch)
+        ///     Returns function descriptor from the managled function name.
+        ///     name.
         /// </summary>
         /// <param name="library">Library path</param>
         /// <param name="mangledName">Mangled function name</param>
@@ -485,8 +399,23 @@ namespace Dynamo.Engine
             }
             return null;
         }
+
         /// <summary>
-        /// 获取函数描述符
+        /// Returns a dictionary of old names vs. new names for node migration
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> GetPriorNames()
+        {
+            var priorNames = new Dictionary<string, string>();
+            foreach (var kvp in priorNameHints)
+            {
+                priorNames[kvp.Key] = kvp.Value.UpgradeName;
+            }
+            return priorNames;
+        }
+
+        /// <summary>
+        ///     Returns function descriptor from the managed function name.
         /// </summary>
         /// <param name="managledName"></param>
         /// <returns></returns>
@@ -509,21 +438,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 获取一个字典,其中存储 <old names,new names>
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, string> GetPriorNames()
-        {
-            var priorNames = new Dictionary<string, string>();
-            foreach (var kvp in priorNameHints)
-            {
-                priorNames[kvp.Key] = kvp.Value.UpgradeName;
-            }
-            return priorNames;
-        }
-
-        /// <summary>
-        /// 获取所有相关的函数描述符
+        ///     Returns a list of function descriptors associated with the function name.
         /// </summary>
         /// <param name="qualifiedName"></param>
         /// <returns></returns>
@@ -552,7 +467,8 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 检查该library是否已经被导入,不允许重复导入组件
+        /// Checks if a given library is already loaded or not.
+        /// Only unique assembly names are allowed to be loaded
         /// </summary>
         /// <param name="library"> can be either the full path or the assembly name </param>
         /// <returns> true even if the same library name is loaded from different paths </returns>
@@ -562,7 +478,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 检查给定函数是否在builtinFunctionGroups中，不必根据它的Assembly标签查找它的库(zero-touch)
+        /// Checks if a given function is in the builtinFunctionGroups so we do not necessarily look for it's library based on its Assembly tag
         /// </summary>
         /// <param name="library">assembly name</param>
         /// <param name="name">name, used for searching as key with default value ""</param>
@@ -580,25 +496,12 @@ namespace Dynamo.Engine
             }
         }
 
-        /// <summary>
-        /// 检查该部分名称能否被解析成该全名
-        /// </summary>
-        /// <param name="partialName">部分名称</param>
-        /// <param name="fullName">全名</param>
-        /// <returns></returns>
         private static bool CanbeResolvedTo(ICollection<string> partialName, ICollection<string> fullName)
         {
             return null != partialName && null != fullName && partialName.Count <= fullName.Count
                 && fullName.Reverse().Take(partialName.Count).SequenceEqual(partialName.Reverse());
         }
 
-        /// <summary>
-        /// 尝试获取Function Group
-        /// </summary>
-        /// <param name="funcGroupMap"></param>
-        /// <param name="qualifiedName"></param>
-        /// <param name="funcGroup"></param>
-        /// <returns></returns>
         private static bool TryGetFunctionGroup(
             Dictionary<string, FunctionGroup> funcGroupMap, string qualifiedName, out FunctionGroup funcGroup)
         {
@@ -618,10 +521,11 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 如果尚未导入,则导入这个库
+        ///     Import a library (if it hasn't been imported yet).
         /// </summary>
-        /// <param name="library"></param>
-        internal bool ImportLibrary(string library)
+        /// <param name="library">The library to be loaded</param>
+        /// <param name="isExplicitlyImportedLib">Indicates if the library has been imported using the "File | ImportLibrary" command</param>
+        internal bool ImportLibrary(string library, bool isExplicitlyImportedLib = false)
         {
             if (null == library)
                 throw new ArgumentNullException();
@@ -641,10 +545,19 @@ namespace Dynamo.Engine
                 return false;
             }
 
+            // Copy the library path so that the path can be reported in the case of a failure
+            // to resolve the library path. If there is a failure "library" is set to null.
+            string path = library;
             if (!pathManager.ResolveLibraryPath(ref library))
             {
-                string errorMessage = string.Format(Properties.Resources.LibraryPathCannotBeFound, library);
-                OnLibraryLoadFailed(new LibraryLoadFailedEventArgs(library, errorMessage));
+                string errorMessage = string.Format(Properties.Resources.LibraryPathCannotBeFound, path);
+
+                // In the case that a library was explicitly imported using the "File|Import Library" command
+                // set the load failed args to not throw an exception if the load fails. This can happen after using
+                // File|Import Library and then moving or deleting the library.
+                OnLibraryLoadFailed(new LibraryLoadFailedEventArgs(path, errorMessage,
+                    throwOnFailure: !isExplicitlyImportedLib));
+
                 return false;
             }
 
@@ -692,7 +605,8 @@ namespace Dynamo.Engine
             }
             catch (Exception e)
             {
-                OnLibraryLoadFailed(new LibraryLoadFailedEventArgs(library, e.Message));
+                OnLibraryLoadFailed(new LibraryLoadFailedEventArgs(library, e.Message,
+                    throwOnFailure: !isExplicitlyImportedLib));
                 return false;
             }
 
@@ -703,10 +617,7 @@ namespace Dynamo.Engine
             return true;
         }
 
-        /// <summary>
-        /// 导入库的迁移文件(.Migrations.xml)
-        /// </summary>
-        /// <param name="library"></param>
+
         internal void LoadLibraryMigrations(string library)
         {
             string fullLibraryName = library;
@@ -815,11 +726,6 @@ namespace Dynamo.Engine
             }
         }
 
-        /// <summary>
-        /// 添加导入函数
-        /// </summary>
-        /// <param name="library"></param>
-        /// <param name="functions"></param>
         private void AddImportedFunctions(string library, IEnumerable<FunctionDescriptor> functions)
         {
             if (null == library || null == functions)
@@ -846,10 +752,6 @@ namespace Dynamo.Engine
             }
         }
 
-        /// <summary>
-        /// 添加内置函数
-        /// </summary>
-        /// <param name="functions"></param>
         private void AddBuiltinFunctions(IEnumerable<FunctionDescriptor> functions)
         {
             if (null == functions)
@@ -873,7 +775,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 添加DesignScript的内置函数
+        ///     Add DesignScript builtin functions to the library.
         /// </summary>
         private void PopulateBuiltIns()
         {
@@ -899,6 +801,8 @@ namespace Dynamo.Engine
                                                                     argType))
                                                         let visibleInLibrary =
                                                             (method.MethodAttribute == null || !method.MethodAttribute.HiddenInLibrary)
+                                                        let obsoleteMsg =
+                                                            (method.MethodAttribute != null ? method.MethodAttribute.ObsoleteMessage: String.Empty)
                                                         let description = 
                                                             (method.MethodAttribute != null ? method.MethodAttribute.Description :String.Empty)
                                                         select
@@ -913,6 +817,7 @@ namespace Dynamo.Engine
                                                                 IsVisibleInLibrary = visibleInLibrary,
                                                                 IsBuiltIn = true,
                                                                 IsPackageMember = false,
+                                                                ObsoleteMsg = obsoleteMsg,
                                                                 Assembly = Categories.BuiltIn
                                                             });
 
@@ -920,27 +825,19 @@ namespace Dynamo.Engine
             LoadLibraryMigrations(Categories.BuiltIn);
         }
 
-        /// <summary>
-        /// 获取二元函数参数
-        /// </summary>
-        /// <returns></returns>
         private static IEnumerable<TypedParameter> GetBinaryFuncArgs()
         {
             yield return new TypedParameter("x", TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.Var));
             yield return new TypedParameter("y", TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.Var));
         }
 
-        /// <summary>
-        /// 获取一元函数参数
-        /// </summary>
-        /// <returns></returns>
         private static IEnumerable<TypedParameter> GetUnaryFuncArgs()
         {
             return new List<TypedParameter> { new TypedParameter("x", TypeSystem.BuildPrimitiveTypeObject(PrimitiveType.Var)), };
         }
 
         /// <summary>
-        /// 添加操作符
+        ///     Add operators to the library.
         /// </summary>
         private void PopulateOperators()
         {
@@ -981,7 +878,7 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 填充预加载libraries
+        ///     Polulate preloaded libraries.
         /// </summary>
         private void PopulatePreloadLibraries()
         {
@@ -1005,7 +902,8 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 尝试从Default Argument Attribute获取默认参数表达式，然后解析为AST节点。
+        /// Try get default argument expression from DefaultArgumentAttribute, 
+        /// and parse into Associaitve AST node. 
         /// </summary>
         /// <param name="arg"></param>
         /// <param name="defaultArgumentNode"></param>
@@ -1030,11 +928,6 @@ namespace Dynamo.Engine
             return defaultArgumentNode != null;
         }
 
-        /// <summary>
-        /// 导入Procedure
-        /// </summary>
-        /// <param name="library"></param>
-        /// <param name="proc"></param>
         private void ImportProcedure(string library, ProcedureNode proc)
         {
             string procName = proc.Name;
@@ -1166,11 +1059,6 @@ namespace Dynamo.Engine
             AddImportedFunctions(library, new[] { function });
         }
 
-        /// <summary>
-        /// 导入类
-        /// </summary>
-        /// <param name="library"></param>
-        /// <param name="classNode"></param>
         private void ImportClass(string library, ClassNode classNode)
         {
             foreach (ProcedureNode proc in classNode.ProcTable.Procedures)
@@ -1178,9 +1066,38 @@ namespace Dynamo.Engine
                 
         }
 
-        /// <summary>
-        /// library的类别
-        /// </summary>
+        private void OnLibraryLoading(LibraryLoadingEventArgs e)
+        {
+            string library = e.LibraryPath;
+
+            // Assembly, that is located in package directory, considered as part of package.
+            if (pathManager.PackagesDirectories.Any(
+                directory => library.StartsWith(directory)))
+            {
+                packagedLibraries.Add(library);
+            }
+
+            EventHandler<LibraryLoadingEventArgs> handler = LibraryLoading;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        private void OnLibraryLoadFailed(LibraryLoadFailedEventArgs e)
+        {
+            EventHandler<LibraryLoadFailedEventArgs> handler = LibraryLoadFailed;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        private void OnLibraryLoaded(LibraryLoadedEventArgs e)
+        {
+            importedLibraries.Add(e.LibraryPath);
+
+            EventHandler<LibraryLoadedEventArgs> handler = LibraryLoaded;
+            if (handler != null)
+                handler(this, e);
+        }
+
         public static class Categories
         {
             public const string BuiltIn = "BuiltIn";
@@ -1191,8 +1108,53 @@ namespace Dynamo.Engine
         }
 
         /// <summary>
-        /// 用于比较library的路径
+        /// Contains arguments to pass to a handler when a library load fails
         /// </summary>
+        public class LibraryLoadFailedEventArgs : EventArgs
+        {
+            public LibraryLoadFailedEventArgs(string libraryPath, string reason, bool throwOnFailure = true)
+            {
+                LibraryPath = libraryPath;
+                Reason = reason;
+                ThrowOnFailure = throwOnFailure;
+            }
+
+            /// <summary>
+            /// The path to the library that failed to load
+            /// </summary>
+            public string LibraryPath { get; private set; }
+
+            /// <summary>
+            /// The reason that the library failed to load
+            /// </summary>
+            public string Reason { get; private set; }
+
+            /// <summary>
+            /// Indicates if the failure should result in an exception being thrown
+            /// </summary>
+            public bool ThrowOnFailure { get; private set; }
+        }
+
+        public class LibraryLoadedEventArgs : EventArgs
+        {
+            public LibraryLoadedEventArgs(string libraryPath)
+            {
+                LibraryPath = libraryPath;
+            }
+
+            public string LibraryPath { get; private set; }
+        }
+
+        public class LibraryLoadingEventArgs : EventArgs
+        {
+            public LibraryLoadingEventArgs(string libraryPath)
+            {
+                LibraryPath = libraryPath;
+            }
+
+            public string LibraryPath { get; private set; }
+        }
+
         private class LibraryPathComparer : IEqualityComparer<string>
         {
             public bool Equals(string path1, string path2)

@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
+using System.Globalization;
 
 namespace Dynamo.Models
 {
@@ -43,7 +44,8 @@ namespace Dynamo.Models
                 jsonSettings = new JsonSerializerSettings()
                 {
                     TypeNameHandling = TypeNameHandling.Objects,
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    Culture = CultureInfo.InvariantCulture
                 };
             }
 
@@ -598,6 +600,39 @@ namespace Dynamo.Models
             }
 
             #endregion
+        }
+
+        /// <summary>
+        /// A command used to force cancellation of execution.
+        /// </summary>
+        [DataContract]
+        public class ForceRunCancelCommand : RunCancelCommand
+        {
+            /// <summary>
+            ///
+            /// </summary>
+            /// <param name="showErrors">Should errors be shown?</param>
+            /// <param name="cancelRun">True to cancel execution. False to execute.</param>
+            public ForceRunCancelCommand(bool showErrors, bool cancelRun)
+                : base(showErrors, cancelRun) { }
+
+            protected override void ExecuteCore(DynamoModel dynamoModel)
+            {
+                dynamoModel.ForceRunCancelImpl(this);
+            }
+        }
+
+        /// <summary>
+        /// A command used to mutate commands during testing.
+        /// </summary>
+        public class MutateTestCommand : RecordableCommand
+        {
+            protected override void ExecuteCore(DynamoModel dynamoModel) { }
+
+            protected override void SerializeCore(XmlElement element)
+            {
+                var helper = new XmlElementHelper(element);
+            }
         }
 
         /// <summary>
@@ -2276,4 +2311,37 @@ namespace Dynamo.Models
             #endregion
         }
     }
+
+    // public class XxxYyyCommand : RecordableCommand
+    // {
+    //     #region Public Class Methods
+    //
+    //     public XxxYyyCommand()
+    //     {
+    //     }
+    //
+    //     internal static XxxYyyCommand DeserializeCore(XmlElement element)
+    //     {
+    //         throw new NotImplementedException();
+    //     }
+    //
+    //     #endregion
+    //
+    //     #region Public Command Properties
+    //     #endregion
+    //
+    //     #region Protected Overridable Methods
+    //
+    //     protected override void ExecuteCore(DynamoModel dynamoModel)
+    //     {
+    //         throw new NotImplementedException();
+    //     }
+    //
+    //     protected override void SerializeCore(XmlElement element)
+    //     {
+    //         throw new NotImplementedException();
+    //     }
+    //
+    //     #endregion
+    // }
 }

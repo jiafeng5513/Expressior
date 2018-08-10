@@ -9,6 +9,7 @@ namespace DynamoShapeManager
     public enum LibraryVersion
     {
         None,
+        Version224 = 224,
         Version223 = 223,
         Version222 = 222,
         Version221 = 221

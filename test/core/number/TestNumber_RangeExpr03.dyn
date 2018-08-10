@@ -1,0 +1,16 @@
+<Workspace Version="1.0.1.1743" X="65" Y="2" zoom="1" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap />
+  <Elements>
+    <CoreNodeModels.Input.DoubleInput guid="ce2edddc-cfc2-40d3-a6b4-32aeb80fe8a2" type="CoreNodeModels.Input.DoubleInput" nickname="Number" x="39" y="43.5" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Double value="5..1" />
+    </CoreNodeModels.Input.DoubleInput>
+    <CoreNodeModels.Watch guid="d358da0e-9cfa-4562-b110-726133cc1be4" type="CoreNodeModels.Watch" nickname="Watch" x="192" y="43.5" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="580f2bef-9ecb-45ae-b2cb-2701a125f546" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="355" y="41" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="5..1;" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="ce2edddc-cfc2-40d3-a6b4-32aeb80fe8a2" start_index="0" end="d358da0e-9cfa-4562-b110-726133cc1be4" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

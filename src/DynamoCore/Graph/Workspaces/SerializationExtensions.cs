@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Dynamo.Graph.Workspaces
 {
@@ -17,6 +18,8 @@ namespace Dynamo.Graph.Workspaces
         /// <returns>A string representing the serialized WorkspaceModel.</returns>
         internal static string ToJson(this WorkspaceModel workspace, EngineController engine)
         {
+            var logger = engine != null ? engine.AsLogger() : null;
+
             var settings = new JsonSerializerSettings
             {
                 Error = (sender, args) =>
@@ -27,9 +30,12 @@ namespace Dynamo.Graph.Workspaces
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.Auto,
                 Formatting = Formatting.Indented,
+                Culture = CultureInfo.InvariantCulture,
                 Converters = new List<JsonConverter>{
-                        new ConnectorConverter(),                        
-                        new WorkspaceWriteConverter(engine)
+                        new ConnectorConverter(logger),                        
+                        new WorkspaceWriteConverter(engine),
+                        new DummyNodeWriteConverter(),
+                        new TypedParameterConverter()
                     },
                 ReferenceResolverProvider = () => { return new IdReferenceResolver(); }
             };

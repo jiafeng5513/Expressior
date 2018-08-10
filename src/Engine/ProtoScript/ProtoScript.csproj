@@ -116,7 +116,5 @@
       <Name>ProtoImperative</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -15,6 +15,7 @@ using Dynamo.Logging;
 using Dynamo.Nodes;
 using Dynamo.Search;
 using Dynamo.Search.SearchElements;
+using Dynamo.Services;
 using Dynamo.UI;
 using Dynamo.Utilities;
 using Dynamo.Wpf.Services;
@@ -431,6 +432,7 @@ namespace Dynamo.ViewModels
 
         internal void UpdateEntry(NodeSearchElement entry)
         {
+            //look for the viewModel which should own this nodeSearchElement entry.
             var rootNode = libraryRoot;
             foreach (var categoryName in entry.Categories)
             {

@@ -1,0 +1,12 @@
+<Workspace Version="1.0.1.1743" X="0" Y="0" zoom="1" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="372d31c2-b66e-494c-a33d-e82ae1ecf68a" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="175" y="280" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="t = 0..360..30;&#xA;x = 16 * Math.Sin(t) * Math.Sin(t) * Math.Sin(t);" ShouldFocus="false" />
+  </Elements>
+  <Connectors />
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

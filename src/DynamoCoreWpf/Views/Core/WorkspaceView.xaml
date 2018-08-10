@@ -66,7 +66,7 @@
                                                       Width="{Binding ElementName=ContextMenuPanel, Path=ActualWidth}" />
                             <Border BorderThickness="1"
                                     Name="MenuItems"
-                                    Background="Transparent"
+                                    Background="White"
                                     BorderBrush="#bbbbbb"
                                     Padding="0,3,0,3"
                                     CornerRadius="4">
@@ -148,7 +148,7 @@
         <controls:ZoomBorder x:Name="zoomBorder"
                              ClipToBounds="True"
                              BorderThickness="0"
-                             Background="#232323"
+                             Background="Transparent"
                              Cursor="{Binding CurrentCursor}"
                              ForceCursor="{Binding IsCursorForced}">
 
@@ -228,7 +228,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}"
                              Converter="{StaticResource BooleanToVisibilityConverter}"/>
                 </StackPanel.Visibility>
-                <!--<ui:ImageCheckBox Width="56"
+                <ui:ImageCheckBox Width="56"
                               Height="30"
                               Margin="4,4,0,4"
                               StateImage="/DynamoCoreWpf;component/UI/Images/Canvas/canvas-button-geom-states.png"
@@ -250,7 +250,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}"
                              Converter="{StaticResource InverseBooleanConverter}" />
                     </ui:ImageCheckBox.IsChecked>
-                </ui:ImageCheckBox>-->
+                </ui:ImageCheckBox>
             </StackPanel>
 
             <ui:ImageButton Width="30"
@@ -330,7 +330,7 @@
         <Popup Name="InCanvasSearchBar"
                StaysOpen="True"
                AllowsTransparency="True"
-               IsOpen="True"
+               IsOpen="False"
                Placement="MousePoint"
                DataContext="{Binding InCanvasSearchViewModel}">
             <ui:InCanvasSearchControl RequestShowInCanvasSearch="ShowHideInCanvasControl" />
@@ -439,8 +439,6 @@
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodesFromSelection}"
                            Command="{Binding NodeFromSelectionCommand}" CommandTarget="{Binding ElementName=_this}" />
 
-                    <MenuItem  Header="{x:Static p:Resources.DynamoViewEditMenuCreatePreset}"
-                           Command="{Binding DynamoViewModel.ShowNewPresetsDialogCommand}" />
 
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodeToCode}"
                            Command="{Binding NodeToCodeCommand}"
@@ -476,10 +474,10 @@
 
                     <Separator />
 
-                    <!--<MenuItem Header="{x:Static p:Resources.ContextMenuGeometryView}"
+                    <MenuItem Header="{x:Static p:Resources.ContextMenuGeometryView}"
                           Command="{Binding DynamoViewModel.BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}"
                           Visibility="{Binding DynamoViewModel.BackgroundPreviewViewModel.Active, 
-                          Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>-->
+                          Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
                     <MenuItem Header="{x:Static p:Resources.ContextMenuPan}"
                           Command="{Binding DynamoViewModel.BackgroundPreviewViewModel.TogglePanCommand}">
                         <MenuItem.IsChecked>

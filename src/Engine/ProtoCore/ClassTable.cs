@@ -7,6 +7,8 @@ using ProtoCore.AST.AssociativeAST;
 using ProtoCore.Properties;
 using ProtoCore.Utils;
 using System.Linq;
+using System.Runtime.InteropServices;
+using ProtoCore.Namespace;
 
 namespace ProtoCore.DSASM
 {
@@ -23,6 +25,8 @@ namespace ProtoCore.DSASM
         public bool IsImportedClass { get; set; }
         public ClassAttributes ClassAttributes { get; set; }
         public bool IsStatic { get; set; }
+        public bool IsInterface { get; set; }
+        public List<int> Interfaces { get; set; }
 
         /// <summary>
         /// String description of where the classnode was loaded from 
@@ -63,6 +67,8 @@ namespace ProtoCore.DSASM
             ProcTable = new ProcedureTable(classRuntimProc);
             Base = Constants.kInvalidIndex;
             ExternLib = string.Empty;
+            IsInterface = false;
+            Interfaces = new List<int>();
 
             // Set default allowed coerce types
             CoerceTypes = new Dictionary<int, int>();
@@ -96,6 +102,8 @@ namespace ProtoCore.DSASM
             ExternLib = rhs.ExternLib;
             TypeSystem = rhs.TypeSystem;
             CoerceTypes = new Dictionary<int, int>(rhs.CoerceTypes);
+            IsInterface = rhs.IsInterface;
+            Interfaces = new List<int>(rhs.Interfaces);
         }
 
         public bool ConvertibleTo(int type)
@@ -204,24 +212,24 @@ namespace ProtoCore.DSASM
         //    1.3 Return member function whose access == kPublic
         //
         // 2. In global scope, classScope == kInvalidIndex;
-        public ProtoCore.DSASM.ProcedureNode GetMemberFunction(string procName, List<ProtoCore.Type> argTypeList, int classScope, out bool isAccessible, out int functionHostClassIndex, bool isStaticOrConstructor = false)
+        public ProcedureNode GetMemberFunction(string procName, List<ProtoCore.Type> argTypeList, int classScope, out bool isAccessible, out int functionHostClassIndex, bool isStaticOrConstructor = false)
         {
             isAccessible = false;
-            functionHostClassIndex = ProtoCore.DSASM.Constants.kInvalidIndex;
+            functionHostClassIndex = Constants.kInvalidIndex;
 
             if (ProcTable == null)
                 return null;
 
-            ProtoCore.DSASM.ProcedureNode procNode = null;
+            ProcedureNode procNode = null;
 
             int functionIndex = ProcTable.IndexOf(procName, argTypeList, isStaticOrConstructor);
-            if (functionIndex != ProtoCore.DSASM.Constants.kInvalidIndex)
+            if (functionIndex != Constants.kInvalidIndex)
             {
                 int myClassIndex = TypeSystem.classTable.IndexOf(Name);
                 functionHostClassIndex = myClassIndex;
                 procNode = ProcTable.Procedures[functionIndex];
 
-                if (classScope == ProtoCore.DSASM.Constants.kInvalidIndex)
+                if (classScope == Constants.kInvalidIndex)
                 {
                     isAccessible = (procNode.AccessModifier == CompilerDefinitions.AccessModifier.Public);
                 }
@@ -294,9 +302,9 @@ namespace ProtoCore.DSASM
                 return null;
             }
 
-            return  ProcTable.GetFunctionsByNameAndArgumentNumber(procName, argCount)
-                          .Where(p => p.IsConstructor)
-                          .FirstOrDefault();
+            return  ProcTable
+                          .GetFunctionsByNameAndArgumentNumber(procName, argCount)
+                          .FirstOrDefault(p => p.IsConstructor);
         }
 
         public ProcedureNode GetFirstStaticFunctionBy(string procName)
@@ -379,26 +387,53 @@ namespace ProtoCore.DSASM
             }
             return disposeMethod;
         }
-
     }
-
-
 
     public class ClassTable
     {
+        
+        private List<ClassNode> classNodes = new List<ClassNode>();
+
+        //Symbol table to manage symbols with namespace
+        private Namespace.SymbolTable symbolTable = new Namespace.SymbolTable();
+        
+        private List<ClassNode> GetClassHierarchy(ClassNode node)
+        {
+            var cNodes = new List<ClassNode> {node};
+            
+            while (node.Base != Constants.kInvalidIndex)
+            {
+                node = ClassNodes[node.Base];
+                cNodes.Add(node);
+            }
+            return cNodes;
+        }
+
+        private ClassNode GetCommonBaseClass(IEnumerable<Symbol> symbols)
+        {
+            var cNodes = ClassNodes.Where(node => symbols.Any(s => s.Id == node.ID));
+            var baseLists = new List<List<ClassNode>>();
+            foreach (var classNode in cNodes)
+            {
+                var baseNodes = GetClassHierarchy(classNode);
+                baseLists.Add(baseNodes);
+            }
+            var arr = baseLists.ToArray();
+
+            if (!arr.Any()) return null;
+
+            var baseClass = ArrayUtils.GetCommonItems(arr);
+            return baseClass.FirstOrDefault();
+        }
+
         // Don't directly modify class table list.
-        public ReadOnlyCollection<ClassNode> ClassNodes 
+        public ReadOnlyCollection<ClassNode> ClassNodes
         {
             get
             {
                 return classNodes.AsReadOnly();
             }
         }
-
-        private List<ClassNode> classNodes = new List<ClassNode>();
-
-        //Symbol table to manage symbols with namespace
-        private Namespace.SymbolTable symbolTable = new Namespace.SymbolTable();
 
         public ClassTable()
         {
@@ -500,19 +535,29 @@ namespace ProtoCore.DSASM
         }
 
         /// <summary>
-        /// Returns all matching classes for the given name from this ClassTable
+        /// Returns all matching classes for the given name from this ClassTable.
+        /// If the classes have a common base class, this simply returns the given name of the class.
         /// </summary>
         /// <param name="name">Partial name of the class for lookup</param>
         /// <returns>Array of fully qualified name of all matching symbols</returns>
         public string[] GetAllMatchingClasses(string name)
         {
-            Namespace.Symbol[] symbols = symbolTable.TryGetSymbols(name, (Namespace.Symbol s) => s.Matches(name));
-            int size = symbols.Length;
-            string[] classes = new string[size];
-            for (int i = 0; i < size; ++i)
-                classes[i] = symbols[i].FullName;
+            var symbols = symbolTable.TryGetSymbols(name, s => s.Matches(name));
 
-            return classes;
+            var classes = new List<string>();
+
+            if (symbols.Length > 1)
+            {
+                var baseClass = GetCommonBaseClass(symbols);
+
+                if (baseClass != null)
+                {
+                    classes.Add(name);
+                    return classes.ToArray();
+                }
+            }
+            classes.AddRange(symbols.Select(t => t.FullName));
+            return classes.ToArray();
         }
 
         public string GetTypeName(int UID)
@@ -545,6 +590,13 @@ namespace ProtoCore.DSASM
                 var symbols = symbolTable.GetAllSymbols(name);
                 if (symbols.Count > 1)
                 {
+                    var baseClass = GetCommonBaseClass(symbols);
+
+                    if (baseClass != null)
+                    {
+                        continue;
+                    }
+
                     string message = string.Format(Resources.kMultipleSymbolFound, name, "");
                     foreach (var symbol in symbols)
                     {

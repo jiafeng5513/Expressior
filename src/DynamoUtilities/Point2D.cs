@@ -6,9 +6,6 @@ using System.Text;
 
 namespace Dynamo.Utilities
 {
-    /// <summary>
-    /// 2D坐标结构体
-    /// </summary>
     // From https://github.com/mono/mono/blob/master/mcs/class/WindowsBase/System.Windows/Point.cs
 	public struct Point2D : IFormattable
 	{

@@ -1,0 +1,26 @@
+<Workspace Version="1.0.1.1743" X="124.822467" Y="45.212683359375" zoom="0.822695359375" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="77890923-e785-4df1-8887-5d1d610f6687" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="131.172402307256" y="37.8967029544636" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//Geometry functions (2)&#xA;def Eta(i, j)&#xA;{&#xA;    return = 6 * Math.Cos(((3 * i + 10) * 1.8)) *&#xA;        Math.Cos( j * 7.2);&#xA;}&#xA;&#xA;def Theta(i, j)&#xA;{&#xA;    return = 6 * Math.Sin(((3 * i + 10) * 1.8)) *&#xA;        Math.Cos( j * 7.2);&#xA;}&#xA;&#xA;def Kappa(i, j)&#xA;{&#xA;    return = 3*i/20 + 2.5 * Math.Cos( (j + 12.5) * 7.2);&#xA;};&#xA;&#xA;&#xA;//Replication (3)&#xA;eta = Eta(i&lt;1&gt;, j&lt;2&gt;);&#xA;theta = Theta(i&lt;1&gt;, j&lt;2&gt;);&#xA;kappa = Kappa(i&lt;1&gt;, j&lt;2&gt;);" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="1eec043d-8540-434c-823e-c6ab20162dad" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="-118.361983778815" y="51.3189803531277" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="//Parameters (1)&#xA;i = 0..200..#20;&#xA;j = 0..25;" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="e6dc584e-01d1-43fc-b970-1699970eed14" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Point.ByCoordinates" x="694.387974584988" y="389.974147981151" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double">
+      <PortInfo index="0" default="True" />
+      <PortInfo index="1" default="True" />
+      <PortInfo index="2" default="True" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="21780859-f85e-44ff-bedb-bd016ca7398d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="787" y="625" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="ptOut = pt[0][0].X;" ShouldFocus="false" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="77890923-e785-4df1-8887-5d1d610f6687" start_index="0" end="e6dc584e-01d1-43fc-b970-1699970eed14" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="77890923-e785-4df1-8887-5d1d610f6687" start_index="1" end="e6dc584e-01d1-43fc-b970-1699970eed14" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="77890923-e785-4df1-8887-5d1d610f6687" start_index="2" end="e6dc584e-01d1-43fc-b970-1699970eed14" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1eec043d-8540-434c-823e-c6ab20162dad" start_index="0" end="77890923-e785-4df1-8887-5d1d610f6687" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1eec043d-8540-434c-823e-c6ab20162dad" start_index="1" end="77890923-e785-4df1-8887-5d1d610f6687" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e6dc584e-01d1-43fc-b970-1699970eed14" start_index="0" end="21780859-f85e-44ff-bedb-bd016ca7398d" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

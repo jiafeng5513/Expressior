@@ -5,16 +5,14 @@ namespace Dynamo.Utilities
 {
     /// <summary>
     ///     Object containing an instance of one of two potential types, labeled "Left" or "Right".
-    ///     包含两种潜在类型之一的实例，标记为“左”或“右”。
     /// </summary>
     /// <typeparam name="TLeft">Type of a potential "Left" value.</typeparam>
     /// <typeparam name="TRight">Type of a potential "Right" value.</typeparam>
     public interface IEither<TLeft, TRight>
     {
         /// <summary>
-        /// 如果IEither（TLeft，TRight）实例包含Right值，
-        /// 则将右值投影到新的IEither（TLeft，TNewRight）中。 
-        /// 如果实例包含一个Left值，则返回该实例。
+        ///     If the IEither(TLeft, TRight) instance contains a Right value, project the Right value into
+        ///     a new IEither(TLeft, TNewRight). If the instance contains a Left value, just return the instance.
         /// </summary>
         /// <typeparam name="TNewRight">The new type of a potential Right value.</typeparam>
         /// <param name="selector">Function used to project a Right value.</param>

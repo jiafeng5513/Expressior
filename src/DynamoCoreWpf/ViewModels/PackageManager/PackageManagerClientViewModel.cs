@@ -244,65 +244,65 @@ namespace Dynamo.ViewModels
             return AuthenticationManager.LoginState == LoginState.LoggedOut || AuthenticationManager.LoginState == LoginState.LoggedIn;
         }
 
-        //public void PublishCurrentWorkspace(object m)
-        //{
-        //    var ws = (CustomNodeWorkspaceModel)DynamoViewModel.CurrentSpace;
+        public void PublishCurrentWorkspace(object m)
+        {
+            var ws = (CustomNodeWorkspaceModel)DynamoViewModel.CurrentSpace;
 
-        //    CustomNodeDefinition currentFunDef;
-        //    if (DynamoViewModel.Model.CustomNodeManager.TryGetFunctionDefinition(
-        //        ws.CustomNodeId,
-        //        DynamoModel.IsTestMode,
-        //        out currentFunDef))
-        //    {
-        //        CustomNodeInfo currentFunInfo;
-        //        if (DynamoViewModel.Model.CustomNodeManager.TryGetNodeInfo(
-        //            ws.CustomNodeId,
-        //            out currentFunInfo))
-        //        {
-        //            var touParams = new TermsOfUseHelperParams
-        //            {
-        //                PackageManagerClient = Model,
-        //                AuthenticationManager = DynamoViewModel.Model.AuthenticationManager,
-        //                ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-        //                AcceptanceCallback = () => ShowNodePublishInfo(new[]
-        //                {
-        //                    Tuple.Create(currentFunInfo, currentFunDef)
-        //                })
-        //            };
+            CustomNodeDefinition currentFunDef;
+            if (DynamoViewModel.Model.CustomNodeManager.TryGetFunctionDefinition(
+                ws.CustomNodeId,
+                DynamoModel.IsTestMode,
+                out currentFunDef))
+            {
+                CustomNodeInfo currentFunInfo;
+                if (DynamoViewModel.Model.CustomNodeManager.TryGetNodeInfo(
+                    ws.CustomNodeId,
+                    out currentFunInfo))
+                {
+                    var touParams = new TermsOfUseHelperParams
+                    {
+                        PackageManagerClient = Model,
+                        AuthenticationManager = DynamoViewModel.Model.AuthenticationManager,
+                        ResourceProvider = DynamoViewModel.BrandingResourceProvider,
+                        AcceptanceCallback = () => ShowNodePublishInfo(new[]
+                        {
+                            Tuple.Create(currentFunInfo, currentFunDef)
+                        })
+                    };
 
-        //            var termsOfUseCheck = new TermsOfUseHelper(touParams);
-        //            termsOfUseCheck.Execute();
-        //            return;
-        //        }
-        //    }
+                    var termsOfUseCheck = new TermsOfUseHelper(touParams);
+                    termsOfUseCheck.Execute();
+                    return;
+                }
+            }
             
-        //    MessageBox.Show(Resources.MessageSelectSymbolNotFound, 
-        //            Resources.SelectionErrorMessageBoxTitle,
-        //            MessageBoxButton.OK, MessageBoxImage.Question);
-        //}
+            MessageBox.Show(Resources.MessageSelectSymbolNotFound, 
+                    Resources.SelectionErrorMessageBoxTitle,
+                    MessageBoxButton.OK, MessageBoxImage.Question);
+        }
 
-        //public bool CanPublishCurrentWorkspace(object m)
-        //{
-        //    return DynamoViewModel.Model.CurrentWorkspace is CustomNodeWorkspaceModel && AuthenticationManager.HasAuthProvider;
-        //}
+        public bool CanPublishCurrentWorkspace(object m)
+        {
+            return DynamoViewModel.Model.CurrentWorkspace is CustomNodeWorkspaceModel && AuthenticationManager.HasAuthProvider;
+        }
 
-        //public void PublishNewPackage(object m)
-        //{
-        //    var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-        //    {
-        //        PackageManagerClient = Model,
-        //        AuthenticationManager = AuthenticationManager,
-        //        ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-        //        AcceptanceCallback = ShowNodePublishInfo
-        //    });
+        public void PublishNewPackage(object m)
+        {
+            var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
+            {
+                PackageManagerClient = Model,
+                AuthenticationManager = AuthenticationManager,
+                ResourceProvider = DynamoViewModel.BrandingResourceProvider,
+                AcceptanceCallback = ShowNodePublishInfo
+            });
 
-        //    termsOfUseCheck.Execute();
-        //}
+            termsOfUseCheck.Execute();
+        }
 
-        //public bool CanPublishNewPackage(object m)
-        //{
-        //    return AuthenticationManager.HasAuthProvider;
-        //}
+        public bool CanPublishNewPackage(object m)
+        {
+            return AuthenticationManager.HasAuthProvider;
+        }
 
         public void PublishCustomNode(Function m)
         {
@@ -331,58 +331,58 @@ namespace Dynamo.ViewModels
             return AuthenticationManager.HasAuthProvider && m != null;
         }
 
-        //public void PublishSelectedNodes(object m)
-        //{
-        //    var nodeList = DynamoSelection.Instance.Selection
-        //                        .Where(x => x is Function)
-        //                        .Cast<Function>()
-        //                        .Select(x => x.Definition.FunctionId)
-        //                        .ToList();
+        public void PublishSelectedNodes(object m)
+        {
+            var nodeList = DynamoSelection.Instance.Selection
+                                .Where(x => x is Function)
+                                .Cast<Function>()
+                                .Select(x => x.Definition.FunctionId)
+                                .ToList();
 
-        //    if (!nodeList.Any())
-        //    {
-        //        MessageBox.Show(Resources.MessageSelectAtLeastOneNode,
-        //           Resources.SelectionErrorMessageBoxTitle,
-        //           MessageBoxButton.OK, MessageBoxImage.Question);
-        //        return;
-        //    }
+            if (!nodeList.Any())
+            {
+                MessageBox.Show(Resources.MessageSelectAtLeastOneNode,
+                   Resources.SelectionErrorMessageBoxTitle,
+                   MessageBoxButton.OK, MessageBoxImage.Question);
+                return;
+            }
 
-        //    var manager = DynamoViewModel.Model.CustomNodeManager;
+            var manager = DynamoViewModel.Model.CustomNodeManager;
 
-        //    var defs = new List<Tuple<CustomNodeInfo, CustomNodeDefinition>>();
-        //    foreach (var node in nodeList)
-        //    {
-        //        CustomNodeInfo info;
-        //        if (manager.TryGetNodeInfo(node, out info))
-        //        {
-        //            CustomNodeDefinition def;
-        //            if (manager.TryGetFunctionDefinition(node, DynamoModel.IsTestMode, out def))
-        //            {
-        //                defs.Add(Tuple.Create(info, def));
-        //                continue;
-        //            }
-        //        }
-        //        MessageBox.Show(Resources.MessageGettingNodeError, 
-        //            Resources.SelectionErrorMessageBoxTitle, 
-        //            MessageBoxButton.OK, MessageBoxImage.Question);
-        //    }
+            var defs = new List<Tuple<CustomNodeInfo, CustomNodeDefinition>>();
+            foreach (var node in nodeList)
+            {
+                CustomNodeInfo info;
+                if (manager.TryGetNodeInfo(node, out info))
+                {
+                    CustomNodeDefinition def;
+                    if (manager.TryGetFunctionDefinition(node, DynamoModel.IsTestMode, out def))
+                    {
+                        defs.Add(Tuple.Create(info, def));
+                        continue;
+                    }
+                }
+                MessageBox.Show(Resources.MessageGettingNodeError, 
+                    Resources.SelectionErrorMessageBoxTitle, 
+                    MessageBoxButton.OK, MessageBoxImage.Question);
+            }
 
-        //    var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-        //    {
-        //        PackageManagerClient = Model,
-        //        AuthenticationManager = AuthenticationManager,
-        //        ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-        //        AcceptanceCallback = () => ShowNodePublishInfo(defs)
-        //    });
+            var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
+            {
+                PackageManagerClient = Model,
+                AuthenticationManager = AuthenticationManager,
+                ResourceProvider = DynamoViewModel.BrandingResourceProvider,
+                AcceptanceCallback = () => ShowNodePublishInfo(defs)
+            });
 
-        //    termsOfUseCheck.Execute();
-        //}
+            termsOfUseCheck.Execute();
+        }
 
-        //public bool CanPublishSelectedNodes(object m)
-        //{
-        //    return DynamoSelection.Instance.Selection.Count > 0 &&
-        //           DynamoSelection.Instance.Selection.All(x => x is Function) && AuthenticationManager.HasAuthProvider; ;
-        //}
+        public bool CanPublishSelectedNodes(object m)
+        {
+            return DynamoSelection.Instance.Selection.Count > 0 &&
+                   DynamoSelection.Instance.Selection.All(x => x is Function) && AuthenticationManager.HasAuthProvider; ;
+        }
 
         private void ShowNodePublishInfo()
         {

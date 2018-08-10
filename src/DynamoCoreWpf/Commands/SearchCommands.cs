@@ -28,6 +28,17 @@ namespace Dynamo.ViewModels
             get { return hideSearch ?? (hideSearch = new DelegateCommand(HideSearch, CanHideSearch)); }
         }
 
+        public DelegateCommand ImportLibraryCommand
+        {
+            get { return dynamoViewModel.ImportLibraryCommand; }
+        }
+
+
+        public DelegateCommand ShowPackageManagerSearchCommand
+        {
+            get { return dynamoViewModel.ShowPackageManagerSearchCommand; }
+        }
+
         private DelegateCommand toggleLayoutCommand;
         public DelegateCommand ToggleLayoutCommand
         {

@@ -1,0 +1,30 @@
+<Workspace Version="0.8.2.1957" X="83.7409118008416" Y="-4.14510670200883" zoom="1.44258909293313" Name="Home" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Sphere" resolvedName="Autodesk.DesignScript.Geometry.Sphere" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Circle" resolvedName="Autodesk.DesignScript.Geometry.Circle" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Line" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="Autodesk.DesignScript.Geometry.Point" resolvedName="Autodesk.DesignScript.Geometry.Point" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Nodes.CodeBlockNodeModel guid="63e663e3-d62f-4d38-9494-8cb8f9c70c40" type="Dynamo.Nodes.CodeBlockNodeModel" nickname="Code Block" x="32" y="87" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" CodeText="pt1 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(1,1,1);&#xA;pt2 = Autodesk.DesignScript.Geometry.Point.ByCoordinates(5,5,5);&#xA;Sphere.ByCenterPointRadius(pt2,0.2);&#xA;Circle.ByCenterPointRadius(pt1,3);&#xA;Line.ByStartPointEndPoint(pt1,pt2);" ShouldFocus="false" />
+  </Elements>
+  <Connectors />
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+  <Cameras>
+    <Camera Name="background_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+  <Cameras>
+    <Camera Name="eb39be19-caad-41f7-ac76-aa6c908a4e96_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+  <Cameras>
+    <Camera Name="eb39be19-caad-41f7-ac76-aa6c908a4e96_preview" eyeX="10" eyeY="15" eyeZ="10" lookX="-10" lookY="-10" lookZ="-10" />
+  </Cameras>
+</Workspace>

@@ -176,11 +176,6 @@
     <Compile Include="Extensions\ViewStartupParams.cs" />
     <Compile Include="Interfaces\ILibraryViewCustomization.cs" />
     <Compile Include="Interfaces\LayoutSpecification.cs" />
-    <Compile Include="Properties\Resources.zh-CN.Designer.cs">
-      <DependentUpon>Resources.zh-CN.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Utilities\CompactBubbleHandler.cs" />
     <Compile Include="Interfaces\IShellCom.cs" />
     <Compile Include="Rendering\HelixRenderPackage.cs" />
@@ -230,6 +225,7 @@
     <Compile Include="NodeViewCustomization\NodeViewCustomizations\DSVarArgFunctionNodeViewCustomization.cs" />
     <Compile Include="NodeViewCustomization\NodeViewCustomizationLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UsageReportingManager.cs" />
     <Compile Include="TestInfrastructure\AbstractMutator.cs" />
     <Compile Include="TestInfrastructure\CodeBlockNodeMutator.cs" />
     <Compile Include="TestInfrastructure\CopyNodeMutator.cs" />
@@ -289,6 +285,9 @@
     <Compile Include="UI\Prompts\NodeHelpPrompt.xaml.cs">
       <DependentUpon>NodeHelpPrompt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Prompts\UsageReportingAgreementPrompt.xaml.cs">
+      <DependentUpon>UsageReportingAgreementPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Prompts\ChangeScaleFactorPrompt.xaml.cs">
       <DependentUpon>ChangeScaleFactorPrompt.xaml</DependentUpon>
     </Compile>
@@ -298,6 +297,7 @@
     <Compile Include="Utilities\ResourceUtilities.cs" />
     <Compile Include="ViewModels\Core\Converters\SerializationConverters.cs" />
     <Compile Include="ViewModels\Core\DynamoViewModelBranding.cs" />
+    <Compile Include="ViewModels\Core\GalleryViewModel.cs" />
     <Compile Include="ViewModels\Core\HomeWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\Core\SerializationExtensions.cs" />
     <Compile Include="ViewModels\PackageManager\PackagePathViewModel.cs" />
@@ -323,6 +323,9 @@
     </Compile>
     <Compile Include="Views\CodeBlocks\CodeBlockEditor.cs" />
     <Compile Include="Views\Core\DynamoOpenFileDialog.cs" />
+    <Compile Include="Views\Gallery\GalleryView.xaml.cs">
+      <DependentUpon>GalleryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CodeCompletion\CodeCompletionEditor.xaml.cs">
       <DependentUpon>CodeCompletionEditor.xaml</DependentUpon>
     </Compile>
@@ -359,6 +362,9 @@
     <Compile Include="Views\Preview\InfoBubbleView.xaml.cs">
       <DependentUpon>InfoBubbleView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PackageManager\InstalledPackagesView.xaml.cs">
+      <DependentUpon>InstalledPackagesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Search\LibraryView.xaml.cs">
       <DependentUpon>LibraryView.xaml</DependentUpon>
     </Compile>
@@ -368,8 +374,14 @@
     <Compile Include="Views\Core\NoteView.xaml.cs">
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PackageManager\PackageManagerSearchView.xaml.cs">
+      <DependentUpon>PackageManagerSearchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preview\PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PackageManager\PublishPackageView.xaml.cs">
+      <DependentUpon>PublishPackageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TooltipWindow.xaml.cs">
       <DependentUpon>TooltipWindow.xaml</DependentUpon>
@@ -412,6 +424,7 @@
     <Compile Include="ViewModels\Preview\Watch3DFullscreenViewModel.cs" />
     <Compile Include="ViewModels\Preview\WatchViewModel.cs" />
     <Compile Include="ViewModels\Core\WorkspaceViewModel.cs" />
+    <Compile Include="Windows\ModelessChildWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\GraphUpdateNotificationControl.xaml">
@@ -460,11 +473,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.zh-CN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.zh-CN.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1010,6 +1018,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Prompts\UsageReportingAgreementPrompt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\Themes\Modern\Connectors.xaml">
@@ -1089,6 +1101,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Gallery\GalleryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CodeCompletion\CodeCompletionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1129,6 +1145,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\PackageManager\InstalledPackagesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Include="Views\Search\LibraryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1144,12 +1166,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\PackageManager\PackageManagerSearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Include="Views\Preview\PreviewControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\PackageManager\PublishPackageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\TooltipWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1172,6 +1204,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DesignScriptBuiltin\DesignScriptBuiltin.csproj">
+      <Project>{c0d6dee5-5532-4345-9c66-4c00d7fdb8be}</Project>
+      <Name>DesignScriptBuiltin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamoCore\DynamoCore.csproj">
       <Project>{7858fa8c-475f-4b8e-b468-1f8200778cf8}</Project>
       <Name>DynamoCore</Name>
@@ -1193,6 +1229,10 @@
     <ProjectReference Include="..\Engine\ProtoCore\ProtoCore.csproj">
       <Project>{7A9E0314-966F-4584-BAA3-7339CBB849D1}</Project>
       <Name>ProtoCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\CoreNodes\CoreNodes.csproj">
+      <Project>{87550b2b-6cb8-461e-8965-dfafe3aafb5c}</Project>
+      <Name>CoreNodes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\DynamoUnits\Units.csproj">
       <Project>{6e0a079e-85f1-45a1-ad5b-9855e4344809}</Project>
@@ -1260,9 +1300,7 @@
     <Content Include="ViewModels\Watch3D\Shaders\Material.fx" />
     <Content Include="ViewModels\Watch3D\Shaders\Points.fx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Gallery\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <MakeDir Directories="$(OutputPath)\viewExtensions\" />

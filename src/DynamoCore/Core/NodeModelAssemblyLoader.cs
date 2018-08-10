@@ -17,9 +17,10 @@ using DynamoUtilities;
 namespace Dynamo.Models
 {
     /// <summary>
-    /// 负责加载派生自NodModel的子类
-    /// 有关包加载的信息,请看:PackageLoader
-    /// 有关其他库的加载,请看:LibraryServices
+    ///     This class is responsible for loading types that derive
+    ///     from NodeModel. For information about package loading see the
+    ///     PackageLoader. For information about loading other libraries, 
+    ///     see LibraryServices.
     /// </summary>
     public class NodeModelAssemblyLoader : LogSourceBase
     {
@@ -32,7 +33,7 @@ namespace Dynamo.Models
         private readonly HashSet<Assembly> loadedAssemblies = new HashSet<Assembly>();
 
         /// <summary>
-        /// 获取所有已经加载的assemblies
+        ///     All assemblies that have been loaded into Dynamo.
         /// </summary>
         public IEnumerable<Assembly> LoadedAssemblies
         {
@@ -44,7 +45,7 @@ namespace Dynamo.Models
         #region Events
 
         /// <summary>
-        /// 用于AssemblyLoaded事件的委托
+        /// Delegate used in AssemblyLoaded event.
         /// </summary>
         /// <param name="args">AssemblyLoadedEventArgs</param>
         public delegate void AssemblyLoadedHandler(AssemblyLoadedEventArgs args);
@@ -83,11 +84,12 @@ namespace Dynamo.Models
         }
 
         #endregion
-
+        
         #region Methods
         /// <summary>
-        /// 加载NodeModel的派生类,这些组件必须位于bin/nodes文件夹下
-        /// Add the types to the searchviewmodel and the controller's dictionaries.
+        /// Load all types which inherit from NodeModel whose assemblies are located in
+        /// the bin/nodes directory. Add the types to the searchviewmodel and
+        /// the controller's dictionaries.
         /// </summary>
         /// <param name="nodeDirectories">Directories that contain node assemblies.</param>
         /// <param name="context"></param>

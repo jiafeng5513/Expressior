@@ -4,7 +4,8 @@ using System.Collections;
 namespace Autodesk.DesignScript.Runtime
 {
     /// <summary>
-    /// 标识一个库是否引入到虚拟机
+    /// This attribute is used to specify whether the item will be imported
+    /// into the VM.
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class SupressImportIntoVMAttribute : Attribute
@@ -12,7 +13,8 @@ namespace Autodesk.DesignScript.Runtime
     }
 
     /// <summary>
-    /// 标识一个item是否显示到library视图中
+    /// This attribute is used to specify whether the item will be displayed
+    /// in the library.
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class IsVisibleInDynamoLibraryAttribute : Attribute
@@ -130,7 +132,7 @@ namespace Autodesk.DesignScript.Runtime
     /// collection of single object and at designscript side we want the method
     /// to return a single object instead of a collection of single object.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property)]
     public sealed class AllowRankReductionAttribute : Attribute
     {
         /// <summary>

@@ -1,0 +1,19 @@
+<Workspace Version="1.0.1.1743" X="0" Y="0" zoom="1" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="74b1dd64-491c-42e0-b8a6-62ceebfe00fe" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Point.ByCoordinates" x="396" y="219.5" isVisible="true" isUpstreamVisible="true" lacing="Longest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Point.ByCoordinates@double,double,double">
+      <PortInfo index="0" default="True" />
+      <PortInfo index="1" default="True" />
+      <PortInfo index="2" default="True" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="f7d7dc66-21df-4608-9a36-c6e774a7acda" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="118" y="182" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="zs = {0, 1, 2, 3, 4};" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="eaa2b29f-b5f4-4017-a143-3fb2d4af349c" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Point.Z" x="637" y="212.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="ProtoGeometry.dll" function="Autodesk.DesignScript.Geometry.Point.Z" />
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="74b1dd64-491c-42e0-b8a6-62ceebfe00fe" start_index="0" end="eaa2b29f-b5f4-4017-a143-3fb2d4af349c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f7d7dc66-21df-4608-9a36-c6e774a7acda" start_index="0" end="74b1dd64-491c-42e0-b8a6-62ceebfe00fe" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>

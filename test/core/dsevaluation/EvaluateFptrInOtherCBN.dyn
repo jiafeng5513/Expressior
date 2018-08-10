@@ -1,0 +1,11 @@
+<Workspace Version="1.0.1.1743" X="0" Y="0" zoom="1" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="bd9d352e-e9ec-474d-9ec9-62641d88ea25" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="38" y="148" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="def foo()&#xA;{&#xA;    return = 42;&#xA;};" ShouldFocus="false" />
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="49048255-fc2c-463d-8e93-96e20f061a0d" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="192" y="244" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="x = foo;&#xA;r = x();" ShouldFocus="false" />
+  </Elements>
+  <Connectors />
+  <Notes />
+  <Annotations />
+  <Presets />
+</Workspace>
