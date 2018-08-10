@@ -55,7 +55,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NodeServices\DynamoServices.csproj">
+    <ProjectReference Include="..\..\NodeServices\DynamoServices.csproj">
       <Project>{ef879a10-041d-4c68-83e7-3192685f1bae}</Project>
       <Name>DynamoServices</Name>
     </ProjectReference>

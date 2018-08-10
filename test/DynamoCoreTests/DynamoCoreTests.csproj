@@ -150,10 +150,6 @@
     <Compile Include="XmlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DesignScriptBuiltin\DesignScriptBuiltin.csproj">
-      <Project>{c0d6dee5-5532-4345-9c66-4c00d7fdb8be}</Project>
-      <Name>DesignScriptBuiltin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\DynamoCore\DynamoCore.csproj">
       <Project>{7858FA8C-475F-4B8E-B468-1F8200778CF8}</Project>
       <Name>DynamoCore</Name>
@@ -178,6 +174,10 @@
       <Project>{d8262d40-4880-41e4-91e4-af8f480c8637}</Project>
       <Name>CoreNodeModels</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\DesignScriptBuiltin\DesignScriptBuiltin.csproj">
+      <Project>{c0d6dee5-5532-4345-9c66-4c00d7fdb8be}</Project>
+      <Name>DesignScriptBuiltin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Libraries\DynamoUnits\Units.csproj">
       <Project>{6e0a079e-85f1-45a1-ad5b-9855e4344809}</Project>
