@@ -92,7 +92,7 @@ namespace Dynamo.Configuration
         /// <summary>
         /// Link to Dynamo's github repo
         /// </summary>
-        public static string GitHubDynamoLink = "https://github.com/DynamoDS/Dynamo";
+        public static string GitHubDynamoLink = "https://github.com/AngelaViVi/Expressior/";
 
         /// <summary>
         /// Link to Dynamo's issues on github
