@@ -600,18 +600,18 @@ namespace Dynamo.Controls
 
             this.DynamoLoadedViewExtensionHandler(loadedParams, viewExtensionManager.ViewExtensions);
 
-            BackgroundPreview = new Watch3DView { Name = BackgroundPreviewName };
-            background_grid.Children.Add(BackgroundPreview);
-            BackgroundPreview.DataContext = dynamoViewModel.BackgroundPreviewViewModel;
-            BackgroundPreview.Margin = new System.Windows.Thickness(0, 20, 0, 0);
-            var vizBinding = new Binding
-            {
-                Source = dynamoViewModel.BackgroundPreviewViewModel,
-                Path = new PropertyPath("Active"),
-                Mode = BindingMode.TwoWay,
-                Converter = new BooleanToVisibilityConverter()
-            };
-            BackgroundPreview.SetBinding(VisibilityProperty, vizBinding);
+            //BackgroundPreview = new Watch3DView { Name = BackgroundPreviewName };
+            //background_grid.Children.Add(BackgroundPreview);
+            //BackgroundPreview.DataContext = dynamoViewModel.BackgroundPreviewViewModel;
+            //BackgroundPreview.Margin = new System.Windows.Thickness(0, 20, 0, 0);
+            //var vizBinding = new Binding
+            //{
+            //    Source = dynamoViewModel.BackgroundPreviewViewModel,
+            //    Path = new PropertyPath("Active"),
+            //    Mode = BindingMode.TwoWay,
+            //    Converter = new BooleanToVisibilityConverter()
+            //};
+            //BackgroundPreview.SetBinding(VisibilityProperty, vizBinding);
             TrackStartupAnalytics();
 
             // In native host scenario (e.g. Revit), the "Application.Current" will be "null". Therefore, the InCanvasSearchControl.OnRequestShowInCanvasSearch

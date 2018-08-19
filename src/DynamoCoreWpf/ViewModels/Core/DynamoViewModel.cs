@@ -463,9 +463,12 @@ namespace Dynamo.ViewModels
         /// </summary>
         public DefaultWatch3DViewModel BackgroundPreviewViewModel { get; private set; }
 
+        /// <summary>
+        ///  «∑Òº§ªÓ±≥æ∞3D‘§¿¿
+        /// </summary>
         public bool BackgroundPreviewActive
         {
-            get { return BackgroundPreviewViewModel.Active; }
+            get { return /*BackgroundPreviewViewModel.Active*/false; }
         }
         
         #endregion

@@ -42,7 +42,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    <!--快捷键-->
     <Window.InputBindings>
 
         <KeyBinding Key="Tab"
@@ -285,7 +285,7 @@
                             </Style.Triggers>
                         </Style>
                     </Menu.Resources>
-
+                    <!--File--> 
                     <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenu}"
                               Name="fileMenu"
                               Focusable="False">
@@ -391,7 +391,7 @@
                                   InputGestureText="Alt + F4"
                                   Focusable="False" />
                     </MenuItem>
-
+                    <!--Edit-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewEditMenu}"
                               Name="editMenu"
                               Focusable="False">
@@ -492,10 +492,11 @@
                                   Name="GraphAutoLayout"
                                   InputGestureText="Ctrl + L" />
                     </MenuItem>
-
+                    <!--视图-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenu}"
                               Name="viewMenu"
                               Focusable="False">
+                        <!--缩放-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuZoom}"
                                   Name="zoomMenu">
                             <MenuItem  Header="{x:Static p:Resources.DynamoViewViewMenuZoomIn}"
@@ -505,7 +506,7 @@
                                        Command="{Binding ZoomOutCommand}"
                                        InputGestureText="Ctrl + -" />
                         </MenuItem>
-
+                        <!--平移-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuPan}"
                                   Name="panMenu">
                             <MenuItem  Header="{x:Static p:Resources.DynamoViewViewMenuPanLeft}"
@@ -525,14 +526,14 @@
                                        CommandParameter="Down"
                                        InputGestureText="Ctrl + Alt + Down" />
                         </MenuItem>
-
+                        <!--显示终端-->
                         <MenuItem Focusable="False"
                                   IsCheckable="True"
                                   IsChecked="{Binding Path=ConsoleHeight, Converter={StaticResource ConsoleHeightToBoolConverter},Mode=TwoWay}"
                                   Header="{x:Static p:Resources.DynamoViewViewMenuShowConsole}"
                                   Command="{Binding ToggleConsoleShowingCommand}"
                                   InputGestureText="Ctrl + Shift + Up" />
-
+                        <!--连接线-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuConnector}"
                                   Name="connectorMenu">
                             <MenuItem Focusable="False"
@@ -560,7 +561,7 @@
                                       Command="{Binding ShowHideConnectorsCommand}">
                             </MenuItem>
                         </MenuItem>
-
+                        <!--背景3D预览-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenu3DPreview}"
                                   Name="background3dMenu"
                                   Focusable="False">
@@ -591,7 +592,7 @@
                                       Command="{Binding Path=BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}" />
                         </MenuItem>
                     </MenuItem>
-
+                    <!--Package-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
                               Name="PackageManagerMenu"
                               Focusable="False"
@@ -617,7 +618,7 @@
                                   Command="{Binding Path=DataContext.PublishCurrentWorkspaceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   Name="publishCurrent" />
                     </MenuItem>
-                    <!--settings-->
+                    <!--Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
                               Name="SettingsMenu"
                               Focusable="False"
@@ -726,7 +727,7 @@
                                   Header="{x:Static p:Resources.DynamoViewSettingEnableTSplineNodes}" />
                         </MenuItem>
                     </MenuItem>
-
+                    <!--Help-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenu}"
                               Focusable="False">
                         <MenuItem Focusable="False"
@@ -770,7 +771,7 @@
                                   Command="{Binding ShowAboutWindowCommand}"
                                   Focusable="False" />
                     </MenuItem>
-
+                    <!--Debug-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewDebugMenu}"
                               Focusable="False"
                               Visibility="{Binding IsDebugBuild, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -849,6 +850,8 @@
 
         </Grid>
 
+        <!--工作区背景-->
+<!--{Binding BackgroundPreviewViewModel.CanNavigateBackground}-->
         <Grid HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
               Grid.Row="2"
@@ -856,7 +859,8 @@
               Grid.RowSpan="3"
               Background="#232323"
               Name="background_grid"
-              IsHitTestVisible="{Binding BackgroundPreviewViewModel.CanNavigateBackground}">
+
+              IsHitTestVisible="True">
             <Canvas Name="backgroundCanvas"
                     Margin="0,20,0,0"
                     ClipToBounds="True">
@@ -865,7 +869,7 @@
                 </Canvas.Background>
             </Canvas>
 
-            <!-- The BackgroundPreview is now created in the DynamoView_Loaded method.-->
+             <!--The BackgroundPreview is now created in the DynamoView_Loaded method.-->
             
         </Grid>
 
@@ -875,7 +879,7 @@
             Please ensure that mouse events will be able to pass through this layer,
             when Navigate Background 3D Preview is set to true.
         -->
-        <!--Workspace-->
+        <!--工作区-->
         <Border Margin="0"
                 BorderBrush="Black"
                 BorderThickness="0"
@@ -884,8 +888,8 @@
                 Grid.Column="2"
                 SizeChanged="Workspace_SizeChanged">
 
-            <Grid AllowDrop="True"
-                  Drop="DynamoView_OnDrop">
+            <Grid AllowDrop="True" Drop="DynamoView_OnDrop">
+                <!--工作区是标签页视图-->
                 <TabControl ItemsSource="{Binding Path=Workspaces, NotifyOnTargetUpdated=True}"
                             Name="WorkspaceTabs"
                             SelectedIndex="{Binding CurrentWorkspaceIndex}"
@@ -898,10 +902,8 @@
                     <TabControl.Resources>
 
                         <Style TargetType="{x:Type TabControl}">
-                            <Setter Property="OverridesDefaultStyle"
-                                    Value="True" />
-                            <Setter Property="SnapsToDevicePixels"
-                                    Value="True" />
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type TabControl}">
@@ -956,6 +958,7 @@
                                                                                     <ContentPresenter ContentSource="Header"
                                                                                                       HorizontalAlignment="Center"
                                                                                                       VerticalAlignment="Center" />
+                                                                                    <!--标题栏按钮-->
                                                                                     <Image Name="TabMenuButtonImage"
                                                                                            Width="16"
                                                                                            Height="16">
@@ -976,12 +979,13 @@
                                                                                             </Style>
                                                                                         </Image.Style>
                                                                                     </Image>
+                                                                                    <!--上下文菜单-->
                                                                                     <Popup Name="Popup"
                                                                                            Placement="Custom"
                                                                                            CustomPopupPlacementCallback="PlacePopup"
                                                                                            IsOpen="{TemplateBinding IsSubmenuOpen}"
-                                                                                           AllowsTransparency="True"
-                                                                                           Focusable="False"
+                                                                                           AllowsTransparency="False"
+                                                                                           Focusable="True"
                                                                                            PopupAnimation="Fade">
                                                                                         <Border Name="SubmenuBorder"
                                                                                                 SnapsToDevicePixels="True"

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Dynamo.Views.WorkspaceView"
+<UserControl x:Class="Dynamo.Views.WorkspaceView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -132,7 +132,7 @@
            HorizontalAlignment="Stretch"
            VerticalAlignment="Stretch">
 
-        <!-- Infinite grid view should not be hittable by mouse -->
+        <!-- 无限网格空间无法被鼠标击中 -->
 
         <controls:InfiniteGridView x:Name="infiniteGridView"
                                    IsHitTestVisible="False">
@@ -228,6 +228,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}"
                              Converter="{StaticResource BooleanToVisibilityConverter}"/>
                 </StackPanel.Visibility>
+                <!--显示几何体视图-->
                 <ui:ImageCheckBox Width="56"
                               Height="30"
                               Margin="4,4,0,4"
@@ -239,6 +240,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
                     </ui:ImageCheckBox.IsChecked>
                 </ui:ImageCheckBox>
+                <!--显示节点按钮-->
                 <ui:ImageCheckBox Width="55"
                               Height="30"
                               Margin="0,4,0,4"
@@ -252,7 +254,7 @@
                     </ui:ImageCheckBox.IsChecked>
                 </ui:ImageCheckBox>
             </StackPanel>
-
+            <!--缩放以适应-->
             <ui:ImageButton Width="30"
                             Height="28"
                             HorizontalAlignment="Right"
@@ -263,7 +265,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
                 </ui:ImageButton.Command>
             </ui:ImageButton>
-
+            <!--放大-->
             <ui:ImageRepeatButton Width="30"
                                   Height="24"
                                   HorizontalAlignment="Right"
@@ -274,7 +276,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
                 </ui:ImageRepeatButton.Command>
             </ui:ImageRepeatButton>
-
+            <!--缩小-->
             <ui:ImageRepeatButton Width="30"
                                   Height="28"
                                   HorizontalAlignment="Right"
@@ -335,7 +337,7 @@
                DataContext="{Binding InCanvasSearchViewModel}">
             <ui:InCanvasSearchControl RequestShowInCanvasSearch="ShowHideInCanvasControl" />
         </Popup>
-
+        <!--上下文菜单的具体实现-->
         <Popup Name="ContextMenuPopup" Style="{StaticResource WorkspaceContextMenuStylePopup}"
                Opened="OnContextMenuOpened" StaysOpen="True" AllowsTransparency="True" Placement="MousePoint">
             <Popup.Resources>
