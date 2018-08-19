@@ -401,7 +401,7 @@ namespace Dynamo.Controls
 
             var screenShotButton = new ImageExportShortcutBarItem(dynamoViewModel)
             {
-                ShortcutCommand = dynamoViewModel.ShowSaveImageDialogAndSaveResultCommand,
+                //ShortcutCommand = dynamoViewModel.ShowSaveImageDialogAndSaveResultCommand,
                 ShortcutCommandParameter = Wpf.Properties.Resources.ScreenShotFrom3DShortcutParameter,
                 ImgNormalSource = "/DynamoCoreWpf;component/UI/Images/screenshot_normal.png",
                 ImgDisabledSource = "/DynamoCoreWpf;component/UI/Images/screenshot_disabled.png",

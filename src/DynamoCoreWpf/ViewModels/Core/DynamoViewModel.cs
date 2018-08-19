@@ -2325,10 +2325,10 @@ namespace Dynamo.ViewModels
         //    }
         //}
 
-        internal bool CanExportToSTL(object parameter)
-        {
-            return true;
-        }
+        //internal bool CanExportToSTL(object parameter)
+        //{
+        //    return true;
+        //}
 
         private bool CanShowAboutWindow(object obj)
         {

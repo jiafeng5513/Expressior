@@ -148,7 +148,7 @@ namespace Dynamo.ViewModels
         public DelegateCommand ZoomOutCommand { get; set; }
         public DelegateCommand FitViewCommand { get; set; }
         public DelegateCommand EscapeCommand { get; set; }
-        public DelegateCommand ExportToSTLCommand { get; set; }
+        //public DelegateCommand ExportToSTLCommand { get; set; }
         public DelegateCommand ImportLibraryCommand { get; set; }
         public DelegateCommand ShowAboutWindowCommand { get; set; }
         public DelegateCommand SetNumberFormatCommand { get; set; }

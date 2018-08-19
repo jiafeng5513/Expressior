@@ -289,6 +289,7 @@
                     <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenu}"
                               Name="fileMenu"
                               Focusable="False">
+                        <!--新建-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenuNew}"
                                   Name="newMenu"
                                   Focusable="False">
@@ -305,6 +306,7 @@
                                       Focusable="False">
                             </MenuItem>
                         </MenuItem>
+                        <!--打开-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenuOpen}"
                                   Command="{Binding ShowOpenDialogAndOpenResultCommand}"
                                   Name="openButton"
@@ -316,6 +318,7 @@
                                        Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        <!--最近打开的文件-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenuRecentFiles}"
                                   ItemsSource="{Binding RecentFiles}">
                             <MenuItem.ItemContainerStyle>
@@ -330,6 +333,7 @@
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
                         <Separator />
+                        <!--保存-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFileMenuSave}"
                                   Command="{Binding ShowSaveDialogIfNeededAndSaveResultCommand}"
                                   Name="saveThisButton"
@@ -341,6 +345,7 @@
                                        Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
+                        <!--另存为-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewFileMenuSaveAs}"
                                   Command="{Binding ShowSaveDialogAndSaveResultCommand}"
@@ -353,11 +358,13 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator />
+                        <!--导入库-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewFileMenuImport}"
                                   Command="{Binding Path=DataContext.ImportLibraryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   Name="importLibrary" />
                         <Separator />
+                        <!--将工作区导出为图片-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewFileMenuExportAsImage}"
                                   Command="{Binding ShowSaveImageDialogAndSaveResultCommand}"
@@ -368,7 +375,8 @@
                                        Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Focusable="False"
+                        <!--导出3d预览为图片-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewFileMenuExport3DAsImage}"
                                   Command="{Binding ShowSaveImageDialogAndSaveResultCommand}"
                                   CommandParameter="{x:Static p:Resources.ScreenShotFrom3DParameter}"
@@ -378,13 +386,15 @@
                                        Width="14"
                                        Height="14" />
                             </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Focusable="False"
+                        </MenuItem>-->
+                        <!--将模型导出为STL-->
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewFileMenuExportToSTL}"
                                   Command="{Binding ExportToSTLCommand}"
                                   Name="saveSTL">
-                        </MenuItem>
+                        </MenuItem>-->
                         <Separator />
+                        <!--退出-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFiileMenuExit}"
                                   Command="{Binding ExitCommand}"
                                   Name="exit"
