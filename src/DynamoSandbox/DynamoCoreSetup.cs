@@ -44,11 +44,6 @@ namespace DynamoSandbox
                     {
                         CommandFilePath = commandFilePath,
                         DynamoModel = model,
-                        //Watch3DViewModel =
-                        //    HelixWatch3DViewModel.TryCreateHelixWatch3DViewModel(
-                        //        null,
-                        //        new Watch3DViewModelStartupParams(model),
-                        //        model.Logger),
                         ShowLogin = true
                     });
 

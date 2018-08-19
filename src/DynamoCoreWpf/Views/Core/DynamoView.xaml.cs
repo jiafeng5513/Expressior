@@ -475,33 +475,33 @@ namespace Dynamo.Controls
             Dispatcher.Invoke(new Action(UpdateLayout), DispatcherPriority.Render, null);
         }
 
-        private void DynamoViewModelRequestViewOperation(ViewOperationEventArgs e)
-        {
+        //private void DynamoViewModelRequestViewOperation(ViewOperationEventArgs e)
+        //{
             //if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground == false)
             //    return;
 
-            switch (e.ViewOperation)
-            {
-                case ViewOperationEventArgs.Operation.FitView:
-                    //if (dynamoViewModel.BackgroundPreviewViewModel != null)
-                    //{
-                    //    dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
-                    //    return;
-                    //}
-                    BackgroundPreview.View.ZoomExtents();
-                    break;
+        //    switch (e.ViewOperation)
+        //    {
+        //        case ViewOperationEventArgs.Operation.FitView:
+        //            //if (dynamoViewModel.BackgroundPreviewViewModel != null)
+        //            //{
+        //            //    dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
+        //            //    return;
+        //            //}
+        //            //BackgroundPreview.View.ZoomExtents();
+        //            break;
 
-                case ViewOperationEventArgs.Operation.ZoomIn:
-                    var camera1 = BackgroundPreview.View.CameraController;
-                    camera1.Zoom(-0.5 * BackgroundPreview.View.ZoomSensitivity);
-                    break;
+        //        case ViewOperationEventArgs.Operation.ZoomIn:
+        //            var camera1 = BackgroundPreview.View.CameraController;
+        //            //camera1.Zoom(-0.5 * BackgroundPreview.View.ZoomSensitivity);
+        //            break;
 
-                case ViewOperationEventArgs.Operation.ZoomOut:
-                    var camera2 = BackgroundPreview.View.CameraController;
-                    camera2.Zoom(0.5 * BackgroundPreview.View.ZoomSensitivity);
-                    break;
-            }
-        }
+        //        case ViewOperationEventArgs.Operation.ZoomOut:
+        //            var camera2 = BackgroundPreview.View.CameraController;
+        //            //camera2.Zoom(0.5 * BackgroundPreview.View.ZoomSensitivity);
+        //            break;
+        //    }
+        //}
 
         private void DynamoLoadedViewExtensionHandler(ViewLoadedParams loadedParams, IEnumerable<IViewExtension> extensions)
         {
@@ -531,7 +531,7 @@ namespace Dynamo.Controls
             WorkspaceTabs.SelectedIndex = 0;
             dynamoViewModel = (DataContext as DynamoViewModel);
             dynamoViewModel.Model.RequestLayoutUpdate += vm_RequestLayoutUpdate;
-            dynamoViewModel.RequestViewOperation += DynamoViewModelRequestViewOperation;
+            //dynamoViewModel.RequestViewOperation += DynamoViewModelRequestViewOperation;
             dynamoViewModel.PostUiActivationCommand.Execute(null);
 
             _timer.Stop();
@@ -572,7 +572,7 @@ namespace Dynamo.Controls
 
             dynamoViewModel.RequestClose += DynamoViewModelRequestClose;
             dynamoViewModel.RequestSaveImage += DynamoViewModelRequestSaveImage;
-            dynamoViewModel.RequestSave3DImage += DynamoViewModelRequestSave3DImage;
+            //dynamoViewModel.RequestSave3DImage += DynamoViewModelRequestSave3DImage;
             dynamoViewModel.SidebarClosed += DynamoViewModelSidebarClosed;
 
             dynamoViewModel.Model.RequestsCrashPrompt += Controller_RequestsCrashPrompt;
@@ -912,27 +912,27 @@ namespace Dynamo.Controls
             workspace.SaveWorkspaceAsImage(e.Path);
         }
 
-        private void DynamoViewModelRequestSave3DImage(object sender, ImageSaveEventArgs e)
-        {
-            var canvas = (DPFCanvas)BackgroundPreview.View.RenderHost;
+        //private void DynamoViewModelRequestSave3DImage(object sender, ImageSaveEventArgs e)
+        //{
+        //    var canvas = (DPFCanvas)BackgroundPreview.View.RenderHost;
 
-            var encoder = new PngBitmapEncoder();
-            var rtBitmap = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96,
-                PixelFormats.Pbgra32);
-            rtBitmap.Render(canvas);
+        //    var encoder = new PngBitmapEncoder();
+        //    var rtBitmap = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96,
+        //        PixelFormats.Pbgra32);
+        //    rtBitmap.Render(canvas);
 
-            encoder.Frames.Add(BitmapFrame.Create(rtBitmap));
+        //    encoder.Frames.Add(BitmapFrame.Create(rtBitmap));
 
-            if (File.Exists(e.Path))
-            {
-                File.Delete(e.Path);
-            }
+        //    if (File.Exists(e.Path))
+        //    {
+        //        File.Delete(e.Path);
+        //    }
 
-            using (var stream = File.Create(e.Path))
-            {
-                encoder.Save(stream);
-            }
-        }
+        //    using (var stream = File.Create(e.Path))
+        //    {
+        //        encoder.Save(stream);
+        //    }
+        //}
 
         private void DynamoViewModelRequestClose(object sender, EventArgs e)
         {
@@ -1168,7 +1168,7 @@ namespace Dynamo.Controls
             }
 
             dynamoViewModel.Model.RequestLayoutUpdate -= vm_RequestLayoutUpdate;
-            dynamoViewModel.RequestViewOperation -= DynamoViewModelRequestViewOperation;
+            //dynamoViewModel.RequestViewOperation -= DynamoViewModelRequestViewOperation;
 
             //PACKAGE MANAGER
             dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;

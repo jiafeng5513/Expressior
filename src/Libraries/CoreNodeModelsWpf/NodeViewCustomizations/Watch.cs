@@ -41,7 +41,6 @@ namespace CoreNodeModelsWpf.Nodes
             var watchTree = new WatchTree();
 
             // make empty watchViewModel
-            //rootWatchViewModel = new WatchViewModel(dynamoViewModel.BackgroundPreviewViewModel.AddLabelForPath);
 
             // Fix the maximum width/height of watch node.
             nodeView.PresentationGrid.MaxWidth = Configurations.MaxWatchNodeWidth;
@@ -174,14 +173,6 @@ namespace CoreNodeModelsWpf.Nodes
             // Without doing this, the preview would say "null"
             if (watch.IsPartiallyApplied)
             {
-                // There should be only one node in rootWatchViewModel.Children
-                // as it is the parent node. Therefore, the iteration should only occur once.
-                //foreach (var node in rootWatchViewModel.Children)
-                //{
-                //    // remove all labels (in Watch 3D View) upon disconnect of Watch Node
-                //    dynamoViewModel.BackgroundPreviewViewModel.ClearPathLabel(node.Path);
-                //}
-
                 rootWatchViewModel.Children.Clear();
                 rootWatchViewModel.IsCollection = false;
                 return;

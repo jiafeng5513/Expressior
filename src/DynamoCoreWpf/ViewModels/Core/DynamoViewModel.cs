@@ -1986,14 +1986,7 @@ namespace Dynamo.ViewModels
             }
             else if (parameter.ToString() == Resources.ScreenShotFrom3DShortcutParameter)
             {
-                //if (BackgroundPreviewViewModel.CanNavigateBackground)
-                //{
-                //    Save3DImage(_fileDialog.FileName);
-                //}
-                //else
-                {
-                    SaveImage(_fileDialog.FileName);
-                }
+                SaveImage(_fileDialog.FileName);
             }
             else
             {
@@ -2176,14 +2169,6 @@ namespace Dynamo.ViewModels
 
         internal void ZoomIn(object parameter)
         {
-            //if (BackgroundPreviewViewModel != null && 
-            //    BackgroundPreviewViewModel.CanNavigateBackground)
-            //{
-            //    var op = ViewOperationEventArgs.Operation.ZoomIn;
-            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
-            //    return;
-            //}
-
             CurrentSpaceViewModel.ZoomInInternal();
             ZoomInCommand.RaiseCanExecuteChanged();
         }
@@ -2195,14 +2180,6 @@ namespace Dynamo.ViewModels
 
         private void ZoomOut(object parameter)
         {
-            //if (BackgroundPreviewViewModel != null && 
-            //    BackgroundPreviewViewModel.CanNavigateBackground)
-            //{
-            //    var op = ViewOperationEventArgs.Operation.ZoomOut;
-            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
-            //    return;
-            //}
-
             CurrentSpaceViewModel.ZoomOutInternal();
             ZoomOutCommand.RaiseCanExecuteChanged();
         }
@@ -2214,13 +2191,6 @@ namespace Dynamo.ViewModels
 
         private void FitView(object parameter)
         {
-            //if (BackgroundPreviewViewModel.CanNavigateBackground)
-            //{
-            //    var op = ViewOperationEventArgs.Operation.FitView;
-            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
-            //    return;
-            //}
-
             CurrentSpaceViewModel.FitViewInternal();
         }
 
@@ -2295,40 +2265,6 @@ namespace Dynamo.ViewModels
         {
             return true;
         }
-        /// <summary>
-        /// µ¼³öSTL
-        /// </summary>
-        /// <param name="parameter"></param>
-        //private void ExportToSTL(object parameter)
-        //{
-        //    FileDialog _fileDialog = null ?? new SaveFileDialog()
-        //    {
-        //        AddExtension = true,
-        //        DefaultExt = ".stl",
-        //        FileName = Resources.FileDialogDefaultSTLModelName,
-        //        Filter = string.Format(Resources.FileDialogSTLModels,"*.stl"),
-        //        Title = Resources.SaveModelToSTLDialogTitle,
-        //    };
-
-        //    // if you've got the current space path, use it as the inital dir
-        //    if (!string.IsNullOrEmpty(model.CurrentWorkspace.FileName))
-        //    {
-        //        var fi = new FileInfo(model.CurrentWorkspace.FileName);
-        //        _fileDialog.InitialDirectory = fi.DirectoryName;
-        //    }
-
-        //    if (_fileDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        BackgroundPreviewViewModel.ExportToSTL(_fileDialog.FileName, HomeSpace.Name);
-
-        //        Dynamo.Logging.Analytics.TrackCommandEvent("ExportToSTL");
-        //    }
-        //}
-
-        //internal bool CanExportToSTL(object parameter)
-        //{
-        //    return true;
-        //}
 
         private bool CanShowAboutWindow(object obj)
         {

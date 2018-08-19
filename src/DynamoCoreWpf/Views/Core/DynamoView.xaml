@@ -375,24 +375,6 @@
                                        Height="14" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <!--导出3d预览为图片-->
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewFileMenuExport3DAsImage}"
-                                  Command="{Binding ShowSaveImageDialogAndSaveResultCommand}"
-                                  CommandParameter="{x:Static p:Resources.ScreenShotFrom3DParameter}"
-                                  Name="save3DImage">
-                            <MenuItem.Icon>
-                                <Image Source="/DynamoCoreWpf;component/UI/Images/screenshot_normal.png"
-                                       Width="14"
-                                       Height="14" />
-                            </MenuItem.Icon>
-                        </MenuItem>-->
-                        <!--将模型导出为STL-->
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewFileMenuExportToSTL}"
-                                  Command="{Binding ExportToSTLCommand}"
-                                  Name="saveSTL">
-                        </MenuItem>-->
                         <Separator />
                         <!--退出-->
                         <MenuItem Header="{x:Static p:Resources.DynamoViewFiileMenuExit}"
