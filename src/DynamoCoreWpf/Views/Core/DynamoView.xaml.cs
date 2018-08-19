@@ -54,8 +54,6 @@ namespace Dynamo.Controls
     /// </summary>
     public partial class DynamoView : Window, IDisposable
     {
-        public const string BackgroundPreviewName = "BackgroundPreview";
-        private const int navigationInterval = 100;
         // This is used to determine whether ESC key is being held down
         private bool IsEscKeyPressed = false;
 
@@ -75,8 +73,6 @@ namespace Dynamo.Controls
         private bool isPSSCalledOnViewModelNoCancel = false;
 
         private readonly DispatcherTimer _workspaceResizeTimer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };
-
-        internal Watch3DView BackgroundPreview { get; private set; }
 
         public DynamoView(DynamoViewModel dynamoViewModel)
         {
@@ -399,15 +395,6 @@ namespace Dynamo.Controls
                 ImgHoverSource = "/DynamoCoreWpf;component/UI/Images/save_hover.png"
             };
 
-            var screenShotButton = new ImageExportShortcutBarItem(dynamoViewModel)
-            {
-                //ShortcutCommand = dynamoViewModel.ShowSaveImageDialogAndSaveResultCommand,
-                ShortcutCommandParameter = Wpf.Properties.Resources.ScreenShotFrom3DShortcutParameter,
-                ImgNormalSource = "/DynamoCoreWpf;component/UI/Images/screenshot_normal.png",
-                ImgDisabledSource = "/DynamoCoreWpf;component/UI/Images/screenshot_disabled.png",
-                ImgHoverSource = "/DynamoCoreWpf;component/UI/Images/screenshot_hover.png"
-            };
-
             var undoButton = new ShortcutBarItem
             {
                 ShortcutToolTip = Wpf.Properties.Resources.DynamoViewToolbarUndoButtonTooltip,
@@ -433,8 +420,6 @@ namespace Dynamo.Controls
             shortcutBar.ShortcutBarItems.Add(saveButton);
             shortcutBar.ShortcutBarItems.Add(undoButton);
             shortcutBar.ShortcutBarItems.Add(redoButton);
-
-            shortcutBar.ShortcutBarRightSideItems.Add(screenShotButton);
 
             shortcutBarGrid.Children.Add(shortcutBar);
         }
@@ -475,34 +460,6 @@ namespace Dynamo.Controls
             Dispatcher.Invoke(new Action(UpdateLayout), DispatcherPriority.Render, null);
         }
 
-        //private void DynamoViewModelRequestViewOperation(ViewOperationEventArgs e)
-        //{
-            //if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground == false)
-            //    return;
-
-        //    switch (e.ViewOperation)
-        //    {
-        //        case ViewOperationEventArgs.Operation.FitView:
-        //            //if (dynamoViewModel.BackgroundPreviewViewModel != null)
-        //            //{
-        //            //    dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
-        //            //    return;
-        //            //}
-        //            //BackgroundPreview.View.ZoomExtents();
-        //            break;
-
-        //        case ViewOperationEventArgs.Operation.ZoomIn:
-        //            var camera1 = BackgroundPreview.View.CameraController;
-        //            //camera1.Zoom(-0.5 * BackgroundPreview.View.ZoomSensitivity);
-        //            break;
-
-        //        case ViewOperationEventArgs.Operation.ZoomOut:
-        //            var camera2 = BackgroundPreview.View.CameraController;
-        //            //camera2.Zoom(0.5 * BackgroundPreview.View.ZoomSensitivity);
-        //            break;
-        //    }
-        //}
-
         private void DynamoLoadedViewExtensionHandler(ViewLoadedParams loadedParams, IEnumerable<IViewExtension> extensions)
         {
             foreach (var ext in extensions)
@@ -531,7 +488,6 @@ namespace Dynamo.Controls
             WorkspaceTabs.SelectedIndex = 0;
             dynamoViewModel = (DataContext as DynamoViewModel);
             dynamoViewModel.Model.RequestLayoutUpdate += vm_RequestLayoutUpdate;
-            //dynamoViewModel.RequestViewOperation += DynamoViewModelRequestViewOperation;
             dynamoViewModel.PostUiActivationCommand.Execute(null);
 
             _timer.Stop();
@@ -600,18 +556,6 @@ namespace Dynamo.Controls
 
             this.DynamoLoadedViewExtensionHandler(loadedParams, viewExtensionManager.ViewExtensions);
 
-            //BackgroundPreview = new Watch3DView { Name = BackgroundPreviewName };
-            //background_grid.Children.Add(BackgroundPreview);
-            //BackgroundPreview.DataContext = dynamoViewModel.BackgroundPreviewViewModel;
-            //BackgroundPreview.Margin = new System.Windows.Thickness(0, 20, 0, 0);
-            //var vizBinding = new Binding
-            //{
-            //    Source = dynamoViewModel.BackgroundPreviewViewModel,
-            //    Path = new PropertyPath("Active"),
-            //    Mode = BindingMode.TwoWay,
-            //    Converter = new BooleanToVisibilityConverter()
-            //};
-            //BackgroundPreview.SetBinding(VisibilityProperty, vizBinding);
             TrackStartupAnalytics();
 
             // In native host scenario (e.g. Revit), the "Application.Current" will be "null". Therefore, the InCanvasSearchControl.OnRequestShowInCanvasSearch
@@ -912,28 +856,6 @@ namespace Dynamo.Controls
             workspace.SaveWorkspaceAsImage(e.Path);
         }
 
-        //private void DynamoViewModelRequestSave3DImage(object sender, ImageSaveEventArgs e)
-        //{
-        //    var canvas = (DPFCanvas)BackgroundPreview.View.RenderHost;
-
-        //    var encoder = new PngBitmapEncoder();
-        //    var rtBitmap = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96,
-        //        PixelFormats.Pbgra32);
-        //    rtBitmap.Render(canvas);
-
-        //    encoder.Frames.Add(BitmapFrame.Create(rtBitmap));
-
-        //    if (File.Exists(e.Path))
-        //    {
-        //        File.Delete(e.Path);
-        //    }
-
-        //    using (var stream = File.Create(e.Path))
-        //    {
-        //        encoder.Save(stream);
-        //    }
-        //}
-
         private void DynamoViewModelRequestClose(object sender, EventArgs e)
         {
             Close();
@@ -1168,7 +1090,6 @@ namespace Dynamo.Controls
             }
 
             dynamoViewModel.Model.RequestLayoutUpdate -= vm_RequestLayoutUpdate;
-            //dynamoViewModel.RequestViewOperation -= DynamoViewModelRequestViewOperation;
 
             //PACKAGE MANAGER
             dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
@@ -1217,53 +1138,6 @@ namespace Dynamo.Controls
             }
 
             viewExtensionManager.MessageLogged -= Log;
-        }
-
-        // the key press event is being intercepted before it can get to
-        // the active workspace. This code simply grabs the key presses and
-        // passes it to thecurrent workspace
-        private void DynamoView_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Escape || !IsMouseOver) return;
-
-            //var vm = dynamoViewModel.BackgroundPreviewViewModel;
-
-
-            // ESC key to navigate has long lag on some machines.
-            // This issue was caused by using KeyEventArgs.IsRepeated API
-            // In order to fix this we need to use our own extension method DelayInvoke to determine
-            // whether ESC key is being held down or not
-            //if (!IsEscKeyPressed && !vm.NavigationKeyIsDown)
-            //{
-            //    IsEscKeyPressed = true;
-            //    dynamoViewModel.UIDispatcher.DelayInvoke(navigationInterval, () =>
-            //    {
-            //        if (IsEscKeyPressed)
-            //        {
-            //            vm.NavigationKeyIsDown = true;
-            //        }
-            //    });
-            //}
-
-            //else
-            //{
-            //    vm.CancelNavigationState();
-            //}
-
-            //e.Handled = true;
-        }
-
-        private void DynamoView_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Escape) return;
-
-            //IsEscKeyPressed = false;
-            //if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground)
-            //{
-            //    dynamoViewModel.BackgroundPreviewViewModel.NavigationKeyIsDown = false;
-            //    dynamoViewModel.EscapeCommand.Execute(null);
-            //    e.Handled = true;
-            //}
         }
 
         private void WorkspaceTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)

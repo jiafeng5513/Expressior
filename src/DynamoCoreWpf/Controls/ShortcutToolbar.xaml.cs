@@ -104,17 +104,5 @@ namespace Dynamo.UI.Controls
                 shortcutToolTip = value;
             }
         }
-
-        public ImageExportShortcutBarItem(DynamoViewModel viewModel)
-        {
-            vm = viewModel;
-            //vm.BackgroundPreviewViewModel.PropertyChanged += BackgroundPreviewViewModel_PropertyChanged;
-        }
-
-        private void BackgroundPreviewViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != "CanNavigateBackground") return;
-            RaisePropertyChanged("ShortcutToolTip");
-        }
     }
 }

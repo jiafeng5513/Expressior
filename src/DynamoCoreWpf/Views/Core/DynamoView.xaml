@@ -24,8 +24,6 @@
         MinHeight="600"
         MinWidth="800"
         AllowsTransparency="False"
-        KeyDown="DynamoView_KeyDown"
-        KeyUp="DynamoView_KeyUp"
         Background="#FF353535"
         SnapsToDevicePixels="True"
         ResizeMode="CanResizeWithGrip"
@@ -65,9 +63,6 @@
         <KeyBinding Key="L"
                     Modifiers="Control"
                     Command="{Binding Path=DataContext.GraphAutoLayoutCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
-        <KeyBinding Key="I"
-                    Modifiers="Control"
-                    Command="{Binding Path=DataContext.BackgroundPreviewViewModel.ToggleIsolationModeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
         <KeyBinding Key="Tab"
                     Command="{Binding Path=DataContext.SelectNeighborsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
 
@@ -91,9 +86,6 @@
                     Modifiers="Control"
                     Command="{Binding Path=DataContext.PasteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
 
-        <KeyBinding Key="B"
-                    Modifiers="Control"
-                    Command="{Binding Path=DataContext.BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
 
         <KeyBinding Key="W"
                     Modifiers="Control"
@@ -159,9 +151,6 @@
         <KeyBinding Key="D0"
                     Modifiers="Ctrl"
                     Command="{Binding Path=DataContext.FitViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
-        <KeyBinding Key="P"
-                    Modifiers="Ctrl"
-                    Command="{Binding Path=DataContext.BackgroundPreviewViewModel.TogglePanCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}" />
 
         <KeyBinding Key="F5"
                     Modifiers="Shift"
