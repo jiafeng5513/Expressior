@@ -220,8 +220,8 @@ namespace Dynamo.ViewModels
         /// Gets the Camera Data. This is used when serializing Camera Data in the View block
         /// of Graph.Json.
         /// </summary>
-        [JsonProperty("Camera")]
-        public CameraData Camera => DynamoViewModel.BackgroundPreviewViewModel.GetCameraInformation() ?? new CameraData();
+        //[JsonProperty("Camera")]
+        //public CameraData Camera => DynamoViewModel.BackgroundPreviewViewModel.GetCameraInformation() ?? new CameraData();
 
         /// <summary>
         /// ViewModel that is used in InCanvasSearch in context menu and called by Shift+DoubleClick.

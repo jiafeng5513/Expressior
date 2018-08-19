@@ -477,17 +477,17 @@ namespace Dynamo.Controls
 
         private void DynamoViewModelRequestViewOperation(ViewOperationEventArgs e)
         {
-            if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground == false)
-                return;
+            //if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground == false)
+            //    return;
 
             switch (e.ViewOperation)
             {
                 case ViewOperationEventArgs.Operation.FitView:
-                    if (dynamoViewModel.BackgroundPreviewViewModel != null)
-                    {
-                        dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
-                        return;
-                    }
+                    //if (dynamoViewModel.BackgroundPreviewViewModel != null)
+                    //{
+                    //    dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
+                    //    return;
+                    //}
                     BackgroundPreview.View.ZoomExtents();
                     break;
 
@@ -1226,44 +1226,44 @@ namespace Dynamo.Controls
         {
             if (e.Key != Key.Escape || !IsMouseOver) return;
 
-            var vm = dynamoViewModel.BackgroundPreviewViewModel;
+            //var vm = dynamoViewModel.BackgroundPreviewViewModel;
 
 
             // ESC key to navigate has long lag on some machines.
             // This issue was caused by using KeyEventArgs.IsRepeated API
             // In order to fix this we need to use our own extension method DelayInvoke to determine
             // whether ESC key is being held down or not
-            if (!IsEscKeyPressed && !vm.NavigationKeyIsDown)
-            {
-                IsEscKeyPressed = true;
-                dynamoViewModel.UIDispatcher.DelayInvoke(navigationInterval, () =>
-                {
-                    if (IsEscKeyPressed)
-                    {
-                        vm.NavigationKeyIsDown = true;
-                    }
-                });
-            }
+            //if (!IsEscKeyPressed && !vm.NavigationKeyIsDown)
+            //{
+            //    IsEscKeyPressed = true;
+            //    dynamoViewModel.UIDispatcher.DelayInvoke(navigationInterval, () =>
+            //    {
+            //        if (IsEscKeyPressed)
+            //        {
+            //            vm.NavigationKeyIsDown = true;
+            //        }
+            //    });
+            //}
 
-            else
-            {
-                vm.CancelNavigationState();
-            }
+            //else
+            //{
+            //    vm.CancelNavigationState();
+            //}
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         private void DynamoView_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Escape) return;
 
-            IsEscKeyPressed = false;
-            if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground)
-            {
-                dynamoViewModel.BackgroundPreviewViewModel.NavigationKeyIsDown = false;
-                dynamoViewModel.EscapeCommand.Execute(null);
-                e.Handled = true;
-            }
+            //IsEscKeyPressed = false;
+            //if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground)
+            //{
+            //    dynamoViewModel.BackgroundPreviewViewModel.NavigationKeyIsDown = false;
+            //    dynamoViewModel.EscapeCommand.Execute(null);
+            //    e.Handled = true;
+            //}
         }
 
         private void WorkspaceTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)

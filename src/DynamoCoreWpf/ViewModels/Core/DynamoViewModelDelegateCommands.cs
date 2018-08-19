@@ -40,8 +40,8 @@ namespace Dynamo.ViewModels
             GoToWorkspaceCommand = new DelegateCommand(GoToWorkspace, CanGoToWorkspace);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             ExitCommand = new DelegateCommand(Exit, CanExit);
-            ToggleFullscreenWatchShowingCommand = new DelegateCommand(ToggleFullscreenWatchShowing, CanToggleFullscreenWatchShowing);
-            ToggleBackgroundGridVisibilityCommand = new DelegateCommand(ToggleBackgroundGridVisibility, CanToggleBackgroundGridVisibility);
+            //ToggleFullscreenWatchShowingCommand = new DelegateCommand(ToggleFullscreenWatchShowing, CanToggleFullscreenWatchShowing);
+            //ToggleBackgroundGridVisibilityCommand = new DelegateCommand(ToggleBackgroundGridVisibility, CanToggleBackgroundGridVisibility);
             AlignSelectedCommand = new DelegateCommand(AlignSelected, CanAlignSelected); ;
             UndoCommand = new DelegateCommand(Undo, CanUndo);
             RedoCommand = new DelegateCommand(Redo, CanRedo);
@@ -73,7 +73,7 @@ namespace Dynamo.ViewModels
             ZoomOutCommand = new DelegateCommand(ZoomOut, CanZoomOut);
             FitViewCommand = new DelegateCommand(FitView, CanFitView);
             EscapeCommand = new DelegateCommand(Escape, CanEscape);
-            ExportToSTLCommand = new DelegateCommand(ExportToSTL, CanExportToSTL);
+            //ExportToSTLCommand = new DelegateCommand(ExportToSTL, CanExportToSTL);
             ImportLibraryCommand = new DelegateCommand(ImportLibrary, CanImportLibrary);
             ShowAboutWindowCommand = new DelegateCommand(ShowAboutWindow, CanShowAboutWindow);
             SetNumberFormatCommand = new DelegateCommand(SetNumberFormat, CanSetNumberFormat);

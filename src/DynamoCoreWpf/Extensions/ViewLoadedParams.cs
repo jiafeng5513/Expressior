@@ -40,7 +40,7 @@ namespace Dynamo.Wpf.Extensions
         /// A reference to the background preview viewmodel for geometry selection,
         /// hit testing, mouse and keyboard event handling for events in the background preview 
         /// </summary>
-        public IWatch3DViewModel BackgroundPreviewViewModel { get { return dynamoViewModel.BackgroundPreviewViewModel; } }
+        //public IWatch3DViewModel BackgroundPreviewViewModel { get { return dynamoViewModel.BackgroundPreviewViewModel; } }
 
         /// <summary>
         /// A reference to the factory for creating render packages in the extension

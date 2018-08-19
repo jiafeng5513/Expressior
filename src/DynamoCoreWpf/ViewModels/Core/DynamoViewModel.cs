@@ -461,7 +461,7 @@ namespace Dynamo.ViewModels
         /// A <see cref="DefaultWatch3DViewModel"/> which provides the
         /// geometry for the primary background 3d preview.
         /// </summary>
-        public DefaultWatch3DViewModel BackgroundPreviewViewModel { get; private set; }
+        //public DefaultWatch3DViewModel BackgroundPreviewViewModel { get; private set; }
 
         /// <summary>
         /// 是否激活背景3D预览
@@ -479,7 +479,7 @@ namespace Dynamo.ViewModels
             public IWatchHandler WatchHandler { get; set; }
             public DynamoModel DynamoModel { get; set; }
             public bool ShowLogin { get; set; }
-            public DefaultWatch3DViewModel Watch3DViewModel { get; set; }
+            //public DefaultWatch3DViewModel Watch3DViewModel { get; set; }
 
             /// <summary>
             /// This property is initialized if there is an external host application
@@ -496,14 +496,14 @@ namespace Dynamo.ViewModels
             if(startConfiguration.WatchHandler == null)
                 startConfiguration.WatchHandler = new DefaultWatchHandler(startConfiguration.DynamoModel.PreferenceSettings);
 
-            if (startConfiguration.Watch3DViewModel == null)
-            {
-                startConfiguration.Watch3DViewModel = 
-                    HelixWatch3DViewModel.TryCreateHelixWatch3DViewModel(
-                        null,
-                        new Watch3DViewModelStartupParams(startConfiguration.DynamoModel), 
-                        startConfiguration.DynamoModel.Logger);
-            }
+            //if (startConfiguration.Watch3DViewModel == null)
+            //{
+            //    startConfiguration.Watch3DViewModel = 
+            //        HelixWatch3DViewModel.TryCreateHelixWatch3DViewModel(
+            //            null,
+            //            new Watch3DViewModelStartupParams(startConfiguration.DynamoModel), 
+            //            startConfiguration.DynamoModel.Logger);
+            //}
 
             return new DynamoViewModel(startConfiguration);
         }
@@ -563,10 +563,10 @@ namespace Dynamo.ViewModels
             RenderPackageFactoryViewModel = new RenderPackageFactoryViewModel(Model.PreferenceSettings);
             RenderPackageFactoryViewModel.PropertyChanged += RenderPackageFactoryViewModel_PropertyChanged;
 
-            BackgroundPreviewViewModel = startConfiguration.Watch3DViewModel;
-            BackgroundPreviewViewModel.PropertyChanged += Watch3DViewModelPropertyChanged;
-            WatchHandler.RequestSelectGeometry += BackgroundPreviewViewModel.AddLabelForPath;
-            RegisterWatch3DViewModel(BackgroundPreviewViewModel, RenderPackageFactoryViewModel.Factory);
+            //BackgroundPreviewViewModel = startConfiguration.Watch3DViewModel;
+            //BackgroundPreviewViewModel.PropertyChanged += Watch3DViewModelPropertyChanged;
+            //WatchHandler.RequestSelectGeometry += BackgroundPreviewViewModel.AddLabelForPath;
+           // RegisterWatch3DViewModel(BackgroundPreviewViewModel, RenderPackageFactoryViewModel.Factory);
             model.ComputeModelDeserialized += model_ComputeModelDeserialized;
         }
 
@@ -603,22 +603,22 @@ namespace Dynamo.ViewModels
             }
         }
 
-        void Watch3DViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "Active":
-                    RaisePropertyChanged("BackgroundPreviewActive");                 
-                    break;
-                case "CanNavigateBackground":
-                    if (!BackgroundPreviewViewModel.CanNavigateBackground)
-                    {
-                        // Return focus back to Dynamo View
-                        OnRequestReturnFocusToView();
-                    }
-                    break;
-            }
-        }
+        //void Watch3DViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    switch (e.PropertyName)
+        //    {
+        //        case "Active":
+        //            RaisePropertyChanged("BackgroundPreviewActive");                 
+        //            break;
+        //        case "CanNavigateBackground":
+        //            if (!BackgroundPreviewViewModel.CanNavigateBackground)
+        //            {
+        //                // Return focus back to Dynamo View
+        //                OnRequestReturnFocusToView();
+        //            }
+        //            break;
+        //    }
+        //}
 
         internal event EventHandler NodeViewReady;
         internal void OnNodeViewReady(object nodeView)
@@ -1718,23 +1718,23 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        public void ToggleFullscreenWatchShowing(object parameter)
-        {
-            if (BackgroundPreviewViewModel == null) return;
-            BackgroundPreviewViewModel.Active = !BackgroundPreviewViewModel.Active;
-        }
+        //public void ToggleFullscreenWatchShowing(object parameter)
+        //{
+        //    if (BackgroundPreviewViewModel == null) return;
+        //    BackgroundPreviewViewModel.Active = !BackgroundPreviewViewModel.Active;
+        //}
 
         internal bool CanToggleFullscreenWatchShowing(object parameter)
         {
             return true;
         }
 
-        public void ToggleBackgroundGridVisibility(object parameter)
-        {
-            if (BackgroundPreviewViewModel == null || !BackgroundPreviewViewModel.Active) return;
+        //public void ToggleBackgroundGridVisibility(object parameter)
+        //{
+        //    if (BackgroundPreviewViewModel == null || !BackgroundPreviewViewModel.Active) return;
 
-            BackgroundPreviewViewModel.IsGridVisible = !BackgroundPreviewViewModel.IsGridVisible;
-        }
+        //    BackgroundPreviewViewModel.IsGridVisible = !BackgroundPreviewViewModel.IsGridVisible;
+        //}
 
         internal bool CanToggleBackgroundGridVisibility(object parameter)
         {
@@ -1986,11 +1986,11 @@ namespace Dynamo.ViewModels
             }
             else if (parameter.ToString() == Resources.ScreenShotFrom3DShortcutParameter)
             {
-                if (BackgroundPreviewViewModel.CanNavigateBackground)
-                {
-                    Save3DImage(_fileDialog.FileName);
-                }
-                else
+                //if (BackgroundPreviewViewModel.CanNavigateBackground)
+                //{
+                //    Save3DImage(_fileDialog.FileName);
+                //}
+                //else
                 {
                     SaveImage(_fileDialog.FileName);
                 }
@@ -2176,13 +2176,13 @@ namespace Dynamo.ViewModels
 
         internal void ZoomIn(object parameter)
         {
-            if (BackgroundPreviewViewModel != null && 
-                BackgroundPreviewViewModel.CanNavigateBackground)
-            {
-                var op = ViewOperationEventArgs.Operation.ZoomIn;
-                OnRequestViewOperation(new ViewOperationEventArgs(op));
-                return;
-            }
+            //if (BackgroundPreviewViewModel != null && 
+            //    BackgroundPreviewViewModel.CanNavigateBackground)
+            //{
+            //    var op = ViewOperationEventArgs.Operation.ZoomIn;
+            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
+            //    return;
+            //}
 
             CurrentSpaceViewModel.ZoomInInternal();
             ZoomInCommand.RaiseCanExecuteChanged();
@@ -2195,13 +2195,13 @@ namespace Dynamo.ViewModels
 
         private void ZoomOut(object parameter)
         {
-            if (BackgroundPreviewViewModel != null && 
-                BackgroundPreviewViewModel.CanNavigateBackground)
-            {
-                var op = ViewOperationEventArgs.Operation.ZoomOut;
-                OnRequestViewOperation(new ViewOperationEventArgs(op));
-                return;
-            }
+            //if (BackgroundPreviewViewModel != null && 
+            //    BackgroundPreviewViewModel.CanNavigateBackground)
+            //{
+            //    var op = ViewOperationEventArgs.Operation.ZoomOut;
+            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
+            //    return;
+            //}
 
             CurrentSpaceViewModel.ZoomOutInternal();
             ZoomOutCommand.RaiseCanExecuteChanged();
@@ -2214,12 +2214,12 @@ namespace Dynamo.ViewModels
 
         private void FitView(object parameter)
         {
-            if (BackgroundPreviewViewModel.CanNavigateBackground)
-            {
-                var op = ViewOperationEventArgs.Operation.FitView;
-                OnRequestViewOperation(new ViewOperationEventArgs(op));
-                return;
-            }
+            //if (BackgroundPreviewViewModel.CanNavigateBackground)
+            //{
+            //    var op = ViewOperationEventArgs.Operation.FitView;
+            //    OnRequestViewOperation(new ViewOperationEventArgs(op));
+            //    return;
+            //}
 
             CurrentSpaceViewModel.FitViewInternal();
         }
@@ -2295,32 +2295,35 @@ namespace Dynamo.ViewModels
         {
             return true;
         }
+        /// <summary>
+        /// 导出STL
+        /// </summary>
+        /// <param name="parameter"></param>
+        //private void ExportToSTL(object parameter)
+        //{
+        //    FileDialog _fileDialog = null ?? new SaveFileDialog()
+        //    {
+        //        AddExtension = true,
+        //        DefaultExt = ".stl",
+        //        FileName = Resources.FileDialogDefaultSTLModelName,
+        //        Filter = string.Format(Resources.FileDialogSTLModels,"*.stl"),
+        //        Title = Resources.SaveModelToSTLDialogTitle,
+        //    };
 
-        private void ExportToSTL(object parameter)
-        {
-            FileDialog _fileDialog = null ?? new SaveFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".stl",
-                FileName = Resources.FileDialogDefaultSTLModelName,
-                Filter = string.Format(Resources.FileDialogSTLModels,"*.stl"),
-                Title = Resources.SaveModelToSTLDialogTitle,
-            };
+        //    // if you've got the current space path, use it as the inital dir
+        //    if (!string.IsNullOrEmpty(model.CurrentWorkspace.FileName))
+        //    {
+        //        var fi = new FileInfo(model.CurrentWorkspace.FileName);
+        //        _fileDialog.InitialDirectory = fi.DirectoryName;
+        //    }
 
-            // if you've got the current space path, use it as the inital dir
-            if (!string.IsNullOrEmpty(model.CurrentWorkspace.FileName))
-            {
-                var fi = new FileInfo(model.CurrentWorkspace.FileName);
-                _fileDialog.InitialDirectory = fi.DirectoryName;
-            }
+        //    if (_fileDialog.ShowDialog() == DialogResult.OK)
+        //    {
+        //        BackgroundPreviewViewModel.ExportToSTL(_fileDialog.FileName, HomeSpace.Name);
 
-            if (_fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                BackgroundPreviewViewModel.ExportToSTL(_fileDialog.FileName, HomeSpace.Name);
-
-                Dynamo.Logging.Analytics.TrackCommandEvent("ExportToSTL");
-            }
-        }
+        //        Dynamo.Logging.Analytics.TrackCommandEvent("ExportToSTL");
+        //    }
+        //}
 
         internal bool CanExportToSTL(object parameter)
         {
@@ -2434,7 +2437,7 @@ namespace Dynamo.ViewModels
             if (shutdownParams.CloseDynamoView)
                 OnRequestClose(this, EventArgs.Empty);
 
-            BackgroundPreviewViewModel.Dispose();
+            //BackgroundPreviewViewModel.Dispose();
 
             model.ShutDown(shutdownParams.ShutdownHost);
             if (shutdownParams.ShutdownHost)

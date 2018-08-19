@@ -386,7 +386,7 @@ namespace Dynamo.UI.Controls
                     {
                         var tree = new WatchTree
                         {
-                            DataContext = new WatchViewModel(nodeViewModel.DynamoViewModel.BackgroundPreviewViewModel.AddLabelForPath)
+                            //DataContext = new WatchViewModel(nodeViewModel.DynamoViewModel.BackgroundPreviewViewModel.AddLabelForPath)
                         };
                         tree.treeView1.ItemContainerGenerator.StatusChanged += WatchContainer_StatusChanged;
                         largeContentGrid.Children.Add(tree);

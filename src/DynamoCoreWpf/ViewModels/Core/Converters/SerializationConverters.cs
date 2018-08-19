@@ -35,8 +35,8 @@ namespace Dynamo.Wpf.ViewModels.Core.Converters
             writer.WritePropertyName("Dynamo");
             serializer.Serialize(writer, workspaceView.DynamoPreferences);
 
-            writer.WritePropertyName("Camera");
-            serializer.Serialize(writer, workspaceView.Camera);
+            //writer.WritePropertyName("Camera");
+            //serializer.Serialize(writer, workspaceView.Camera);
 
             writer.WritePropertyName("NodeViews");
             writer.WriteStartArray();

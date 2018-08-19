@@ -132,8 +132,8 @@ namespace Dynamo.Tests
             this.ViewModel = DynamoViewModel.Start(
                 new DynamoViewModel.StartConfiguration()
                 {
-                    DynamoModel = model,
-                    Watch3DViewModel = new DefaultWatch3DViewModel(null, watch3DViewParams)
+                    DynamoModel = model/*,*/
+                    //Watch3DViewModel = new DefaultWatch3DViewModel(null, watch3DViewParams)
                 });
 
             this.ViewModel.RequestUserSaveWorkflow += RequestUserSaveWorkflow;

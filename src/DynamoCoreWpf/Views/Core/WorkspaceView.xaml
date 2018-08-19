@@ -218,7 +218,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
 
-            <StackPanel Name="statusBarPanel"
+            <!--<StackPanel Name="statusBarPanel"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -228,7 +228,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}"
                              Converter="{StaticResource BooleanToVisibilityConverter}"/>
                 </StackPanel.Visibility>
-                <!--显示几何体视图-->
+                --><!--显示几何体视图--><!--
                 <ui:ImageCheckBox Width="56"
                               Height="30"
                               Margin="4,4,0,4"
@@ -240,7 +240,7 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
                     </ui:ImageCheckBox.IsChecked>
                 </ui:ImageCheckBox>
-                <!--显示节点按钮-->
+                --><!--显示节点按钮--><!--
                 <ui:ImageCheckBox Width="55"
                               Height="30"
                               Margin="0,4,0,4"
@@ -253,7 +253,7 @@
                              Converter="{StaticResource InverseBooleanConverter}" />
                     </ui:ImageCheckBox.IsChecked>
                 </ui:ImageCheckBox>
-            </StackPanel>
+            </StackPanel>-->
             <!--缩放以适应-->
             <ui:ImageButton Width="30"
                             Height="28"

@@ -1093,7 +1093,7 @@ namespace DynamoCoreWpfTests
                 X = workspaceView.X;
                 Y = workspaceView.Y;
                 Zoom = workspaceView.Zoom;
-                Camera = workspaceView.Camera;
+                //Camera = workspaceView.Camera;
             }
         }
     }
