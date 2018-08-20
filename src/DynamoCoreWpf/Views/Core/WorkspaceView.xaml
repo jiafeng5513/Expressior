@@ -211,7 +211,7 @@
                        StrokeThickness="1"
                        IsHitTestVisible="False" />
         </Canvas>
-
+        <!--右上角按钮区域-->
         <StackPanel Name="viewControlPanel"
                     Orientation="Vertical"
                     Margin="4"
@@ -250,46 +250,6 @@
                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
                 </ui:ImageRepeatButton.Command>
             </ui:ImageRepeatButton>
-
-            <ui:ImageCheckBox Width="30"
-                              Height="30"
-                              HorizontalAlignment="Right"
-                              StateImage="/DynamoCoreWpf;component/UI/Images/Canvas/canvas-button-pan-states.png"
-                              CheckImage="/DynamoCoreWpf;component/UI/Images/Canvas/canvas-button-pan-check.png"
-                              ToolTip="{x:Static p:Resources.InCanvasPanButtonToolTip}">
-                <ui:ImageCheckBox.Command>
-                    <Binding Path="DataContext.BackgroundPreviewViewModel.TogglePanCommand"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
-                </ui:ImageCheckBox.Command>
-                <ui:ImageCheckBox.IsChecked>
-                    <Binding Path="DataContext.BackgroundPreviewViewModel.IsPanning"
-                             Mode="OneWay"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
-                </ui:ImageCheckBox.IsChecked>
-            </ui:ImageCheckBox>
-
-            <ui:ImageCheckBox Width="30"
-                              Height="30"
-                              HorizontalAlignment="Right"
-                              StateImage="/DynamoCoreWpf;component/UI/Images/Canvas/canvas-button-orbit-states.png"
-                              CheckImage="/DynamoCoreWpf;component/UI/Images/Canvas/canvas-button-orbit-check.png"
-                              ToolTip="{x:Static p:Resources.InCanvasOrbitButtonToolTip}">
-                <ui:ImageCheckBox.Command>
-                    <Binding Path="DataContext.BackgroundPreviewViewModel.ToggleOrbitCommand"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
-                </ui:ImageCheckBox.Command>
-                <ui:ImageCheckBox.IsChecked>
-                    <Binding Path="DataContext.BackgroundPreviewViewModel.IsOrbiting"
-                             Mode="OneWay"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
-                </ui:ImageCheckBox.IsChecked>
-                <ui:ImageCheckBox.Visibility>
-                    <Binding Path="DataContext.BackgroundPreviewViewModel.CanNavigateBackground"
-                             Converter="{StaticResource BooleanToVisibilityConverter}"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}" />
-                </ui:ImageCheckBox.Visibility>
-            </ui:ImageCheckBox>
-
         </StackPanel>
 
         <Popup Name="InCanvasSearchBar"
