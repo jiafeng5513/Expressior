@@ -114,14 +114,14 @@ namespace Dynamo.ViewModels
         public DelegateCommand GoToWorkspaceCommand { get; set; }
         public DelegateCommand DeleteCommand { get; set; }
         public DelegateCommand AlignSelectedCommand { get; set; }
-        public DelegateCommand PostUIActivationCommand { get; set; }
-        public DelegateCommand ToggleFullscreenWatchShowingCommand { get; set; }
-        public DelegateCommand ToggleBackgroundGridVisibilityCommand { get; set; }
+        //public DelegateCommand PostUIActivationCommand { get; set; }
+        //public DelegateCommand ToggleFullscreenWatchShowingCommand { get; set; }
+        //public DelegateCommand ToggleBackgroundGridVisibilityCommand { get; set; }
         public DelegateCommand SelectAllCommand { get; set; }
         public DelegateCommand SaveImageCommand { get; set; }
         public DelegateCommand ShowSaveImageDialogAndSaveResultCommand { get; set; }
         public DelegateCommand ToggleConsoleShowingCommand { get; set; }
-        public DelegateCommand ShowPackageManagerCommand { get; set; }
+        //public DelegateCommand ShowPackageManagerCommand { get; set; }
         public DelegateCommand ForceRunExpressionCommand { get; set; }
         public DelegateCommand MutateTestDelegateCommand { get; set; }
         public DelegateCommand DisplayFunctionCommand { get; set; }
@@ -135,7 +135,7 @@ namespace Dynamo.ViewModels
         public DelegateCommand ShowHideConnectorsCommand { get; set; }
         public DelegateCommand SelectNeighborsCommand { get; set; }
         public DelegateCommand ClearLogCommand { get; set; }
-        public DelegateCommand SubmitCommand { get; set; }
+        //public DelegateCommand SubmitCommand { get; set; }
         public DelegateCommand PublishNewPackageCommand { get; set; }
         public DelegateCommand PublishCurrentWorkspaceCommand { get; set; }
         public DelegateCommand PublishSelectedNodesCommand { get; set; }
@@ -149,7 +149,7 @@ namespace Dynamo.ViewModels
         public DelegateCommand ShowAboutWindowCommand { get; set; }
         public DelegateCommand SetNumberFormatCommand { get; set; }
         public DelegateCommand OpenRecentCommand { get; set; }
-        public DelegateCommand CheckForLatestRenderCommand { get; set; }
+        //public DelegateCommand CheckForLatestRenderCommand { get; set; }
         public DelegateCommand DumpLibraryToXmlCommand { get; set; }
         public DelegateCommand ShowGalleryCommand { get; set; }
         public DelegateCommand CloseGalleryCommand { get; set; }

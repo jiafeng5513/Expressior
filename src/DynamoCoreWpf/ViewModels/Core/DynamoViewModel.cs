@@ -457,19 +457,6 @@ namespace Dynamo.ViewModels
             get { return watch3DViewModels; }
         }
 
-        /// <summary>
-        /// A <see cref="DefaultWatch3DViewModel"/> which provides the
-        /// geometry for the primary background 3d preview.
-        /// </summary>
-        //public DefaultWatch3DViewModel BackgroundPreviewViewModel { get; private set; }
-
-        /// <summary>
-        ///  «∑Òº§ªÓ±≥æ∞3D‘§¿¿
-        /// </summary>
-        public bool BackgroundPreviewActive
-        {
-            get { return /*BackgroundPreviewViewModel.Active*/false; }
-        }
         
         #endregion
 
@@ -495,16 +482,6 @@ namespace Dynamo.ViewModels
 
             if(startConfiguration.WatchHandler == null)
                 startConfiguration.WatchHandler = new DefaultWatchHandler(startConfiguration.DynamoModel.PreferenceSettings);
-
-            //if (startConfiguration.Watch3DViewModel == null)
-            //{
-            //    startConfiguration.Watch3DViewModel = 
-            //        HelixWatch3DViewModel.TryCreateHelixWatch3DViewModel(
-            //            null,
-            //            new Watch3DViewModelStartupParams(startConfiguration.DynamoModel), 
-            //            startConfiguration.DynamoModel.Logger);
-            //}
-
             return new DynamoViewModel(startConfiguration);
         }
 
@@ -563,10 +540,6 @@ namespace Dynamo.ViewModels
             RenderPackageFactoryViewModel = new RenderPackageFactoryViewModel(Model.PreferenceSettings);
             RenderPackageFactoryViewModel.PropertyChanged += RenderPackageFactoryViewModel_PropertyChanged;
 
-            //BackgroundPreviewViewModel = startConfiguration.Watch3DViewModel;
-            //BackgroundPreviewViewModel.PropertyChanged += Watch3DViewModelPropertyChanged;
-            //WatchHandler.RequestSelectGeometry += BackgroundPreviewViewModel.AddLabelForPath;
-           // RegisterWatch3DViewModel(BackgroundPreviewViewModel, RenderPackageFactoryViewModel.Factory);
             model.ComputeModelDeserialized += model_ComputeModelDeserialized;
         }
 
@@ -602,23 +575,6 @@ namespace Dynamo.ViewModels
                     return;
             }
         }
-
-        //void Watch3DViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    switch (e.PropertyName)
-        //    {
-        //        case "Active":
-        //            RaisePropertyChanged("BackgroundPreviewActive");                 
-        //            break;
-        //        case "CanNavigateBackground":
-        //            if (!BackgroundPreviewViewModel.CanNavigateBackground)
-        //            {
-        //                // Return focus back to Dynamo View
-        //                OnRequestReturnFocusToView();
-        //            }
-        //            break;
-        //    }
-        //}
 
         internal event EventHandler NodeViewReady;
         internal void OnNodeViewReady(object nodeView)
@@ -906,19 +862,6 @@ namespace Dynamo.ViewModels
             }
         }
 
-        // TODO(Sriram): This method is currently not used, but it should really 
-        // be. It watches property change notifications coming from the current 
-        // WorkspaceModel, and then enables/disables 'set timer' button on the UI.
-        // 
-        //void CurrentWorkspace_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    switch (e.PropertyName)
-        //    {
-        //        case "RunEnabled":
-        //            RaisePropertyChanged(e.PropertyName);
-        //            break;
-        //    }
-        //}
 
         private void CleanUp()
         {
@@ -1485,15 +1428,6 @@ namespace Dynamo.ViewModels
             return false;
         }
 
-        internal bool CanVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
-
-        internal bool CanUpstreamVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
 
         internal void ShowPackageManagerSearch(object parameters)
         {
@@ -1718,28 +1652,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        //public void ToggleFullscreenWatchShowing(object parameter)
-        //{
-        //    if (BackgroundPreviewViewModel == null) return;
-        //    BackgroundPreviewViewModel.Active = !BackgroundPreviewViewModel.Active;
-        //}
-
-        internal bool CanToggleFullscreenWatchShowing(object parameter)
-        {
-            return true;
-        }
-
-        //public void ToggleBackgroundGridVisibility(object parameter)
-        //{
-        //    if (BackgroundPreviewViewModel == null || !BackgroundPreviewViewModel.Active) return;
-
-        //    BackgroundPreviewViewModel.IsGridVisible = !BackgroundPreviewViewModel.IsGridVisible;
-        //}
-
-        internal bool CanToggleBackgroundGridVisibility(object parameter)
-        {
-            return true;
-        }
 
         public void GoToWorkspace(object parameter)
         {
@@ -1906,10 +1818,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        internal bool CanClear(object parameter)
-        {
-            return true;
-        }
 
         internal void Delete(object parameters)
         {
@@ -2261,10 +2169,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        internal bool CanShowInfoBubble(object parameter)
-        {
-            return true;
-        }
 
         private bool CanShowAboutWindow(object obj)
         {

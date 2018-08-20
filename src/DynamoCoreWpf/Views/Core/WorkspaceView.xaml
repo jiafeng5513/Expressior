@@ -270,9 +270,10 @@
             </Popup.Resources>
             <ItemsControl Style="{StaticResource WorkspaceContextMenuStyle}">
                 <ItemsControl.Items>
+                    <!--Lacing-->
                     <controls:ParentMenuItem x:Name="WorkspaceLacingMenu"
                           Header="{x:Static p:Resources.ContextMenuLacing}">
-
+                        <!--Shortest-->
                         <MenuItem IsCheckable="True"
                               Command="{Binding Path=SetArgumentLacingCommand}"
                               CommandParameter="Shortest"
@@ -284,7 +285,7 @@
                                      ConverterParameter="Shortest" />
                             </MenuItem.IsChecked>
                         </MenuItem>
-
+                        <!--Longest-->
                         <MenuItem IsCheckable="True"
                               Command="{Binding Path=SetArgumentLacingCommand}"
                               CommandParameter="Longest"
@@ -296,7 +297,7 @@
                                      ConverterParameter="Longest" />
                             </MenuItem.IsChecked>
                         </MenuItem>
-
+                        <!--CrossProduct-->
                         <MenuItem IsCheckable="True"
                               Command="{Binding Path=SetArgumentLacingCommand}"
                               CommandParameter="CrossProduct"
@@ -310,30 +311,8 @@
                         </MenuItem>
 
                     </controls:ParentMenuItem>
-                    <MenuItem IsEnabled="{Binding Path=IsGeometryOperationEnabled}"
-                          Header="{x:Static  p:Resources.ContextMenuShowAllGeometry}"
-                          Command="{Binding Path=ShowHideAllGeometryPreviewCommand}"
-                          CommandParameter="true"
-                          Visibility="{Binding Path=AnyNodeVisible, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
 
-                    <MenuItem IsEnabled="{Binding Path=IsGeometryOperationEnabled}"
-                          Header="{x:Static p:Resources.ContextMenuHideAllGeometry}"
-                          Command="{Binding Path=ShowHideAllGeometryPreviewCommand}"
-                          CommandParameter="false"
-                          Visibility="{Binding Path=AnyNodeVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-
-                    <MenuItem IsEnabled="{Binding Path=IsGeometryOperationEnabled}"
-                          Header="{x:Static  p:Resources.ContextMenuShowUpstreamPreview}"
-                          Command="{Binding Path=ShowHideAllUpstreamPreviewCommand}"
-                          CommandParameter="true"
-                          Visibility="{Binding Path=AnyNodeUpstreamVisible, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
-
-                    <MenuItem IsEnabled="{Binding Path=IsGeometryOperationEnabled}"
-                          Header="{x:Static p:Resources.ContextMenuHideUpstreamPreview}"
-                          Command="{Binding Path=ShowHideAllUpstreamPreviewCommand}"
-                          CommandParameter="false"
-                          Visibility="{Binding Path=AnyNodeUpstreamVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-
+                    <!--对齐-->
                     <controls:ParentMenuItem  Header="{x:Static p:Resources.DynamoViewEditMenuAlignSelection}" x:Name="Align">
                         <MenuItem  Header="{x:Static p:Resources.DynamoViewEditMenuAlignXAverage}"
                                Command="{Binding AlignSelectedCommand}"
@@ -360,15 +339,14 @@
                                Command="{Binding AlignSelectedCommand}"
                                CommandParameter="HorizontalDistribute" />
                     </controls:ParentMenuItem>
-
+                    <!--创建自定义节点-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodesFromSelection}"
                            Command="{Binding NodeFromSelectionCommand}" CommandTarget="{Binding ElementName=_this}" />
-
-
+                    <!--节点转换为代码-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuNodeToCode}"
                            Command="{Binding NodeToCodeCommand}"
                            Visibility="{Binding Path=CanRunNodeToCode, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-
+                    <!--创建组-->
                     <MenuItem  Header="{x:Static p:Resources.ContextCreateGroupFromSelection}"
                            Command="{Binding DynamoViewModel.AddAnnotationCommand}" />
 
@@ -379,19 +357,22 @@
 
                     <Separator Visibility="{Binding Path=CanCopyOrPaste, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
 
+                    <!--复制-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuCopy}"
                            Visibility="{Binding Path=CanCopy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                            Command="{Binding CopyCommand}" />
-
+                    <!--粘贴-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuPaste}"
                            Visibility="{Binding Path=CanPaste, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                            Command="{Binding PasteCommand}" />
 
                     <Separator Visibility="{Binding Path=IsHomeSpace, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
 
+                    <!--编辑自定义节点属性-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuEditCustomNodeProperty}"
                            Click="WorkspacePropertyEditClick"
                            Visibility="{Binding Path=IsHomeSpace, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
+                    <!--发布自定义节点-->
                     <MenuItem  Header="{x:Static p:Resources.ContextMenuPublishCustomNode}"
                            Name="Publish"
                            Command="{Binding DynamoViewModel.PublishCurrentWorkspaceCommand }"
@@ -399,17 +380,7 @@
 
                     <Separator />
 
-                    <MenuItem Header="{x:Static p:Resources.ContextMenuGeometryView}"
-                          Command="{Binding DynamoViewModel.BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}"
-                          Visibility="{Binding DynamoViewModel.BackgroundPreviewViewModel.Active, 
-                          Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
-                    <MenuItem Header="{x:Static p:Resources.ContextMenuPan}"
-                          Command="{Binding DynamoViewModel.BackgroundPreviewViewModel.TogglePanCommand}">
-                        <MenuItem.IsChecked>
-                            <Binding Path="DynamoViewModel.BackgroundPreviewViewModel.IsPanning"
-                                 Mode="OneWay" />
-                        </MenuItem.IsChecked>
-                    </MenuItem>
+                    <!--适应屏幕-->
                     <MenuItem Header="{x:Static p:Resources.ContextMenuFitToScreen}"
                           Command="{Binding DynamoViewModel.FitViewCommand}" />
                 </ItemsControl.Items>

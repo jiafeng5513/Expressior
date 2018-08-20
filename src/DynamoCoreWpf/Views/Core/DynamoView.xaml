@@ -542,7 +542,7 @@
                                       Command="{Binding ShowHideConnectorsCommand}">
                             </MenuItem>
                         </MenuItem>
-                        <!--背景3D预览-->
+                        <!--背景3D预览--><!--
                         <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenu3DPreview}"
                                   Name="background3dMenu"
                                   Focusable="False">
@@ -571,7 +571,7 @@
                                       InputGestureText="Ctrl + B"
                                       Focusable="False"
                                       Command="{Binding Path=BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}" />
-                        </MenuItem>
+                        </MenuItem>-->
                     </MenuItem>
                     <!--Package-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
