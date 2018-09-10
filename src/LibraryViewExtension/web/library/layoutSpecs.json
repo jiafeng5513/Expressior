@@ -11,7 +11,7 @@
           "text": "List",
           "iconUrl": "./dist/resources/Category.List.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "Inspect",
@@ -103,7 +103,7 @@
                   "path": "DSCoreNodes.DSCore.List.UniqueItems"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Modify",
@@ -195,7 +195,7 @@
                   "path": "DSCoreNodes.DSCore.List.NormalizeDepth"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Organize",
@@ -239,7 +239,7 @@
                   "path": "DSCoreNodes.DSCore.List.SortByKey"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Generate",
@@ -274,7 +274,7 @@
                   "path": "DSCoreNodes.DSCore.List.Cycle"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Match",
@@ -297,7 +297,7 @@
                   "path": "Core.List.List.Combine"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -305,7 +305,7 @@
           "text": "Input",
           "iconUrl": "./dist/resources/Category.Input.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "DateTime",
@@ -374,7 +374,7 @@
                   "iconUrl": "./dist/resources/DSCore.DayOfWeek.png"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Location",
@@ -394,7 +394,7 @@
                   "path": "DynamoUnits.DynamoUnits.Location.ByLatitudeAndLongitude"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Basic",
@@ -426,7 +426,7 @@
                   "path": "Core.Input.Output"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "TimeSpan",
@@ -482,7 +482,7 @@
                   "path": "DSCoreNodes.DSCore.TimeSpan.TotalMilliseconds"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Object",
@@ -499,7 +499,7 @@
                   "path": "DSCoreNodes.DSCore.Object.Type"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Thread",
@@ -510,7 +510,7 @@
                   "path": "DSCoreNodes.DSCore.Thread"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -518,7 +518,7 @@
           "text": "Math",
           "iconUrl": "./dist/resources/Category.Math.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "Functions",
@@ -640,7 +640,7 @@
                   "path": "DSCoreNodes.DSCore.Math.EvaluateFormula"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Units",
@@ -663,7 +663,7 @@
                   "path": "DSCoreNodes.DSCore.Math.DegreesToRadians"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Operators",
@@ -713,7 +713,7 @@
                   "path": "Operators.Not"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Logic",
@@ -730,7 +730,7 @@
                   "path": "Core.Logic.If"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -738,7 +738,7 @@
           "text": "Script",
           "iconUrl": "./dist/resources/Category.Script.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "Evaluate",
@@ -752,7 +752,7 @@
                   "path": "Core.Evaluate.Function.Compose"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Control Flow",
@@ -769,7 +769,7 @@
                   "path": "DSCoreNodes.DSCore.Math.Xor"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Editor",
@@ -786,7 +786,7 @@
                   "path": "Core.Input.Code Block"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -796,7 +796,7 @@
           "elementType": "category",
           "include": [
             {
-              "path":  "Analysis.Analysis.Label"
+              "path": "Analysis.Analysis.Label"
             }
           ],
           "childElements": [
@@ -845,7 +845,7 @@
                   "path": "Core.Color.Color Palette"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Color Range",
@@ -862,7 +862,7 @@
                   "path": "DSCoreNodes.DSCore.ColorRange.GetColorAtParameter"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Watch",
@@ -879,7 +879,7 @@
                   "path": "Core.View.Watch 3D"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -887,7 +887,7 @@
           "text": "ImportExport",
           "iconUrl": "./dist/resources/Category.ImportExport.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "CAD",
@@ -910,7 +910,7 @@
                   "path": "Dynamo.Translation.Models.Select CAD Objects"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "File",
@@ -968,7 +968,7 @@
                 {
                   "path": "DSCoreNodes.DSCore.IO.File.AppendText"
                 },
-								{
+                {
                   "path": "DSCoreNodes.DSCore.IO.File.MoveDirectory"
                 },
                 {
@@ -984,7 +984,7 @@
                   "path": "DSCoreNodes.DSCore.IO.File.DirectoryExists"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Image",
@@ -1007,7 +1007,7 @@
                   "path": "DSCoreNodes.DSCore.IO.Image.WriteToFile"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Data",
@@ -1027,7 +1027,7 @@
                   "path": "DSOffice.DSOffice.Data.ExportCSV"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -1035,7 +1035,7 @@
           "text": "String",
           "iconUrl": "./dist/resources/Category.String.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "Inspect",
@@ -1067,7 +1067,7 @@
                   "path": "DSCoreNodes.DSCore.String.StartsWith"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Modify",
@@ -1120,7 +1120,7 @@
                   "path": "DSCoreNodes.DSCore.String.ChangeCase"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Generate",
@@ -1140,7 +1140,7 @@
                   "path": "DSCoreNodes.DSCore.String.Join"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         },
@@ -1148,7 +1148,7 @@
           "text": "ImageProc",
           "iconUrl": "./dist/resources/Category.ImageProc.svg",
           "elementType": "category",
-          "include": [ ],
+          "include": [],
           "childElements": [
             {
               "text": "Processor",
@@ -1166,29 +1166,24 @@
                 },
                 {
                   "path": "ImageProcess.ImageProc.Processor.ClearBorder"
-                }
-                ,
+                },
                 {
                   "path": "ImageProcess.ImageProc.Processor.Erode"
-                }
-                ,
+                },
                 {
                   "path": "ImageProcess.ImageProc.Processor.Dilate"
-                }
-                ,
+                },
                 {
                   "path": "ImageProcess.ImageProc.Processor.Open"
-                }
-                ,
+                },
                 {
                   "path": "ImageProcess.ImageProc.Processor.Close"
-                }
-                ,
+                },
                 {
                   "path": "ImageProcess.ImageProc.Processor.MaxRegion"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             },
             {
               "text": "Converter",
@@ -1202,16 +1197,35 @@
                   "path": "ImageProcess.ImageProc.Converter.MatToBitmap"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
+            }
+          ]
+        },
+        {
+          "text": "Deep Learning",
+          "iconUrl": "./dist/resources/Category.DicomTools.svg",
+          "elementType": "category",
+          "include": [],
+          "childElements": [
+            {
+              "text": "Example",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "DeepLearning.DeepLearning.Example.Predict"
+                }
+              ],
+              "childElements": []
             }
           ]
         },
         {
           "text": "Dicom Tools",
-          "iconUrl":"./dist/resources/Category.DicomTools.svg",
-          "elementType":"category",
-          "include":[],
-          "childElements":[
+          "iconUrl": "./dist/resources/Category.DicomTools.svg",
+          "elementType": "category",
+          "include": [],
+          "childElements": [
             {
               "text": "Dicom Reader",
               "iconUrl": "",
@@ -1221,7 +1235,7 @@
                   "path": "DicomTools.DicomTools.DicomReader.ReadDicomFromPath"
                 }
               ],
-              "childElements": [ ]
+              "childElements": []
             }
           ]
         }
