@@ -1,5 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using Emgu.Models;
 using Emgu.TF;
 using Buffer = Emgu.TF.Buffer;
 
@@ -7,28 +14,45 @@ namespace DeepLearning
 {
     class ModelDecoder
     {
-        //private FileDownloadManager _downloadManager;
+        private FileDownloadManager _downloadManager;
         private Graph _graph = null;
         private Status _status = null;
         private String _inputName = null;
-        private String _modelFile = null;
-        private String _labelFile = null;
         private String _outputName = null;
 
         public ModelDecoder(Status status = null)
         {
             _status = status;
+            _downloadManager = new FileDownloadManager();
+
+            _downloadManager.OnDownloadProgressChanged += onDownloadProgressChanged;
+            _downloadManager.OnDownloadCompleted += onDownloadCompleted;
         }
 
-        //进行手动初始化
-        public void Init(String[] modelFiles = null, String inputName = null, String outputName = null)
+        private void onDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            _inputName = inputName;
-            _outputName = outputName;
-            String[] fileNames = modelFiles;
+            ImportGraph();
+            if (OnDownloadCompleted != null)
+            {
+                OnDownloadCompleted(sender, e);
+            }
+        }
 
-            _modelFile = modelFiles[0];
-            _labelFile = modelFiles[1];
+        private void onDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (OnDownloadProgressChanged != null)
+                OnDownloadProgressChanged(sender, e);
+        }
+
+        public event System.Net.DownloadProgressChangedEventHandler OnDownloadProgressChanged;
+        public event System.ComponentModel.AsyncCompletedEventHandler OnDownloadCompleted;
+
+        //进行手动初始化
+        public void Init(String[] modelFiles = null,  String inputName = null, String outputName = null)
+        {
+            _inputName =  inputName;
+            _outputName = outputName;
+            String[] fileNames =  modelFiles;
 
             if (_graph != null)
                 _graph.Dispose();
@@ -41,12 +65,45 @@ namespace DeepLearning
 
         }
 
+        //进行下载
+        public void Init(String[] modelFiles = null, String downloadUrl = null, String inputName = null, String outputName = null)
+        {
+            _inputName = inputName == null ? "input" : inputName;
+            _outputName = outputName == null ? "output" : outputName;
+
+            _downloadManager.Clear();
+            String url = downloadUrl == null ? "https://github.com/emgucv/models/raw/master/inception/" : downloadUrl;
+            String[] fileNames = modelFiles == null ? new string[] { "tensorflow_inception_graph.pb", "imagenet_comp_graph_label_strings.txt" } : modelFiles;
+            for (int i = 0; i < fileNames.Length; i++)
+                _downloadManager.AddFile(url + fileNames[i]);
+            _downloadManager.Download();
+        }
+
+        public bool Imported
+        {
+            get
+            {
+                return _graph != null;
+            }
+        }
+
+        public void ImportGraph()
+        {
+            if (_graph != null)
+                _graph.Dispose();
+            _graph = new Graph();
+            String localFileName = _downloadManager.Files[0].LocalFile;
+            byte[] model = File.ReadAllBytes(localFileName);
+            Buffer modelBuffer = Buffer.FromString(model);
+            using (ImportGraphDefOptions options = new ImportGraphDefOptions())
+                _graph.ImportGraphDef(modelBuffer, options, _status);
+        }
 
         public String[] Labels
         {
             get
             {
-                return File.ReadAllLines(_labelFile);
+                return File.ReadAllLines(_downloadManager.Files[1].LocalFile);
             }
         }
 
