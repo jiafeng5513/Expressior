@@ -1,0 +1,273 @@
+{
+  "Uuid": "a5b9bd03-a337-47cf-89d6-aed3c7234986",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "神经网路预测",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\optimized_graph.pb",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\optimized_graph.pb",
+      "NodeType": "ExtensionNode",
+      "Id": "12f5ff07d14141eda66036df8482f5b9",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "25c0f95587d14a43bbb28b09da49ab8b",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\output_labels.txt",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\output_labels.txt",
+      "NodeType": "ExtensionNode",
+      "Id": "935e1c6527a24a50ab98f280fc4fe226",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "44fe687680f646ecad8baee4ad46aa32",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\flower.png",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\flower.png",
+      "NodeType": "ExtensionNode",
+      "Id": "76b2f26ea24f4a829f64f9358b2c4349",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7d8a31f04efa4f16a86bea8d899236d6",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DeepLearning.Example.Predict@string,string,string",
+      "Id": "7c3a80e08e3947ba9d7f35c6fd5ba227",
+      "Inputs": [
+        {
+          "Id": "0c1d442f85fa45dca672a94989a3ccbb",
+          "Name": "ModelFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4c64a350370645fd8a4c3c6e59886c6c",
+          "Name": "LabelFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fc19b6d6bb5648668e36f672dd7985a5",
+          "Name": "inputFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c5183ca59aef43f2b29c5674ef49316d",
+          "Name": "string",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Example.Predict (ModelFile: string = \" \", LabelFile: string = \" \", inputFile: string = \" \"): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "05774e7695434e39b848c67b7352420c",
+      "Inputs": [
+        {
+          "Id": "77ee538e11504a4fbab2c86cf1d73f54",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "49b5b643e6fa4e41a680d0fde1ce2602",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "sdf \r\n",
+      "Id": "6058392da2b84b9d928f2ce823376bd0",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2d4d390860d94ab4bc743194b669aabc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "25c0f95587d14a43bbb28b09da49ab8b",
+      "End": "0c1d442f85fa45dca672a94989a3ccbb",
+      "Id": "4f80457f3c2b4dcd899b7d811362ffc0"
+    },
+    {
+      "Start": "44fe687680f646ecad8baee4ad46aa32",
+      "End": "4c64a350370645fd8a4c3c6e59886c6c",
+      "Id": "3c0d1c2d24de425ba889d7f19eec9588"
+    },
+    {
+      "Start": "7d8a31f04efa4f16a86bea8d899236d6",
+      "End": "fc19b6d6bb5648668e36f672dd7985a5",
+      "Id": "20781fb8801a4e39b99b41e817e08301"
+    },
+    {
+      "Start": "2d4d390860d94ab4bc743194b669aabc",
+      "End": "77ee538e11504a4fbab2c86cf1d73f54",
+      "Id": "c361f7cb075f44a29828af18c82f44ff"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.0.5801",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "12f5ff07d14141eda66036df8482f5b9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 155.0,
+        "Y": 112.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "935e1c6527a24a50ab98f280fc4fe226",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 175.0,
+        "Y": 221.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "76b2f26ea24f4a829f64f9358b2c4349",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 146.0,
+        "Y": 394.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Example.Predict",
+        "Id": "7c3a80e08e3947ba9d7f35c6fd5ba227",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 598.0,
+        "Y": 217.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "05774e7695434e39b848c67b7352420c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 864.0,
+        "Y": 407.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "String",
+        "Id": "6058392da2b84b9d928f2ce823376bd0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 641.0,
+        "Y": 409.5
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}
