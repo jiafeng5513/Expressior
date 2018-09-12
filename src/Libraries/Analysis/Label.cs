@@ -6,6 +6,7 @@ using Autodesk.DesignScript.Runtime;
 
 namespace Analysis
 {
+    [IsVisibleInDynamoLibrary(false)]
     public class Label : IGraphicItem
     {
         private string label;
@@ -35,7 +36,11 @@ namespace Analysis
 
             return new Label(point,label);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="parameters"></param>
         [IsVisibleInDynamoLibrary(false)]
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {

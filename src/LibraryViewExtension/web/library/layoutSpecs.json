@@ -106,6 +106,17 @@
               "childElements": []
             },
             {
+              "text": "Create",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "Core.List.List Create"
+                }
+              ],
+              "childElements": []
+            },
+            {
               "text": "Modify",
               "iconUrl": "",
               "elementType": "group",
@@ -237,6 +248,9 @@
                 },
                 {
                   "path": "DSCoreNodes.DSCore.List.SortByKey"
+                },
+                {
+                  "path": "BuiltIn.List.Rank"
                 }
               ],
               "childElements": []
@@ -298,9 +312,43 @@
                 }
               ],
               "childElements": []
+            },
+            {
+              "text": "Dictionary",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.ByKeysValues"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.Components"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.Keys"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.Values"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.Count"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.SetValueAtKeys"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.RemoveKeys"
+                },
+                {
+                  "path": "DesignScriptBuiltin.DesignScript.Builtin.Dictionary.ValueAtKey"
+                }
+              ],
+              "childElements": []
             }
           ]
         },
+
+
         {
           "text": "Input",
           "iconUrl": "./dist/resources/Category.Input.svg",
@@ -731,7 +779,19 @@
                 }
               ],
               "childElements": []
+            },
+            {
+              "text": "IComparable",
+              "iconUrl": "",
+              "elementType": "group",
+              "include": [
+                {
+                  "path": "DSCoreNodes.System.IComparable.CompareTo"
+                }
+              ],
+              "childElements": []
             }
+
           ]
         },
         {
@@ -746,10 +806,10 @@
               "elementType": "group",
               "include": [
                 {
-                  "path": "Core.Evaluate.Function.Apply"
+                  "path": "Core.Evaluate.Function Apply"
                 },
                 {
-                  "path": "Core.Evaluate.Function.Compose"
+                  "path": "Core.Evaluate.Function Compose"
                 }
               ],
               "childElements": []
@@ -890,30 +950,18 @@
           "include": [],
           "childElements": [
             {
-              "text": "CAD",
+              "text": "Web",
               "iconUrl": "",
               "elementType": "group",
               "include": [
                 {
-                  "path": "Dynamo.Translation.CAD.Import"
-                },
-                {
-                  "path": "Dynamo.Translation.CAD.Export"
-                },
-                {
-                  "path": "Dynamo.Translation.CAD.ConvertToGeometries"
-                },
-                {
-                  "path": "Dynamo.Translation.Models.Filter CAD Objects"
-                },
-                {
-                  "path": "Dynamo.Translation.Models.Select CAD Objects"
+                  "path": "Core.Web.Web Request"
                 }
               ],
               "childElements": []
             },
             {
-              "text": "File",
+              "text": "FileSystem",
               "iconUrl": "",
               "elementType": "group",
               "include": [
@@ -924,64 +972,76 @@
                   "path": "Core.Input.Directory Path"
                 },
                 {
-                  "path": "Core.File.File.FromPath"
+                  "path": "Core.File.File From Path"
                 },
                 {
-                  "path": "Core.File.DirectoryFromPath"
+                  "path": "Core.File.Directory From Path"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.CombinePath"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.CombinePath"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.FileExtension"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.CopyFile"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.ChangePathExtension"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.FileExists"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.DirectoryName"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.MoveFile"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.FileName"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.DeleteFile"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.FileHasExtension"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.FileExtension"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.ReadText"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.ChangePathExtension"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.Move"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.DirectoryName"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.Delete"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.FileName"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.Copy"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.FileHasExtension"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.Exists"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.ReadText"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.WriteText"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.Move"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.AppendText"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.Delete"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.MoveDirectory"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.Copy"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.CopyDirectory"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.Exists"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.DeleteDirectory"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.WriteText"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.GetDirectoryContents"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.AppendText"
                 },
                 {
-                  "path": "DSCoreNodes.DSCore.IO.File.DirectoryExists"
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.MoveDirectory"
+                },
+                {
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.CopyDirectory"
+                },
+                {
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.DeleteDirectory"
+                },
+                {
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.GetDirectoryContents"
+                },
+                {
+                  "path": "DSCoreNodes.DSCore.IO.FileSystem.DirectoryExists"
                 }
               ],
               "childElements": []
@@ -1242,18 +1302,15 @@
       ]
     },
     {
-      "text": "Example",
-      "iconUrl": "",
+      "text": "GUI Node Test",
+      "iconUrl": "./dist/resources/Category.UITest.svg",
       "elementType": "category",
       "include": [
-        {
-          "path": "ImageProcess.ImageProc.Converter.BitmapToMat"
-        },
         {
           "path": "Geometry.Geometry.MUL"
         }
       ],
-      "childElements": [ ]
+      "childElements": []
     },
     {
       "text": "Miscellaneous",

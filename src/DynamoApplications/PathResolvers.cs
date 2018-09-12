@@ -34,14 +34,15 @@ namespace Dynamo.Applications
                 "VMDataBridge.dll",
                 //"ProtoGeometry.dll",
                 "DSCoreNodes.dll",
-                "DSOffice.dll",
+                "DesignScriptBuiltin.dll",
+                //"DSOffice.dll",
                 "DSIronPython.dll",
                 "FunctionObject.ds",
                 "BuiltIn.ds",
-                "DynamoConversions.dll",
-                "DynamoUnits.dll",
+                //"DynamoConversions.dll",
+                //"DynamoUnits.dll",
                 //"Tessellation.dll",
-                "Analysis.dll",
+                //"Analysis.dll",
                 "ImageProcess.dll",//注意这个dll的名字
                 "DicomTools.dll",
                 "DeepLearning.dll"
@@ -100,9 +101,11 @@ namespace Dynamo.Applications
             preloadedLibraryPaths = new List<string>
             {
                 "VMDataBridge.dll",
-                "ProtoGeometry.dll",
+                //"ProtoGeometry.dll",
+                "DesignScriptBuiltin.dll",
                 "DSCoreNodes.dll",
-                "DSIronPython.dll",
+                "Analysis.dll",
+                //"DSIronPython.dll",
                 "FunctionObject.ds",
                 "BuiltIn.ds",
                 "DynamoConversions.dll",
