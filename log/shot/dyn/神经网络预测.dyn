@@ -1,0 +1,243 @@
+{
+  "Uuid": "a39a413b-ad60-4932-a75b-5fc2d84ff152",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "神经网络预测",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DeepLearning.Example.Predict@string,string,string",
+      "Id": "0ac7159ad62c4681980e81762ef23a1d",
+      "Inputs": [
+        {
+          "Id": "4fe0710e611742ff88f83747792fd10e",
+          "Name": "ModelFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b25da9b6744e4d51aff6d6043ebd0bbf",
+          "Name": "LabelFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f334fecca98f47ee8166d58987614a7a",
+          "Name": "inputFile",
+          "Description": "string\nDefault value : \" \"",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e6a55a3aacb345948eb3d2fa96e04fc2",
+          "Name": "string",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Example.Predict (ModelFile: string = \" \", LabelFile: string = \" \", inputFile: string = \" \"): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\flower.png",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\flower.png",
+      "NodeType": "ExtensionNode",
+      "Id": "93009b439eb648ff9ab79e8d49a4abb9",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cbb9a1d86f5b4a779bc6e7fcdfe9c37b",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\optimized_graph.pb",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\optimized_graph.pb",
+      "NodeType": "ExtensionNode",
+      "Id": "080b9977aa1e45deb7c7e78d964f90fd",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9112e3d5b1aa43fc8b66ddc511ff1723",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\output_labels.txt",
+      "InputValue": "E:\\VisualStudio\\Expressior\\data\\output_labels.txt",
+      "NodeType": "ExtensionNode",
+      "Id": "25a17344fabc43638d2d958fa08bb28a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fb91e9861bff47a6b17400c989a52d3b",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "82a59f58d01f4c91a1aac1541a5f3e2c",
+      "Inputs": [
+        {
+          "Id": "3206597dc5284b8d8666782090daf626",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8bdf685c3607495ea015402182a0bc72",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualize the output of node."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e6a55a3aacb345948eb3d2fa96e04fc2",
+      "End": "3206597dc5284b8d8666782090daf626",
+      "Id": "729bf906768a43e083e87e555b245032"
+    },
+    {
+      "Start": "cbb9a1d86f5b4a779bc6e7fcdfe9c37b",
+      "End": "f334fecca98f47ee8166d58987614a7a",
+      "Id": "8f8b93105e5e4b6990c101334cbd48bb"
+    },
+    {
+      "Start": "9112e3d5b1aa43fc8b66ddc511ff1723",
+      "End": "4fe0710e611742ff88f83747792fd10e",
+      "Id": "d68a85505b0b43c88ca484b351688377"
+    },
+    {
+      "Start": "fb91e9861bff47a6b17400c989a52d3b",
+      "End": "b25da9b6744e4d51aff6d6043ebd0bbf",
+      "Id": "3c9290edda6049aab636f39b4cfa46ac"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.0.5801",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Example.Predict",
+        "Id": "0ac7159ad62c4681980e81762ef23a1d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 676.0,
+        "Y": 185.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "93009b439eb648ff9ab79e8d49a4abb9",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 200.0,
+        "Y": 445.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "080b9977aa1e45deb7c7e78d964f90fd",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 159.0,
+        "Y": 78.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "File Path",
+        "Id": "25a17344fabc43638d2d958fa08bb28a",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 103.0,
+        "Y": 226.5
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Watch",
+        "Id": "82a59f58d01f4c91a1aac1541a5f3e2c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1042.0,
+        "Y": 329.5
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

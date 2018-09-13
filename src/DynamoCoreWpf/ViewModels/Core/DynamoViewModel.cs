@@ -465,7 +465,7 @@ namespace Dynamo.ViewModels
 
         public bool BackgroundPreviewActive
         {
-            get { return BackgroundPreviewViewModel.Active; }
+            get { return false/*BackgroundPreviewViewModel.Active*/; }
         }
 
         #endregion
