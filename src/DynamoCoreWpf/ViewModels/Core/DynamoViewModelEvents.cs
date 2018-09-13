@@ -15,7 +15,14 @@ namespace Dynamo.ViewModels
                 RequestManagePackagesDialog(this, e);
             }
         }
-
+        internal event RequestViewOperationHandler RequestViewOperation;
+        private void OnRequestViewOperation(ViewOperationEventArgs e)
+        {
+            if (RequestViewOperation != null)
+            {
+                RequestViewOperation(e);
+            }
+        }
         public event RequestPackagePublishDialogHandler RequestPackagePublishDialog;
         public void OnRequestPackagePublishDialog(PublishPackageViewModel vm)
         {
