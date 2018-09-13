@@ -1,4 +1,5 @@
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png) 
+<div align=center><img src="https://github.com/AngelaViVi/Expressior/blob/Expressior_master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png"/></div>
+
 ====================================
 
 |分支|Expressior_master|Expressior_slim|RC2.0.0_master
