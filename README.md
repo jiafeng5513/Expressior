@@ -1,11 +1,14 @@
 <div align=center><img src="https://github.com/AngelaViVi/Expressior/blob/Expressior_master/src/DynamoCoreWpf/UI/Images/StartPage/dynamo-logo.png"/></div>
-====================================
-<div align=center>
+
+<center>
 
 |分支|Expressior_master|Expressior_slim|RC2.0.0_master
-|:--------:|:----------:|:-------------:|-------------:|
+|:--------:|:----------:|:-------------:|:-------------:|
 |构建状态|[![Build status](https://ci.appveyor.com/api/projects/status/ke5nv5l0d33w5tl2/branch/Expressior_master?svg=true)](https://ci.appveyor.com/project/AngelaViVi/expressior/branch/Expressior_master)| 尚未构建|stopped
-</div>
+
+</center>
+
+========
 
 ### 这是一个可视化编程环境
 
