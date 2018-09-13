@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 
 using Autodesk.DesignScript.Geometry;
+using Autodesk.DesignScript.Runtime;
 
 namespace Analysis
 {
+    [IsVisibleInDynamoLibrary(false)]
     public interface IStructuredData<TLocation, TValue>
     {
         /// <summary>
@@ -17,7 +19,7 @@ namespace Analysis
         /// </summary>
         IList<TValue> Values { get; } 
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public interface ISurfaceData<TLocation, TValue> : IStructuredData<TLocation, TValue>
     {
         /// <summary>
@@ -25,7 +27,7 @@ namespace Analysis
         /// </summary>
         Surface Surface { get; }
     }
-
+    [IsVisibleInDynamoLibrary(false)]
     public interface ICurveData<TLocation, TValue> : IStructuredData<TLocation, TValue>
     {
         /// <summary>
@@ -39,6 +41,7 @@ namespace Analysis
     /// </summary>
     /// <typeparam name="TLocation">The analysis location type. (i.e. UV, Point)</typeparam>
     /// <typeparam name="TValue">The analysis return type. (i.e. double, vector, SIUnit)</typeparam>
+    [IsVisibleInDynamoLibrary(false)]
     public interface IAnalysisModel<TLocation, TValue>
     {
         event EventHandler AnalysisCompleted;
