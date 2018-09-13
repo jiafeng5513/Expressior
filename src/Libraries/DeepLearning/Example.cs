@@ -38,7 +38,7 @@ namespace DeepLearning
                         maxIdx = i;
                     }
                 }
-                resStr = String.Format("Object is {0} with {1}% probability. Recognition done in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
+                resStr = String.Format("Object is {0} with {1}% probability. \n Recognition done in {2} milliseconds.", labels[maxIdx], maxVal * 100, sw.ElapsedMilliseconds);
             }
 
             return resStr;

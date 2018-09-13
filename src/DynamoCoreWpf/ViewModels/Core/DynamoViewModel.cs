@@ -462,7 +462,10 @@ namespace Dynamo.ViewModels
         /// geometry for the primary background 3d preview.
         /// </summary>
         public DefaultWatch3DViewModel BackgroundPreviewViewModel { get; private set; }
-
+        /// <summary>
+        /// 查询背景3D预览的可用状态,
+        /// 如果不可用,显示无限网格
+        /// </summary>
         public bool BackgroundPreviewActive
         {
             get { return false/*BackgroundPreviewViewModel.Active*/; }
