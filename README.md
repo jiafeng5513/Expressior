@@ -36,7 +36,6 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### New Features
-1. dcm预处理:<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/肺部图像预处理-1.gif) 
-2. 添加了测试数据<br>
-3. 已经迁移到VS2017
+1. 加载tensorflow模型进行Predict:<br>
+![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Predict_example.png) 
+
