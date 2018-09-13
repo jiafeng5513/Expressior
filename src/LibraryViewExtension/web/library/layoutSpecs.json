@@ -1263,7 +1263,7 @@
         },
         {
           "text": "Deep Learning",
-          "iconUrl": "./dist/resources/Category.DicomTools.svg",
+          "iconUrl": "./dist/resources/Category.DeepLearning.svg",
           "elementType": "category",
           "include": [],
           "childElements": [
