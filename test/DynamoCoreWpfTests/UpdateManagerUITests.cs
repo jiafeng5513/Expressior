@@ -40,9 +40,9 @@ namespace DynamoCoreWpfTests
 
             var stb = (ShortcutToolbar)View.shortcutBarGrid.Children[0];
             Assert.IsNotNull(stb);
-            var updateControl = stb.UpdateControl;
-            Assert.IsNotNull(updateControl);
-            Assert.AreEqual(Visibility.Visible, updateControl.Visibility);
+            //var updateControl = stb.UpdateControl;
+            //Assert.IsNotNull(updateControl);
+            //Assert.AreEqual(Visibility.Visible, updateControl.Visibility);
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace DynamoCoreWpfTests
 
             var stb = View.shortcutBarGrid.Children[0] as ShortcutToolbar;
             Assert.IsNotNull(stb);
-            var updateControl = stb.UpdateControl;
-            Assert.IsNotNull(updateControl);
-            Assert.AreEqual(Visibility.Collapsed, updateControl.Visibility);
+            //var updateControl = stb.UpdateControl;
+            //Assert.IsNotNull(updateControl);
+            //Assert.AreEqual(Visibility.Collapsed, updateControl.Visibility);
         }
     }
 }

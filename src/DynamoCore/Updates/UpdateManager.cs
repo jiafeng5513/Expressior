@@ -11,7 +11,9 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using Dynamo.Core;
 using Dynamo.Logging;
-
+/*
+ * 与更新有关的一切
+ */
 namespace Dynamo.Updates
 {
     /// <summary>
@@ -552,7 +554,7 @@ namespace Dynamo.Updates
     }
 
     /// <summary>
-    /// This class provides services for product update management.
+    /// 该类为产品更新管理提供服务。
     /// </summary>
     internal sealed class UpdateManager : NotificationObject, IUpdateManager
     {
@@ -574,7 +576,7 @@ namespace Dynamo.Updates
         #region Public Event Handlers
 
         /// <summary>
-        /// Occurs when RequestUpdateDownload operation completes.
+        /// 当RequestUpdateDownload操作完成时发生。
         /// </summary>
         public event UpdateDownloadedEventHandler UpdateDownloaded;
         public event ShutdownRequestedEventHandler ShutdownRequested;
@@ -660,6 +662,7 @@ namespace Dynamo.Updates
             {
                 if (value != null)
                 {
+                    //在控制台上输出:Update available! [版本号]
                     OnLog(new LogEventArgs(string.Format(Properties.Resources.UpdateAvailable, value.Version), LogLevel.Console));
                 }
 
@@ -683,12 +686,16 @@ namespace Dynamo.Updates
         }
 
         /// <summary>
-        /// Returns true if a new version is available.
+        /// 查询是否进行更新
+        /// 如果启动了强制更新,则直接进行更新
+        /// 如果当前最新版本高于运行版本,进行更新
+        /// 在最新本版下载完毕之前,查询将返回false
         /// </summary>
         public bool IsUpdateAvailable
         {
             get
             {
+                return false;//自废武功
                 //Update is not available unitl it's downloaded
                 if (DownloadedUpdateInfo == null)
                     return false;
@@ -755,7 +762,7 @@ namespace Dynamo.Updates
             HostVersion = null;
             HostName = string.Empty;
         }
-
+        //向控制台输出下载开始,并启动同步下载
         void UpdateManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -769,8 +776,8 @@ namespace Dynamo.Updates
                         OnLog(new LogEventArgs(Properties.Resources.UpdateDownloadStarted, LogLevel.Console));
 
                         var tempPath = Path.GetTempPath();
-                        DownloadUpdatePackageAsynchronously(updateInfo.InstallerURL, updateInfo.Version, tempPath);
-                        DownloadSignatureFileAsynchronously(updateInfo.SignatureURL, tempPath);
+                        //DownloadUpdatePackageAsynchronously(updateInfo.InstallerURL, updateInfo.Version, tempPath);
+                        //DownloadSignatureFileAsynchronously(updateInfo.SignatureURL, tempPath);
                     }
                     break;
             }
@@ -798,106 +805,19 @@ namespace Dynamo.Updates
         /// Callback for the UpdateRequest's UpdateDataAvailable event.
         /// Reads the request's data, and parses for available versions. 
         /// If a more recent version is available, the UpdateInfo object 
-        /// will be set. 
+        /// will be set.
+        /// 自废武功
         /// </summary>
         /// <param name="request">An instance of an update request.</param>
         public void UpdateDataAvailable(IAsynchronousRequest request)
         {
             UpdateInfo = null;
 
-            //If there is error data or the request data is empty
-            //bail out.
-            if (!string.IsNullOrEmpty(request.Error) ||
-                string.IsNullOrEmpty(request.Data))
-            {
-                OnLog(new LogEventArgs(String.Format(Properties.Resources.CouldNotGetUpdateData, request.Path), LogLevel.Console));
-                versionCheckInProgress = false;
-                return;
-            }
-
-            var latestBuildFilePath = GetLatestBuildFromS3(request, CheckNewerDailyBuilds);
-            if (string.IsNullOrEmpty(latestBuildFilePath))
-            {
-                OnLog(new LogEventArgs(Properties.Resources.CouldNotGetLatestBuild, LogLevel.Console));
-                versionCheckInProgress = false;
-                return;
-            }
-
-            // Strip the build number from the file name.
-            // DynamoInstall0.7.0 becomes 0.7.0. Build a version
-            // and compare it with the current product version.
-
-            var latestBuildDownloadUrl = Path.Combine(Configuration.DownloadSourcePath, latestBuildFilePath);
-            var latestBuildSignatureUrl = Path.Combine(
-                Configuration.SignatureSourcePath,
-                Path.GetFileNameWithoutExtension(latestBuildFilePath) + ".sig");
-
-            BinaryVersion latestBuildVersion;
-            var latestBuildTime = new DateTime();
-
-            bool useStable = false;
-            if (IsStableBuild(Configuration.InstallerNameBase, latestBuildFilePath))
-            {
-                useStable = true;
-                latestBuildVersion = GetBinaryVersionFromFilePath(Configuration.InstallerNameBase, latestBuildFilePath);
-            }
-            else if (IsDailyBuild(Configuration.InstallerNameBase, latestBuildFilePath) || IsDailyBuild(OLD_DAILY_INSTALL_NAME_BASE, latestBuildFilePath))
-            {
-                latestBuildTime = GetBuildTimeFromFilePath(Configuration.InstallerNameBase, latestBuildFilePath);
-                latestBuildVersion = GetCurrentBinaryVersion();
-            }
-            else
-            {
-                OnLog(new LogEventArgs(Properties.Resources.PathNotRegconizableAsStableOrDailyBuild, LogLevel.Console));
-                versionCheckInProgress = false;
-                return;
-            }
-
-            // Check the last downloaded update. If it's the same or newer as the 
-            // one found on S3, then just set the update information to that one
-            // and bounce.
-
-            //if (ExistingUpdateIsNewer())
-            //{
-            //    logger.Log(string.Format("Using previously updated download {0}", dynamoModel.PreferenceSettings.LastUpdateDownloadPath));
-            //    UpdateDownloaded(this, new UpdateDownloadedEventArgs(null, UpdateFileLocation));
-            //    versionCheckInProgress = false;
-            //    return;
-            //}
-
-            // Install the latest update regardless of whether it
-            // is newer than the current build.
-            if (ForceUpdate)
-            {
-                SetUpdateInfo(latestBuildVersion, latestBuildDownloadUrl, latestBuildSignatureUrl);
-            }
-            else
-            {
-                if (useStable) //Check stables
-                {
-                    if (latestBuildVersion > BaseVersion())
-                    {
-                        SetUpdateInfo(latestBuildVersion, latestBuildDownloadUrl, latestBuildSignatureUrl);
-                    }
-                    else
-                    {
-                        OnLog(new LogEventArgs(Properties.Resources.DynamoUpToDate, LogLevel.Console));
-                    }
-                }
-                else // Check dailies
-                {
-                    if (latestBuildTime > DateTime.Now)
-                    {
-                        SetUpdateInfo(GetCurrentBinaryVersion(), latestBuildDownloadUrl, latestBuildSignatureUrl);
-                    }
-                    else
-                    {
-                        OnLog(new LogEventArgs(Properties.Resources.DynamoUpToDate, LogLevel.Console));
-                    }
-                }
-            }
+            //OnLog(new LogEventArgs(String.Format(Properties.Resources.CouldNotGetUpdateData, request.Path), LogLevel.Console));
+            OnLog(new LogEventArgs("更新个香蕉船哟", LogLevel.Console));
 
             versionCheckInProgress = false;
+            return;
         }
 
         public void QuitAndInstallUpdate()
@@ -907,7 +827,9 @@ namespace Dynamo.Updates
             if (ShutdownRequested != null)
                 ShutdownRequested(this);
         }
-
+        /// <summary>
+        /// 更新下载完毕之后,要关闭程序进行更新
+        /// </summary>
         public void HostApplicationBeginQuit()
         {
             // Double check that the updater path is not null and that there
@@ -958,323 +880,15 @@ namespace Dynamo.Updates
 
         #region Private Event Handlers
 
-        private void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            versionCheckInProgress = false;
-
-            if (e == null)
-                return;
-
-            string errorMessage = ((null == e.Error) ? "Successful" : e.Error.Message);
-            OnLog(new LogEventArgs(Properties.Resources.UpdateDownloadComplete, LogLevel.Console));
-            OnLog(new LogEventArgs(errorMessage, LogLevel.File));
-
-            UpdateFileLocation = string.Empty;
-
-            if (e.Error != null)
-                return;
-
-            // Dirty patch: this ensures that we have a property that reflects the update status 
-            // only after the update has been downloaded.
-            DownloadedUpdateInfo = UpdateInfo;
-
-            UpdateFileLocation = (string)e.UserState;
-            OnLog(new LogEventArgs("Update download complete.", LogLevel.Console));
-            Dynamo.Logging.Analytics.TrackEvent(Actions.Downloaded, Categories.Upgrade, AvailableVersion.ToString());
-
-            if (null != UpdateDownloaded)
-                UpdateDownloaded(this, new UpdateDownloadedEventArgs(e.Error, UpdateFileLocation));
-        }
 
         public void OnLog(LogEventArgs args)
         {
-            if (Log != null)
-            {
-                Log(args);
-            }
+            Log?.Invoke(args);
         }
 
         #endregion
 
-        #region Private Class Helper Methods
 
-        /// <summary>
-        /// Returns the file name of the latest build on S3
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="checkDailyBuilds"></param>
-        /// <returns></returns>
-        private string GetLatestBuildFromS3(IAsynchronousRequest request, bool checkDailyBuilds)
-        {
-            XNamespace ns = "http://s3.amazonaws.com/doc/2006-03-01/";
-
-            XDocument doc = null;
-            using (TextReader td = new StringReader(request.Data))
-            {
-                try
-                {
-                    doc = XDocument.Load(td);
-                }
-                catch (Exception e)
-                {
-                    OnLog(new LogEventArgs(e, LogLevel.Console));
-                    return null;
-                }
-            }
-
-            // Reads filenames from S3, and pulls out those which include 
-            // DynamoInstall, and optionally, those that include DynamoDailyInstall.
-            // Order the results according to their LastUpdated field.
-
-            var bucketresult = doc.Element(ns + "ListBucketResult");
-
-            if (bucketresult == null)
-            {
-                return null;
-            }
-
-            var builds = bucketresult.Descendants(ns + "LastModified").
-                OrderByDescending(x => DateTime.Parse(x.Value)).
-                Where(x => x.Parent.Value.Contains(Configuration.InstallerNameBase) || x.Parent.Value.Contains(OLD_DAILY_INSTALL_NAME_BASE)).
-                Select(x => x.Parent);
-
-
-            var xElements = builds as XElement[] ?? builds.ToArray();
-            if (!xElements.Any())
-            {
-                return null;
-            }
-
-            var fileNames = xElements.Select(x => x.Element(ns + "Key").Value);
-
-            string latestBuild = string.Empty;
-            latestBuild = checkDailyBuilds ?
-                fileNames.FirstOrDefault(x => IsDailyBuild(Configuration.InstallerNameBase, x) || IsDailyBuild(OLD_DAILY_INSTALL_NAME_BASE, x)) :
-                fileNames.FirstOrDefault(x => IsStableBuild(Configuration.InstallerNameBase, x));
-
-            return latestBuild;
-        }
-
-        /// <summary>
-        /// Returns a build time from a file path.
-        /// </summary>
-        /// <param name="installNameBase"></param>
-        /// <param name="filePath"></param>
-        /// <returns>A DateTime or the DateTime MinValue.</returns>
-        internal static DateTime GetBuildTimeFromFilePath(string installNameBase, string filePath)
-        {
-            var version = GetVersionString(installNameBase, filePath);
-            var dtStr = version.Split('.').LastOrDefault();
-
-            DateTime dt;
-            return DateTime.TryParseExact(
-                dtStr,
-                "yyyyMMddTHHmm",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out dt) ? dt : DateTime.MinValue;
-        }
-
-        /// <summary>
-        /// Find the version string within a file name 
-        /// by removing the base install name.
-        /// </summary>
-        /// <param name="installNameBase"></param>
-        /// <param name="filePath"></param>
-        /// <returns>A version string like "x.x.x.x" or null if one cannot be found.</returns>
-        private static string GetVersionString(string installNameBase, string filePath)
-        {
-            if (!filePath.Contains(installNameBase))
-            {
-                return null;
-            }
-
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            return fileName.Replace(installNameBase, "");
-        }
-
-        /// <summary>
-        /// Returns a binary version for the executing assembly
-        /// </summary>
-        /// <returns>A BinaryVersion</returns>
-        internal static BinaryVersion GetCurrentBinaryVersion()
-        {
-            // If we're looking at dailies, latest build version will simply be
-            // the current build version without a build or revision, ex. 0.6
-            var v = Assembly.GetExecutingAssembly().GetName().Version;
-            return BinaryVersion.FromString(string.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build));
-        }
-
-        /// <summary>
-        /// Returns a BinaryVersion from a file path.
-        /// </summary>
-        /// <param name="installNameBase">The base install name.</param>
-        /// <param name="filePath">The path name of the file.</param>
-        /// <returns>A BinaryVersion or null if one can not be parse from the file path.</returns>
-        internal static BinaryVersion GetBinaryVersionFromFilePath(string installNameBase, string filePath)
-        {
-            // Filename format is DynamoInstall0.7.1.YYYYMMDDT0000.exe
-            var index = filePath.IndexOf(installNameBase, StringComparison.Ordinal);
-            if (index < 0)
-                return null;
-
-            // Skip past the 'installNameBase' since we are only interested 
-            // in getting the version numbers that come after the base name.
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            var version = fileName.Substring(index + installNameBase.Length);
-
-            var splits = version.Split(new [] { "." }, StringSplitOptions.RemoveEmptyEntries);
-            if (splits.Count() < 3) // This can be 4 if it includes revision number.
-                return null;
-
-            ushort major, minor, build;
-            if (!ushort.TryParse(splits[0], out major))
-                return null;
-            if (!ushort.TryParse(splits[1], out minor))
-                return null;
-            if (!ushort.TryParse(splits[2], out build))
-                return null;
-
-            return BinaryVersion.FromString(string.Format("{0}.{1}.{2}.0", major, minor, build));
-        }
-
-        private void SetUpdateInfo(BinaryVersion latestBuildVersion, string latestBuildDownloadUrl, string signatureUrl)
-        {
-            UpdateInfo = new AppVersionInfo()
-            {
-                Version = latestBuildVersion,
-                VersionInfoURL = Configuration.DownloadSourcePath,
-                InstallerURL = latestBuildDownloadUrl,
-                SignatureURL = signatureUrl
-            };
-        }
-
-        /// <summary>
-        /// Check if a file name is a daily build.
-        /// </summary>
-        /// <param name="installNameBase"></param>
-        /// <param name="fileName"></param>
-        /// <returns>True if this is a daily build, otherwise false.</returns>
-        internal static bool IsDailyBuild(string installNameBase, string fileName)
-        {
-            if (!fileName.Contains(installNameBase))
-            {
-                return false;
-            }
-
-            var versionStr = GetVersionString(installNameBase, fileName);
-            var splits = versionStr.Split('.');
-
-            DateTime dt;
-            return DateTime.TryParseExact(
-                splits.Last(),
-                "yyyyMMddTHHmm",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out dt);
-        }
-
-        /// <summary>
-        /// Check if a file name is a stable build.
-        /// </summary>
-        /// <param name="installNameBase"></param>
-        /// <param name="fileName"></param>
-        /// <returns>True if this is a stable build, otherwise false.</returns>
-        internal static bool IsStableBuild(string installNameBase, string fileName)
-        {
-            if (!fileName.Contains(installNameBase))
-            {
-                return false;
-            }
-            return !IsDailyBuild(installNameBase, fileName);
-        }
-
-        /// <summary>
-        /// Async call to request downloading a file from web.
-        /// This call raises UpdateDownloaded event notification.
-        /// </summary>
-        /// <param name="url">Web URL for file to download.</param>
-        /// <param name="version">The version of package that is to be downloaded.</param>
-        /// <param name="tempPath">Temp folder path where the update package
-        /// to be downloaded.</param>
-        /// <returns>Request status, it may return false if invalid URL was passed.</returns>
-        private bool DownloadUpdatePackageAsynchronously(string url, BinaryVersion version, string tempPath)
-        {
-            currentDownloadProgress = -1;
-
-            if (string.IsNullOrEmpty(url) || (null == version))
-            {
-                versionCheckInProgress = false;
-                return false;
-            }
-
-            UpdateFileLocation = string.Empty;
-            string downloadedFileName = string.Empty;
-            string downloadedFilePath = string.Empty;
-
-            try
-            {
-                downloadedFileName = Path.GetFileName(url);
-                downloadedFilePath = Path.Combine(tempPath, downloadedFileName);
-
-                if (File.Exists(downloadedFilePath))
-                    File.Delete(downloadedFilePath);
-            }
-            catch (Exception)
-            {
-                versionCheckInProgress = false;
-                return false;
-            }
-
-            var client = new WebClient();
-            client.DownloadProgressChanged += client_DownloadProgressChanged;
-            client.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
-            client.DownloadFileAsync(new Uri(url), downloadedFilePath, downloadedFilePath);
-            return true;
-        }
-
-        /// <summary>
-        /// Async call to download the signature file.
-        /// </summary>
-        /// <param name="url">Signature file url for download.</param>
-        /// <param name="tempPath">Temp folder path where the signature file 
-        /// to be downloaded.</param>
-        /// <returns></returns>
-        private bool DownloadSignatureFileAsynchronously(string url, string tempPath)
-        {
-            string downloadedFileName = string.Empty;
-            string downloadedFilePath = string.Empty;
-
-            try
-            {
-                downloadedFileName = Path.GetFileName(url);
-                downloadedFilePath = Path.Combine(tempPath, downloadedFileName);
-
-                if (File.Exists(downloadedFilePath))
-                    File.Delete(downloadedFilePath);
-            }
-            catch (Exception)
-            {
-                versionCheckInProgress = false;
-                return false;
-            }
-
-            var client = new WebClient();
-            client.DownloadFileAsync(new Uri(url), downloadedFilePath, downloadedFilePath);
-            return true;
-        }
-
-        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage % 10 == 0 &&
-                e.ProgressPercentage > currentDownloadProgress)
-            {
-                OnLog(new LogEventArgs(string.Format(Properties.Resources.UpdateDownloadProgress, e.ProgressPercentage), LogLevel.Console));
-                currentDownloadProgress = e.ProgressPercentage;
-            }
-        }
-
-        #endregion
 
         /// <summary>
         /// Checks for the product update by requesting for update version info 

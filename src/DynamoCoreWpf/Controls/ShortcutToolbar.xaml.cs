@@ -43,7 +43,7 @@ namespace Dynamo.UI.Controls
             shortcutBarRightSideItems = new ObservableCollection<ShortcutBarItem>();    
 
             InitializeComponent();
-            UpdateControl.DataContext = updateManager;
+            //UpdateControl.DataContext = updateManager;
         }
     }
 

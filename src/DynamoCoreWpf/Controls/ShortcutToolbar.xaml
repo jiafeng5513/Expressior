@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:DynamoCore.UI.Controls"
              xmlns:ui="clr-namespace:Dynamo.UI"
-             xmlns:um="clr-namespace:Dynamo.Updates"
              xmlns:updateManager="clr-namespace:Dynamo.Updates;assembly=DynamoCore"
              mc:Ignorable="d"
              Height="Auto"
@@ -130,10 +129,10 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
                 
-                <controls:GraphUpdateNotificationControl x:Name="UpdateControl" HorizontalAlignment="Right" 
+                <!--<controls:GraphUpdateNotificationControl x:Name="UpdateControl" HorizontalAlignment="Right" 
                                                          Margin="0,0,50,0"
                                                          Visibility="{Binding Path=DataContext.IsUpdateAvailable, RelativeSource={RelativeSource AncestorType={x:Type Window}}, 
-                                                         Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
+                                                         Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>-->
             </Grid>
         </Border>
     </Border>
