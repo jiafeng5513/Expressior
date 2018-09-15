@@ -36,6 +36,4 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### New Features
-1. 加载tensorflow模型进行Predict:<br>
-![image](https://github.com/AngelaViVi/Expressior/blob/Expressior_master/log/shot/Predict_example.png) 
-
+1. 准备合并FixUpdate.<br>
