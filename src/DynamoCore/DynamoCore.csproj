@@ -254,7 +254,6 @@ limitations under the License.
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Models\DynamoModel.cs" />
     <Compile Include="Updates\BinaryVersion.cs" />
-    <Compile Include="Updates\UpdateManager.cs" />
     <Compile Include="Graph\ModelBase.cs" />
     <Compile Include="Graph\Notes\NoteModel.cs" />
     <Compile Include="Graph\Nodes\PortModel.cs" />
