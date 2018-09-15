@@ -778,12 +778,12 @@ namespace Dynamo.ViewModels
             CurrentSpaceViewModel.CancelActiveState();
         }
 
-        internal void ForceRunExprCmd(object parameters)
-        {
-            bool displayErrors = Convert.ToBoolean(parameters);
-            var command = new DynamoModel.ForceRunCancelCommand(displayErrors, false);
-            this.ExecuteCommand(command);
-        }
+        //internal void ForceRunExprCmd(object parameters)
+        //{
+        //    bool displayErrors = Convert.ToBoolean(parameters);
+        //    var command = new DynamoModel.ForceRunCancelCommand(displayErrors, false);
+        //    this.ExecuteCommand(command);
+        //}
 
         internal void MutateTestCmd(object parameters)
         {

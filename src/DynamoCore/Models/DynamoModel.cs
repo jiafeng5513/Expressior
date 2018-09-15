@@ -1400,16 +1400,16 @@ namespace Dynamo.Models
         /// <summary>
         ///     Forces an evaluation of the current workspace by resetting the DesignScript VM.
         /// </summary>
-        public void ForceRun()
-        {
-            Logger.Log("Beginning engine reset");
+        //public void ForceRun()
+        //{
+        //    Logger.Log("Beginning engine reset");
 
-            ResetEngine(true);
+        //    ResetEngine(true);
 
-            Logger.Log("Reset complete");
+        //    Logger.Log("Reset complete");
 
-            ((HomeWorkspaceModel)CurrentWorkspace).Run();
-        }
+        //    ((HomeWorkspaceModel)CurrentWorkspace).Run();
+        //}
 
         #endregion
 

@@ -59,10 +59,10 @@ namespace Dynamo.Models
                 model.Run();
         }
 
-        void ForceRunCancelImpl(ForceRunCancelCommand command)
-        {
-            ForceRun();
-        }
+        //void ForceRunCancelImpl(ForceRunCancelCommand command)
+        //{
+        //    ForceRun();
+        //}
 
         void CreateNodeImpl(CreateNodeCommand command)
         {
