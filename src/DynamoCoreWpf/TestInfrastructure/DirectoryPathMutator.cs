@@ -1,124 +1,124 @@
-﻿using Dynamo.Models;
-using Dynamo.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using Dynamo.Engine;
-using Dynamo.Graph;
-using Dynamo.Graph.Nodes;
+﻿////using Dynamo.Models;
+//using Dynamo.ViewModels;
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Reflection;
+//using System.Threading;
+//using Dynamo.Engine;
+//using Dynamo.Graph;
+//using Dynamo.Graph.Nodes;
 
-namespace Dynamo.TestInfrastructure
-{
-    [MutationTest("DirectoryPathMutator")]
-    class DirectoryPathMutator : AbstractMutator
-    {
-        public DirectoryPathMutator(DynamoViewModel viewModel)
-            : base(viewModel)
-        {
-        }
+//namespace Dynamo.TestInfrastructure
+//{
+//    [MutationTest("DirectoryPathMutator")]
+//    class DirectoryPathMutator : AbstractMutator
+//    {
+//        public DirectoryPathMutator(DynamoViewModel viewModel)
+//            : base(viewModel)
+//        {
+//        }
 
-        public override Type GetNodeType()
-        {
-            string assemblyPath = Assembly.GetExecutingAssembly().Location;
-            string assemblyDir = Path.GetDirectoryName(assemblyPath);
-            string pathToNodesDll = assemblyDir + "\\nodes\\CoreNodeModels.dll";
-            Assembly assembly = Assembly.LoadFile(pathToNodesDll);
-            Type type = assembly.GetType("DSCore.File.Directory");
+//        public override Type GetNodeType()
+//        {
+//            string assemblyPath = Assembly.GetExecutingAssembly().Location;
+//            string assemblyDir = Path.GetDirectoryName(assemblyPath);
+//            string pathToNodesDll = assemblyDir + "\\nodes\\CoreNodeModels.dll";
+//            Assembly assembly = Assembly.LoadFile(pathToNodesDll);
+//            Type type = assembly.GetType("DSCore.File.Directory");
 
-            return type;
-        }
+//            return type;
+//        }
 
-        public override bool RunTest(NodeModel node, EngineController engine, StreamWriter writer)
-        {
-            bool pass = false;
+//        public override bool RunTest(NodeModel node, EngineController engine, StreamWriter writer)
+//        {
+//            bool pass = false;
 
-            var valueMap = new Dictionary<Guid, String>();
-            if (node.OutPorts.Count > 0)
-            {
-                Guid guid = node.GUID;
-                Object data = node.GetValue(0, engine).Data;
-                String val = data != null ? data.ToString() : "null";
-                valueMap.Add(guid, val);
-                writer.WriteLine(guid + " :: " + val);
-                writer.Flush();
-            }
+//            var valueMap = new Dictionary<Guid, String>();
+//            if (node.OutPorts.Count > 0)
+//            {
+//                Guid guid = node.GUID;
+//                Object data = node.GetValue(0, engine).Data;
+//                String val = data != null ? data.ToString() : "null";
+//                valueMap.Add(guid, val);
+//                writer.WriteLine(guid + " :: " + val);
+//                writer.Flush();
+//            }
 
-            int numberOfUndosNeeded = Mutate(node);
-            Thread.Sleep(100);
+//            int numberOfUndosNeeded = Mutate(node);
+//            Thread.Sleep(100);
 
-            writer.WriteLine("### - Beginning undo");
-            for (int iUndo = 0; iUndo < numberOfUndosNeeded; iUndo++)
-            {
-                DynamoViewModel.UIDispatcher.Invoke(new Action(() =>
-                {
-                    DynamoModel.UndoRedoCommand undoCommand =
-                        new DynamoModel.UndoRedoCommand(
-                            DynamoModel.UndoRedoCommand.Operation.Undo);
+//            writer.WriteLine("### - Beginning undo");
+//            for (int iUndo = 0; iUndo < numberOfUndosNeeded; iUndo++)
+//            {
+//                DynamoViewModel.UIDispatcher.Invoke(new Action(() =>
+//                {
+//                    DynamoModel.UndoRedoCommand undoCommand =
+//                        new DynamoModel.UndoRedoCommand(
+//                            DynamoModel.UndoRedoCommand.Operation.Undo);
 
-                    DynamoViewModel.ExecuteCommand(undoCommand);
-                }));
-            }
-            Thread.Sleep(100);
+//                    DynamoViewModel.ExecuteCommand(undoCommand);
+//                }));
+//            }
+//            Thread.Sleep(100);
 
-            writer.WriteLine("### - undo complete");
-            writer.Flush();
-            writer.WriteLine("### - Beginning re-exec");
+//            writer.WriteLine("### - undo complete");
+//            writer.Flush();
+//            writer.WriteLine("### - Beginning re-exec");
 
-            ExecuteAndWait();
-            writer.WriteLine("### - re-exec complete");
-            writer.Flush();
+//            ExecuteAndWait();
+//            writer.WriteLine("### - re-exec complete");
+//            writer.Flush();
 
-            writer.WriteLine("### - Beginning readback");
+//            writer.WriteLine("### - Beginning readback");
 
-            writer.WriteLine("### - Beginning test of DirectoryPath");
+//            writer.WriteLine("### - Beginning test of DirectoryPath");
 
-            if (node.OutPorts.Count > 0)
-            {
-                try
-                {
-                    string valmap = valueMap[node.GUID].ToString();
-                    object data = node.GetValue(0, engine).Data;
-                    string nodeVal = data != null ? data.ToString() : "null";
+//            if (node.OutPorts.Count > 0)
+//            {
+//                try
+//                {
+//                    string valmap = valueMap[node.GUID].ToString();
+//                    object data = node.GetValue(0, engine).Data;
+//                    string nodeVal = data != null ? data.ToString() : "null";
 
-                    if (valmap != nodeVal)
-                    {
-                        writer.WriteLine("!!!!!!!!!!! - test of DirectoryPath is failed");
-                        writer.WriteLine(node.GUID);
+//                    if (valmap != nodeVal)
+//                    {
+//                        writer.WriteLine("!!!!!!!!!!! - test of DirectoryPath is failed");
+//                        writer.WriteLine(node.GUID);
 
-                        writer.WriteLine("Was: " + nodeVal);
-                        writer.WriteLine("Should have been: " + valmap);
-                        writer.Flush();
-                        return pass;
-                    }
-                }
-                catch (Exception)
-                {
-                    writer.WriteLine("!!!!!!!!!!! - test of DirectoryPath is failed");
-                    writer.Flush();
-                    return pass;
-                }
-            }
-            writer.WriteLine("### - test of DirectoryPath complete");
-            writer.Flush();
+//                        writer.WriteLine("Was: " + nodeVal);
+//                        writer.WriteLine("Should have been: " + valmap);
+//                        writer.Flush();
+//                        return pass;
+//                    }
+//                }
+//                catch (Exception)
+//                {
+//                    writer.WriteLine("!!!!!!!!!!! - test of DirectoryPath is failed");
+//                    writer.Flush();
+//                    return pass;
+//                }
+//            }
+//            writer.WriteLine("### - test of DirectoryPath complete");
+//            writer.Flush();
 
-            return pass = true;
-        }
+//            return pass = true;
+//        }
 
-        public override int Mutate(NodeModel node)
-        {
-            string assemblyPath = Assembly.GetExecutingAssembly().Location;
+//        public override int Mutate(NodeModel node)
+//        {
+//            string assemblyPath = Assembly.GetExecutingAssembly().Location;
 
-            DynamoViewModel.UIDispatcher.Invoke(new Action(() =>
-            {
-                DynamoModel.UpdateModelValueCommand updateValue =
-                    new DynamoModel.UpdateModelValueCommand(System.Guid.Empty, node.GUID, "Value", assemblyPath);
+//            DynamoViewModel.UIDispatcher.Invoke(new Action(() =>
+//            {
+//                DynamoModel.UpdateModelValueCommand updateValue =
+//                    new DynamoModel.UpdateModelValueCommand(System.Guid.Empty, node.GUID, "Value", assemblyPath);
 
-                DynamoViewModel.ExecuteCommand(updateValue);
-            }));
+//                DynamoViewModel.ExecuteCommand(updateValue);
+//            }));
 
-            return 1;
-        }        
-    }
-}
+//            return 1;
+//        }        
+//    }
+//}
