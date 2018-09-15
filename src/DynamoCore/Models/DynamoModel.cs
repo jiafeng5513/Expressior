@@ -1397,20 +1397,6 @@ namespace Dynamo.Models
                 RegisterCustomNodeDefinitionWithEngine(def);
         }
 
-        /// <summary>
-        ///     Forces an evaluation of the current workspace by resetting the DesignScript VM.
-        /// </summary>
-        //public void ForceRun()
-        //{
-        //    Logger.Log("Beginning engine reset");
-
-        //    ResetEngine(true);
-
-        //    Logger.Log("Reset complete");
-
-        //    ((HomeWorkspaceModel)CurrentWorkspace).Run();
-        //}
-
         #endregion
 
         #region save/load
@@ -1895,20 +1881,20 @@ namespace Dynamo.Models
 
         }
 
-        internal void DumpLibraryToXml(object parameter)
-        {
-            string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
-            string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
+        //internal void DumpLibraryToXml(object parameter)
+        //{
+        //    string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
+        //    string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
 
-            SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
+        //    SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
 
-            Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
-        }
+        //    Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
+        //}
 
-        internal bool CanDumpLibraryToXml(object obj)
-        {
-            return true;
-        }
+        //internal bool CanDumpLibraryToXml(object obj)
+        //{
+        //    return true;
+        //}
 
         #endregion
 

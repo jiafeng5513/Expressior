@@ -767,22 +767,16 @@
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuShowDebugAST}"
                                   IsChecked="{Binding ShowDebugASTs}"></MenuItem>
                         <!--anchor-->
-                        <!--<MenuItem Focusable="False"
-                                  Name="ForceReexec"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuForceReExecute}"
-                                  Command="{Binding ForceRunExpressionCommand}"
-                                  CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
-                                  IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>-->
                         <MenuItem Focusable="False"
                                   Name="MutateTest"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuRunMutationTest}"
                                   Command="{Binding MutateTestDelegateCommand}"
                                   CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
                                   IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuDumpLibrary}"
                                   Command="{Binding DumpLibraryToXmlCommand}"
-                                  IsEnabled="True" />
+                                  IsEnabled="True" />-->
                     </MenuItem>
                 </Menu>
 
