@@ -768,11 +768,6 @@ namespace Dynamo.ViewModels
             CurrentSpaceViewModel.CancelActiveState();
         }
 
-        internal void MutateTestCmd(object parameters)
-        {
-            var command = new DynamoModel.MutateTestCommand();
-            this.ExecuteCommand(command);
-        }
 
         public void DisplayFunction(object parameters)
         {

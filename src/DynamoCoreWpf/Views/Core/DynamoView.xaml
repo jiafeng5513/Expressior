@@ -762,12 +762,6 @@
                                   IsChecked="{Binding VerboseLogging}"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuVerboseLogging}" />
                         <!--anchor-->
-                        <MenuItem Focusable="False"
-                                  Name="MutateTest"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuRunMutationTest}"
-                                  Command="{Binding MutateTestDelegateCommand}"
-                                  CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
-                                  IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
                     </MenuItem>
                 </Menu>
 

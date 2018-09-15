@@ -2,30 +2,12 @@
   "Uuid": "9e29f70a-d5e7-4a1c-813b-d69cf9d57a05",
   "IsCustomNode": false,
   "Description": null,
-  "Name": "Home",
+  "Name": "四项处理",
   "ElementResolver": {
     "ResolutionMap": {}
   },
-  "Inputs": [
-    {
-      "Id": "1c243e89b19c47a5bca40da41ff66a56",
-      "Name": "Boolean",
-      "Type": "boolean",
-      "Value": "true",
-      "Description": "Selection between a true and false."
-    },
-    {
-      "Id": "431d17f2d0584ff0934e9afdf61a8917",
-      "Name": "Number Slider",
-      "Type": "number",
-      "Value": "52.2",
-      "MaximumValue": 100.0,
-      "MinimumValue": 0.0,
-      "StepValue": 0.1,
-      "NumberType": "Double",
-      "Description": "A slider that produces numeric values."
-    }
-  ],
+  "Inputs": [],
+  "Outputs": [],
   "Nodes": [
     {
       "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
@@ -37,6 +19,7 @@
           "Id": "9c91c1b6814c4c66aac1d13593d25e36",
           "Name": "filepath",
           "Description": "string",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -47,6 +30,7 @@
           "Id": "ab68484ce87a4fd8abf6f10daab10b32",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -57,8 +41,8 @@
     },
     {
       "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
-      "HintPath": "G:\\TCIA_LIDC-IDRI\\LIDC-IDRI-Sample\\LIDC-IDRI-0001\\1.3.6.1.4.1.14519.5.2.1.6279.6001.298806137288633453246975630178\\1.3.6.1.4.1.14519.5.2.1.6279.6001.179049373636438705059720603192\\000061.dcm",
-      "InputValue": "G:\\TCIA_LIDC-IDRI\\LIDC-IDRI-Sample\\LIDC-IDRI-0001\\1.3.6.1.4.1.14519.5.2.1.6279.6001.298806137288633453246975630178\\1.3.6.1.4.1.14519.5.2.1.6279.6001.179049373636438705059720603192\\000061.dcm",
+      "HintPath": "E:\\VisualStudio\\Expressior\\data\\IMG-0003-00001.dcm",
+      "InputValue": "..\\..\\..\\data\\IMG-0003-00001.dcm",
       "NodeType": "ExtensionNode",
       "Id": "0f21fcac3e094d5fb4336fad4cdbdf8c",
       "Inputs": [],
@@ -67,6 +51,7 @@
           "Id": "7ab456528d5e48ab97c55b4be80c4129",
           "Name": "",
           "Description": "Filename",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -85,6 +70,7 @@
           "Id": "8de18fe4239843e48b4a93a43c5fbdff",
           "Name": "mat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -95,6 +81,7 @@
           "Id": "1034cdc324154dc6a33502c4b654f7af",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -112,6 +99,7 @@
           "Id": "2d71796a426242c0bb9fec03d13e12dd",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -122,6 +110,7 @@
           "Id": "f8db300a5af0415e8da3b6ea67fa9919",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -140,6 +129,7 @@
           "Id": "d8e1bba9c24945b39e0f52296cbc0394",
           "Name": "inMat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -148,6 +138,7 @@
           "Id": "72bd4074363c4e9f881d2b491d685123",
           "Name": "Threshold",
           "Description": "double",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -156,6 +147,7 @@
           "Id": "d9a74f34f32b4ef798dbbbb9ab9a3bfb",
           "Name": "reverse",
           "Description": "bool\nDefault value : true",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -166,6 +158,7 @@
           "Id": "0857bdd79c384f95a200282fab7f144b",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -183,7 +176,8 @@
         {
           "Id": "3b0b828f0979458e83191642298ce32d",
           "Name": "inMat",
-          "Description": "var",
+          "Description": "输入图片:Mat\n\nvar",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -191,7 +185,8 @@
         {
           "Id": "bf2e73240f05496a86053df72e5f23f5",
           "Name": "color",
-          "Description": "Color",
+          "Description": "填充颜色\n\nColor",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -202,23 +197,24 @@
           "Id": "f77f73b1be9d44918570db29dbf84dbe",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
         }
       ],
       "Replication": "Auto",
-      "Description": "Processor.ClearBorder (inMat: var, color: Color): var"
+      "Description": "移除与图像边缘联通的区域\n\nProcessor.ClearBorder (inMat: var, color: Color): var"
     },
     {
       "ConcreteType": "CoreNodeModels.Input.ColorPalette, CoreNodeModels",
-      "DsColor": {
-        "Red": 0,
-        "Green": 0,
-        "Blue": 0,
-        "Alpha": 255
+      "InputValue": {
+        "R": 0,
+        "G": 0,
+        "B": 0,
+        "A": 255
       },
-      "NodeType": "ExtensionNode",
+      "NodeType": "ColorInputNode",
       "Id": "f2230144954e4bfd935677d00c3ec54e",
       "Inputs": [],
       "Outputs": [
@@ -226,6 +222,7 @@
           "Id": "198ba7861fd8453c9467f0a37abef01c",
           "Name": "Color",
           "Description": "Selected Color.",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -245,6 +242,7 @@
           "Id": "29e0a8cd236c47abb6c4337b84c0ef55",
           "Name": "",
           "Description": "Boolean",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -268,6 +266,7 @@
           "Id": "4bb71f345b54486ca6bada71a4766d9d",
           "Name": "",
           "Description": "Double",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -286,6 +285,7 @@
           "Id": "827176ef51ed4be5ab04fa8f052617c2",
           "Name": "mat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -296,6 +296,7 @@
           "Id": "d86aad51bafc47a7a5b12e19e7a505c1",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -313,6 +314,7 @@
           "Id": "0b88063090704ea8ba44871c5014dc65",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -323,6 +325,7 @@
           "Id": "66eb2261b4df4b20b37156ee605cbd86",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -341,6 +344,7 @@
           "Id": "b0cd85221c56453a8198147ddf1bcb4d",
           "Name": "mat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -351,6 +355,7 @@
           "Id": "4238fdd7d45246d9a01a978b55f748a9",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -368,6 +373,7 @@
           "Id": "abe0b31d25ef4fd88c8e273547dd0b55",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -378,6 +384,7 @@
           "Id": "5ee2f6b6135d446195e15f73e41faf4a",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -396,6 +403,7 @@
           "Id": "97481232c480470a8558bc5c558c0366",
           "Name": "mat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -406,6 +414,7 @@
           "Id": "fc5ef8f6abc44407abae2e385f33f32b",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -424,6 +433,7 @@
           "Id": "e81ec8509bc44f329b70528b169f39a5",
           "Name": "mat",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -434,6 +444,7 @@
           "Id": "64e31275cb33466ca4a090ff5454a109",
           "Name": "var",
           "Description": "var",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -451,6 +462,7 @@
           "Id": "856da32073ff4a2eb6f80f8ead0bb640",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -461,6 +473,7 @@
           "Id": "dcc0631cba8e478ca6eb5d1c18da2935",
           "Name": "image",
           "Description": "image",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -479,6 +492,7 @@
           "Id": "1ecdde136dad4ee18223753c2dad7f1b",
           "Name": "path",
           "Description": "string",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -487,6 +501,7 @@
           "Id": "98a86e9dcfec4ab381a24255202b9c9a",
           "Name": "image",
           "Description": "The image to write\n\nvar",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -497,6 +512,7 @@
           "Id": "4a6375b1050847558009ca719f602856",
           "Name": "ok",
           "Description": "It is successful or not.",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -517,6 +533,7 @@
           "Id": "247399526125428898212448850cef15",
           "Name": "",
           "Description": "Filename",
+          "UsingDefaultValue": true,
           "Level": 2,
           "UseLevels": false,
           "KeepListStructure": false
@@ -616,24 +633,21 @@
   "Dependencies": [],
   "Bindings": [],
   "View": {
-    "Camera": {
-      "Name": "背景预览",
-      "EyeX": -17.0,
-      "EyeY": 24.0,
-      "EyeZ": 50.0,
-      "LookX": 12.0,
-      "LookY": -13.0,
-      "LookZ": -58.0,
-      "UpX": 0.0,
-      "UpY": 1.0,
-      "UpZ": 0.0
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.0.5801",
+      "RunType": "Automatic",
+      "RunPeriod": "1000"
     },
     "NodeViews": [
       {
         "ShowGeometry": true,
         "Name": "DicomReader.ReadDicomFromPath",
         "Id": "666b2aeb1adc46078593e0487a996ed3",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 867.0,
         "Y": 262.625
@@ -642,7 +656,8 @@
         "ShowGeometry": true,
         "Name": "File Path",
         "Id": "0f21fcac3e094d5fb4336fad4cdbdf8c",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": -154.0,
         "Y": 262.625
@@ -651,7 +666,8 @@
         "ShowGeometry": true,
         "Name": "Converter.MatToBitmap",
         "Id": "b7c73c4c85de44bba65eef1ad8ed3fce",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2100.0,
         "Y": -169.0
@@ -660,7 +676,8 @@
         "ShowGeometry": true,
         "Name": "Watch Image",
         "Id": "b351642404434211a16413f8156bd309",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2362.0,
         "Y": -169.0
@@ -669,7 +686,8 @@
         "ShowGeometry": true,
         "Name": "Processor.Binnary",
         "Id": "bf792fde6bdd43bb85126ea1600ca280",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 1266.0,
         "Y": 694.25
@@ -678,7 +696,8 @@
         "ShowGeometry": true,
         "Name": "Processor.ClearBorder",
         "Id": "7e156fd4cbbc410a89534a0957f0aacd",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 1565.0,
         "Y": 1064.5
@@ -687,7 +706,8 @@
         "ShowGeometry": true,
         "Name": "Color Palette",
         "Id": "f2230144954e4bfd935677d00c3ec54e",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 1266.0,
         "Y": 1090.5
@@ -696,7 +716,8 @@
         "ShowGeometry": true,
         "Name": "Boolean",
         "Id": "1c243e89b19c47a5bca40da41ff66a56",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 867.0,
         "Y": 775.25
@@ -705,7 +726,8 @@
         "ShowGeometry": true,
         "Name": "Number Slider",
         "Id": "431d17f2d0584ff0934e9afdf61a8917",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 696.63416652704313,
         "Y": 664.91471493192046
@@ -714,7 +736,8 @@
         "ShowGeometry": true,
         "Name": "Converter.MatToBitmap",
         "Id": "16f80d3942de4643a6fd79925e498b62",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2100.0,
         "Y": 324.0
@@ -723,7 +746,8 @@
         "ShowGeometry": true,
         "Name": "Watch Image",
         "Id": "908136bca2a647b8b037da01109a9907",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2362.0,
         "Y": 324.0
@@ -732,7 +756,8 @@
         "ShowGeometry": true,
         "Name": "Converter.MatToBitmap",
         "Id": "0eb1c91004674738bec4a1fa1ddc9f3e",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2100.0,
         "Y": 818.0
@@ -741,7 +766,8 @@
         "ShowGeometry": true,
         "Name": "Watch Image",
         "Id": "f7493a0917ec445f859896a2dfed2375",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2368.41671835525,
         "Y": 823.93477781805313
@@ -750,7 +776,8 @@
         "ShowGeometry": true,
         "Name": "Processor.Sobel",
         "Id": "031a34ad8e664615b151baeae8c42793",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 1838.0,
         "Y": 1311.0
@@ -759,7 +786,8 @@
         "ShowGeometry": true,
         "Name": "Converter.MatToBitmap",
         "Id": "0997332a5e5541209615233c4bd513d2",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2100.0,
         "Y": 1311.0
@@ -768,7 +796,8 @@
         "ShowGeometry": true,
         "Name": "Watch Image",
         "Id": "7bb06f0fc6c546c19d35c9b2e0240be5",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2362.0,
         "Y": 1311.0
@@ -777,25 +806,26 @@
         "ShowGeometry": true,
         "Name": "Image.WriteToFile",
         "Id": "cf9600c6d44d4a37b34b57225ba71214",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3170.0744798847245,
-        "Y": 790.653145573711
+        "X": 3193.8962177656376,
+        "Y": 780.84419468157034
       },
       {
         "ShowGeometry": true,
         "Name": "File Path",
         "Id": "e0cc9f105acb4496a8080ef1d262e00b",
-        "IsUpstreamVisible": true,
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
         "Excluded": false,
         "X": 2919.7488212702374,
         "Y": 506.10621861420225
       }
     ],
-    "Notes": [],
     "Annotations": [],
-    "X": -114.14589674897366,
-    "Y": -78.71357863082801,
-    "Zoom": 0.77127009204443908
+    "X": -1544.5192019776066,
+    "Y": -203.61105601826245,
+    "Zoom": 0.71363391222691352
   }
 }

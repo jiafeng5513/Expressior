@@ -154,30 +154,6 @@ namespace Dynamo.Wpf.ViewModels
             }
         }
 
-        public virtual bool RunInDebug
-        {
-            get { return debug; }
-            set
-            {
-                debug = value;
-
-                if (debug)
-                {
-                    Model.RunType = RunType.Manual;
-                    ToggleRunTypeEnabled(RunType.Automatic, false);
-                    ToggleRunTypeEnabled(RunType.Periodic, false);
-                }
-                else
-                {
-                    ToggleRunTypeEnabled(RunType.Automatic, true);
-                    ToggleRunTypeEnabled(RunType.Periodic, true);
-                    workspaceViewModel.CheckAndSetPeriodicRunCapability();
-                }
-
-                RaisePropertyChanged("RunInDebug");
-            }
-        }
-
         public RunTypeItem SelectedRunTypeItem
         {
             get { return RunTypeItems.First(rt => rt.RunType == Model.RunType); }
