@@ -761,11 +761,6 @@
                                   IsCheckable="True"
                                   IsChecked="{Binding VerboseLogging}"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuVerboseLogging}" />
-                        <MenuItem Focusable="False"
-                                  Name="ShowDebugASTs"
-                                  IsCheckable="True"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuShowDebugAST}"
-                                  IsChecked="{Binding ShowDebugASTs}"></MenuItem>
                         <!--anchor-->
                         <MenuItem Focusable="False"
                                   Name="MutateTest"
@@ -773,10 +768,6 @@
                                   Command="{Binding MutateTestDelegateCommand}"
                                   CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
                                   IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewDebugMenuDumpLibrary}"
-                                  Command="{Binding DumpLibraryToXmlCommand}"
-                                  IsEnabled="True" />-->
                     </MenuItem>
                 </Menu>
 

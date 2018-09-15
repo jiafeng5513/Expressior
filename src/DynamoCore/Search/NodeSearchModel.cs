@@ -24,40 +24,6 @@ namespace Dynamo.Search
             base.Add(entry);
         }
 
-        /// <summary>
-        ///     Dumps the contents of search into an Xml file.
-        /// </summary>
-        /// <param name="fileName"></param>
-        //internal void DumpLibraryToXml(string fileName, string dynamoPath)
-        //{
-        //    if (string.IsNullOrEmpty(fileName))
-        //        return;
-
-        //    var document = ComposeXmlForLibrary(dynamoPath);
-        //    document.Save(fileName);
-        //}
-
-        /// <summary>
-        ///     Serializes the contents of search into Xml.
-        /// </summary>
-        /// <returns></returns>
-        //internal XmlDocument ComposeXmlForLibrary(string dynamoPath)
-        //{
-        //    var document = XmlHelper.CreateDocument("LibraryTree");
-
-        //    var root = SearchCategoryUtil.CategorizeSearchEntries(
-        //        SearchEntries,
-        //        entry => entry.Categories);
-
-        //    foreach (var category in root.SubCategories)
-        //        AddCategoryToXml(document.DocumentElement, category, dynamoPath);
-
-        //    foreach (var entry in root.Entries)
-        //        AddEntryToXml(document.DocumentElement, entry, dynamoPath);
-
-        //    return document;
-        //}
-
         private static void AddEntryToXml(XmlNode parent, NodeSearchElement entry, string dynamoPath)
         {
             var element = XmlHelper.AddNode(parent, entry.GetType().ToString());

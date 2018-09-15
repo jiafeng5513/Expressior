@@ -886,7 +886,7 @@ namespace Dynamo.Tests
             var rhs = result.AstNodes.Skip(1).Select(b => (b as BinaryExpressionNode).RightNode.ToString().Contains("ValueContainer.SomeValue"));
             Assert.IsTrue(rhs.All(r => r));
 
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             var cbn = CurrentDynamoModel.CurrentWorkspace.Nodes.OfType<CodeBlockNodeModel>().FirstOrDefault();
             Assert.IsNotNull(cbn);
@@ -1121,7 +1121,7 @@ namespace Dynamo.Tests
 
             var command = new DynamoModel.ConvertNodesToCodeCommand();
             CurrentDynamoModel.ExecuteCommand(command);
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             var cbn = CurrentDynamoModel.CurrentWorkspace.Nodes.OfType<CodeBlockNodeModel>().FirstOrDefault();
             Assert.IsNotNull(cbn);
@@ -1144,7 +1144,7 @@ namespace Dynamo.Tests
 
             var command = new DynamoModel.ConvertNodesToCodeCommand();
             CurrentDynamoModel.ExecuteCommand(command);
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             var cbn = CurrentDynamoModel.CurrentWorkspace.Nodes.OfType<CodeBlockNodeModel>().FirstOrDefault();
             Assert.IsNotNull(cbn);

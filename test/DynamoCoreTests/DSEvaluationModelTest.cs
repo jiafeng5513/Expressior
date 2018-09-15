@@ -1018,7 +1018,7 @@ namespace Dynamo.Tests
             AssertPreviewValue("c739b941-ece7-4b87-ae69-9a16f04dbe5d", new object[] { null, null, null, null });
 
             // Reset engine and mark all nodes as dirty. A.k.a., force re-execute.
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             AssertPreviewValue("79d158b3-fa40-4069-8bb5-153e6fb13858", new object[] { 2, 3, 6, 5 });
         }
@@ -1036,7 +1036,7 @@ namespace Dynamo.Tests
             AssertPreviewValue("bd89982a-c3e6-4a4e-898c-2bdc8f1f8c3e", null);
 
             // Reset engine and mark all nodes as dirty. A.k.a., force re-execute.
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             // Fix expected result after MAGN-7639 is fixed.
             AssertPreviewValue("980dcd47-84e7-412c-8d9e-d66f166d2370", new object[] { 1, 2, 3, 4 });
@@ -1332,7 +1332,7 @@ namespace Dynamo.Tests
             AssertPreviewValue("42693721-622d-475e-a82e-bfe793ddc153", new object[] { 2, 3, 4, 5, 6 });
 
             // Reset engine and mark all nodes as dirty. A.k.a., force re-execute.
-            CurrentDynamoModel.ForceRun();
+            //CurrentDynamoModel.ForceRun();
 
             AssertPreviewValue("42693721-622d-475e-a82e-bfe793ddc153", new object[] { 2, 3, 4, 5, 6 });
         }

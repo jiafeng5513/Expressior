@@ -73,7 +73,6 @@ namespace Dynamo.ViewModels
             ImportLibraryCommand = new DelegateCommand(ImportLibrary, CanImportLibrary);
             ShowAboutWindowCommand = new DelegateCommand(ShowAboutWindow, CanShowAboutWindow);
             SetNumberFormatCommand = new DelegateCommand(SetNumberFormat, CanSetNumberFormat);
-            //DumpLibraryToXmlCommand = new DelegateCommand(model.DumpLibraryToXml, model.CanDumpLibraryToXml);
             ShowGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(true), o => true);
             CloseGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(false), o => true);
             ShowNewPresetsDialogCommand = new DelegateCommand(ShowNewPresetStateDialogAndMakePreset, CanShowNewPresetStateDialog);
@@ -142,7 +141,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand ShowAboutWindowCommand { get; set; }
         public DelegateCommand SetNumberFormatCommand { get; set; }
         public DelegateCommand OpenRecentCommand { get; set; }
-        //public DelegateCommand DumpLibraryToXmlCommand { get; set; }
         public DelegateCommand ShowGalleryCommand { get; set; }
         public DelegateCommand CloseGalleryCommand { get; set; }
         public DelegateCommand ShowNewPresetsDialogCommand { get; set; }

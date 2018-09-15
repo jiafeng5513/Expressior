@@ -1881,21 +1881,6 @@ namespace Dynamo.Models
 
         }
 
-        //internal void DumpLibraryToXml(object parameter)
-        //{
-        //    string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
-        //    string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
-
-        //    SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
-
-        //    Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
-        //}
-
-        //internal bool CanDumpLibraryToXml(object obj)
-        //{
-        //    return true;
-        //}
-
         #endregion
 
         #region public methods

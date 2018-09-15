@@ -400,16 +400,6 @@ namespace Dynamo.ViewModels
             }
         }
 
-        public bool ShowDebugASTs
-        {
-            get { return IsDebugBuild && model.DebugSettings.ShowDebugASTs; }
-            set
-            {
-                model.DebugSettings.ShowDebugASTs = value;
-                RaisePropertyChanged("ShowDebugASTs");
-            }
-        }
-
         internal Dispatcher UIDispatcher { get; set; }
 
         public IWatchHandler WatchHandler { get; private set; }
