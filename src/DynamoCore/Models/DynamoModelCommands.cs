@@ -59,11 +59,6 @@ namespace Dynamo.Models
                 model.Run();
         }
 
-        void ForceRunCancelImpl(ForceRunCancelCommand command)
-        {
-            ForceRun();
-        }
-
         void CreateNodeImpl(CreateNodeCommand command)
         {
             var node = GetNodeFromCommand(command);

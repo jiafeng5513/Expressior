@@ -24,6 +24,7 @@ using ProtoCore.Mirror;
 
 using TestServices;
 
+
 namespace SystemTestServices
 {
     /// <summary>
@@ -44,8 +45,6 @@ namespace SystemTestServices
         protected DynamoView View { get; set; }
 
         protected DynamoModel Model { get; set; }
-
-        protected IUpdateManager UpdateManager { get; set; }
 
         protected string ExecutingDirectory
         {
@@ -179,16 +178,6 @@ namespace SystemTestServices
                     pr.AddPreloadLibraryPath(preloadedLibrary);
                 }
             }
-
-            Model = DynamoModel.Start(
-                new DynamoModel.DefaultStartConfiguration()
-                {
-                    StartInTestMode = true,
-                    PathResolver = pathResolver,
-                    GeometryFactoryPath = preloader.GeometryFactoryPath,
-                    UpdateManager = this.UpdateManager,
-                    ProcessMode = TaskProcessMode.Synchronous
-                });
 
             ViewModel = DynamoViewModel.Start(
                 new DynamoViewModel.StartConfiguration()

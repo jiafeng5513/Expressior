@@ -36,4 +36,14 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### New Features
-1. 准备合并FixUpdate.<br>
+1. 当前分支:FixUpdate<br>
+2. 目标文件:
+> 1. DynamoCore->Core->DynamoMigrator.cs<br>
+> 2. DynamoCore->Core->UpdateManager.cs<br>
+> 3. DynamoCoreWpf->ViewModel->CoreDynamoViewModel.cs<br>
+> 4. DynamoCoreWpf->Controls->ShortcutToolbar.xaml<br>
+> 5. DynamoCoreWpf->Controls->GraphUpdateNotificationControl.xaml<br>
+3. 潜在问题:
+> 1. 运行时出现的Microsoft.Dynamic加载问题.<br>
+> 2. 运行时出现的有关iron 的加载问题,这两个问题貌似和IronPython有什么关系.<br>
+> 3. 现在有55个工程在生成,但是理论上不应该有这么多.<br>

@@ -602,25 +602,6 @@ namespace Dynamo.Models
             #endregion
         }
 
-        /// <summary>
-        /// A command used to force cancellation of execution.
-        /// </summary>
-        [DataContract]
-        public class ForceRunCancelCommand : RunCancelCommand
-        {
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="showErrors">Should errors be shown?</param>
-            /// <param name="cancelRun">True to cancel execution. False to execute.</param>
-            public ForceRunCancelCommand(bool showErrors, bool cancelRun)
-                : base(showErrors, cancelRun) { }
-
-            protected override void ExecuteCore(DynamoModel dynamoModel)
-            {
-                dynamoModel.ForceRunCancelImpl(this);
-            }
-        }
 
         /// <summary>
         /// A command used to mutate commands during testing.

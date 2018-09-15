@@ -437,13 +437,13 @@
                 HorizontalAlignment="Left"
                 Background="Blue"/>
 
-        <Canvas ClipToBounds="False"
+        <!--<Canvas ClipToBounds="False"
                 Grid.Row="4"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Visibility="{Binding ShowDebugASTs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <Label Content="{Binding ASTText}"
-                   HorizontalContentAlignment="Center"></Label>
-        </Canvas>
+                Visibility="{Binding ShowDebugASTs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">-->
+            <!--<Label Content="{Binding ASTText}"
+                   HorizontalContentAlignment="Center"></Label>-->
+        <!--</Canvas>-->
     </Grid>
 </UserControl>

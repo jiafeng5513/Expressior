@@ -8,7 +8,7 @@ namespace Dynamo.Configuration
     /// </summary>
     public class DebugSettings : NotificationObject
     {
-        private bool showDebugASTs = false;
+        //private bool showDebugASTs = false;
         private bool verboseLogging = false;
 
         /// <summary>
@@ -21,19 +21,6 @@ namespace Dynamo.Configuration
             {
                 verboseLogging = value;
                 RaisePropertyChanged("VerboseLogging");
-            }
-        }
-
-        /// <summary>
-        /// Shows near node view its AST compiled node.
-        /// </summary>
-        internal bool ShowDebugASTs
-        {
-            get { return showDebugASTs; }
-            set
-            {
-                showDebugASTs = value;
-                RaisePropertyChanged("ShowDebugASTs");
             }
         }
     }

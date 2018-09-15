@@ -252,9 +252,6 @@
     <Compile Include="Commands\PortCommands.cs" />
     <Compile Include="Commands\SearchCommands.cs" />
     <Compile Include="Commands\WorkspaceCommands.cs" />
-    <Compile Include="Controls\GraphUpdateNotificationControl.xaml.cs">
-      <DependentUpon>GraphUpdateNotificationControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ImageBasedControls.cs" />
     <Compile Include="Controls\ShortcutToolbar.xaml.cs">
       <DependentUpon>ShortcutToolbar.xaml</DependentUpon>
@@ -425,12 +422,6 @@
     <Compile Include="ViewModels\Preview\WatchViewModel.cs" />
     <Compile Include="ViewModels\Core\WorkspaceViewModel.cs" />
     <Compile Include="Windows\ModelessChildWindow.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\GraphUpdateNotificationControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\InCanvasSearchControl.xaml">

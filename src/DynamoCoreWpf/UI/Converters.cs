@@ -1787,28 +1787,6 @@ namespace Dynamo.Controls
         }
     }
 
-    public class IsUpdateAvailableToTextConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var um = value as IUpdateManager;
-            if (um == null)
-                return Resources.AboutWindowCannotGetVersion;
-
-            if (!um.IsUpdateAvailable) 
-                return Resources.AboutWindowUpToDate;
-            
-            var latest = um.AvailableVersion;
-
-            return latest != null ? latest.ToString() : Resources.AboutWindowCannotGetVersion;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-    }
-
     public class IsUpdateAvailableBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

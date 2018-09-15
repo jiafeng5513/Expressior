@@ -40,7 +40,7 @@ using ProtoCore;
 using ProtoCore.Runtime;
 using Compiler = ProtoAssociative.Compiler;
 // Dynamo package manager
-using DefaultUpdateManager = Dynamo.Updates.UpdateManager;
+//using DefaultUpdateManager = Dynamo.Updates.UpdateManager;
 using FunctionGroup = Dynamo.Engine.FunctionGroup;
 using Utils = Dynamo.Graph.Nodes.Utilities;
 
@@ -259,7 +259,7 @@ namespace Dynamo.Models
         /// </summary>
         public string Version
         {
-            get { return DefaultUpdateManager.GetProductVersion().ToString(); }
+            get { return VersionManager.GetProductVersion().ToString(); }
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Dynamo.Models
         /// <summary>
         /// UpdateManager to handle automatic upgrade to higher version.
         /// </summary>
-        public IUpdateManager UpdateManager { get; private set; }
+        //public IUpdateManager UpdateManager { get; private set; }
 
         /// <summary>
         ///     The path manager that configures path information required for
@@ -330,7 +330,7 @@ namespace Dynamo.Models
             get
             {
                 return Process.GetCurrentProcess().ProcessName + "-"
-                    + DefaultUpdateManager.GetProductVersion();
+                    + VersionManager.GetProductVersion();
             }
         }
 
@@ -489,7 +489,7 @@ namespace Dynamo.Models
             IPreferences Preferences { get; set; }
             IPathResolver PathResolver { get; set; }
             bool StartInTestMode { get; set; }
-            IUpdateManager UpdateManager { get; set; }
+            //IUpdateManager UpdateManager { get; set; }
             ISchedulerThread SchedulerThread { get; set; }
             string GeometryFactoryPath { get; set; }
             IAuthProvider AuthProvider { get; set; }
@@ -514,7 +514,7 @@ namespace Dynamo.Models
             public IPreferences Preferences { get; set; }
             public IPathResolver PathResolver { get; set; }
             public bool StartInTestMode { get; set; }
-            public IUpdateManager UpdateManager { get; set; }
+            //public IUpdateManager UpdateManager { get; set; }
             public ISchedulerThread SchedulerThread { get; set; }
             public string GeometryFactoryPath { get; set; }
             public IAuthProvider AuthProvider { get; set; }
@@ -599,29 +599,29 @@ namespace Dynamo.Models
 
             if (!IsTestMode && PreferenceSettings.IsFirstRun)
             {
-                DynamoMigratorBase migrator = null;
+                //DynamoMigratorBase migrator = null;
 
-                try
-                {
-                    var dynamoLookup = config.UpdateManager != null && config.UpdateManager.Configuration != null
-                        ? config.UpdateManager.Configuration.DynamoLookUp : null;
+                //try
+                //{
+                //    var dynamoLookup = config.UpdateManager != null && config.UpdateManager.Configuration != null
+                //        ? config.UpdateManager.Configuration.DynamoLookUp : null;
 
-                    migrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(pathManager, dynamoLookup);
-                }
-                catch (Exception e)
-                {
-                    Logger.Log(e.Message);
-                }
+                //    migrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(pathManager, dynamoLookup);
+                //}
+                //catch (Exception e)
+                //{
+                //    Logger.Log(e.Message);
+                //}
 
-                if (migrator != null)
-                {
-                    var isFirstRun = PreferenceSettings.IsFirstRun;
-                    PreferenceSettings = migrator.PreferenceSettings;
+                //if (migrator != null)
+                //{
+                //    var isFirstRun = PreferenceSettings.IsFirstRun;
+                //    PreferenceSettings = migrator.PreferenceSettings;
 
-                    // Preserve the preference settings for IsFirstRun as this needs to be set
-                    // only by UsageReportingManager
-                    PreferenceSettings.IsFirstRun = isFirstRun;
-                }
+                //    // Preserve the preference settings for IsFirstRun as this needs to be set
+                //    // only by UsageReportingManager
+                //    PreferenceSettings.IsFirstRun = isFirstRun;
+                //}
             }
             InitializePreferences(PreferenceSettings);
 
@@ -706,26 +706,26 @@ namespace Dynamo.Models
 
             AuthenticationManager = new AuthenticationManager(config.AuthProvider);
 
-            UpdateManager = config.UpdateManager ?? new DefaultUpdateManager(null);
+            //UpdateManager = config.UpdateManager ?? new DefaultUpdateManager(null);
 
-            var hostUpdateManager = config.UpdateManager;
+            //var hostUpdateManager = config.UpdateManager;
 
-            if (hostUpdateManager != null)
-            {
-                HostName = hostUpdateManager.HostName;
-                HostVersion = hostUpdateManager.HostVersion == null ? null : hostUpdateManager.HostVersion.ToString();
-            }
-            else
-            {
-                HostName = string.Empty;
-                HostVersion = null;
-            }
+            //if (hostUpdateManager != null)
+            //{
+            //    HostName = hostUpdateManager.HostName;
+            //    HostVersion = hostUpdateManager.HostVersion == null ? null : hostUpdateManager.HostVersion.ToString();
+            //}
+            //else
+            //{
+            //    HostName = string.Empty;
+            //    HostVersion = null;
+            //}
 
-            UpdateManager.Log += UpdateManager_Log;
-            if (!IsTestMode && !IsHeadless)
-            {
-                DefaultUpdateManager.CheckForProductUpdate(UpdateManager);
-            }
+            //UpdateManager.Log += UpdateManager_Log;
+            //if (!IsTestMode && !IsHeadless)
+            //{
+            //    DefaultUpdateManager.CheckForProductUpdate(UpdateManager);
+            //}
 
             Logger.Log(string.Format("Dynamo -- Build {0}",
                                         Assembly.GetExecutingAssembly().GetName().Version));
@@ -989,7 +989,7 @@ namespace Dynamo.Models
             LibraryServices.Dispose();
             LibraryServices.LibraryManagementCore.Cleanup();
 
-            UpdateManager.Log -= UpdateManager_Log;
+            //UpdateManager.Log -= UpdateManager_Log;
             Logger.Dispose();
 
             EngineController.Dispose();
@@ -1395,20 +1395,6 @@ namespace Dynamo.Models
 
             foreach (var def in CustomNodeManager.LoadedDefinitions)
                 RegisterCustomNodeDefinitionWithEngine(def);
-        }
-
-        /// <summary>
-        ///     Forces an evaluation of the current workspace by resetting the DesignScript VM.
-        /// </summary>
-        public void ForceRun()
-        {
-            Logger.Log("Beginning engine reset");
-
-            ResetEngine(true);
-
-            Logger.Log("Reset complete");
-
-            ((HomeWorkspaceModel)CurrentWorkspace).Run();
         }
 
         #endregion
@@ -1893,21 +1879,6 @@ namespace Dynamo.Models
                 }
             }
 
-        }
-
-        internal void DumpLibraryToXml(object parameter)
-        {
-            string fileName = String.Format("LibrarySnapshot_{0}.xml", DateTime.Now.ToString("yyyyMMddHmmss"));
-            string fullFileName = Path.Combine(pathManager.LogDirectory, fileName);
-
-            SearchModel.DumpLibraryToXml(fullFileName, PathManager.DynamoCoreDirectory);
-
-            Logger.Log(string.Format(Resources.LibraryIsDumped, fullFileName));
-        }
-
-        internal bool CanDumpLibraryToXml(object obj)
-        {
-            return true;
         }
 
         #endregion

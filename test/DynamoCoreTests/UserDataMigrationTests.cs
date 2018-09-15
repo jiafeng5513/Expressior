@@ -198,73 +198,73 @@ namespace Dynamo
             
         }
 
-        [Test, Category("UnitTests")]
-        public void GetSortedInstallVersion_FromDynamoLookUp()
-        {
-            var mockLookup = new Mock<IDynamoLookUp>();
-            mockLookup.Setup(x=>x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
+        //[Test, Category("UnitTests")]
+        //public void GetSortedInstallVersion_FromDynamoLookUp()
+        //{
+        //    var mockLookup = new Mock<IDynamoLookUp>();
+        //    mockLookup.Setup(x=>x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
 
-            var versionList = DynamoMigratorBase.GetInstalledVersions(null, mockLookup.Object).ToList();
-            VerifySortedOrder(versionList);
-            Assert.AreEqual(5, versionList.Count);
-            Assert.AreEqual(TempFolder, versionList[0].UserDataRoot);
-            Assert.AreEqual(Path.Combine(TempFolder, "Test"), versionList[1].UserDataRoot);
-            Assert.AreEqual(TempFolder, versionList[2].UserDataRoot);
-        }
+        //    var versionList = DynamoMigratorBase.GetInstalledVersions(null, mockLookup.Object).ToList();
+        //    VerifySortedOrder(versionList);
+        //    Assert.AreEqual(5, versionList.Count);
+        //    Assert.AreEqual(TempFolder, versionList[0].UserDataRoot);
+        //    Assert.AreEqual(Path.Combine(TempFolder, "Test"), versionList[1].UserDataRoot);
+        //    Assert.AreEqual(TempFolder, versionList[2].UserDataRoot);
+        //}
 
-        [Test, Category("UnitTests")]
-        public void GetLatestVersionToMigrate()
-        {
-            var mockLookup = new Mock<IDynamoLookUp>();
-            mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
+        //[Test, Category("UnitTests")]
+        //public void GetLatestVersionToMigrate()
+        //{
+        //    var mockLookup = new Mock<IDynamoLookUp>();
+        //    mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
 
-            var current = new FileVersion(1, 0, Path.Combine(TempFolder, "Test"));
-            var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
-            Assert.IsTrue(latest.HasValue);
-            Assert.AreEqual(1, latest.Value.MajorPart);
-            Assert.AreEqual(0, latest.Value.MinorPart);
-            Assert.AreEqual(TempFolder, latest.Value.UserDataRoot);
-        }
+        //    var current = new FileVersion(1, 0, Path.Combine(TempFolder, "Test"));
+        //    var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
+        //    Assert.IsTrue(latest.HasValue);
+        //    Assert.AreEqual(1, latest.Value.MajorPart);
+        //    Assert.AreEqual(0, latest.Value.MinorPart);
+        //    Assert.AreEqual(TempFolder, latest.Value.UserDataRoot);
+        //}
 
-        [Test, Category("UnitTests")]
-        public void GetLatestVersionToMigrate_10()
-        {
-            var mockLookup = new Mock<IDynamoLookUp>();
-            mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
+        //[Test, Category("UnitTests")]
+        //public void GetLatestVersionToMigrate_10()
+        //{
+        //    var mockLookup = new Mock<IDynamoLookUp>();
+        //    mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
 
-            var current = new FileVersion(1, 0, TempFolder);
-            var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
-            Assert.IsTrue(latest.HasValue);
-            Assert.AreEqual(1, latest.Value.MajorPart);
-            Assert.AreEqual(0, latest.Value.MinorPart);
-            Assert.AreEqual(Path.Combine(TempFolder, "Test"), latest.Value.UserDataRoot);
-        }
+        //    var current = new FileVersion(1, 0, TempFolder);
+        //    var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
+        //    Assert.IsTrue(latest.HasValue);
+        //    Assert.AreEqual(1, latest.Value.MajorPart);
+        //    Assert.AreEqual(0, latest.Value.MinorPart);
+        //    Assert.AreEqual(Path.Combine(TempFolder, "Test"), latest.Value.UserDataRoot);
+        //}
 
 
-        [Test, Category("UnitTests")]
-        public void GetLatestVersionToMigrate_PartiallyValidData()
-        {
-            var mockLookup = new Mock<IDynamoLookUp>();
-            mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
+        //[Test, Category("UnitTests")]
+        //public void GetLatestVersionToMigrate_PartiallyValidData()
+        //{
+        //    var mockLookup = new Mock<IDynamoLookUp>();
+        //    mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(MockUserDirectories);
 
-            var current = new FileVersion(0, 9, TempFolder);
-            var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
-            Assert.IsTrue(latest.HasValue);
-            Assert.AreEqual(0, latest.Value.MajorPart);
-            Assert.AreEqual(8, latest.Value.MinorPart);
-            Assert.AreEqual(TempFolder, latest.Value.UserDataRoot);
-        }
+        //    var current = new FileVersion(0, 9, TempFolder);
+        //    var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
+        //    Assert.IsTrue(latest.HasValue);
+        //    Assert.AreEqual(0, latest.Value.MajorPart);
+        //    Assert.AreEqual(8, latest.Value.MinorPart);
+        //    Assert.AreEqual(TempFolder, latest.Value.UserDataRoot);
+        //}
 
-        [Test, Category("UnitTests")]
-        public void GetLatestVersionToMigrate_AllInvalidData()
-        {
-            var mockLookup = new Mock<IDynamoLookUp>();
-            mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(new[] { "x", "y", "z" });
+        //[Test, Category("UnitTests")]
+        //public void GetLatestVersionToMigrate_AllInvalidData()
+        //{
+        //    var mockLookup = new Mock<IDynamoLookUp>();
+        //    mockLookup.Setup(x => x.GetDynamoUserDataLocations()).Returns(new[] { "x", "y", "z" });
 
-            var current = new FileVersion(1, 0, "a");
-            var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
-            Assert.IsTrue(!latest.HasValue || latest.Value.UserDataRoot == null);
-        }
+        //    var current = new FileVersion(1, 0, "a");
+        //    var latest = DynamoMigratorBase.GetLatestVersionToMigrate(null, mockLookup.Object, current);
+        //    Assert.IsTrue(!latest.HasValue || latest.Value.UserDataRoot == null);
+        //}
 
         private IEnumerable<string> MockUserDirectories()
         {
@@ -350,15 +350,6 @@ namespace Dynamo
             var currentVersionDir = Path.Combine(userDataDir, "2.0");
 
             mockPathManager.Setup(x => x.UserDataDirectory).Returns(() => currentVersionDir);
-
-            // Test MigrateBetweenDynamoVersions
-            var targetMigrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(
-                mockPathManager.Object);
-
-            // Assert that new CustomePackageFolders in preference settings
-            // for 2.0 version points to user data dir for 2.0
-            Assert.AreEqual(currentVersionDir,
-                targetMigrator.PreferenceSettings.CustomPackageFolders[0]);
         }
     }
 }

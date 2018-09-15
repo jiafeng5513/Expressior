@@ -127,6 +127,7 @@ limitations under the License.
     <Compile Include="Graph\Workspaces\SerializationExtensions.cs" />
     <Compile Include="Graph\Workspaces\UndoRedo.cs" />
     <Compile Include="Extensions\IServiceManager.cs" />
+    <Compile Include="Interfaces\DynamoLookUp.cs" />
     <Compile Include="Logging\AnalyticsService.cs" />
     <Compile Include="Logging\DynamoAnalyticsClient.cs" />
     <Compile Include="Logging\IAnalyticsSession.cs" />
@@ -145,6 +146,7 @@ limitations under the License.
     <Compile Include="Interfaces\IDynamoModel.cs" />
     <Compile Include="Library\ILibraryLoader.cs" />
     <Compile Include="Graph\Workspaces\ICustomNodeWorkspaceModel.cs" />
+    <Compile Include="Utilities\VersionManager.cs" />
     <Compile Include="Visualization\IRenderPackageSource.cs" />
     <Compile Include="Graph\Workspaces\IWorkspaceModel.cs" />
     <Compile Include="Logging\LogMessage.cs" />

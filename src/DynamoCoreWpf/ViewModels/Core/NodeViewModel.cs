@@ -367,16 +367,6 @@ namespace Dynamo.ViewModels
         }
 
         [JsonIgnore]
-        public bool ShowDebugASTs
-        {
-            get { return DynamoViewModel.Model.DebugSettings.ShowDebugASTs; }
-            set
-            {
-                DynamoViewModel.Model.DebugSettings.ShowDebugASTs = value;
-            }
-        }
-
-        [JsonIgnore]
         public bool WillForceReExecuteOfNode
         {
             get
@@ -567,7 +557,7 @@ namespace Dynamo.ViewModels
             logic.PropertyChanged += logic_PropertyChanged;
 
             DynamoViewModel.Model.PropertyChanged += Model_PropertyChanged;
-            DynamoViewModel.Model.DebugSettings.PropertyChanged += DebugSettings_PropertyChanged;
+            //DynamoViewModel.Model.DebugSettings.PropertyChanged += DebugSettings_PropertyChanged;
 
             ErrorBubble = new InfoBubbleViewModel(DynamoViewModel);
             UpdateBubbleContent();
@@ -595,7 +585,6 @@ namespace Dynamo.ViewModels
             this.NodeModel.PropertyChanged -= logic_PropertyChanged;
 
             DynamoViewModel.Model.PropertyChanged -= Model_PropertyChanged;
-            DynamoViewModel.Model.DebugSettings.PropertyChanged -= DebugSettings_PropertyChanged;
             if (IsDebugBuild)
             {
                 DynamoViewModel.EngineController.AstBuilt -= EngineController_AstBuilt;
@@ -621,13 +610,13 @@ namespace Dynamo.ViewModels
             RaisePropertyChanged("CanToggleFrozen");
         }
 
-        void DebugSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "ShowDebugASTs")
-            {
-                RaisePropertyChanged("ShowDebugASTs");
-            }
-        }
+        //void DebugSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == "ShowDebugASTs")
+        //    {
+        //        RaisePropertyChanged("ShowDebugASTs");
+        //    }
+        //}
 
         /// <summary>
         /// Handler for the EngineController's AstBuilt event.

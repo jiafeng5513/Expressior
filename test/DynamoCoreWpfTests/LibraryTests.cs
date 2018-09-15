@@ -108,9 +108,9 @@ namespace DynamoCoreWpfTests
                 }
             }
 
-            var document = searchViewModel.Model.ComposeXmlForLibrary(ExecutingDirectory);
+            //var document = searchViewModel.Model.ComposeXmlForLibrary(ExecutingDirectory);
 
-            Assert.AreEqual("LibraryTree", document.DocumentElement.Name);
+            //Assert.AreEqual("LibraryTree", document.DocumentElement.Name);
 
             XmlNode node, subNode;
             foreach (var functionGroup in fgToCompare)
@@ -126,20 +126,20 @@ namespace DynamoCoreWpfTests
                     var group = SearchElementGroup.Action;
                     category = searchViewModel.Model.ProcessNodeCategory(category, ref group);
 
-                    node = document.SelectSingleNode(string.Format(
-                        "//{0}[FullCategoryName='{1}' and Name='{2}']",
-                        typeof(ZeroTouchSearchElement).FullName, category, function.FunctionName));
-                    Assert.IsNotNull(node);
+                    //node = document.SelectSingleNode(string.Format(
+                    //    "//{0}[FullCategoryName='{1}' and Name='{2}']",
+                    //    typeof(ZeroTouchSearchElement).FullName, category, function.FunctionName));
+                    //Assert.IsNotNull(node);
 
-                    subNode = node.SelectSingleNode("Group");
-                    Assert.IsNotNull(subNode.FirstChild);
-                    Assert.AreEqual(group.ToString(), subNode.FirstChild.Value);
+                    //subNode = node.SelectSingleNode("Group");
+                    //Assert.IsNotNull(subNode.FirstChild);
+                    //Assert.AreEqual(group.ToString(), subNode.FirstChild.Value);
 
                     // 'FullCategoryName' is already checked.
                     // 'Name' is already checked.
 
-                    subNode = node.SelectSingleNode("Description");
-                    Assert.IsNotNull(subNode.FirstChild);
+                    //subNode = node.SelectSingleNode("Description");
+                    //Assert.IsNotNull(subNode.FirstChild);
 
                     // No check Description on text equality because for some reason 
                     // function.Descriptions are different in real executing Dynamo and

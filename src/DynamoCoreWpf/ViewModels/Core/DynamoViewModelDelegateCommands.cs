@@ -46,7 +46,6 @@ namespace Dynamo.ViewModels
             CopyCommand = new DelegateCommand(_ => model.Copy(), CanCopy);
             PasteCommand = new DelegateCommand(Paste, CanPaste);
             ToggleConsoleShowingCommand = new DelegateCommand(ToggleConsoleShowing, CanToggleConsoleShowing);
-            ForceRunExpressionCommand = new DelegateCommand(ForceRunExprCmd, RunSettingsViewModel.CanRunExpression);
             MutateTestDelegateCommand = new DelegateCommand(MutateTestCmd, RunSettingsViewModel.CanRunExpression);
             DisplayFunctionCommand = new DelegateCommand(DisplayFunction, CanDisplayFunction);
             SetConnectorTypeCommand = new DelegateCommand(SetConnectorType, CanSetConnectorType);
@@ -74,7 +73,6 @@ namespace Dynamo.ViewModels
             ImportLibraryCommand = new DelegateCommand(ImportLibrary, CanImportLibrary);
             ShowAboutWindowCommand = new DelegateCommand(ShowAboutWindow, CanShowAboutWindow);
             SetNumberFormatCommand = new DelegateCommand(SetNumberFormat, CanSetNumberFormat);
-            DumpLibraryToXmlCommand = new DelegateCommand(model.DumpLibraryToXml, model.CanDumpLibraryToXml);
             ShowGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(true), o => true);
             CloseGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(false), o => true);
             ShowNewPresetsDialogCommand = new DelegateCommand(ShowNewPresetStateDialogAndMakePreset, CanShowNewPresetStateDialog);
@@ -114,15 +112,10 @@ namespace Dynamo.ViewModels
         public DelegateCommand GoToWorkspaceCommand { get; set; }
         public DelegateCommand DeleteCommand { get; set; }
         public DelegateCommand AlignSelectedCommand { get; set; }
-        //public DelegateCommand PostUIActivationCommand { get; set; }
-        //public DelegateCommand ToggleFullscreenWatchShowingCommand { get; set; }
-        //public DelegateCommand ToggleBackgroundGridVisibilityCommand { get; set; }
         public DelegateCommand SelectAllCommand { get; set; }
         public DelegateCommand SaveImageCommand { get; set; }
         public DelegateCommand ShowSaveImageDialogAndSaveResultCommand { get; set; }
         public DelegateCommand ToggleConsoleShowingCommand { get; set; }
-        //public DelegateCommand ShowPackageManagerCommand { get; set; }
-        public DelegateCommand ForceRunExpressionCommand { get; set; }
         public DelegateCommand MutateTestDelegateCommand { get; set; }
         public DelegateCommand DisplayFunctionCommand { get; set; }
         public DelegateCommand SetConnectorTypeCommand { get; set; }
@@ -135,7 +128,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand ShowHideConnectorsCommand { get; set; }
         public DelegateCommand SelectNeighborsCommand { get; set; }
         public DelegateCommand ClearLogCommand { get; set; }
-        //public DelegateCommand SubmitCommand { get; set; }
         public DelegateCommand PublishNewPackageCommand { get; set; }
         public DelegateCommand PublishCurrentWorkspaceCommand { get; set; }
         public DelegateCommand PublishSelectedNodesCommand { get; set; }
@@ -149,8 +141,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand ShowAboutWindowCommand { get; set; }
         public DelegateCommand SetNumberFormatCommand { get; set; }
         public DelegateCommand OpenRecentCommand { get; set; }
-        //public DelegateCommand CheckForLatestRenderCommand { get; set; }
-        public DelegateCommand DumpLibraryToXmlCommand { get; set; }
         public DelegateCommand ShowGalleryCommand { get; set; }
         public DelegateCommand CloseGalleryCommand { get; set; }
         public DelegateCommand ShowNewPresetsDialogCommand { get; set; }
