@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using Dynamo.Utilities;
 
 namespace Dynamo.Wpf.ViewModels.Core
 {
@@ -79,7 +80,7 @@ namespace Dynamo.Wpf.ViewModels.Core
             var galleryFilePath = pathManager.GalleryFilePath;
             var galleryDirectory = Path.GetDirectoryName(galleryFilePath);
 
-            var version = dynamoViewModel.Model.UpdateManager.ProductVersion;
+            var version = VersionManager.GetProductVersion();
 
             DynamoVersion = string.Format(Properties.Resources.GalleryDynamoVersion,
                             version.FileMajor, 

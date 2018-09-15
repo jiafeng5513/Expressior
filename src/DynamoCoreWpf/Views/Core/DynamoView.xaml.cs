@@ -363,7 +363,7 @@ namespace Dynamo.Controls
 
         private void InitializeShortcutBar()
         {
-            shortcutBar = new ShortcutToolbar(this.dynamoViewModel.Model.UpdateManager) { Name = "ShortcutToolbar" };
+            shortcutBar = new ShortcutToolbar() { Name = "ShortcutToolbar" };
 
             var newScriptButton = new ShortcutBarItem
             {

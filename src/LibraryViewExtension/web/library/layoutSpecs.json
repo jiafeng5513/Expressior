@@ -347,8 +347,6 @@
             }
           ]
         },
-
-
         {
           "text": "Input",
           "iconUrl": "./dist/resources/Category.Input.svg",

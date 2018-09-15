@@ -778,18 +778,18 @@
                                   Command="{Binding MutateTestDelegateCommand}"
                                   CommandParameter="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunInDebug}"
                                   IsEnabled="{Binding Path=HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled}"></MenuItem>
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Name="CheckDailyBuilds"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuCheckDailyBuild}"
                                   DataContext="{Binding Path=Model.UpdateManager}"
                                   IsCheckable="True"
-                                  IsChecked="{Binding Path=CheckNewerDailyBuilds, Mode=TwoWay}"></MenuItem>
-                        <MenuItem Focusable="False"
+                                  IsChecked="{Binding Path=CheckNewerDailyBuilds, Mode=TwoWay}"></MenuItem>-->
+                        <!--<MenuItem Focusable="False"
                                   Name="ForceUpdate"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuForceUpdate}"
                                   DataContext="{Binding Path=Model.UpdateManager}"
                                   IsCheckable="True"
-                                  IsChecked="{Binding Path=ForceUpdate, Mode=TwoWay}" />
+                                  IsChecked="{Binding Path=ForceUpdate, Mode=TwoWay}" />-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuDumpLibrary}"
                                   Command="{Binding DumpLibraryToXmlCommand}"

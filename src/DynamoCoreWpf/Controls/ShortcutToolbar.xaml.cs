@@ -15,7 +15,7 @@ namespace Dynamo.UI.Controls
     public partial class ShortcutToolbar : UserControl
     {
         private readonly ObservableCollection<ShortcutBarItem> shortcutBarItems;
-        private readonly ObservableCollection<ShortcutBarItem> shortcutBarRightSideItems;
+        //private readonly ObservableCollection<ShortcutBarItem> shortcutBarRightSideItems;
 
         /// <summary>
         /// A collection of <see cref="ShortcutBarItem"/>.
@@ -28,19 +28,19 @@ namespace Dynamo.UI.Controls
         /// <summary>
         /// A collection of <see cref="ShortcutBarItems"/> for the right hand side of the shortcut bar.
         /// </summary>
-        public ObservableCollection<ShortcutBarItem> ShortcutBarRightSideItems
-        {
-            get { return shortcutBarRightSideItems; }
-        }
+        //public ObservableCollection<ShortcutBarItem> ShortcutBarRightSideItems
+        //{
+        //    get { return shortcutBarRightSideItems; }
+        //}
 
         /// <summary>
         /// Construct a ShortcutToolbar.
         /// </summary>
         /// <param name="updateManager"></param>
-        public ShortcutToolbar(IUpdateManager updateManager)
+        public ShortcutToolbar(/*IUpdateManager updateManager*/)
         {
             shortcutBarItems = new ObservableCollection<ShortcutBarItem>();
-            shortcutBarRightSideItems = new ObservableCollection<ShortcutBarItem>();    
+            //shortcutBarRightSideItems = new ObservableCollection<ShortcutBarItem>();    
 
             InitializeComponent();
             //UpdateControl.DataContext = updateManager;

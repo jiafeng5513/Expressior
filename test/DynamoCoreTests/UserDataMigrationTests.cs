@@ -350,15 +350,6 @@ namespace Dynamo
             var currentVersionDir = Path.Combine(userDataDir, "2.0");
 
             mockPathManager.Setup(x => x.UserDataDirectory).Returns(() => currentVersionDir);
-
-            // Test MigrateBetweenDynamoVersions
-            var targetMigrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(
-                mockPathManager.Object);
-
-            // Assert that new CustomePackageFolders in preference settings
-            // for 2.0 version points to user data dir for 2.0
-            Assert.AreEqual(currentVersionDir,
-                targetMigrator.PreferenceSettings.CustomPackageFolders[0]);
         }
     }
 }
