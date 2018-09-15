@@ -46,7 +46,6 @@ namespace Dynamo.ViewModels
             CopyCommand = new DelegateCommand(_ => model.Copy(), CanCopy);
             PasteCommand = new DelegateCommand(Paste, CanPaste);
             ToggleConsoleShowingCommand = new DelegateCommand(ToggleConsoleShowing, CanToggleConsoleShowing);
-            MutateTestDelegateCommand = new DelegateCommand(MutateTestCmd, RunSettingsViewModel.CanRunExpression);
             DisplayFunctionCommand = new DelegateCommand(DisplayFunction, CanDisplayFunction);
             SetConnectorTypeCommand = new DelegateCommand(SetConnectorType, CanSetConnectorType);
             ReportABugCommand = new DelegateCommand(ReportABug, CanReportABug);
@@ -116,7 +115,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand SaveImageCommand { get; set; }
         public DelegateCommand ShowSaveImageDialogAndSaveResultCommand { get; set; }
         public DelegateCommand ToggleConsoleShowingCommand { get; set; }
-        public DelegateCommand MutateTestDelegateCommand { get; set; }
         public DelegateCommand DisplayFunctionCommand { get; set; }
         public DelegateCommand SetConnectorTypeCommand { get; set; }
         public DelegateCommand ReportABugCommand { get; set; }

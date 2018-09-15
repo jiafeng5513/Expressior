@@ -110,18 +110,6 @@ namespace DynamoCoreWpfTests
         }
 
         [Test]
-        public void OnlyManualRunIsAvailableInDebug()
-        {
-            ViewModel.CurrentSpaceViewModel.RunSettingsViewModel.RunInDebug = true;
-
-            var auto = View.RunSettingsControl.RunTypesComboBox.Items[1] as RunTypeItem;
-            var period = View.RunSettingsControl.RunTypesComboBox.Items[2] as RunTypeItem;
-
-            Assert.False(auto.Enabled);
-            Assert.False(period.Enabled);
-        }
-
-        [Test]
         public void RunSettingsResetsOnWorkspaceClear()
         {
             var homeSpace = GetHomeSpace();

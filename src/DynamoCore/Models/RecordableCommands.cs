@@ -604,19 +604,6 @@ namespace Dynamo.Models
 
 
         /// <summary>
-        /// A command used to mutate commands during testing.
-        /// </summary>
-        public class MutateTestCommand : RecordableCommand
-        {
-            protected override void ExecuteCore(DynamoModel dynamoModel) { }
-
-            protected override void SerializeCore(XmlElement element)
-            {
-                var helper = new XmlElementHelper(element);
-            }
-        }
-
-        /// <summary>
         /// A command used to create a node.
         /// </summary>
         [DataContract]
