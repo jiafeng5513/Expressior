@@ -54,7 +54,6 @@ namespace Dynamo.ViewModels
             GoToDictionaryCommand = new DelegateCommand(GoToDictionary, CanGoToDictionary);
             DisplayStartPageCommand = new DelegateCommand(DisplayStartPage, CanDisplayStartPage);
             ChangeScaleFactorCommand = new DelegateCommand(p => OnRequestScaleFactorDialog(this, EventArgs.Empty));
-            ShowPackageManagerSearchCommand = new DelegateCommand(ShowPackageManagerSearch, CanShowPackageManagerSearch);
             PublishNewPackageCommand = new DelegateCommand(PackageManagerClientViewModel.PublishNewPackage, PackageManagerClientViewModel.CanPublishNewPackage);
             ShowInstalledPackagesCommand = new DelegateCommand(ShowInstalledPackages, CanShowInstalledPackages);
             ManagePackagePathsCommand = new DelegateCommand(ManagePackagePaths, o => true);
@@ -97,7 +96,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand InsertPausePlaybackCommand { get; set; }
         public DelegateCommand GraphAutoLayoutCommand { get; set; }
         public DelegateCommand GoHomeCommand { get; set; }
-        public DelegateCommand ShowPackageManagerSearchCommand { get; set; }
         public DelegateCommand ShowInstalledPackagesCommand { get; set; }
         public DelegateCommand ManagePackagePathsCommand { get; set; }
         public DelegateCommand HomeCommand { get; set; }

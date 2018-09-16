@@ -579,10 +579,6 @@
                               Focusable="False"
                               IsEnabled="True">
                         <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewPackageMenuSearchPackage}"
-                                  Command="{Binding Path=DataContext.ShowPackageManagerSearchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="showPMSearch" />
-                        <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuManagePackage}"
                                   Command="{Binding Path=DataContext.ShowInstalledPackagesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   Name="showPMInstalled" />

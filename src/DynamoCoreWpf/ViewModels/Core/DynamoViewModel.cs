@@ -1473,16 +1473,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        internal void ShowPackageManagerSearch(object parameters)
-        {
-            OnRequestPackageManagerSearchDialog(this, EventArgs.Empty);
-        }
-
-        internal bool CanShowPackageManagerSearch(object parameters)
-        {
-            return true;
-        }
-
         private void ShowInstalledPackages(object parameters)
         {
             OnRequestManagePackagesDialog(this, EventArgs.Empty);

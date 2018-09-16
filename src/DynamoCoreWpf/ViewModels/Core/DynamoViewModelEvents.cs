@@ -30,15 +30,6 @@ namespace Dynamo.ViewModels
                 RequestPackagePublishDialog(vm);
         }
 
-        public event EventHandler RequestPackageManagerSearchDialog;
-        public virtual void OnRequestPackageManagerSearchDialog(Object sender, EventArgs e)
-        {
-            if (RequestPackageManagerSearchDialog != null)
-            {
-                RequestPackageManagerSearchDialog(this, e);
-            }
-        }
-
         public event EventHandler RequestPackagePathsDialog;
         public virtual void OnRequestPackagePathsDialog(object sender, EventArgs e)
         {

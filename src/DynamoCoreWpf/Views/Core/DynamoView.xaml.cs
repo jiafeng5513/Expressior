@@ -505,7 +505,7 @@ namespace Dynamo.Controls
 
             dynamoViewModel.RequestPackagePublishDialog += DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestManagePackagesDialog += DynamoViewModelRequestShowInstalledPackages;
-            dynamoViewModel.RequestPackageManagerSearchDialog += DynamoViewModelRequestShowPackageManagerSearch;
+            //dynamoViewModel.RequestPackageManagerSearchDialog += DynamoViewModelRequestShowPackageManagerSearch;
             dynamoViewModel.RequestPackagePathsDialog += DynamoViewModelRequestPackagePaths;
             dynamoViewModel.RequestScaleFactorDialog += DynamoViewModelChangeScaleFactor;
 
@@ -684,38 +684,6 @@ namespace Dynamo.Controls
             }
 
             _pubPkgView.Focus();
-        }
-
-        private PackageManagerSearchView _searchPkgsView;
-        private PackageManagerSearchViewModel _pkgSearchVM;
-
-        private void DynamoViewModelRequestShowPackageManagerSearch(object s, EventArgs e)
-        {
-            if (!DisplayTermsOfUseForAcceptance())
-                return; // Terms of use not accepted.
-
-            var cmd = Analytics.TrackCommandEvent("SearchPackage");
-            if (_pkgSearchVM == null)
-            {
-                _pkgSearchVM = new PackageManagerSearchViewModel(dynamoViewModel.PackageManagerClientViewModel);
-            }
-
-            if (_searchPkgsView == null)
-            {
-                _searchPkgsView = new PackageManagerSearchView(_pkgSearchVM)
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-
-                _searchPkgsView.Closed += (sender, args) => { _searchPkgsView = null; cmd.Dispose(); };
-                _searchPkgsView.Show();
-
-                if (_searchPkgsView.IsLoaded && IsLoaded) _searchPkgsView.Owner = this;
-            }
-
-            _searchPkgsView.Focus();
-            _pkgSearchVM.RefreshAndSearchAsync();
         }
 
         private void DynamoViewModelRequestPackagePaths(object sender, EventArgs e)
@@ -1094,7 +1062,7 @@ namespace Dynamo.Controls
             //PACKAGE MANAGER
             dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestManagePackagesDialog -= DynamoViewModelRequestShowInstalledPackages;
-            dynamoViewModel.RequestPackageManagerSearchDialog -= DynamoViewModelRequestShowPackageManagerSearch;
+            //dynamoViewModel.RequestPackageManagerSearchDialog -= DynamoViewModelRequestShowPackageManagerSearch;
             dynamoViewModel.RequestPackagePathsDialog -= DynamoViewModelRequestPackagePaths;
 
             //FUNCTION NAME PROMPT
