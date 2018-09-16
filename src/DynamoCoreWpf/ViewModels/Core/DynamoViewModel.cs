@@ -1463,25 +1463,25 @@ namespace Dynamo.ViewModels
             return false;
         }
 
-        internal bool CanVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
+        //internal bool CanVisibilityBeToggled(object parameters)
+        //{
+        //    return true;
+        //}
 
-        internal bool CanUpstreamVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
+        //internal bool CanUpstreamVisibilityBeToggled(object parameters)
+        //{
+        //    return true;
+        //}
 
-        private void ShowInstalledPackages(object parameters)
-        {
-            OnRequestManagePackagesDialog(this, EventArgs.Empty);
-        }
+        //private void ShowInstalledPackages(object parameters)
+        //{
+        //    OnRequestManagePackagesDialog(this, EventArgs.Empty);
+        //}
 
-        private bool CanShowInstalledPackages(object parameters)
-        {
-            return true;
-        }
+        //private bool CanShowInstalledPackages(object parameters)
+        //{
+        //    return true;
+        //}
 
         private void ManagePackagePaths(object parameters)
         {

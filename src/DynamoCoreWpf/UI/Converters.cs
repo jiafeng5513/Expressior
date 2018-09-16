@@ -80,42 +80,6 @@ namespace Dynamo.Controls
         }
     }
 
-    //public class PackageSearchStateToStringConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter,
-    //                          CultureInfo culture)
-    //    {
-    //        if (value is PackageManagerSearchViewModel.PackageSearchState)
-    //        {
-    //            var st = (PackageManagerSearchViewModel.PackageSearchState)value;
-
-    //            if (st == PackageManagerSearchViewModel.PackageSearchState.NoResults)
-    //            {
-    //                return Resources.PackageSearchStateNoResult;
-    //            }
-    //            else if (st == PackageManagerSearchViewModel.PackageSearchState.Results)
-    //            {
-    //                return "";
-    //            }
-    //            else if (st == PackageManagerSearchViewModel.PackageSearchState.Searching)
-    //            {
-    //                return Resources.PackageSearchStateSearching;
-    //            }
-    //            else if (st == PackageManagerSearchViewModel.PackageSearchState.Syncing)
-    //            {
-    //                return Resources.PackageSearchStateSyncingWithServer;
-    //            }
-    //        }
-
-    //        return Resources.PackageStateUnknown;
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        return null;
-    //    }
-    //}
-
     public class PackageUploadStateToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,

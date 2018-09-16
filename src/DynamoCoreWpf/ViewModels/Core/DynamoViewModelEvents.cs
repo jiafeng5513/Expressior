@@ -7,14 +7,14 @@ namespace Dynamo.ViewModels
 {
     partial class DynamoViewModel
     {
-        public event EventHandler RequestManagePackagesDialog;
-        public virtual void OnRequestManagePackagesDialog(Object sender, EventArgs e)
-        {
-            if (RequestManagePackagesDialog != null)
-            {
-                RequestManagePackagesDialog(this, e);
-            }
-        }
+        //public event EventHandler RequestManagePackagesDialog;
+        //public virtual void OnRequestManagePackagesDialog(Object sender, EventArgs e)
+        //{
+        //    if (RequestManagePackagesDialog != null)
+        //    {
+        //        RequestManagePackagesDialog(this, e);
+        //    }
+        //}
         internal event RequestViewOperationHandler RequestViewOperation;
         private void OnRequestViewOperation(ViewOperationEventArgs e)
         {
