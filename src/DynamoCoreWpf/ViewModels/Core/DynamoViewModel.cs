@@ -836,7 +836,7 @@ namespace Dynamo.ViewModels
 
         private void SelectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            PublishSelectedNodesCommand.RaiseCanExecuteChanged();
+            //PublishSelectedNodesCommand.RaiseCanExecuteChanged();
             AlignSelectedCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             UngroupModelCommand.RaiseCanExecuteChanged();
@@ -867,8 +867,8 @@ namespace Dynamo.ViewModels
                     RaisePropertyChanged("BackgroundColor");
                     RaisePropertyChanged("CurrentWorkspaceIndex");
                     RaisePropertyChanged("ViewingHomespace");
-                    if (this.PublishCurrentWorkspaceCommand != null)
-                        this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
+                    //if (this.PublishCurrentWorkspaceCommand != null)
+                    //    this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
                     RaisePropertyChanged("IsPanning");
                     RaisePropertyChanged("IsOrbiting");
                     if (ChangeScaleFactorCommand != null)

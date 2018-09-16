@@ -574,7 +574,7 @@
                         </MenuItem>-->
                     </MenuItem>
                     <!--Package-->
-                    <MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
+                    <!--<MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
                               Name="PackageManagerMenu"
                               Focusable="False"
                               IsEnabled="True">
@@ -590,7 +590,7 @@
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuPublishWorkspace}"
                                   Command="{Binding Path=DataContext.PublishCurrentWorkspaceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   Name="publishCurrent" />
-                    </MenuItem>
+                    </MenuItem>-->
                     <!--Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
                               Name="SettingsMenu"
