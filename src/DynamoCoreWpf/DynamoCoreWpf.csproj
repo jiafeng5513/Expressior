@@ -142,9 +142,6 @@
     <Compile Include="Controls\InfiniteGridView.xaml.cs">
       <DependentUpon>InfiniteGridView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\HeaderStrip.xaml.cs">
       <DependentUpon>HeaderStrip.xaml</DependentUpon>
     </Compile>
@@ -380,7 +377,6 @@
     <Compile Include="ViewModels\PackageManager\PackageItemRootViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageItemViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageManagerClientViewModel.cs" />
-    <Compile Include="ViewModels\PackageManager\PackageManagerSearchElementViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageViewModel.cs" />
     <Compile Include="ViewModels\Core\PortViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchViewModel.cs" />
@@ -396,10 +392,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\InfiniteGridView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -213,21 +213,21 @@ namespace Dynamo.ViewModels
         }
 
 
-        private void ExecuteWithTou(Action acceptanceCallback)
-        {
-            var dModel = dynamoViewModel.Model;
-            // create TermsOfUseHelper object to check asynchronously whether the Terms of Use has 
-            // been accepted, and if so, continue to execute the provided Action.
-            var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-            {
-                PackageManagerClient = dModel.GetPackageManagerExtension().PackageManagerClient,
-                AuthenticationManager = dModel.AuthenticationManager,
-                ResourceProvider = dynamoViewModel.BrandingResourceProvider,
-                AcceptanceCallback = acceptanceCallback
-            });
+        //private void ExecuteWithTou(Action acceptanceCallback)
+        //{
+        //    var dModel = dynamoViewModel.Model;
+        //    // create TermsOfUseHelper object to check asynchronously whether the Terms of Use has 
+        //    // been accepted, and if so, continue to execute the provided Action.
+        //    var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
+        //    {
+        //        PackageManagerClient = dModel.GetPackageManagerExtension().PackageManagerClient,
+        //        AuthenticationManager = dModel.AuthenticationManager,
+        //        ResourceProvider = dynamoViewModel.BrandingResourceProvider,
+        //        AcceptanceCallback = acceptanceCallback
+        //    });
 
-            termsOfUseCheck.Execute(false);
-        }
+        //    termsOfUseCheck.Execute(false);
+        //}
 
         private bool CanPublishNewPackage()
         {
