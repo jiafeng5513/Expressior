@@ -578,10 +578,6 @@
                               Name="PackageManagerMenu"
                               Focusable="False"
                               IsEnabled="True">
-                        <!--<MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewPackageMenuManagePackage}"
-                                  Command="{Binding Path=DataContext.ShowInstalledPackagesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="showPMInstalled" />-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewPackageMenuPublishPackage}"
                                   Command="{Binding Path=DataContext.PublishNewPackageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"

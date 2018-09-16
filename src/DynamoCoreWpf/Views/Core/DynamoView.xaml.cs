@@ -504,8 +504,6 @@ namespace Dynamo.Controls
             #region Package manager
 
             dynamoViewModel.RequestPackagePublishDialog += DynamoViewModelRequestRequestPackageManagerPublish;
-            //dynamoViewModel.RequestManagePackagesDialog += DynamoViewModelRequestShowInstalledPackages;
-            //dynamoViewModel.RequestPackageManagerSearchDialog += DynamoViewModelRequestShowPackageManagerSearch;
             dynamoViewModel.RequestPackagePathsDialog += DynamoViewModelRequestPackagePaths;
             dynamoViewModel.RequestScaleFactorDialog += DynamoViewModelChangeScaleFactor;
 
@@ -718,29 +716,6 @@ namespace Dynamo.Controls
                 }
             }
         }
-
-        //private InstalledPackagesView _installedPkgsView;
-
-        //private void DynamoViewModelRequestShowInstalledPackages(object s, EventArgs e)
-        //{
-        //    var cmd = Analytics.TrackCommandEvent("ManagePackage");
-        //    if (_installedPkgsView == null)
-        //    {
-        //        var pmExtension = dynamoViewModel.Model.GetPackageManagerExtension();
-        //        _installedPkgsView = new InstalledPackagesView(new InstalledPackagesViewModel(dynamoViewModel,
-        //            pmExtension.PackageLoader))
-        //        {
-        //            Owner = this,
-        //            WindowStartupLocation = WindowStartupLocation.CenterOwner
-        //        };
-
-        //        _installedPkgsView.Closed += (sender, args) => { _installedPkgsView = null; cmd.Dispose(); };
-        //        _installedPkgsView.Show();
-
-        //        if (_installedPkgsView.IsLoaded && IsLoaded) _installedPkgsView.Owner = this;
-        //    }
-        //    _installedPkgsView.Focus();
-        //}
 
         private void ClipBoard_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -1061,8 +1036,6 @@ namespace Dynamo.Controls
 
             //PACKAGE MANAGER
             dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
-            //dynamoViewModel.RequestManagePackagesDialog -= DynamoViewModelRequestShowInstalledPackages;
-            //dynamoViewModel.RequestPackageManagerSearchDialog -= DynamoViewModelRequestShowPackageManagerSearch;
             dynamoViewModel.RequestPackagePathsDialog -= DynamoViewModelRequestPackagePaths;
 
             //FUNCTION NAME PROMPT
