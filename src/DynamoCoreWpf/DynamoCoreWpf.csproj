@@ -373,7 +373,6 @@
     <Compile Include="ViewModels\Core\DynamoViewModelEventArgs.cs" />
     <Compile Include="ViewModels\Core\DynamoViewModelEvents.cs" />
     <Compile Include="ViewModels\Preview\InfoBubbleViewModel.cs" />
-    <Compile Include="ViewModels\PackageManager\InstalledPackagesViewModel.cs" />
     <Compile Include="ViewModels\Core\NodeViewModel.cs" />
     <Compile Include="ViewModels\Core\NoteViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageItemInternalViewModel.cs" />
