@@ -93,7 +93,6 @@
     <controls:NonEmptyStringToCollapsedConverter x:Key="NonEmptyStringToCollapsedConverter" />
     <controls:SearchResultsToVisibilityConverter x:Key="SearchResultsToVisibilityConverter" />
     <controls:EnumToBooleanConverter x:Key="EnumToBoolConverter" />
-    <controls:PackageUploadStateToStringConverter x:Key="PackageUploadStateToStringConverter" />
     <controls:ShowHideClassicNavigatorMenuItemConverter x:Key="ShowHideClassicNavigatorMenuItemConverter" />
     <controls:PortTypeToMarginConverter x:Key="PortTypeToMarginConverter" />
     <controls:PortTypeToTextAlignmentConverter x:Key="PortTypeToTextAlignmentConverter" />

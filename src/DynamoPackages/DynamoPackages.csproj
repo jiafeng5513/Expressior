@@ -80,7 +80,6 @@
     <Compile Include="PackageDirectoryBuilder.cs" />
     <Compile Include="PackageFileInfo.cs" />
     <Compile Include="PackageLoader.cs" />
-    <Compile Include="PackageManagerClient.cs" />
     <Compile Include="PackageManagerExtension.cs" />
     <Compile Include="PackageManagerResult.cs" />
     <Compile Include="PackageManagerSearchElement.cs" />
