@@ -172,7 +172,6 @@
     <Compile Include="PresetViewModelTest.cs" />
     <Compile Include="PreviewBubbleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PublishPackageViewModelTests.cs" />
     <Compile Include="RecentFileTests.cs" />
     <Compile Include="RecordedTests.cs" />
     <Compile Include="RunSettingsTests.cs" />

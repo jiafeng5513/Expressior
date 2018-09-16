@@ -503,7 +503,7 @@ namespace Dynamo.Controls
 
             #region Package manager
 
-            dynamoViewModel.RequestPackagePublishDialog += DynamoViewModelRequestRequestPackageManagerPublish;
+            //dynamoViewModel.RequestPackagePublishDialog += DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestPackagePathsDialog += DynamoViewModelRequestPackagePaths;
             dynamoViewModel.RequestScaleFactorDialog += DynamoViewModelChangeScaleFactor;
 
@@ -591,28 +591,6 @@ namespace Dynamo.Controls
             Analytics.TrackTimedEvent(Categories.Performance, "ViewStartup", dynamoViewModel.Model.stopwatch.Elapsed, packages);
         }
 
-        /// <summary>
-        /// Call this method to optionally bring up terms of use dialog. User 
-        /// needs to accept terms of use before any packages can be downloaded 
-        /// from package manager.
-        /// </summary>
-        /// <returns>Returns true if the terms of use for downloading a package 
-        /// is accepted by the user, or false otherwise. If this method returns 
-        /// false, then download of package should be terminated.</returns>
-        /// 
-        private bool DisplayTermsOfUseForAcceptance()
-        {
-            var prefSettings = dynamoViewModel.Model.PreferenceSettings;
-            if (prefSettings.PackageDownloadTouAccepted)
-                return true; // User accepts the terms of use.
-
-            var acceptedTermsOfUse = TermsOfUseHelper.ShowTermsOfUseDialog(false, null);
-            prefSettings.PackageDownloadTouAccepted = acceptedTermsOfUse;
-
-            // User may or may not accept the terms.
-            return prefSettings.PackageDownloadTouAccepted;
-        }
-
         private void DynamoView_Unloaded(object sender, RoutedEventArgs e)
         {
             UnsubscribeNodeViewCustomizationEvents();
@@ -663,26 +641,26 @@ namespace Dynamo.Controls
             }
         }
 
-        private PublishPackageView _pubPkgView;
+        //private PublishPackageView _pubPkgView;
 
-        private void DynamoViewModelRequestRequestPackageManagerPublish(PublishPackageViewModel model)
-        {
-            var cmd = Analytics.TrackCommandEvent("PublishPackage");
-            if (_pubPkgView == null)
-            {
-                _pubPkgView = new PublishPackageView(model)
-                {
-                    Owner = this,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                _pubPkgView.Closed += (sender, args) => { _pubPkgView = null; cmd.Dispose(); };
-                _pubPkgView.Show();
+        //private void DynamoViewModelRequestRequestPackageManagerPublish(PublishPackageViewModel model)
+        //{
+        //    var cmd = Analytics.TrackCommandEvent("PublishPackage");
+        //    if (_pubPkgView == null)
+        //    {
+        //        _pubPkgView = new PublishPackageView(model)
+        //        {
+        //            Owner = this,
+        //            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        //        };
+        //        _pubPkgView.Closed += (sender, args) => { _pubPkgView = null; cmd.Dispose(); };
+        //        _pubPkgView.Show();
 
-                if (_pubPkgView.IsLoaded && IsLoaded) _pubPkgView.Owner = this;
-            }
+        //        if (_pubPkgView.IsLoaded && IsLoaded) _pubPkgView.Owner = this;
+        //    }
 
-            _pubPkgView.Focus();
-        }
+        //    _pubPkgView.Focus();
+        //}
 
         private void DynamoViewModelRequestPackagePaths(object sender, EventArgs e)
         {
@@ -1035,7 +1013,7 @@ namespace Dynamo.Controls
             dynamoViewModel.Model.RequestLayoutUpdate -= vm_RequestLayoutUpdate;
 
             //PACKAGE MANAGER
-            dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
+            //dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestPackagePathsDialog -= DynamoViewModelRequestPackagePaths;
 
             //FUNCTION NAME PROMPT

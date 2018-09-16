@@ -99,7 +99,7 @@ namespace Dynamo.ViewModels
                     else
                     {
                         // Prompt user to accept the terms of use.
-                        ShowTermsOfUseForPublishing();
+                        //ShowTermsOfUseForPublishing();
                     }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext()).
@@ -111,54 +111,54 @@ namespace Dynamo.ViewModels
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        internal static bool ShowTermsOfUseDialog(bool forPublishing, string additionalTerms)
-        {
-            var executingAssemblyPathName = Assembly.GetExecutingAssembly().Location;
-            var rootModuleDirectory = Path.GetDirectoryName(executingAssemblyPathName);
-            var touFilePath = Path.Combine(rootModuleDirectory, "TermsOfUse.rtf");
+        //internal static bool ShowTermsOfUseDialog(bool forPublishing, string additionalTerms)
+        //{
+        //    var executingAssemblyPathName = Assembly.GetExecutingAssembly().Location;
+        //    var rootModuleDirectory = Path.GetDirectoryName(executingAssemblyPathName);
+        //    var touFilePath = Path.Combine(rootModuleDirectory, "TermsOfUse.rtf");
 
-            var termsOfUseView = new TermsOfUseView(touFilePath);
-            termsOfUseView.ShowDialog();
-            if (!termsOfUseView.AcceptedTermsOfUse)
-                return false; // User rejected the terms, go no further.
+        //    //var termsOfUseView = new TermsOfUseView(touFilePath);
+        //    //termsOfUseView.ShowDialog();
+        //    //if (!termsOfUseView.AcceptedTermsOfUse)
+        //    //    return false; // User rejected the terms, go no further.
 
-            if (string.IsNullOrEmpty(additionalTerms)) // No additional terms.
-                return termsOfUseView.AcceptedTermsOfUse;
+        //    //if (string.IsNullOrEmpty(additionalTerms)) // No additional terms.
+        //    //    return termsOfUseView.AcceptedTermsOfUse;
 
-            // If user has accepted the terms, and if there is an additional 
-            // terms specified, then that should be shown, too. Note that if 
-            // the file path is provided, it has to represent a valid file path.
-            // 
-            if (!File.Exists(additionalTerms))
-                throw new FileNotFoundException(additionalTerms);
+        //    // If user has accepted the terms, and if there is an additional 
+        //    // terms specified, then that should be shown, too. Note that if 
+        //    // the file path is provided, it has to represent a valid file path.
+        //    // 
+        //    if (!File.Exists(additionalTerms))
+        //        throw new FileNotFoundException(additionalTerms);
 
-            var additionalTermsView = new TermsOfUseView(additionalTerms);
-            additionalTermsView.ShowDialog();
-            return additionalTermsView.AcceptedTermsOfUse;
-        }
+        //    var additionalTermsView = new TermsOfUseView(additionalTerms);
+        //    additionalTermsView.ShowDialog();
+        //    return additionalTermsView.AcceptedTermsOfUse;
+        //}
 
-        private void ShowTermsOfUseForPublishing()
-        {
-            var additionalTerms = string.Empty;
-            if (resourceProvider != null)
-                additionalTerms = resourceProvider.AdditionalPackagePublisherTermsOfUse;
+        //private void ShowTermsOfUseForPublishing()
+        //{
+        //    var additionalTerms = string.Empty;
+        //    if (resourceProvider != null)
+        //        additionalTerms = resourceProvider.AdditionalPackagePublisherTermsOfUse;
 
-            if (!ShowTermsOfUseDialog(true, additionalTerms))
-                return; // Terms of use not accepted.
+        //    if (!ShowTermsOfUseDialog(true, additionalTerms))
+        //        return; // Terms of use not accepted.
 
-            // If user accepts the terms of use, then update the record on 
-            // the server, before proceeding to show the publishing dialog. 
-            // This method is invoked on the UI thread, so when the server call 
-            // returns, invoke the publish dialog on the UI thread's context.
-            // 
-            Task<bool>.Factory.StartNew(() => packageManagerClient.SetTermsOfUseAcceptanceStatus()).
-                ContinueWith(t =>
-                {
-                    if (t.Result)
-                        callbackAction.Invoke();
-                },
-                TaskScheduler.FromCurrentSynchronizationContext());
-        }
+        //    // If user accepts the terms of use, then update the record on 
+        //    // the server, before proceeding to show the publishing dialog. 
+        //    // This method is invoked on the UI thread, so when the server call 
+        //    // returns, invoke the publish dialog on the UI thread's context.
+        //    // 
+        //    Task<bool>.Factory.StartNew(() => packageManagerClient.SetTermsOfUseAcceptanceStatus()).
+        //        ContinueWith(t =>
+        //        {
+        //            if (t.Result)
+        //                callbackAction.Invoke();
+        //        },
+        //        TaskScheduler.FromCurrentSynchronizationContext());
+        //}
     }
 
     /// <summary>
@@ -242,180 +242,6 @@ namespace Dynamo.ViewModels
         private bool CanToggleLoginState()
         {
             return AuthenticationManager.LoginState == LoginState.LoggedOut || AuthenticationManager.LoginState == LoginState.LoggedIn;
-        }
-
-        public void PublishCurrentWorkspace(object m)
-        {
-            var ws = (CustomNodeWorkspaceModel)DynamoViewModel.CurrentSpace;
-
-            CustomNodeDefinition currentFunDef;
-            if (DynamoViewModel.Model.CustomNodeManager.TryGetFunctionDefinition(
-                ws.CustomNodeId,
-                DynamoModel.IsTestMode,
-                out currentFunDef))
-            {
-                CustomNodeInfo currentFunInfo;
-                if (DynamoViewModel.Model.CustomNodeManager.TryGetNodeInfo(
-                    ws.CustomNodeId,
-                    out currentFunInfo))
-                {
-                    var touParams = new TermsOfUseHelperParams
-                    {
-                        PackageManagerClient = Model,
-                        AuthenticationManager = DynamoViewModel.Model.AuthenticationManager,
-                        ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-                        AcceptanceCallback = () => ShowNodePublishInfo(new[]
-                        {
-                            Tuple.Create(currentFunInfo, currentFunDef)
-                        })
-                    };
-
-                    var termsOfUseCheck = new TermsOfUseHelper(touParams);
-                    termsOfUseCheck.Execute();
-                    return;
-                }
-            }
-            
-            MessageBox.Show(Resources.MessageSelectSymbolNotFound, 
-                    Resources.SelectionErrorMessageBoxTitle,
-                    MessageBoxButton.OK, MessageBoxImage.Question);
-        }
-
-        public bool CanPublishCurrentWorkspace(object m)
-        {
-            return DynamoViewModel.Model.CurrentWorkspace is CustomNodeWorkspaceModel && AuthenticationManager.HasAuthProvider;
-        }
-
-        public void PublishNewPackage(object m)
-        {
-            var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-            {
-                PackageManagerClient = Model,
-                AuthenticationManager = AuthenticationManager,
-                ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-                AcceptanceCallback = ShowNodePublishInfo
-            });
-
-            termsOfUseCheck.Execute();
-        }
-
-        public bool CanPublishNewPackage(object m)
-        {
-            return AuthenticationManager.HasAuthProvider;
-        }
-
-        public void PublishCustomNode(Function m)
-        {
-            CustomNodeInfo currentFunInfo;
-            if (DynamoViewModel.Model.CustomNodeManager.TryGetNodeInfo(
-                m.Definition.FunctionId,
-                out currentFunInfo))
-            {
-                var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-                {
-                    PackageManagerClient = Model,
-                    AuthenticationManager = AuthenticationManager,
-                    ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-                    AcceptanceCallback = () => ShowNodePublishInfo(new[]
-                    {
-                        Tuple.Create(currentFunInfo, m.Definition)
-                    })
-                });
-
-                termsOfUseCheck.Execute();
-            }
-        }
-
-        public bool CanPublishCustomNode(Function m)
-        {
-            return AuthenticationManager.HasAuthProvider && m != null;
-        }
-
-        public void PublishSelectedNodes(object m)
-        {
-            var nodeList = DynamoSelection.Instance.Selection
-                                .Where(x => x is Function)
-                                .Cast<Function>()
-                                .Select(x => x.Definition.FunctionId)
-                                .ToList();
-
-            if (!nodeList.Any())
-            {
-                MessageBox.Show(Resources.MessageSelectAtLeastOneNode,
-                   Resources.SelectionErrorMessageBoxTitle,
-                   MessageBoxButton.OK, MessageBoxImage.Question);
-                return;
-            }
-
-            var manager = DynamoViewModel.Model.CustomNodeManager;
-
-            var defs = new List<Tuple<CustomNodeInfo, CustomNodeDefinition>>();
-            foreach (var node in nodeList)
-            {
-                CustomNodeInfo info;
-                if (manager.TryGetNodeInfo(node, out info))
-                {
-                    CustomNodeDefinition def;
-                    if (manager.TryGetFunctionDefinition(node, DynamoModel.IsTestMode, out def))
-                    {
-                        defs.Add(Tuple.Create(info, def));
-                        continue;
-                    }
-                }
-                MessageBox.Show(Resources.MessageGettingNodeError, 
-                    Resources.SelectionErrorMessageBoxTitle, 
-                    MessageBoxButton.OK, MessageBoxImage.Question);
-            }
-
-            var termsOfUseCheck = new TermsOfUseHelper(new TermsOfUseHelperParams
-            {
-                PackageManagerClient = Model,
-                AuthenticationManager = AuthenticationManager,
-                ResourceProvider = DynamoViewModel.BrandingResourceProvider,
-                AcceptanceCallback = () => ShowNodePublishInfo(defs)
-            });
-
-            termsOfUseCheck.Execute();
-        }
-
-        public bool CanPublishSelectedNodes(object m)
-        {
-            return DynamoSelection.Instance.Selection.Count > 0 &&
-                   DynamoSelection.Instance.Selection.All(x => x is Function) && AuthenticationManager.HasAuthProvider; ;
-        }
-
-        private void ShowNodePublishInfo()
-        {
-            var newPkgVm = new PublishPackageViewModel(DynamoViewModel);
-            DynamoViewModel.OnRequestPackagePublishDialog(newPkgVm);
-        }
-
-        private void ShowNodePublishInfo(ICollection<Tuple<CustomNodeInfo, CustomNodeDefinition>> funcDefs)
-        {
-            foreach (var f in funcDefs)
-            {
-                var pmExtension = DynamoViewModel.Model.GetPackageManagerExtension();
-                var pkg = pmExtension.PackageLoader.GetOwnerPackage(f.Item1);
-
-                if (pkg != null)
-                {
-                    var m = MessageBox.Show(String.Format(Resources.MessageSubmitSameNamePackage, 
-                            DynamoViewModel.BrandingResourceProvider.ProductName,pkg.Name),
-                            Resources.PackageWarningMessageBoxTitle, 
-                            MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                    if (m == MessageBoxResult.Yes)
-                    {
-                        var pkgVm = new PackageViewModel(DynamoViewModel, pkg);
-                        pkgVm.PublishNewPackageVersionCommand.Execute();
-                        return;
-                    }
-                }
-            }
-
-            var newPkgVm = new PublishPackageViewModel(DynamoViewModel) { CustomNodeDefinitions = funcDefs.Select(pair => pair.Item2).ToList() };
-
-            DynamoViewModel.OnRequestPackagePublishDialog(newPkgVm);
         }
 
         public List<PackageManagerSearchElement> ListAll()

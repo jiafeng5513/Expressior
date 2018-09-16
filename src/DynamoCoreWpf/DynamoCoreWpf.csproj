@@ -313,9 +313,6 @@
     <Compile Include="Views\PackageManager\PackagePathView.xaml.cs">
       <DependentUpon>PackagePathView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PackageManager\TermsOfUseView.xaml.cs">
-      <DependentUpon>TermsOfUseView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\Watch3D\AttachedProperties.cs" />
     <Compile Include="ViewModels\Watch3D\DynamoEffectsManager.cs" />
     <Compile Include="ViewModels\Watch3D\DynamoRenderTechniquesManager.cs" />
@@ -353,9 +350,6 @@
     <Compile Include="Views\Preview\PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PackageManager\PublishPackageView.xaml.cs">
-      <DependentUpon>PublishPackageView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TooltipWindow.xaml.cs">
       <DependentUpon>TooltipWindow.xaml</DependentUpon>
     </Compile>
@@ -390,7 +384,6 @@
     <Compile Include="ViewModels\PackageManager\PackageManagerSearchElementViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageViewModel.cs" />
     <Compile Include="ViewModels\Core\PortViewModel.cs" />
-    <Compile Include="ViewModels\PackageManager\PublishPackageViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\Preview\Watch3DFullscreenViewModel.cs" />
@@ -1080,10 +1073,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PackageManager\TermsOfUseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Preview\PreviewCompactView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1133,10 +1122,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\PackageManager\PublishPackageView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\TooltipWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

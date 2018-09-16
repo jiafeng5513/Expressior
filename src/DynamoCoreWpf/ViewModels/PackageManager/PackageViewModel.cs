@@ -66,8 +66,6 @@ namespace Dynamo.ViewModels
 
             ToggleTypesVisibleInManagerCommand = new DelegateCommand(ToggleTypesVisibleInManager, CanToggleTypesVisibleInManager);
             GetLatestVersionCommand = new DelegateCommand(GetLatestVersion, CanGetLatestVersion);
-            PublishNewPackageVersionCommand = new DelegateCommand(() => ExecuteWithTou(PublishNewPackageVersion), CanPublishNewPackageVersion);
-            PublishNewPackageCommand = new DelegateCommand(() => ExecuteWithTou(PublishNewPackage), CanPublishNewPackage);
             UninstallCommand = new DelegateCommand(Uninstall, CanUninstall);
             DeprecateCommand = new DelegateCommand(Deprecate, CanDeprecate);
             UndeprecateCommand = new DelegateCommand(Undeprecate, CanUndeprecate);
@@ -214,28 +212,6 @@ namespace Dynamo.ViewModels
             return dynamoViewModel.Model.AuthenticationManager.HasAuthProvider;
         }
 
-        private void PublishNewPackageVersion()
-        {
-            Model.RefreshCustomNodesFromDirectory(dynamoViewModel.Model.CustomNodeManager, DynamoModel.IsTestMode);
-            var vm = PublishPackageViewModel.FromLocalPackage(dynamoViewModel, Model);
-            vm.IsNewVersion = true;
-
-            dynamoViewModel.OnRequestPackagePublishDialog(vm);
-        }
-
-        private bool CanPublishNewPackageVersion()
-        {
-            return dynamoViewModel.Model.AuthenticationManager.HasAuthProvider;
-        }
-
-        private void PublishNewPackage()
-        {
-            Model.RefreshCustomNodesFromDirectory(dynamoViewModel.Model.CustomNodeManager, DynamoModel.IsTestMode);
-            var vm = PublishPackageViewModel.FromLocalPackage(dynamoViewModel, Model);
-            vm.IsNewVersion = false;
-
-            dynamoViewModel.OnRequestPackagePublishDialog(vm);
-        }
 
         private void ExecuteWithTou(Action acceptanceCallback)
         {
