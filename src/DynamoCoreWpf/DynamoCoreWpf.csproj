@@ -353,9 +353,6 @@
     <Compile Include="Views\Core\NoteView.xaml.cs">
       <DependentUpon>NoteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PackageManager\PackageManagerSearchView.xaml.cs">
-      <DependentUpon>PackageManagerSearchView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Preview\PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
@@ -394,7 +391,6 @@
     <Compile Include="ViewModels\PackageManager\PackageItemViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageManagerClientViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageManagerSearchElementViewModel.cs" />
-    <Compile Include="ViewModels\PackageManager\PackageManagerSearchViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageViewModel.cs" />
     <Compile Include="ViewModels\Core\PortViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PublishPackageViewModel.cs" />
@@ -1135,12 +1131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Core\NoteView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\PackageManager\PackageManagerSearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

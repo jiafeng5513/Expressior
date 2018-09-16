@@ -168,7 +168,6 @@
     <Compile Include="LibraryTests.cs" />
     <Compile Include="NodeViewCustomizationTests.cs" />
     <Compile Include="PackagePathTests.cs" />
-    <Compile Include="PackageManagerUITests.cs" />
     <Compile Include="PackageManager\PackageDependencyTests.cs" />
     <Compile Include="PackageManager\PackageManagerSearchViewModelTests.cs" />
     <Compile Include="PresetViewModelTest.cs" />
