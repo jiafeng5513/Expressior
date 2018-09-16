@@ -82,7 +82,6 @@
     <Compile Include="PackageManagerExtension.cs" />
     <Compile Include="PackageManagerResult.cs" />
     <Compile Include="PackageManagerSearchElement.cs" />
-    <Compile Include="PackageUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
