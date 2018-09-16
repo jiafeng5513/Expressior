@@ -150,7 +150,7 @@ namespace Dynamo.PackageManager
             Dependencies = new ObservableCollection<PackageDependency>();
             LoadedCustomNodes = new ObservableCollection<CustomNodeInfo>();
             AdditionalFiles = new ObservableCollection<PackageFileInfo>();
-            Header = PackageUploadBuilder.NewRequestBody(this);
+            //Header = PackageUploadBuilder.NewRequestBody(this);
         }
 
         public static Package FromDirectory(string rootPath, ILogger logger)

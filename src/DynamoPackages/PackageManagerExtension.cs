@@ -108,16 +108,16 @@ namespace Dynamo.PackageManager
             PackageLoader.RequestLoadNodeLibrary += RequestLoadNodeLibraryHandler;
             PackageLoader.RequestLoadCustomNodeDirectory += RequestLoadCustomNodeDirectoryHandler;
                 
-            var dirBuilder = new PackageDirectoryBuilder(
-                new MutatingFileSystem(),
-                new CustomNodePathRemapper(startupParams.CustomNodeManager, DynamoModel.IsTestMode));
+            //var dirBuilder = new PackageDirectoryBuilder(
+            //    new MutatingFileSystem(),
+            //    new CustomNodePathRemapper(startupParams.CustomNodeManager, DynamoModel.IsTestMode));
 
-            PackageUploadBuilder.SetEngineVersion(startupParams.DynamoVersion);
-            var uploadBuilder = new PackageUploadBuilder(dirBuilder, new MutatingFileCompressor());
+            //PackageUploadBuilder.SetEngineVersion(startupParams.DynamoVersion);
+            //var uploadBuilder = new PackageUploadBuilder(dirBuilder, new MutatingFileCompressor());
 
-            PackageManagerClient = new PackageManagerClient(
-                new GregClient(startupParams.AuthProvider, url),
-                uploadBuilder, PackageLoader.DefaultPackagesDirectory);
+            //PackageManagerClient = new PackageManagerClient(
+            //    new GregClient(startupParams.AuthProvider, url),
+            //    uploadBuilder, PackageLoader.DefaultPackagesDirectory);
 
             LoadPackages(startupParams.Preferences, startupParams.PathManager);
         }

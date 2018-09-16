@@ -67,12 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PackageManagerExtensionTests.cs" />
-    <Compile Include="PackageDirectoryBuilderTests.cs" />
     <Compile Include="PackageLoaderCustomTest.cs" />
     <Compile Include="PackageLoaderTests.cs" />
-    <Compile Include="PackageManagerClientTests.cs" />
     <Compile Include="PackageTests.cs" />
-    <Compile Include="PackageUploadBuilderTests.cs" />
     <Compile Include="PackageUtilitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordedFileSystem.cs" />

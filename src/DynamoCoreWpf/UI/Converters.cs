@@ -125,51 +125,6 @@ namespace Dynamo.Controls
         }
     }
 
-    public class PackageDownloadStateToStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter,
-          CultureInfo culture)
-        {
-            if (value is PackageDownloadHandle.State)
-            {
-                var st = (PackageDownloadHandle.State)value;
-
-                if (st == PackageDownloadHandle.State.Downloaded)
-                {
-                    return Resources.PackageDownloadStateDownloaded;
-                }
-                else if (st == PackageDownloadHandle.State.Downloading)
-                {
-                    return Resources.PackageDownloadStateDownloading;
-                }
-                else if (st == PackageDownloadHandle.State.Error)
-                {
-                    return Resources.PackageDownloadStateError;
-                }
-                else if (st == PackageDownloadHandle.State.Installed)
-                {
-                    return Resources.PackageDownloadStateInstalled;
-                }
-                else if (st == PackageDownloadHandle.State.Installing)
-                {
-                    return Resources.PackageDownloadStateInstalling;
-                }
-                else if (st == PackageDownloadHandle.State.Uninitialized)
-                {
-                    return Resources.PackageDownloadStateStarting;
-                }
-            }
-
-            return Resources.PackageStateUnknown;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter,
-          CultureInfo culture)
-        {
-            return null;
-        }
-    }
-
     public class NonEmptyStringToCollapsedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,
