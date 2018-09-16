@@ -68,7 +68,6 @@
     <Compile Include="..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="FailFunc.cs" />
     <Compile Include="Interfaces\CustomNodePathRemapper.cs" />
     <Compile Include="Interfaces\IDirectoryInfo.cs" />
     <Compile Include="Interfaces\IFileCompressor.cs" />
