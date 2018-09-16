@@ -80,51 +80,6 @@ namespace Dynamo.Controls
         }
     }
 
-    //public class PackageUploadStateToStringConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter,
-    //      CultureInfo culture)
-    //    {
-    //        if (value is PackageUploadHandle.State)
-    //        {
-    //            var st = (PackageUploadHandle.State)value;
-
-    //            if (st == PackageUploadHandle.State.Compressing)
-    //            {
-    //                return Resources.PackageUploadStateCompressing;
-    //            }
-    //            else if (st == PackageUploadHandle.State.Copying)
-    //            {
-    //                return Resources.PackageUploadStateCopying;
-    //            }
-    //            else if (st == PackageUploadHandle.State.Error)
-    //            {
-    //                return Resources.PackageUploadStateError;
-    //            }
-    //            else if (st == PackageUploadHandle.State.Ready)
-    //            {
-    //                return Resources.PackageUploadStateReady;
-    //            }
-    //            else if (st == PackageUploadHandle.State.Uploaded)
-    //            {
-    //                return Resources.PackageUploadStateUploaded;
-    //            }
-    //            else if (st == PackageUploadHandle.State.Uploading)
-    //            {
-    //                return Resources.PackageUploadStateUploading;
-    //            }
-    //        }
-
-    //        return Resources.PackageStateUnknown;
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType, object parameter,
-    //      CultureInfo culture)
-    //    {
-    //        return null;
-    //    }
-    //}
-
     public class NonEmptyStringToCollapsedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,
