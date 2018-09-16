@@ -168,7 +168,6 @@
     <Compile Include="LibraryTests.cs" />
     <Compile Include="NodeViewCustomizationTests.cs" />
     <Compile Include="PackagePathTests.cs" />
-    <Compile Include="PackageManager\PackageDependencyTests.cs" />
     <Compile Include="PresetViewModelTest.cs" />
     <Compile Include="PreviewBubbleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

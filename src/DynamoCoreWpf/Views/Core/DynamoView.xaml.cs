@@ -9,7 +9,6 @@ using Dynamo.Models;
 using Dynamo.Nodes;
 using Dynamo.Nodes.Prompts;
 using Dynamo.PackageManager;
-using Dynamo.PackageManager.UI;
 using Dynamo.Search;
 using Dynamo.Search.SearchElements;
 using Dynamo.Selection;

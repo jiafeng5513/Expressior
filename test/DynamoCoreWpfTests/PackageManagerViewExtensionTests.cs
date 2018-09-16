@@ -6,7 +6,7 @@ using Dynamo.Graph.Nodes;
 using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.PackageManager;
-using Dynamo.PackageManager.UI;
+//using Dynamo.PackageManager.UI;
 using Dynamo.Scheduler;
 using Dynamo.Wpf.Extensions;
 using DynamoCoreWpfTests.Utility;

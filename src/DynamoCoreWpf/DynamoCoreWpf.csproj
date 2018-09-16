@@ -376,7 +376,6 @@
     <Compile Include="ViewModels\PackageManager\PackageItemLeafViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageItemRootViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageItemViewModel.cs" />
-    <Compile Include="ViewModels\PackageManager\PackageManagerClientViewModel.cs" />
     <Compile Include="ViewModels\PackageManager\PackageViewModel.cs" />
     <Compile Include="ViewModels\Core\PortViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchViewModel.cs" />
