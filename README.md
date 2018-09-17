@@ -36,5 +36,5 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### Working On:
-1. Package Manager.<br>
+1. prepare merger Package Manager branch.<br>
 
