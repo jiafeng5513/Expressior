@@ -39,8 +39,6 @@ namespace Dynamo.PackageManager
 
         public string Name { get; set; }
 
-        public string ID { get; set; }
-
         public string CustomNodeDirectory
         {
             get { return Path.Combine(RootDirectory, "dyf"); }
@@ -51,28 +49,9 @@ namespace Dynamo.PackageManager
             get { return Path.Combine(RootDirectory, "bin"); }
         }
 
-        public string ExtraDirectory
-        {
-            get { return Path.Combine(RootDirectory, "extra"); }
-        }
-
         public bool Loaded { get; internal set; }
 
         private bool typesVisibleInManager;
-        public bool TypesVisibleInManager
-        {
-            get
-            {
-                return typesVisibleInManager;
-            }
-            set
-            {
-                // this implies the user would like to rescan additional files
-                EnumerateAdditionalFiles();
-                typesVisibleInManager = value;
-                RaisePropertyChanged("TypesVisibleInManager");
-            }
-        }
 
         private string rootDirectory;
         public string RootDirectory { get { return rootDirectory; } set { rootDirectory = value; RaisePropertyChanged("RootDirectory"); } }
@@ -105,23 +84,6 @@ namespace Dynamo.PackageManager
         private string _group = "";
         public string Group { get { return _group; } set { _group = value; RaisePropertyChanged("Group"); } }
 
-
-        /// <summary>
-        ///     Determines if there are binaries in the package
-        /// </summary>
-        internal bool ContainsBinaries
-        {
-            get { return LoadedAssemblies.Any(); }
-        }
-
-        /// <summary>
-        ///     List the LoadedAssemblies whose IsNodeLibrary attribute is true
-        /// </summary>
-        internal IEnumerable<Assembly> NodeLibraries
-        {
-            get { return LoadedAssemblies.Where(x => x.IsNodeLibrary).Select(x => x.Assembly); }
-        } 
-
         public String SiteUrl { get; set; }
         public String RepositoryUrl { get; set; }
 
@@ -151,11 +113,6 @@ namespace Dynamo.PackageManager
             LoadedCustomNodes = new ObservableCollection<CustomNodeInfo>();
             AdditionalFiles = new ObservableCollection<PackageFileInfo>();
             //Header = PackageUploadBuilder.NewRequestBody(this);
-        }
-
-        public static Package FromDirectory(string rootPath, ILogger logger)
-        {
-            return FromJson(Path.Combine(rootPath, "pkg.json"), logger);
         }
 
         public static Package FromJson(string headerPath, ILogger logger)
@@ -216,35 +173,6 @@ namespace Dynamo.PackageManager
 
             AdditionalFiles.Clear();
             AdditionalFiles.AddRange(nonDyfDllFiles);
-        }
-
-        public IEnumerable<string> EnumerateAssemblyFilesInBinDirectory()
-        {
-            if (String.IsNullOrEmpty(RootDirectory) || !Directory.Exists(RootDirectory)) 
-                return new List<string>();
-
-            return Directory.EnumerateFiles(RootDirectory, "*.dll", SearchOption.AllDirectories);
-        }
-
-        /// <summary>
-        ///     Add assemblies at runtime to the package.  Does not load the assembly into the node library.
-        ///     If the package is already present in LoadedAssemblies, this will mutate it's IsNodeLibrary property.
-        /// </summary>
-        /// <param name="assems">A list of assemblies</param>
-        internal void AddAssemblies(IEnumerable<PackageAssembly> assems)
-        {
-            foreach (var assem in assems)
-            {
-                var existingAssem = LoadedAssemblies.FirstOrDefault(x => x.Assembly.GetName().Name == assem.Assembly.GetName().Name);
-                if (existingAssem != null)
-                {
-                    existingAssem.IsNodeLibrary = assem.IsNodeLibrary;
-                }
-                else
-                {
-                    LoadedAssemblies.Add(assem);
-                }
-            }
         }
 
         /// <summary>
@@ -340,34 +268,6 @@ namespace Dynamo.PackageManager
             return Directory.EnumerateFiles(RootDirectory, "*", SearchOption.AllDirectories).Any(s => s == path);
         }
 
-        internal bool InUse(DynamoModel dynamoModel)
-        {
-            return (LoadedAssemblies.Any() || IsWorkspaceFromPackageOpen(dynamoModel) || IsCustomNodeFromPackageInUse(dynamoModel)) && Loaded;
-        }
-
-        private bool IsCustomNodeFromPackageInUse(DynamoModel dynamoModel)
-        {
-            // get all of the function ids from the custom nodes in this package
-            var guids = LoadedCustomNodes.Select(x => x.FunctionId);
-
-            // check if any of the custom nodes is in a workspace
-            return
-                dynamoModel.Workspaces.SelectMany(ws => ws.Nodes.OfType<Function>())
-                    .Any(x => guids.Contains(x.Definition.FunctionId));
-
-        }
-
-        private bool IsWorkspaceFromPackageOpen(DynamoModel dynamoModel)
-        {
-            // get all of the function ids from the custom nodes in this package
-            var guids = new HashSet<Guid>(LoadedCustomNodes.Select(x => x.FunctionId));
-
-            return
-                dynamoModel.Workspaces.OfType<CustomNodeWorkspaceModel>()
-                    .Select(x => x.CustomNodeId)
-                    .Any(guids.Contains);
-        }
-
         internal void MarkForUninstall(IPreferences prefs)
         {
             MarkedForUninstall = true;
@@ -378,53 +278,12 @@ namespace Dynamo.PackageManager
             }
         }
 
-        internal void UnmarkForUninstall(IPreferences prefs)
-        {
-            MarkedForUninstall = false;
-            prefs.PackageDirectoriesToUninstall.RemoveAll(x => x.Equals(RootDirectory));
-        }
-
-        internal void UninstallCore(CustomNodeManager customNodeManager, PackageLoader packageLoader, IPreferences prefs)
-        {
-            if (LoadedAssemblies.Any())
-            {
-                MarkForUninstall(prefs);
-                return;
-            }
-
-            try
-            {
-                LoadedCustomNodes.ToList().ForEach(x => customNodeManager.Remove(x.FunctionId));
-                packageLoader.Remove(this);
-                Directory.Delete(RootDirectory, true);
-            }
-            catch (Exception e)
-            {
-                Log("Exception when attempting to uninstall the package " + Name + " from " + RootDirectory);
-                Log(e.GetType() + ": " + e.Message);
-                throw;
-            }
-        }
-
-        internal void RefreshCustomNodesFromDirectory(CustomNodeManager customNodeManager, bool isTestMode)
-        {
-            LoadedCustomNodes.Clear();
-
-            foreach (var x in customNodeManager.AddUninitializedCustomNodesInPath(CustomNodeDirectory, isTestMode))
-                LoadedCustomNodes.Add(x);
-        }
-
         public event Action<ILogMessage> MessageLogged;
 
         protected virtual void Log(ILogMessage obj)
         {
             var handler = MessageLogged;
             if (handler != null) handler(obj);
-        }
-
-        protected virtual void Log(string s)
-        {
-            Log(LogMessage.Info(s));
         }
     }
 }

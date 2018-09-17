@@ -1,0 +1,208 @@
+{
+  "Uuid": "cbae860a-021d-4a9d-b42d-fd1f9e870e6e",
+  "IsCustomNode": true,
+  "Category": "CustomNode",
+  "Description": "",
+  "Name": "F",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "LoopWhile@var[]..[],Function,Function",
+      "Id": "37178be714b6412cbb7af55e2f939faf",
+      "Inputs": [
+        {
+          "Id": "02d30ff160784d96ab59c50a5607f9fe",
+          "Name": "init",
+          "Description": "initial value\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2f51867eea0949cf8d57ecb5c1df77e8",
+          "Name": "continueWhile",
+          "Description": "while loop condition\n\nFunction",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "67e01177831645988f3c55330f3921b1",
+          "Name": "loopBody",
+          "Description": "while loop body\n\nFunction",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "490dfee3c1e7464099f7639d9f4ffae0",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Constructs a while loop node given an initial value, a condition and a loop body.\n\nLoopWhile (init: var[]..[], continueWhile: Function, loopBody: Function): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.Xor@bool,bool",
+      "Id": "aa7e176cab8a479eb490ee7d641903fb",
+      "Inputs": [
+        {
+          "Id": "3a4d2b01400e4039a8632f6779141f5a",
+          "Name": "a",
+          "Description": "A boolean.\n\nbool",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6a40c09bdf0641fd91d32372e001e550",
+          "Name": "b",
+          "Description": "A boolean.\n\nbool",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e9df4e5fad744a67b53b47efb9908e86",
+          "Name": "bool",
+          "Description": "Boolean result.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Boolean XOR: Returns true if and only if exactly one of the inputs is true.\n\nMath.Xor (a: bool, b: bool): bool"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Logic.ScopedIf, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "82291e37fdb94f47a13e03edfc370d33",
+      "Inputs": [
+        {
+          "Id": "ceb13464d77445288514e36aa2d1f98c",
+          "Name": "test",
+          "Description": "Test block",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "df949c6cf5b249789862c4fb4109679e",
+          "Name": "true",
+          "Description": "True block",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7c75c12afaa1401a9277bc5eb313256c",
+          "Name": "false",
+          "Description": "False block",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "05e574f0a815412aac27f43344396126",
+          "Name": "result",
+          "Description": "result",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Scoped If statement"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e9df4e5fad744a67b53b47efb9908e86",
+      "End": "67e01177831645988f3c55330f3921b1",
+      "Id": "8bba146c031846f3a698f83b9491ed98"
+    },
+    {
+      "Start": "05e574f0a815412aac27f43344396126",
+      "End": "02d30ff160784d96ab59c50a5607f9fe",
+      "Id": "c14029154dfe415ba614c98054f8cf80"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.0.5801",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "LoopWhile",
+        "Id": "37178be714b6412cbb7af55e2f939faf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 529.0,
+        "Y": 240.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.Xor",
+        "Id": "aa7e176cab8a479eb490ee7d641903fb",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 305.0,
+        "Y": 432.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "ScopeIf",
+        "Id": "82291e37fdb94f47a13e03edfc370d33",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 308.0,
+        "Y": 132.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

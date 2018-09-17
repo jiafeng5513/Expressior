@@ -1,0 +1,163 @@
+{
+  "Uuid": "2c82014d-9c43-42c5-b726-53dd08fc323a",
+  "IsCustomNode": true,
+  "Category": "CustomNode",
+  "Description": "既有输入又有输出端口",
+  "Name": "NodeWithIO",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null
+      },
+      "Id": "840b4d1feaa349e88e4d19cae086eda6",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "969cc24b861842b8a17fe3551e7a1450",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CustomNodes.Symbol, DynamoCore",
+      "NodeType": "InputNode",
+      "Parameter": {
+        "Name": "",
+        "TypeName": "var",
+        "TypeRank": -1,
+        "DefaultValue": null
+      },
+      "Id": "a3e6e7109d6941f8942eb4ab477e0a8f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2e6cae6c9c2b4182bdd7d1403d66fdf0",
+          "Name": "",
+          "Description": "Symbol",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A function parameter, use with custom nodes.\r\n\r\nYou can specify the type and default value for parameter. E.g.,\r\n\r\ninput : var[]..[]\r\nvalue : bool = false"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Math.Pow@double,double",
+      "Id": "b0a98aec0c7446289c6495cc0f0cac00",
+      "Inputs": [
+        {
+          "Id": "cf7b9eb3bdf24380807dabfd42b05ef9",
+          "Name": "number",
+          "Description": "Number to be raised to a power.\n\ndouble",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f31962e17a7c42aea3028bfbc541a345",
+          "Name": "power",
+          "Description": "Power to raise the number to.\n\ndouble",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3278247a81a543018521cf5f067d4698",
+          "Name": "result",
+          "Description": "Number raised to the power.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Raises a number to the specified power.\n\nMath.Pow (number: double, power: double): double"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "969cc24b861842b8a17fe3551e7a1450",
+      "End": "cf7b9eb3bdf24380807dabfd42b05ef9",
+      "Id": "2cbabedee3344c29ad19dc568510a9f9"
+    },
+    {
+      "Start": "2e6cae6c9c2b4182bdd7d1403d66fdf0",
+      "End": "f31962e17a7c42aea3028bfbc541a345",
+      "Id": "7c9ec2cafd51423e86419d618ee8679a"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": false,
+      "Version": "2.0.0.5801",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "840b4d1feaa349e88e4d19cae086eda6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 248.0,
+        "Y": 35.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Input",
+        "Id": "a3e6e7109d6941f8942eb4ab477e0a8f",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 249.0,
+        "Y": 413.0
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Math.Pow",
+        "Id": "b0a98aec0c7446289c6495cc0f0cac00",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 442.0,
+        "Y": 159.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}
