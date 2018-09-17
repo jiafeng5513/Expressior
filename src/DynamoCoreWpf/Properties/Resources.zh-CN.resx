@@ -2027,9 +2027,6 @@ Want to publish a different package?</value>
     <value>{0} website</value>
     <comment>Start page | Link to DynamoBIM</comment>
   </data>
-  <data name="StartPageWhatsNew" xml:space="preserve">
-    <value>入门</value>
-  </data>
   <data name="StringInputNodeEditMenu" xml:space="preserve">
     <value>Edit...</value>
   </data>

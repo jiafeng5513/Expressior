@@ -104,12 +104,9 @@ namespace Dynamo.UI.Controls
         // Static lists that gets created only during creation.
         List<StartPageListItem> fileOperations = new List<StartPageListItem>();
         List<StartPageListItem> communityLinks = new List<StartPageListItem>();
-        List<StartPageListItem> references = new List<StartPageListItem>();
         List<StartPageListItem> contributeLinks = new List<StartPageListItem>();
-        string sampleFolderPath = null;
 
         // Dynamic lists that update views on the fly.
-        ObservableCollection<SampleFileEntry> sampleFiles = null;
         ObservableCollection<StartPageListItem> recentFiles = null;
         ObservableCollection<StartPageListItem> backupFiles = null;
         internal readonly DynamoViewModel DynamoViewModel;
@@ -121,7 +118,6 @@ namespace Dynamo.UI.Controls
             this.isFirstRun = isFirstRun;
 
             this.recentFiles = new ObservableCollection<StartPageListItem>();
-            sampleFiles = new ObservableCollection<SampleFileEntry>();
             backupFiles = new ObservableCollection<StartPageListItem>();
 
 
@@ -165,34 +161,6 @@ namespace Dynamo.UI.Controls
 
             #endregion
 
-            #region Reference List
-
-            //references.Add(new StartPageListItem(Resources.StartPageWhatsNew, "icon-whats-new.png")
-            //{
-            //    ContextData = ButtonNames.ShowGallery,
-            //    ClickAction = StartPageListItem.Action.RegularCommand
-            //});
-
-            references.Add(new StartPageListItem(Resources.StartPageDynamoPrimer, "icon-reference.png")
-            {
-                ContextData = Configurations.DynamoPrimer,
-                ClickAction = StartPageListItem.Action.ExternalUrl
-            });
-
-            references.Add(new StartPageListItem(Resources.StartPageVideoTutorials, "icon-video.png")
-            {
-                ContextData = Configurations.DynamoVideoTutorials,
-                ClickAction = StartPageListItem.Action.ExternalUrl
-            });
-
-            references.Add(new StartPageListItem(Resources.StartPageDynamoDictionary, "icon-dictionary.png")
-            {
-                ContextData = Configurations.DynamoDictionary,
-                ClickAction = StartPageListItem.Action.ExternalUrl
-            });
-            
-            #endregion
-
             #region Contribution Links
 
             contributeLinks.Add(new StartPageListItem(Resources.StartPageGithubRepository, "icon-github.png")
@@ -213,50 +181,6 @@ namespace Dynamo.UI.Controls
             RefreshRecentFileList(dvm.RecentFiles);
             RefreshBackupFileList(dvm.Model.PreferenceSettings.BackupFiles);
             dvm.RecentFiles.CollectionChanged += OnRecentFilesChanged;
-        }
-        internal void WalkDirectoryTree(System.IO.DirectoryInfo root, SampleFileEntry rootProperty)
-        {
-            try
-            {
-                // First try to get all the sub-directories before the files themselves.
-                System.IO.DirectoryInfo[] directories = root.GetDirectories();
-                if (null != directories && (directories.Length > 0))
-                {
-                    foreach (System.IO.DirectoryInfo directory in directories)
-                    {
-                        //Make sure the folder's name is not "backup" 
-                        if (!directory.Name.Equals(Configurations.BackupFolderName))
-                        {
-                            // Resursive call for each subdirectory.
-                            SampleFileEntry sampleFileEntry =
-                                new SampleFileEntry(directory.Name, directory.FullName);
-                            WalkDirectoryTree(directory, sampleFileEntry);
-                            rootProperty.AddChildSampleFile(sampleFileEntry);
-                        }
-                    }
-                }
-
-                // Secondly, process all the files directly under this folder 
-                System.IO.FileInfo[] dynamoFiles = null;
-                dynamoFiles = root.GetFiles("*.dyn", System.IO.SearchOption.TopDirectoryOnly);
-
-                if (null != dynamoFiles && (dynamoFiles.Length > 0))
-                {
-                    foreach (System.IO.FileInfo file in dynamoFiles)
-                    {
-                        if (sampleFolderPath == null)
-                        {                            
-                            sampleFolderPath = Path.GetDirectoryName(file.FullName);
-                        }
-                        // Add each file under the root directory property list.
-                        rootProperty.AddChildSampleFile(new SampleFileEntry(file.Name, file.FullName));
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // Perhaps some permission problems?
-            }
         }
 
         internal void HandleListItemClicked(StartPageListItem clicked)
@@ -280,13 +204,6 @@ namespace Dynamo.UI.Controls
             }
         }
 
-        public bool IsFirstRun { get { return isFirstRun; } }
-
-        public string SampleFolderPath
-        {
-            get { return this.sampleFolderPath; }
-        }
-
         #region Public Class Properties (Static Lists)
 
         public IEnumerable<StartPageListItem> FileOperations
@@ -297,11 +214,6 @@ namespace Dynamo.UI.Controls
         public IEnumerable<StartPageListItem> CommunityLinks
         {
             get { return this.communityLinks; }
-        }
-
-        public IEnumerable<StartPageListItem> References
-        {
-            get { return this.references; }
         }
 
         public IEnumerable<StartPageListItem> ContributeLinks
@@ -326,10 +238,10 @@ namespace Dynamo.UI.Controls
 
         #endregion
 
-        public ObservableCollection<SampleFileEntry> SampleFiles
-        {
-            get { return this.sampleFiles; }
-        }
+        //public ObservableCollection<SampleFileEntry> SampleFiles
+        //{
+        //    get { return this.sampleFiles; }
+        //}
 
         public string BackupTitle
         {
@@ -408,10 +320,6 @@ namespace Dynamo.UI.Controls
                     dvm.ShowNewFunctionDialogCommand.Execute(null);
                     break;
 
-                //case ButtonNames.ShowGallery:
-                //    dvm.ShowGalleryCommand.Execute(null);
-                //    break;
-
                 default:
                     throw new ArgumentException(
                         string.Format("Invalid command: {0}", item.ContextData));
@@ -465,20 +373,13 @@ namespace Dynamo.UI.Controls
             this.dynamoViewModel = startPageViewModel.DynamoViewModel;
 
             this.filesListBox.ItemsSource = startPageViewModel.FileOperations;
-            this.askListBox.ItemsSource = startPageViewModel.CommunityLinks;
-            this.referenceListBox.ItemsSource = startPageViewModel.References;
+            //this.askListBox.ItemsSource = startPageViewModel.CommunityLinks;
             this.codeListBox.ItemsSource = startPageViewModel.ContributeLinks;
             this.recentListBox.ItemsSource = startPageViewModel.RecentFiles;
-            this.sampleFileTreeView.ItemsSource = startPageViewModel.SampleFiles;
             this.backupFilesList.ItemsSource = startPageViewModel.BackupFiles;
 
             var id = Wpf.Interfaces.ResourceNames.StartPage.Image;
             StartPageLogo.Source = dynamoViewModel.BrandingResourceProvider.GetImageSource(id);
-
-            //if (startPageViewModel.IsFirstRun)
-            //{
-            //    dynamoViewModel.ShowGalleryCommand.Execute(null);
-            //}
 
         }
 
@@ -504,32 +405,6 @@ namespace Dynamo.UI.Controls
 
         #endregion
 
-        private void OnSampleFileSelected(object sender, RoutedEventArgs e)
-        {
-            var dp = e.OriginalSource as DependencyObject;
-            var treeViewItem = WpfUtilities.FindUpVisualTree<TreeViewItem>(dp) as TreeViewItem;
-            if (sampleFileTreeView.SelectedItem != null)
-                treeViewItem.IsExpanded = !treeViewItem.IsExpanded;
-
-            var filePath = (sampleFileTreeView.SelectedItem as SampleFileEntry).FilePath;
-
-            if (string.IsNullOrEmpty(filePath))
-                return;
-
-            if (!Path.GetExtension(filePath).Equals(".dyn"))
-                return;
-            
-            var dvm = this.dynamoViewModel;
-            if (dvm.OpenCommand.CanExecute(filePath))
-                dvm.OpenCommand.Execute(filePath);
-        }
-
-        private void ShowSamplesInFolder(object sender, MouseButtonEventArgs e)
-        {
-            var startPageViewModel = this.DataContext as StartPageViewModel;
-            Process.Start("explorer.exe", "/select," 
-                + startPageViewModel.SampleFolderPath);
-        }
 
         private void OpenAllFilesOnCrash(object sender, MouseButtonEventArgs e)
         {
@@ -573,26 +448,26 @@ namespace Dynamo.UI.Controls
         }
     }
 
-    public class SampleFileEntry
-    {
-        List<SampleFileEntry> childSampleFiles = null;
+    //public class SampleFileEntry
+    //{
+    //    List<SampleFileEntry> childSampleFiles = null;
 
-        public SampleFileEntry(string name, string path)
-        {
-            this.FileName = name;
-            this.FilePath = path;
-        }
-        public void AddChildSampleFile(SampleFileEntry childSampleFile)
-        {
-            if (null == childSampleFiles)
-                childSampleFiles = new List<SampleFileEntry>();
+    //    public SampleFileEntry(string name, string path)
+    //    {
+    //        this.FileName = name;
+    //        this.FilePath = path;
+    //    }
+    //    public void AddChildSampleFile(SampleFileEntry childSampleFile)
+    //    {
+    //        if (null == childSampleFiles)
+    //            childSampleFiles = new List<SampleFileEntry>();
 
-            childSampleFiles.Add(childSampleFile);
-        }
+    //        childSampleFiles.Add(childSampleFile);
+    //    }
 
-        public string FileName { get; private set; }
-        public string FilePath { get; private set; }
-        public IEnumerable<SampleFileEntry> Children { get { return childSampleFiles; } }
-    }
+    //    public string FileName { get; private set; }
+    //    public string FilePath { get; private set; }
+    //    public IEnumerable<SampleFileEntry> Children { get { return childSampleFiles; } }
+    //}
 
 }

@@ -487,7 +487,7 @@ namespace Dynamo.Controls
             InitializeStartPage(isFirstRun);
 
 #if !__NO_SAMPLES_MENU
-            LoadSamplesMenu();
+            //LoadSamplesMenu();
 #endif
 
             #region Package manager
@@ -1094,84 +1094,84 @@ namespace Dynamo.Controls
         /// <summary>
         ///     Setup the "Samples" sub-menu with contents of samples directory.
         /// </summary>
-        private void LoadSamplesMenu()
-        {
-            var samplesDirectory = dynamoViewModel.Model.PathManager.SamplesDirectory;
-            if (Directory.Exists(samplesDirectory))
-            {
-                var sampleFiles = new System.Collections.Generic.List<string>();
-                string[] dirPaths = Directory.GetDirectories(samplesDirectory);
-                string[] filePaths = Directory.GetFiles(samplesDirectory, "*.dyn");
+        //private void LoadSamplesMenu()
+        //{
+        //    var samplesDirectory = dynamoViewModel.Model.PathManager.SamplesDirectory;
+        //    if (Directory.Exists(samplesDirectory))
+        //    {
+        //        var sampleFiles = new System.Collections.Generic.List<string>();
+        //        string[] dirPaths = Directory.GetDirectories(samplesDirectory);
+        //        string[] filePaths = Directory.GetFiles(samplesDirectory, "*.dyn");
 
-                // handle top-level files
-                if (filePaths.Any())
-                {
-                    foreach (string path in filePaths)
-                    {
-                        var item = new MenuItem
-                        {
-                            Header = Path.GetFileNameWithoutExtension(path),
-                            Tag = path
-                        };
-                        item.Click += OpenSample_Click;
-                        SamplesMenu.Items.Add(item);
-                        sampleFiles.Add(path);
-                    }
-                }
+        //        // handle top-level files
+        //        if (filePaths.Any())
+        //        {
+        //            foreach (string path in filePaths)
+        //            {
+        //                var item = new MenuItem
+        //                {
+        //                    Header = Path.GetFileNameWithoutExtension(path),
+        //                    Tag = path
+        //                };
+        //                item.Click += OpenSample_Click;
+        //                SamplesMenu.Items.Add(item);
+        //                sampleFiles.Add(path);
+        //            }
+        //        }
 
-                // handle top-level dirs, TODO - factor out to a seperate function, make recusive
-                if (dirPaths.Any())
-                {
-                    foreach (string dirPath in dirPaths)
-                    {
-                        var dirItem = new MenuItem
-                        {
-                            Header = Path.GetFileName(dirPath),
-                            Tag = Path.GetFileName(dirPath)
-                        };
+        //        // handle top-level dirs, TODO - factor out to a seperate function, make recusive
+        //        if (dirPaths.Any())
+        //        {
+        //            foreach (string dirPath in dirPaths)
+        //            {
+        //                var dirItem = new MenuItem
+        //                {
+        //                    Header = Path.GetFileName(dirPath),
+        //                    Tag = Path.GetFileName(dirPath)
+        //                };
 
-                        filePaths = Directory.GetFiles(dirPath, "*.dyn");
-                        if (filePaths.Any())
-                        {
-                            foreach (string path in filePaths)
-                            {
-                                var item = new MenuItem
-                                {
-                                    Header = Path.GetFileNameWithoutExtension(path),
-                                    Tag = path
-                                };
-                                item.Click += OpenSample_Click;
-                                dirItem.Items.Add(item);
-                                sampleFiles.Add(path);
-                            }
-                        }
-                        SamplesMenu.Items.Add(dirItem);
-                    }
-                }
+        //                filePaths = Directory.GetFiles(dirPath, "*.dyn");
+        //                if (filePaths.Any())
+        //                {
+        //                    foreach (string path in filePaths)
+        //                    {
+        //                        var item = new MenuItem
+        //                        {
+        //                            Header = Path.GetFileNameWithoutExtension(path),
+        //                            Tag = path
+        //                        };
+        //                        item.Click += OpenSample_Click;
+        //                        dirItem.Items.Add(item);
+        //                        sampleFiles.Add(path);
+        //                    }
+        //                }
+        //                SamplesMenu.Items.Add(dirItem);
+        //            }
+        //        }
 
-                if (dirPaths.Any())
-                {
-                    var showInFolder = new MenuItem
-                    {
-                        Header = Wpf.Properties.Resources.DynamoViewHelpMenuShowInFolder,
-                        Tag = dirPaths[0]
-                    };
-                    showInFolder.Click += OnShowInFolder;
-                    SamplesMenu.Items.Add(new Separator());
-                    SamplesMenu.Items.Add(showInFolder);
-                }
+        //        if (dirPaths.Any())
+        //        {
+        //            var showInFolder = new MenuItem
+        //            {
+        //                Header = Wpf.Properties.Resources.DynamoViewHelpMenuShowInFolder,
+        //                Tag = dirPaths[0]
+        //            };
+        //            showInFolder.Click += OnShowInFolder;
+        //            SamplesMenu.Items.Add(new Separator());
+        //            SamplesMenu.Items.Add(showInFolder);
+        //        }
 
-                if (sampleFiles.Any() && startPage != null)
-                {
-                    var firstFilePath = Path.GetDirectoryName(sampleFiles.ToArray()[0]);
-                    var rootPath = Path.GetDirectoryName(firstFilePath);
-                    var root = new DirectoryInfo(rootPath);
-                    var rootProperty = new SampleFileEntry("Samples", "Path");
-                    startPage.WalkDirectoryTree(root, rootProperty);
-                    startPage.SampleFiles.Add(rootProperty);
-                }
-            }
-        }
+        //        if (sampleFiles.Any() && startPage != null)
+        //        {
+        //            var firstFilePath = Path.GetDirectoryName(sampleFiles.ToArray()[0]);
+        //            var rootPath = Path.GetDirectoryName(firstFilePath);
+        //            var root = new DirectoryInfo(rootPath);
+        //            var rootProperty = new SampleFileEntry("Samples", "Path");
+        //            startPage.WalkDirectoryTree(root, rootProperty);
+        //            startPage.SampleFiles.Add(rootProperty);
+        //        }
+        //    }
+        //}
 
         private static void OnShowInFolder(object sender, RoutedEventArgs e)
         {

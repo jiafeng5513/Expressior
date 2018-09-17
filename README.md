@@ -34,7 +34,10 @@
 2. 由于最终目标不同,这个程序在Dynamo的基础上进行了大幅度的删改,基础版本是Dynamo的RC2.0.0分支.<br>
 3. 如果您对这个程序有兴趣,在查阅文档的时候请注意,由于2的缘故,Dynamo的文档可能并不不适用于本程序,您可以向开发者询问感兴趣的问题.<br>
 4. 后续开发的默认分支是Expressior_master分支.<br>
-
+5. [新手参考](http://primer.dynamobim.org/en/)<br>
+6. [Dynamo BIM](http://dynamobim.org/)<br>
+7. [开发词典](http://dictionary.dynamobim.com/#/)<br>
+8. [Dynamo 论坛](https://forum.dynamobim.com/)<br>
 ### Working On:
 1. 准备清理一波菜单栏.<br>
 
