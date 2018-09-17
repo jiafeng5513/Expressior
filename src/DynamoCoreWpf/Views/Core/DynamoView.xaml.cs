@@ -97,9 +97,9 @@ namespace Dynamo.Controls
 
             InitializeComponent();
 
-            ToggleIsUsageReportingApprovedCommand.ToolTip = string.Format(
-                Wpf.Properties.Resources.DynamoViewSettingMenuEnableDataReportingTooltip,
-                dynamoViewModel.BrandingResourceProvider.ProductName);
+            //ToggleIsUsageReportingApprovedCommand.ToolTip = string.Format(
+            //    Wpf.Properties.Resources.DynamoViewSettingMenuEnableDataReportingTooltip,
+            //    dynamoViewModel.BrandingResourceProvider.ProductName);
 
             Loaded += DynamoView_Loaded;
             Unloaded += DynamoView_Unloaded;
@@ -482,7 +482,7 @@ namespace Dynamo.Controls
             //Backing up IsFirstRun to determine whether to show Gallery
             var isFirstRun = dynamoViewModel.Model.PreferenceSettings.IsFirstRun;
             // If first run, Collect Info Prompt will appear
-            UsageReportingManager.Instance.CheckIsFirstRun(this, dynamoViewModel.BrandingResourceProvider);
+            //UsageReportingManager.Instance.CheckIsFirstRun(this, dynamoViewModel.BrandingResourceProvider);
 
             WorkspaceTabs.SelectedIndex = 0;
             dynamoViewModel = (DataContext as DynamoViewModel);

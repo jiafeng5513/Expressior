@@ -173,6 +173,9 @@
     <Compile Include="Extensions\ViewStartupParams.cs" />
     <Compile Include="Interfaces\ILibraryViewCustomization.cs" />
     <Compile Include="Interfaces\LayoutSpecification.cs" />
+    <Compile Include="UI\Prompts\UsageReportingAgreementPrompt.xaml.cs">
+      <DependentUpon>UsageReportingAgreementPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CompactBubbleHandler.cs" />
     <Compile Include="Interfaces\IShellCom.cs" />
     <Compile Include="Rendering\HelixRenderPackage.cs" />
@@ -260,9 +263,6 @@
     </Compile>
     <Compile Include="UI\Prompts\NodeHelpPrompt.xaml.cs">
       <DependentUpon>NodeHelpPrompt.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Prompts\UsageReportingAgreementPrompt.xaml.cs">
-      <DependentUpon>UsageReportingAgreementPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Prompts\ChangeScaleFactorPrompt.xaml.cs">
       <DependentUpon>ChangeScaleFactorPrompt.xaml</DependentUpon>
@@ -963,10 +963,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\Prompts\UsageReportingAgreementPrompt.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\Themes\Modern\Connectors.xaml">
@@ -1039,6 +1035,10 @@
     <Page Include="UI\Prompts\PresetPrompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Prompts\UsageReportingAgreementPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\About\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

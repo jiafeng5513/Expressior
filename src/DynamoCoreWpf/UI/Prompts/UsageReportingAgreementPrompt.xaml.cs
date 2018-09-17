@@ -44,14 +44,14 @@ namespace Dynamo.UI.Prompts
         private void ToggleIsUsageReportingChecked(object sender, RoutedEventArgs e)
         {
             UsageReportingManager.Instance.SetUsageReportingAgreement(
-                AcceptUsageReportingCheck.IsChecked.HasValue && 
+                AcceptUsageReportingCheck.IsChecked.HasValue &&
                 AcceptUsageReportingCheck.IsChecked.Value);
         }
 
         private void ToggleIsAnalyticsReportingChecked(object sender, RoutedEventArgs e)
         {
             UsageReportingManager.Instance.SetAnalyticsReportingAgreement(
-                AcceptAnalyticsReportingCheck.IsChecked.HasValue && 
+                AcceptAnalyticsReportingCheck.IsChecked.HasValue &&
                 AcceptAnalyticsReportingCheck.IsChecked.Value);
         }
 

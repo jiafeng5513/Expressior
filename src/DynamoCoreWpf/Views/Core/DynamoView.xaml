@@ -573,31 +573,13 @@
                                       Command="{Binding Path=BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}" />
                         </MenuItem>-->
                     </MenuItem>
-                    <!--Package-->
-                    <!--<MenuItem Header="{x:Static p:Resources.DynamoViewPackageMenu}"
-                              Name="PackageManagerMenu"
-                              Focusable="False"
-                              IsEnabled="True">
-                        <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewPackageMenuPublishPackage}"
-                                  Command="{Binding Path=DataContext.PublishNewPackageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishNewPackage" />
-                        <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewPackageMenuPublishNodes}"
-                                  Command="{Binding Path=DataContext.PublishSelectedNodesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishSelected" />
-                        <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewPackageMenuPublishWorkspace}"
-                                  Command="{Binding Path=DataContext.PublishCurrentWorkspaceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  Name="publishCurrent" />
-                    </MenuItem>-->
                     <!--Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
                               Name="SettingsMenu"
                               Focusable="False"
                               IsEnabled="True"
                               SubmenuOpened="OnSettingsSubMenuOpened">
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReporting}"
+                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReporting}"
                                   Name="ToggleIsAnalyticsReportingApprovedCommand"
                                   Command="{Binding Path=ToggleIsAnalyticsReportingApprovedCommand, Source={x:Static service:UsageReportingManager.Instance} }"
                                   CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
@@ -610,7 +592,7 @@
                                   CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
                                   IsChecked="{Binding Path=IsUsageReportingApproved, Mode=OneWay, Source={x:Static service:UsageReportingManager.Instance} }"
                                   ToolTip="{x:Static p:Resources.DynamoViewSettingMenuEnableDataReportingTooltip}"
-                                  Focusable="False" />
+                                  Focusable="False" />-->
                         <Separator />
                         <MenuItem Focusable="False" 
                                   Name="ShowNodeExecution" 

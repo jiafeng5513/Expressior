@@ -28,7 +28,7 @@
             <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <!-- The top banner image -->
+         The top banner image 
         <Rectangle Grid.ColumnSpan="2"
                    Height="100"
                    Stroke="Transparent"
