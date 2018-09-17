@@ -295,9 +295,6 @@
     </Compile>
     <Compile Include="Views\CodeBlocks\CodeBlockEditor.cs" />
     <Compile Include="Views\Core\DynamoOpenFileDialog.cs" />
-    <Compile Include="Views\Gallery\GalleryView.xaml.cs">
-      <DependentUpon>GalleryView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CodeCompletion\CodeCompletionEditor.xaml.cs">
       <DependentUpon>CodeCompletionEditor.xaml</DependentUpon>
     </Compile>
@@ -1038,10 +1035,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Gallery\GalleryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CodeCompletion\CodeCompletionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1218,6 +1211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestInfrastructure\" />
+    <Folder Include="Views\Gallery\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">

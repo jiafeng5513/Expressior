@@ -23,7 +23,7 @@ using Dynamo.Wpf.Extensions;
 using Dynamo.Wpf.Interfaces;
 using Dynamo.Wpf.Utilities;
 using Dynamo.Wpf.ViewModels.Core;
-using Dynamo.Wpf.Views.Gallery;
+//using Dynamo.Wpf.Views.Gallery;
 using Dynamo.Wpf.Views.PackageManager;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace Dynamo.Controls
         private readonly Stopwatch _timer;
         private StartPageViewModel startPage;
         private int tabSlidingWindowStart, tabSlidingWindowEnd;
-        private GalleryView galleryView;
+        //private GalleryView galleryView;
         private readonly LoginService loginService;
         internal ViewExtensionManager viewExtensionManager = new ViewExtensionManager();
         private ShortcutToolbar shortcutBar;
@@ -529,7 +529,7 @@ namespace Dynamo.Controls
             dynamoViewModel.RequestAboutWindow += DynamoViewModelRequestAboutWindow;
 
             //SHOW or HIDE GALLERY
-            dynamoViewModel.RequestShowHideGallery += DynamoViewModelRequestShowHideGallery;
+            //dynamoViewModel.RequestShowHideGallery += DynamoViewModelRequestShowHideGallery;
 
             LoadNodeViewCustomizations();
             SubscribeNodeViewCustomizationEvents();
@@ -597,36 +597,36 @@ namespace Dynamo.Controls
             e.Handled = true;
         }
 
-        private void DynamoViewModelRequestShowHideGallery(bool showGallery)
-        {
-            if (showGallery)
-            {
-                if (galleryView == null) //On-demand instantiation
-                {
-                    galleryView = new GalleryView(new GalleryViewModel(dynamoViewModel));
-                    Grid.SetColumnSpan(galleryBackground, mainGrid.ColumnDefinitions.Count);
-                    Grid.SetRowSpan(galleryBackground, mainGrid.RowDefinitions.Count);
-                }
+        //private void DynamoViewModelRequestShowHideGallery(bool showGallery)
+        //{
+        //    if (showGallery)
+        //    {
+        //        if (galleryView == null) //On-demand instantiation
+        //        {
+        //            galleryView = new GalleryView(new GalleryViewModel(dynamoViewModel));
+        //            Grid.SetColumnSpan(galleryBackground, mainGrid.ColumnDefinitions.Count);
+        //            Grid.SetRowSpan(galleryBackground, mainGrid.RowDefinitions.Count);
+        //        }
 
-                if (galleryView.ViewModel.HasContents)
-                {
-                    galleryBackground.Children.Add(galleryView);
-                    galleryBackground.Visibility = Visibility.Visible;
-                    galleryView.Focus(); //get keyboard focus
-                }
-            }
-            //hide gallery
-            else
-            {
-                if (galleryBackground != null)
-                {
-                    if (galleryView != null && galleryBackground.Children.Contains(galleryView))
-                        galleryBackground.Children.Remove(galleryView);
+        //        if (galleryView.ViewModel.HasContents)
+        //        {
+        //            galleryBackground.Children.Add(galleryView);
+        //            galleryBackground.Visibility = Visibility.Visible;
+        //            galleryView.Focus(); //get keyboard focus
+        //        }
+        //    }
+        //    //hide gallery
+        //    else
+        //    {
+        //        if (galleryBackground != null)
+        //        {
+        //            if (galleryView != null && galleryBackground.Children.Contains(galleryView))
+        //                galleryBackground.Children.Remove(galleryView);
 
-                    galleryBackground.Visibility = Visibility.Hidden;
-                }
-            }
-        }
+        //            galleryBackground.Visibility = Visibility.Hidden;
+        //        }
+        //    }
+        //}
 
         private void DynamoViewModelRequestPackagePaths(object sender, EventArgs e)
         {
@@ -1006,7 +1006,7 @@ namespace Dynamo.Controls
             dynamoViewModel.RequestAboutWindow -= DynamoViewModelRequestAboutWindow;
 
             //SHOW or HIDE GALLERY
-            dynamoViewModel.RequestShowHideGallery -= DynamoViewModelRequestShowHideGallery;
+            //dynamoViewModel.RequestShowHideGallery -= DynamoViewModelRequestShowHideGallery;
 
             foreach (var ext in viewExtensionManager.ViewExtensions)
             {

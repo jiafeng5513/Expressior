@@ -548,6 +548,7 @@
                               Focusable="False"
                               IsEnabled="True"
                               SubmenuOpened="OnSettingsSubMenuOpened">
+                        <!--显示运行预览-->
                         <MenuItem Focusable="False" 
                                   Name="ShowNodeExecution" 
                                   IsCheckable="True" 
@@ -556,7 +557,7 @@
                                   ToolTipService.ShowOnDisabled="True" 
                                   ToolTip="{Binding HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled, Converter={StaticResource RunPreviewToolTipConverter}}"
                                   IsEnabled="{Binding HomeSpaceViewModel.RunSettingsViewModel.RunButtonEnabled, Converter={StaticResource RunPreviewConverter}}"/>
-
+                        <!--数字形式-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewSettingMenuNumberFormat}"
                                   Name="NumberFormat">
@@ -591,6 +592,7 @@
                                       Command="{Binding SetNumberFormatCommand}"
                                       CommandParameter="f4" />
                         </MenuItem>
+                        <!--渲染精度-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewSettingMenuRenderPrecision}">
                             <StackPanel Orientation="Horizontal"
@@ -605,48 +607,45 @@
                                            Margin="10,0,0,0"></TextBlock>
                             </StackPanel>
                         </MenuItem>
+                        <!--集合缩放-->
                         <MenuItem Focusable="False"
                                   Name="ChangeScaleFactorMenu"
                                   Header="{x:Static p:Resources.DynamoViewSettingsMenuChangeScaleFactor}"
                                   Command="{Binding ChangeScaleFactorCommand}" />
                         <Separator />
-                        <MenuItem Focusable="False"
+                        <!--隔离指定几何体-->
+                        <!--<MenuItem Focusable="False"
                                   IsCheckable="True"
                                   IsChecked="{Binding Path=BackgroundPreviewViewModel.IsolationMode, Mode=TwoWay}"
                                   Header="{x:Static p:Resources.DynamoViewSettingsMenuIsolationMode}"
-                                  InputGestureText="Ctrl + I"/>
+                                  InputGestureText="Ctrl + I"/>-->
+                        <!--显示边-->
                         <MenuItem Focusable="False"
                                   IsCheckable="True"
                                   IsChecked="{Binding Path=RenderPackageFactoryViewModel.ShowEdges, Mode=TwoWay}"
                                   Header="{x:Static p:Resources.DynamoViewSettingsMenuShowEdges}"></MenuItem>
+                        <!--显示预览气泡(Visualization Setting)-->
                         <MenuItem Focusable="False"
                                   IsCheckable="True"
                                   IsChecked="{Binding ShowPreviewBubbles, Mode=TwoWay}"
                                   Header="{x:Static p:Resources.DynamoViewSettingsMenuShowPreviewBubbles}"/>
+                        <!--管理自定义节点路径-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewSettingMenuManagePackagePath}"
                                   Command="{Binding ManagePackagePathsCommand}"
                                   Name="managePackagePaths" />
-                        <Separator />
-                        <MenuItem Focusable="False"
-                                  Header="{x:Static p:Resources.DynamoViewSettingExperimental}">
-                            <MenuItem Name="EnableTSpline"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding EnableTSpline}"
-                                  Header="{x:Static p:Resources.DynamoViewSettingEnableTSplineNodes}" />
-                        </MenuItem>
                     </MenuItem>
                     <!--Help-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenu}"
                               Focusable="False">
-                        <MenuItem Focusable="False"
+                        <!--<MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.StartPageWhatsNew}"
                                   Command="{Binding ShowGalleryCommand}">
                             <MenuItem.Icon>
                                 <Image Source="/DynamoCoreWpf;component/UI/Images/icon-whats-new-small.png"
                                        Width="13" Height="14" />
                             </MenuItem.Icon>
-                        </MenuItem>
+                        </MenuItem>-->
                         <MenuItem Focusable="False"
                                   Header="{x:Static p:Resources.DynamoViewHepMenuSamples}"
                                   Name="SamplesMenu"

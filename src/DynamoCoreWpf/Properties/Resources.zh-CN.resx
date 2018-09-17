@@ -883,7 +883,7 @@ It includes the graph being created as well as errors and warnings</value>
     <value>显示边</value>
   </data>
   <data name="DynamoViewSettingsMenuShowPreviewBubbles" xml:space="preserve">
-    <value>Visualization Settings</value>
+    <value>显示预览气泡</value>
     <comment>Settings menu | Show preview bubbles</comment>
   </data>
   <data name="DynamoViewSettingsMenuVisualizationSettings" xml:space="preserve">
