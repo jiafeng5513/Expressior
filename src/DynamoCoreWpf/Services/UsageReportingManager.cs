@@ -45,32 +45,32 @@ namespace Dynamo.Services
         /// <summary>
         /// UsageReporting is the opt-in component
         /// </summary>
-        public bool IsUsageReportingApproved
-        {
-            get {
-                return !DynamoModel.IsTestMode
-                    && (dynamoViewModel != null
-                        && dynamoViewModel.Model.PreferenceSettings.IsUsageReportingApproved);
-            }
-            private set
-            {
-                dynamoViewModel.Model.PreferenceSettings.IsUsageReportingApproved = value;
-                RaisePropertyChanged("IsUsageReportingApproved");
-                var path = dynamoViewModel.Model.PathManager.PreferenceFilePath;
+        //public bool IsUsageReportingApproved
+        //{
+        //    get {
+        //        return !DynamoModel.IsTestMode
+        //            && (dynamoViewModel != null
+        //                && dynamoViewModel.Model.PreferenceSettings.IsUsageReportingApproved);
+        //    }
+        //    private set
+        //    {
+        //        dynamoViewModel.Model.PreferenceSettings.IsUsageReportingApproved = value;
+        //        RaisePropertyChanged("IsUsageReportingApproved");
+        //        var path = dynamoViewModel.Model.PathManager.PreferenceFilePath;
 
-                // Call PreferenceSettings to save
-                try
-                {
-                    dynamoViewModel.Model.PreferenceSettings.SaveInternal(path);
-                }
-                catch (Exception args)
-                {
-                    DynamoModel.IsCrashing = true;
-                    dynamoViewModel.Model.OnRequestsCrashPrompt(this, new CrashPromptArgs(
-                        args.Message, Properties.Resources.UsageReportingErrorMessage, path));
-                }
-            }
-        }
+        //        // Call PreferenceSettings to save
+        //        try
+        //        {
+        //            dynamoViewModel.Model.PreferenceSettings.SaveInternal(path);
+        //        }
+        //        catch (Exception args)
+        //        {
+        //            DynamoModel.IsCrashing = true;
+        //            dynamoViewModel.Model.OnRequestsCrashPrompt(this, new CrashPromptArgs(
+        //                args.Message, Properties.Resources.UsageReportingErrorMessage, path));
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Provide access to the instance of DynamoModel to watch. 
@@ -88,53 +88,53 @@ namespace Dynamo.Services
         /// Analytics is the opt-out tracking system
         /// PII is prohibited from Analytics.
         /// </summary>
-        public bool IsAnalyticsReportingApproved
-        {
-            get
-            {
-                if (DynamoModel.IsTestMode) // Do not want logging in unit tests.
-                    return false;
+        //public bool IsAnalyticsReportingApproved
+        //{
+        //    get
+        //    {
+        //        if (DynamoModel.IsTestMode) // Do not want logging in unit tests.
+        //            return false;
 
-                if (dynamoViewModel.Model != null)
-                    return dynamoViewModel.Model.PreferenceSettings.IsAnalyticsReportingApproved;
+        //        if (dynamoViewModel.Model != null)
+        //            return dynamoViewModel.Model.PreferenceSettings.IsAnalyticsReportingApproved;
 
-                return true;
-            }
+        //        return true;
+        //    }
 
-            private set
-            {
-                dynamoViewModel.Model.PreferenceSettings.IsAnalyticsReportingApproved = value;
-                RaisePropertyChanged("IsAnalyticsReportingApproved");
-                var path = dynamoViewModel.Model.PathManager.PreferenceFilePath;
+        //    private set
+        //    {
+        //        dynamoViewModel.Model.PreferenceSettings.IsAnalyticsReportingApproved = value;
+        //        RaisePropertyChanged("IsAnalyticsReportingApproved");
+        //        var path = dynamoViewModel.Model.PathManager.PreferenceFilePath;
 
-                // Call PreferenceSettings to save
-                try
-                {
-                    dynamoViewModel.Model.PreferenceSettings.SaveInternal(path);
-                }
-                catch (Exception args)
-                {
-                    DynamoModel.IsCrashing = true;
-                    dynamoViewModel.Model.OnRequestsCrashPrompt(this, new CrashPromptArgs(
-                        args.Message, Properties.Resources.UsageReportingErrorMessage, path));
-                }
-            }
+        //        // Call PreferenceSettings to save
+        //        try
+        //        {
+        //            dynamoViewModel.Model.PreferenceSettings.SaveInternal(path);
+        //        }
+        //        catch (Exception args)
+        //        {
+        //            DynamoModel.IsCrashing = true;
+        //            dynamoViewModel.Model.OnRequestsCrashPrompt(this, new CrashPromptArgs(
+        //                args.Message, Properties.Resources.UsageReportingErrorMessage, path));
+        //        }
+        //    }
 
 
-        }
+        //}
 
-        public bool FirstRun
-        {
-            get
-            {
-                return dynamoViewModel.Model.PreferenceSettings.IsFirstRun;
-            }
-            private set
-            {
-                dynamoViewModel.Model.PreferenceSettings.IsFirstRun = value;
-                RaisePropertyChanged("FirstRun");
-            }
-        }
+        //public bool FirstRun
+        //{
+        //    get
+        //    {
+        //        return dynamoViewModel.Model.PreferenceSettings.IsFirstRun;
+        //    }
+        //    private set
+        //    {
+        //        dynamoViewModel.Model.PreferenceSettings.IsFirstRun = value;
+        //        RaisePropertyChanged("FirstRun");
+        //    }
+        //}
 
         #endregion
 
@@ -211,15 +211,15 @@ namespace Dynamo.Services
         //    }
         //}
 
-        public void SetUsageReportingAgreement(bool approved)
-        {
-            IsUsageReportingApproved = approved;
-        }
+        //public void SetUsageReportingAgreement(bool approved)
+        //{
+        //    IsUsageReportingApproved = approved;
+        //}
 
-        public void SetAnalyticsReportingAgreement(bool approved)
-        {
-            IsAnalyticsReportingApproved = approved;
-        }
+        //public void SetAnalyticsReportingAgreement(bool approved)
+        //{
+        //    IsAnalyticsReportingApproved = approved;
+        //}
 
         //private void ShowUsageReportingPrompt(Window ownerWindow)
         //{
@@ -244,10 +244,10 @@ namespace Dynamo.Services
         //    usageReportingPrompt.Loaded -= UsageReportingPromptLoaded;
         //}
 
-        void UsageReportingPromptLoaded(object sender, RoutedEventArgs e)
-        {
-                DynamoModel.OnRequestMigrationStatusDialog(new SettingsMigrationEventArgs(
-                            SettingsMigrationEventArgs.EventStatusType.End));           
-        }
+        //void UsageReportingPromptLoaded(object sender, RoutedEventArgs e)
+        //{
+        //        DynamoModel.OnRequestMigrationStatusDialog(new SettingsMigrationEventArgs(
+        //                    SettingsMigrationEventArgs.EventStatusType.End));           
+        //}
     }
 }
