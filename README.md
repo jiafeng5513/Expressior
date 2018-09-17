@@ -36,5 +36,5 @@
 4. 后续开发的默认分支是Expressior_master分支.<br>
 
 ### Working On:
-1. Prepare for merge Analytics.<br>
+1. 准备清理一波菜单栏.<br>
 
