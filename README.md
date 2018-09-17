@@ -38,6 +38,7 @@
 6. [Dynamo BIM](http://dynamobim.org/)<br>
 7. [开发词典](http://dictionary.dynamobim.com/#/)<br>
 8. [Dynamo 论坛](https://forum.dynamobim.com/)<br>
+9. DynamoTeamEmail:`mailto:team@dynamobim.org`<br>
 ### Working On:
-1. 准备清理一波菜单栏.<br>
+1. 清理工作基本完成.<br>
 

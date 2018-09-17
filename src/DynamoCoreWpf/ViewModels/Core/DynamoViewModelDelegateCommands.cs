@@ -48,10 +48,6 @@ namespace Dynamo.ViewModels
             ToggleConsoleShowingCommand = new DelegateCommand(ToggleConsoleShowing, CanToggleConsoleShowing);
             DisplayFunctionCommand = new DelegateCommand(DisplayFunction, CanDisplayFunction);
             SetConnectorTypeCommand = new DelegateCommand(SetConnectorType, CanSetConnectorType);
-            ReportABugCommand = new DelegateCommand(ReportABug, CanReportABug);
-            GoToWikiCommand = new DelegateCommand(GoToWiki, CanGoToWiki);
-            GoToSourceCodeCommand = new DelegateCommand(GoToSourceCode, CanGoToSourceCode);
-            GoToDictionaryCommand = new DelegateCommand(GoToDictionary, CanGoToDictionary);
             DisplayStartPageCommand = new DelegateCommand(DisplayStartPage, CanDisplayStartPage);
             ChangeScaleFactorCommand = new DelegateCommand(p => OnRequestScaleFactorDialog(this, EventArgs.Empty));
             ManagePackagePathsCommand = new DelegateCommand(ManagePackagePaths, o => true);
@@ -66,7 +62,6 @@ namespace Dynamo.ViewModels
             ImportLibraryCommand = new DelegateCommand(ImportLibrary, CanImportLibrary);
             ShowAboutWindowCommand = new DelegateCommand(ShowAboutWindow, CanShowAboutWindow);
             SetNumberFormatCommand = new DelegateCommand(SetNumberFormat, CanSetNumberFormat);
-            //ShowGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(true), o => true);
             CloseGalleryCommand = new DelegateCommand(p => OnRequestShowHideGallery(false), o => true);
             ShowNewPresetsDialogCommand = new DelegateCommand(ShowNewPresetStateDialogAndMakePreset, CanShowNewPresetStateDialog);
             NodeFromSelectionCommand = new DelegateCommand(CreateNodeFromSelection, CanCreateNodeFromSelection);
@@ -109,10 +104,6 @@ namespace Dynamo.ViewModels
         public DelegateCommand ToggleConsoleShowingCommand { get; set; }
         public DelegateCommand DisplayFunctionCommand { get; set; }
         public DelegateCommand SetConnectorTypeCommand { get; set; }
-        public DelegateCommand ReportABugCommand { get; set; }
-        public DelegateCommand GoToWikiCommand { get; set; }
-        public DelegateCommand GoToDictionaryCommand { get; set; }
-        public DelegateCommand GoToSourceCodeCommand { get; set; }
         public DelegateCommand DisplayStartPageCommand { get; set; }
         public DelegateCommand ChangeScaleFactorCommand { get; set; }
         public DelegateCommand ShowHideConnectorsCommand { get; set; }

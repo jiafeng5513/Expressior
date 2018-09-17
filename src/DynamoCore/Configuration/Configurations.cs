@@ -57,7 +57,7 @@ namespace Dynamo.Configuration
         /// <summary>
         /// Link to Dynamo wiki
         /// </summary>
-        public static string DynamoWikiLink = "https://github.com/DynamoDS/Dynamo/wiki";
+        //public static string DynamoWikiLink = "https://github.com/DynamoDS/Dynamo/wiki";
 
         /// <summary>
         /// Link to Dynamo forum
@@ -74,15 +74,15 @@ namespace Dynamo.Configuration
         /// </summary>
         public static string DynamoVideoTutorials = "http://dynamobim.org/learn/#161";
 
-        /// <summary>
-        /// Link to Dynamo dictionary
-        /// </summary>
+        ///// <summary>
+        ///// Link to Dynamo dictionary
+        ///// </summary>
         public static string DynamoDictionary = "http://dictionary.dynamobim.com/";
 
         /// <summary>
         /// Link to Dynamo primer
         /// </summary>
-        public static string DynamoPrimer = "http://dynamoprimer.com/";
+        //public static string DynamoPrimer = "http://dynamoprimer.com/";
 
         /// <summary>
         /// Link to Dynamo download page

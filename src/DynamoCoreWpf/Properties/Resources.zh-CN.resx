@@ -464,10 +464,6 @@ You will get a chance to save your work.</value>
     <value>调试</value>
     <comment>Debug menu</comment>
   </data>
-  <data name="DynamoViewDebugMenuCheckDailyBuild" xml:space="preserve">
-    <value>检查每日构建</value>
-    <comment>Debug menu | Check the latest daily build</comment>
-  </data>
   <data name="DynamoViewDebugMenuDumpLibrary" xml:space="preserve">
     <value>转储库</value>
     <comment>Debug menu | Dump all imported libraries</comment>
@@ -475,14 +471,6 @@ You will get a chance to save your work.</value>
   <data name="DynamoViewDebugMenuForceReExecute" xml:space="preserve">
     <value>强制重新执行</value>
     <comment>Debug menu | Force to re-execute the whole graph</comment>
-  </data>
-  <data name="DynamoViewDebugMenuForceUpdate" xml:space="preserve">
-    <value>强制升级</value>
-    <comment>Debug menu | Force to update Dynamo</comment>
-  </data>
-  <data name="DynamoViewDebugMenuRunMutationTest" xml:space="preserve">
-    <value>运行突变测试</value>
-    <comment>Debug menu | Run mutation test</comment>
   </data>
   <data name="DynamoViewDebugMenuShowDebugAST" xml:space="preserve">
     <value>渲染调试信息(ASTs)</value>
@@ -639,9 +627,6 @@ You will get a chance to save your work.</value>
     <value>_另存为</value>
     <comment>File menu | Save as</comment>
   </data>
-  <data name="DynamoViewHelpDictionary" xml:space="preserve">
-    <value>打开开发词典</value>
-  </data>
   <data name="DynamoViewHelpMenu" xml:space="preserve">
     <value>帮助</value>
     <comment>Help menu</comment>
@@ -653,14 +638,6 @@ You will get a chance to save your work.</value>
   <data name="DynamoViewHelpMenuDisplayStartPage" xml:space="preserve">
     <value>_显示开始页面</value>
     <comment>Help menu | Display start page</comment>
-  </data>
-  <data name="DynamoViewHelpMenuGotoWebsite" xml:space="preserve">
-    <value>_访问项目网站</value>
-    <comment>Help menu | Go go Dynamo website</comment>
-  </data>
-  <data name="DynamoViewHelpMenuGotoWiki" xml:space="preserve">
-    <value>访问WiKi</value>
-    <comment>Help menu | Go to wiki</comment>
   </data>
   <data name="DynamoViewHelpMenuReportBug" xml:space="preserve">
     <value>_报告BUG...</value>
@@ -681,18 +658,6 @@ You will get a chance to save your work.</value>
   <data name="DynamoViewPackageMenuManagePackage" xml:space="preserve">
     <value>_管理包...</value>
     <comment>Package menu | Manage packages...</comment>
-  </data>
-  <data name="DynamoViewPackageMenuPublishNodes" xml:space="preserve">
-    <value>_发布选中的节点...</value>
-    <comment>Package menu | Publish selected nodes as a package</comment>
-  </data>
-  <data name="DynamoViewPackageMenuPublishPackage" xml:space="preserve">
-    <value>_发布新包...</value>
-    <comment>Package menu | Publish new package</comment>
-  </data>
-  <data name="DynamoViewPackageMenuPublishWorkspace" xml:space="preserve">
-    <value>_发布当前工作区...</value>
-    <comment>Package menu | Publish current workspace as a package</comment>
   </data>
   <data name="DynamoViewPackageMenuSearchPackage" xml:space="preserve">
     <value>_查找包...</value>
@@ -715,10 +680,6 @@ You will get a chance to save your work.</value>
   </data>
   <data name="DynamoViewSamplesMenuShowInFolder" xml:space="preserve">
     <value>Show In Folder</value>
-  </data>
-  <data name="DynamoViewSettingEnableTSplineNodes" xml:space="preserve">
-    <value>使用T样条节点(需要重启)</value>
-    <comment>Setting menu | Experimental | Enable T-Spline nodes</comment>
   </data>
   <data name="DynamoViewSettingExperimental" xml:space="preserve">
     <value>试验</value>
@@ -763,20 +724,6 @@ You will get a chance to save your work.</value>
   <data name="DynamoViewSettingMenuDecimalInch" xml:space="preserve">
     <value>Decimal Inch</value>
     <comment>Setting menu | Decimal inch</comment>
-  </data>
-  <data name="DynamoViewSettingMenuEnableDataReporting" xml:space="preserve">
-    <value>启用详细的可用性数据报告</value>
-    <comment>Setting menu | Enable data reporting during usage</comment>
-  </data>
-  <data name="DynamoViewSettingMenuEnableDataReportingTooltip" xml:space="preserve">
-    <value>Detailed reporting sends behaviour data that we use for improving {0}.
-
-It includes the graph being created as well as errors and warnings</value>
-    <comment>Setting menu | Tooltip for enable data reporting during usage menu item</comment>
-  </data>
-  <data name="DynamoViewSettingMenuEnableSummaryReporting" xml:space="preserve">
-    <value>启用匿名总结报告(Google Analytics)</value>
-    <comment>Setting menu | Enable summary reporting</comment>
   </data>
   <data name="DynamoViewSettingMenuEnableSummaryReportingTooltip" xml:space="preserve">
     <value>匿名摘要报告发送最小数量的数据集，用于计算用户计数、稳定性和性能指标。

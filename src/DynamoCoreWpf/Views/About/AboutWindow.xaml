@@ -78,9 +78,6 @@
                            Foreground="#00bb00"
                            Margin="0,-10,0,0"
                            PreviewMouseDown="OnPreviewMouseDown">
-                        <Run Foreground="{Binding IsUpdateAvailable, Converter={StaticResource IsUpdateAvailableBrushConverter}}" 
-                             Text="{Binding Model.UpdateManager, Converter={StaticResource IsUpdateAvailableToTextConverter}, 
-                             ConverterParameter=DataContext, Mode=OneWay}"/>
                 </TextBlock>
             </Grid>
             <Button Name="DynamoWebsiteButton" Grid.Row="2" Click="OnClickLink" Style="{StaticResource STextButton}"/>

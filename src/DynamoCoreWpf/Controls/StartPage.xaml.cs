@@ -447,27 +447,4 @@ namespace Dynamo.UI.Controls
             }
         }
     }
-
-    //public class SampleFileEntry
-    //{
-    //    List<SampleFileEntry> childSampleFiles = null;
-
-    //    public SampleFileEntry(string name, string path)
-    //    {
-    //        this.FileName = name;
-    //        this.FilePath = path;
-    //    }
-    //    public void AddChildSampleFile(SampleFileEntry childSampleFile)
-    //    {
-    //        if (null == childSampleFiles)
-    //            childSampleFiles = new List<SampleFileEntry>();
-
-    //        childSampleFiles.Add(childSampleFile);
-    //    }
-
-    //    public string FileName { get; private set; }
-    //    public string FilePath { get; private set; }
-    //    public IEnumerable<SampleFileEntry> Children { get { return childSampleFiles; } }
-    //}
-
 }

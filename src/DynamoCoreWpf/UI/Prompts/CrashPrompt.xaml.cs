@@ -94,7 +94,7 @@ namespace Dynamo.Nodes.Prompts
 
         private void PostOnGithub_Click(object sender, RoutedEventArgs e)
         {
-            DynamoViewModel.ReportABug(null);
+            //我们假装报告了Bug...
         }
 
         private void Details_Click(object sender, RoutedEventArgs e)
