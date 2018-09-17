@@ -8,7 +8,7 @@ using Dynamo.Graph.Workspaces;
 using Dynamo.Models;
 using Dynamo.Scheduler;
 using Dynamo.Selection;
-using Dynamo.Services;
+//using Dynamo.Services;
 using Dynamo.Utilities;
 using Dynamo.ViewModels;
 using Dynamo.Views;
@@ -499,27 +499,27 @@ namespace DynamoCoreWpfTests
             #endregion
 
             #region Collect Information Option
-            {
-                // Backup the value of Dynamo.IsTestMode and restore it later. The 
-                // reason for this is 'IsUsageReportingApproved' only returns the 
-                // actual value when not running in test mode.
-                var isTestMode = DynamoModel.IsTestMode;
+            //{
+            //    // Backup the value of Dynamo.IsTestMode and restore it later. The 
+            //    // reason for this is 'IsUsageReportingApproved' only returns the 
+            //    // actual value when not running in test mode.
+            //    var isTestMode = DynamoModel.IsTestMode;
 
-                // First time run, check if dynamo did set it back to false after running
-                Assert.AreEqual(false, UsageReportingManager.Instance.FirstRun);
+            //    // First time run, check if dynamo did set it back to false after running
+            //    Assert.AreEqual(false, UsageReportingManager.Instance.FirstRun);
 
-                // CollectionInfoOption To TRUE
-                UsageReportingManager.Instance.SetUsageReportingAgreement(true);
-                RestartTestSetup(startInTestMode: false);
-                Assert.AreEqual(true, UsageReportingManager.Instance.IsUsageReportingApproved);
+            //    // CollectionInfoOption To TRUE
+            //    UsageReportingManager.Instance.SetUsageReportingAgreement(true);
+            //    RestartTestSetup(startInTestMode: false);
+            //    Assert.AreEqual(true, UsageReportingManager.Instance.IsUsageReportingApproved);
 
-                // CollectionInfoOption To FALSE
-                UsageReportingManager.Instance.SetUsageReportingAgreement(false);
-                RestartTestSetup(startInTestMode: false);
-                Assert.AreEqual(false, UsageReportingManager.Instance.IsUsageReportingApproved);
+            //    // CollectionInfoOption To FALSE
+            //    UsageReportingManager.Instance.SetUsageReportingAgreement(false);
+            //    RestartTestSetup(startInTestMode: false);
+            //    Assert.AreEqual(false, UsageReportingManager.Instance.IsUsageReportingApproved);
 
-                DynamoModel.IsTestMode = isTestMode; // Restore the orignal value.
-            }
+            //    DynamoModel.IsTestMode = isTestMode; // Restore the orignal value.
+            //}
             #endregion
 
             #region Save And Load of PreferenceSettings

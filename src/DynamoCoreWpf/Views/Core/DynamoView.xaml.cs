@@ -12,7 +12,6 @@ using Dynamo.PackageManager;
 using Dynamo.Search;
 using Dynamo.Search.SearchElements;
 using Dynamo.Selection;
-using Dynamo.Services;
 using Dynamo.UI.Controls;
 using Dynamo.Utilities;
 using Dynamo.ViewModels;
@@ -97,9 +96,9 @@ namespace Dynamo.Controls
 
             InitializeComponent();
 
-            ToggleIsUsageReportingApprovedCommand.ToolTip = string.Format(
-                Wpf.Properties.Resources.DynamoViewSettingMenuEnableDataReportingTooltip,
-                dynamoViewModel.BrandingResourceProvider.ProductName);
+            //ToggleIsUsageReportingApprovedCommand.ToolTip = string.Format(
+            //    Wpf.Properties.Resources.DynamoViewSettingMenuEnableDataReportingTooltip,
+            //    dynamoViewModel.BrandingResourceProvider.ProductName);
 
             Loaded += DynamoView_Loaded;
             Unloaded += DynamoView_Unloaded;
@@ -351,15 +350,6 @@ namespace Dynamo.Controls
             dynamoViewModel.Model.PreferenceSettings.WindowH = e.NewSize.Height;
         }
 
-        //private void InitializeLogin()
-        //{
-        //    if (dynamoViewModel.ShowLogin && dynamoViewModel.Model.AuthenticationManager.HasAuthProvider)
-        //    {
-        //        var login = new Login(dynamoViewModel.PackageManagerClientViewModel);
-        //        loginGrid.Children.Add(login);
-        //    }
-        //}
-
         private void InitializeShortcutBar()
         {
             shortcutBar = new ShortcutToolbar() { Name = "ShortcutToolbar" };
@@ -482,7 +472,7 @@ namespace Dynamo.Controls
             //Backing up IsFirstRun to determine whether to show Gallery
             var isFirstRun = dynamoViewModel.Model.PreferenceSettings.IsFirstRun;
             // If first run, Collect Info Prompt will appear
-            UsageReportingManager.Instance.CheckIsFirstRun(this, dynamoViewModel.BrandingResourceProvider);
+            //UsageReportingManager.Instance.CheckIsFirstRun(this, dynamoViewModel.BrandingResourceProvider);
 
             WorkspaceTabs.SelectedIndex = 0;
             dynamoViewModel = (DataContext as DynamoViewModel);
@@ -502,7 +492,6 @@ namespace Dynamo.Controls
 
             #region Package manager
 
-            //dynamoViewModel.RequestPackagePublishDialog += DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestPackagePathsDialog += DynamoViewModelRequestPackagePaths;
             dynamoViewModel.RequestScaleFactorDialog += DynamoViewModelChangeScaleFactor;
 
@@ -525,7 +514,6 @@ namespace Dynamo.Controls
 
             dynamoViewModel.RequestClose += DynamoViewModelRequestClose;
             dynamoViewModel.RequestSaveImage += DynamoViewModelRequestSaveImage;
-            //dynamoViewModel.RequestSave3DImage += DynamoViewModelRequestSave3DImage;
             dynamoViewModel.SidebarClosed += DynamoViewModelSidebarClosed;
 
             dynamoViewModel.Model.RequestsCrashPrompt += Controller_RequestsCrashPrompt;
@@ -639,27 +627,6 @@ namespace Dynamo.Controls
                 }
             }
         }
-
-        //private PublishPackageView _pubPkgView;
-
-        //private void DynamoViewModelRequestRequestPackageManagerPublish(PublishPackageViewModel model)
-        //{
-        //    var cmd = Analytics.TrackCommandEvent("PublishPackage");
-        //    if (_pubPkgView == null)
-        //    {
-        //        _pubPkgView = new PublishPackageView(model)
-        //        {
-        //            Owner = this,
-        //            WindowStartupLocation = WindowStartupLocation.CenterOwner
-        //        };
-        //        _pubPkgView.Closed += (sender, args) => { _pubPkgView = null; cmd.Dispose(); };
-        //        _pubPkgView.Show();
-
-        //        if (_pubPkgView.IsLoaded && IsLoaded) _pubPkgView.Owner = this;
-        //    }
-
-        //    _pubPkgView.Focus();
-        //}
 
         private void DynamoViewModelRequestPackagePaths(object sender, EventArgs e)
         {
@@ -1011,8 +978,6 @@ namespace Dynamo.Controls
 
             dynamoViewModel.Model.RequestLayoutUpdate -= vm_RequestLayoutUpdate;
 
-            //PACKAGE MANAGER
-            //dynamoViewModel.RequestPackagePublishDialog -= DynamoViewModelRequestRequestPackageManagerPublish;
             dynamoViewModel.RequestPackagePathsDialog -= DynamoViewModelRequestPackagePaths;
 
             //FUNCTION NAME PROMPT

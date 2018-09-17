@@ -10,7 +10,6 @@ using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.PackageManager;
 using Dynamo.Selection;
-using Dynamo.Services;
 using Dynamo.UI;
 using Dynamo.Updates;
 using Dynamo.Utilities;
@@ -334,14 +333,6 @@ namespace Dynamo.ViewModels
             }
         }
 
-        public bool IsUsageReportingApproved
-        {
-            get
-            {
-                return UsageReportingManager.Instance.IsUsageReportingApproved;
-            }
-        }
-
         private ObservableCollection<string> recentFiles =
             new ObservableCollection<string>();
         public ObservableCollection<string> RecentFiles
@@ -371,15 +362,6 @@ namespace Dynamo.ViewModels
             get { return model.HostName; }
         }
 
-        //public bool IsUpdateAvailable
-        //{
-        //    get
-        //    {
-        //        var um = model.UpdateManager;
-        //        return um.IsUpdateAvailable;
-        //    }
-        //}
-
         public string LicenseFile
         {
             get
@@ -405,8 +387,6 @@ namespace Dynamo.ViewModels
         public IWatchHandler WatchHandler { get; private set; }
 
         public SearchViewModel SearchViewModel { get; private set; }
-
-        //public PackageManagerClientViewModel PackageManagerClientViewModel { get; private set; }
 
         /// <summary>
         ///     Whether sign in should be shown in Dynamo.  In instances where Dynamo obtains
@@ -507,10 +487,9 @@ namespace Dynamo.ViewModels
             this.model.CommandStarting += OnModelCommandStarting;
             this.model.CommandCompleted += OnModelCommandCompleted;
 
-            UsageReportingManager.Instance.InitializeCore(this);
+            //UsageReportingManager.Instance.InitializeCore(this);
             this.WatchHandler = startConfiguration.WatchHandler;
             var pmExtension = model.GetPackageManagerExtension();
-            //this.PackageManagerClientViewModel = new PackageManagerClientViewModel(this, pmExtension.PackageManagerClient);
             this.SearchViewModel = new SearchViewModel(this);
 
             // Start page should not show up during test mode.
@@ -534,7 +513,6 @@ namespace Dynamo.ViewModels
             SubscribeModelUiEvents();
             SubscribeModelChangedHandlers();
             SubscribeModelBackupFileSaveEvent();
-            //SubscribeUpdateManagerHandlers();
 
             InitializeAutomationSettings(startConfiguration.CommandFilePath);
 
@@ -544,7 +522,6 @@ namespace Dynamo.ViewModels
 
             InitializeRecentFiles();
 
-            UsageReportingManager.Instance.PropertyChanged += CollectInfoManager_PropertyChanged;
 
             WatchIsResizable = false;
 
@@ -626,7 +603,6 @@ namespace Dynamo.ViewModels
             UnsubscribeDispatcherEvents();
             UnsubscribeModelUiEvents();
             UnsubscribeModelChangedEvents();
-            //UnsubscribeUpdateManagerEvents();
             UnsubscribeLoggerEvents();
             UnsubscribeModelCleaningUpEvent();
             UnsubscribeModelBackupFileSaveEvent();
@@ -634,7 +610,6 @@ namespace Dynamo.ViewModels
             model.WorkspaceAdded -= WorkspaceAdded;
             model.WorkspaceRemoved -= WorkspaceRemoved;
             DynamoSelection.Instance.Selection.CollectionChanged -= SelectionOnCollectionChanged;
-            UsageReportingManager.Instance.PropertyChanged -= CollectInfoManager_PropertyChanged;
         }
 
         private void InitializeRecentFiles()
@@ -655,18 +630,6 @@ namespace Dynamo.ViewModels
         {
             model.Logger.PropertyChanged -= Instance_PropertyChanged;
         }
-
-        //private void SubscribeUpdateManagerHandlers()
-        //{
-        //    model.UpdateManager.UpdateDownloaded += Instance_UpdateDownloaded;
-        //    model.UpdateManager.ShutdownRequested += UpdateManager_ShutdownRequested;
-        //}
-
-        //private void UnsubscribeUpdateManagerEvents()
-        //{
-        //    model.UpdateManager.UpdateDownloaded -= Instance_UpdateDownloaded;
-        //    model.UpdateManager.ShutdownRequested -= UpdateManager_ShutdownRequested;
-        //}
 
         private void SubscribeModelUiEvents()
         {
@@ -812,17 +775,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        //void Instance_UpdateDownloaded(object sender, UpdateDownloadedEventArgs e)
-        //{
-        //    RaisePropertyChanged("Version");
-        //    RaisePropertyChanged("IsUpdateAvailable");
-        //}
-
-        //void UpdateManager_ShutdownRequested(IUpdateManager updateManager)
-        //{
-        //    PerformShutdownSequence(new ShutdownParams(
-        //        shutdownHost: true, allowCancellation: true));
-        //}
 
         void CollectInfoManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -836,7 +788,6 @@ namespace Dynamo.ViewModels
 
         private void SelectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            //PublishSelectedNodesCommand.RaiseCanExecuteChanged();
             AlignSelectedCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             UngroupModelCommand.RaiseCanExecuteChanged();
@@ -867,15 +818,13 @@ namespace Dynamo.ViewModels
                     RaisePropertyChanged("BackgroundColor");
                     RaisePropertyChanged("CurrentWorkspaceIndex");
                     RaisePropertyChanged("ViewingHomespace");
-                    //if (this.PublishCurrentWorkspaceCommand != null)
-                    //    this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
+
                     RaisePropertyChanged("IsPanning");
                     RaisePropertyChanged("IsOrbiting");
                     if (ChangeScaleFactorCommand != null)
                     {
                         ChangeScaleFactorCommand.RaiseCanExecuteChanged();
                     }
-                    //RaisePropertyChanged("RunEnabled");
                     break;
 
                 case "EnablePresetOptions":
@@ -883,20 +832,6 @@ namespace Dynamo.ViewModels
                     break;
             }
         }
-
-        // TODO(Sriram): This method is currently not used, but it should really 
-        // be. It watches property change notifications coming from the current 
-        // WorkspaceModel, and then enables/disables 'set timer' button on the UI.
-        // 
-        //void CurrentWorkspace_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    switch (e.PropertyName)
-        //    {
-        //        case "RunEnabled":
-        //            RaisePropertyChanged(e.PropertyName);
-        //            break;
-        //    }
-        //}
 
         private void CleanUp()
         {
@@ -1704,7 +1639,6 @@ namespace Dynamo.ViewModels
 
         public void AlignSelected(object param)
         {
-            //this.CurrentSpaceViewModel.AlignSelectedCommand.Execute(param);
             this.CurrentSpaceViewModel.AlignSelectedCommand.Execute(param.ToString());
         }
 
@@ -2390,7 +2324,7 @@ namespace Dynamo.ViewModels
                 //model.UpdateManager.HostApplicationBeginQuit();
             }
 
-            UsageReportingManager.DestroyInstance();
+            //UsageReportingManager.DestroyInstance();
 
             return true;
         }

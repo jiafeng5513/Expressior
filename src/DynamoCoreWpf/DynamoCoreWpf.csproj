@@ -220,7 +220,6 @@
     <Compile Include="NodeViewCustomization\NodeViewCustomizations\DSVarArgFunctionNodeViewCustomization.cs" />
     <Compile Include="NodeViewCustomization\NodeViewCustomizationLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UsageReportingManager.cs" />
     <Compile Include="NodeViewCustomization\NodeViewCustomizations\CodeBlockNodeViewCustomization.cs" />
     <Compile Include="Commands\AutomationSettings.cs" />
     <Compile Include="Commands\ConnectorCommands.cs" />
@@ -260,9 +259,6 @@
     </Compile>
     <Compile Include="UI\Prompts\NodeHelpPrompt.xaml.cs">
       <DependentUpon>NodeHelpPrompt.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Prompts\UsageReportingAgreementPrompt.xaml.cs">
-      <DependentUpon>UsageReportingAgreementPrompt.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Prompts\ChangeScaleFactorPrompt.xaml.cs">
       <DependentUpon>ChangeScaleFactorPrompt.xaml</DependentUpon>
@@ -960,10 +956,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\Prompts\PresetOverwritePrompt.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\Prompts\UsageReportingAgreementPrompt.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
