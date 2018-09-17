@@ -33,12 +33,6 @@ namespace Dynamo.ViewModels
             get { return dynamoViewModel.ImportLibraryCommand; }
         }
 
-
-        public DelegateCommand ShowPackageManagerSearchCommand
-        {
-            get { return dynamoViewModel.ShowPackageManagerSearchCommand; }
-        }
-
         private DelegateCommand toggleLayoutCommand;
         public DelegateCommand ToggleLayoutCommand
         {

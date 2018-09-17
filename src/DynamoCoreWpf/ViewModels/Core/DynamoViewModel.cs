@@ -406,7 +406,7 @@ namespace Dynamo.ViewModels
 
         public SearchViewModel SearchViewModel { get; private set; }
 
-        public PackageManagerClientViewModel PackageManagerClientViewModel { get; private set; }
+        //public PackageManagerClientViewModel PackageManagerClientViewModel { get; private set; }
 
         /// <summary>
         ///     Whether sign in should be shown in Dynamo.  In instances where Dynamo obtains
@@ -510,7 +510,7 @@ namespace Dynamo.ViewModels
             UsageReportingManager.Instance.InitializeCore(this);
             this.WatchHandler = startConfiguration.WatchHandler;
             var pmExtension = model.GetPackageManagerExtension();
-            this.PackageManagerClientViewModel = new PackageManagerClientViewModel(this, pmExtension.PackageManagerClient);
+            //this.PackageManagerClientViewModel = new PackageManagerClientViewModel(this, pmExtension.PackageManagerClient);
             this.SearchViewModel = new SearchViewModel(this);
 
             // Start page should not show up during test mode.
@@ -836,7 +836,7 @@ namespace Dynamo.ViewModels
 
         private void SelectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            PublishSelectedNodesCommand.RaiseCanExecuteChanged();
+            //PublishSelectedNodesCommand.RaiseCanExecuteChanged();
             AlignSelectedCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
             UngroupModelCommand.RaiseCanExecuteChanged();
@@ -867,8 +867,8 @@ namespace Dynamo.ViewModels
                     RaisePropertyChanged("BackgroundColor");
                     RaisePropertyChanged("CurrentWorkspaceIndex");
                     RaisePropertyChanged("ViewingHomespace");
-                    if (this.PublishCurrentWorkspaceCommand != null)
-                        this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
+                    //if (this.PublishCurrentWorkspaceCommand != null)
+                    //    this.PublishCurrentWorkspaceCommand.RaiseCanExecuteChanged();
                     RaisePropertyChanged("IsPanning");
                     RaisePropertyChanged("IsOrbiting");
                     if (ChangeScaleFactorCommand != null)
@@ -1461,36 +1461,6 @@ namespace Dynamo.ViewModels
             }
 
             return false;
-        }
-
-        internal bool CanVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
-
-        internal bool CanUpstreamVisibilityBeToggled(object parameters)
-        {
-            return true;
-        }
-
-        internal void ShowPackageManagerSearch(object parameters)
-        {
-            OnRequestPackageManagerSearchDialog(this, EventArgs.Empty);
-        }
-
-        internal bool CanShowPackageManagerSearch(object parameters)
-        {
-            return true;
-        }
-
-        private void ShowInstalledPackages(object parameters)
-        {
-            OnRequestManagePackagesDialog(this, EventArgs.Empty);
-        }
-
-        private bool CanShowInstalledPackages(object parameters)
-        {
-            return true;
         }
 
         private void ManagePackagePaths(object parameters)

@@ -7,6 +7,11 @@ namespace Dynamo.PackageManager
         public FileInfo Model { get; private set; }
         private readonly string packageRoot;
 
+        public PackageFileInfo(string packageRoot, string filename)
+        {
+            this.packageRoot = packageRoot;
+            this.Model = new FileInfo(filename);
+        }
         /// <summary>
         /// Filename relative to the package root directory
         /// </summary>
@@ -16,12 +21,6 @@ namespace Dynamo.PackageManager
             {
                 return Model.FullName.Substring(packageRoot.Length);
             }
-        }
-
-        public PackageFileInfo(string packageRoot, string filename)
-        {
-            this.packageRoot = packageRoot;
-            this.Model = new FileInfo(filename);
         }
     }
 }

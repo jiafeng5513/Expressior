@@ -96,14 +96,6 @@ namespace Dynamo.PackageManager
             }
         }
 
-        private void OnPackageRemoved(Package pkg)
-        {
-            if (PackageRemoved != null)
-            {
-                PackageRemoved(pkg);
-            }
-        }
-
         internal void Add(Package pkg)
         {
             if (!this.localPackages.Contains(pkg))
@@ -114,15 +106,6 @@ namespace Dynamo.PackageManager
             }
         }
 
-        internal void Remove(Package pkg)
-        {
-            if (this.localPackages.Contains(pkg))
-            {
-                this.localPackages.Remove(pkg);
-                pkg.MessageLogged -= OnPackageMessageLogged;
-                OnPackageRemoved(pkg);
-            }
-        }
 
         private void OnPackageMessageLogged(ILogMessage obj)
         {
@@ -324,31 +307,6 @@ namespace Dynamo.PackageManager
         }
 
         /// <summary>
-        ///     Attempt to load a managed assembly in to ReflectionOnlyLoadFrom context. 
-        /// </summary>
-        /// <param name="filename">The filename of a DLL</param>
-        /// <param name="assem">out Assembly - the passed value does not matter and will only be set if loading succeeds</param>
-        /// <returns>Returns Success if success, NotManagedAssembly if BadImageFormatException, AlreadyLoaded if FileLoadException</returns>
-        internal static AssemblyLoadingState TryReflectionOnlyLoadFrom(string filename, out Assembly assem)
-        {
-            try
-            {
-                assem = Assembly.ReflectionOnlyLoadFrom(filename);
-                return AssemblyLoadingState.Success;
-            }
-            catch (BadImageFormatException)
-            {
-                assem = null;
-                return AssemblyLoadingState.NotManagedAssembly;
-            }
-            catch (FileLoadException)
-            {
-                assem = null;
-                return AssemblyLoadingState.AlreadyLoaded;
-            }
-        }
-
-        /// <summary>
         ///     Attempt to load a managed assembly in to LoadFrom context. 
         /// </summary>
         /// <param name="filename">The filename of a DLL</param>
@@ -368,35 +326,7 @@ namespace Dynamo.PackageManager
             }
         }
 
-        public bool IsUnderPackageControl(string path)
-        {
-            return LocalPackages.Any(ele => ele.ContainsFile(path));
-        }
 
-        public bool IsUnderPackageControl(CustomNodeInfo def)
-        {
-            return IsUnderPackageControl(def.Path);
-        }
-
-        public bool IsUnderPackageControl(Type t)
-        {
-            return LocalPackages.Any(package => package.LoadedTypes.Contains(t));
-        }
-
-        public bool IsUnderPackageControl(Assembly t)
-        {
-            return LocalPackages.Any(package => package.LoadedAssemblies.Any(x => x.Assembly == t));
-        }
-
-        public Package GetPackageFromRoot(string path)
-        {
-            return LocalPackages.FirstOrDefault(pkg => pkg.RootDirectory == path);
-        }
-
-        public Package GetOwnerPackage(Type t)
-        {
-            return LocalPackages.FirstOrDefault(package => package.LoadedTypes.Contains(t));
-        }
 
         public Package GetOwnerPackage(CustomNodeInfo def)
         {

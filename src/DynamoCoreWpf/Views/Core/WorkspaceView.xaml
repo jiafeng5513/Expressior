@@ -373,10 +373,10 @@
                            Click="WorkspacePropertyEditClick"
                            Visibility="{Binding Path=IsHomeSpace, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
                     <!--发布自定义节点-->
-                    <MenuItem  Header="{x:Static p:Resources.ContextMenuPublishCustomNode}"
+                    <!--<MenuItem  Header="{x:Static p:Resources.ContextMenuPublishCustomNode}"
                            Name="Publish"
                            Command="{Binding DynamoViewModel.PublishCurrentWorkspaceCommand }"
-                           Visibility="{Binding Path=IsHomeSpace, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />
+                           Visibility="{Binding Path=IsHomeSpace, Converter={StaticResource InverseBoolToVisibilityCollapsedConverter}}" />-->
 
                     <Separator />
 

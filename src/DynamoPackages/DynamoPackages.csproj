@@ -68,7 +68,6 @@
     <Compile Include="..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="FailFunc.cs" />
     <Compile Include="Interfaces\CustomNodePathRemapper.cs" />
     <Compile Include="Interfaces\IDirectoryInfo.cs" />
     <Compile Include="Interfaces\IFileCompressor.cs" />
@@ -77,17 +76,9 @@
     <Compile Include="Interfaces\MutatingFileCompressor.cs" />
     <Compile Include="Interfaces\MutatingFileSystem.cs" />
     <Compile Include="Package.cs" />
-    <Compile Include="PackageDirectoryBuilder.cs" />
-    <Compile Include="PackageDownloadHandle.cs" />
     <Compile Include="PackageFileInfo.cs" />
     <Compile Include="PackageLoader.cs" />
-    <Compile Include="PackageManagerClient.cs" />
     <Compile Include="PackageManagerExtension.cs" />
-    <Compile Include="PackageManagerResult.cs" />
-    <Compile Include="PackageManagerSearchElement.cs" />
-    <Compile Include="PackageUploadBuilder.cs" />
-    <Compile Include="PackageUploadHandle.cs" />
-    <Compile Include="PackageUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.en-US.Designer.cs">
       <AutoGen>True</AutoGen>

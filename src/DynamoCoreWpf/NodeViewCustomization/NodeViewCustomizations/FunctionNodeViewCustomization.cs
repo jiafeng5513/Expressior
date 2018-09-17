@@ -52,15 +52,15 @@ namespace Dynamo.Wpf
             }
 
             // publish
-            var publishCustomNodeItem = new MenuItem
-            {
-                Header = Resources.ContextMenuPublishCustomNode,
-                IsCheckable = false
-            };
-            nodeView.MainContextMenu.Items.Add(publishCustomNodeItem);
+            //var publishCustomNodeItem = new MenuItem
+            //{
+            //    Header = Resources.ContextMenuPublishCustomNode,
+            //    IsCheckable = false
+            //};
+            //nodeView.MainContextMenu.Items.Add(publishCustomNodeItem);
 
-            publishCustomNodeItem.Command = nodeView.ViewModel.DynamoViewModel.PublishSelectedNodesCommand;
-            publishCustomNodeItem.CommandParameter = functionNodeModel;
+            ////publishCustomNodeItem.Command = nodeView.ViewModel.DynamoViewModel.PublishSelectedNodesCommand;
+            //publishCustomNodeItem.CommandParameter = functionNodeModel;
 
             nodeView.UpdateLayout();
         }
