@@ -15,7 +15,6 @@ using Dynamo.Logging;
 using Dynamo.Nodes;
 using Dynamo.Search;
 using Dynamo.Search.SearchElements;
-using Dynamo.Services;
 using Dynamo.UI;
 using Dynamo.Utilities;
 using Dynamo.Wpf.Services;

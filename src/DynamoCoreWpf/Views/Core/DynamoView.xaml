@@ -5,7 +5,6 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:Dynamo.Controls"
         xmlns:uictrls="clr-namespace:Dynamo.UI.Controls"
-        xmlns:service="clr-namespace:Dynamo.Services"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModels="clr-namespace:Dynamo.ViewModels"
@@ -542,36 +541,6 @@
                                       Command="{Binding ShowHideConnectorsCommand}">
                             </MenuItem>
                         </MenuItem>
-                        <!--背景3D预览--><!--
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenu3DPreview}"
-                                  Name="background3dMenu"
-                                  Focusable="False">
-
-                            <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuAvailablePreviews}" ItemsSource="{Binding Watch3DViewModels}">
-                                <MenuItem.ItemContainerStyle>
-                                    <Style TargetType="MenuItem">
-                                        <Setter Property="Header" Value="{Binding Name}"/>
-                                        <Setter Property="IsCheckable" Value="True"/>
-                                        <Setter Property="IsChecked" Value="{Binding Active}"/>
-                                        <Setter Property="Focusable" Value="False"/>
-                                        <Setter Property="IsEnabled" Value="{Binding CanBeActivated}"/>
-                                    </Style>
-                                </MenuItem.ItemContainerStyle>
-                            </MenuItem>
-
-                            <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuShowGrid}"
-                                      IsEnabled="{Binding BackgroundPreviewActive}"
-                                      IsChecked="{Binding BackgroundPreviewViewModel.IsGridVisible}"
-                                      Focusable="False"
-                                      Command="{Binding ToggleBackgroundGridVisibilityCommand}" />
-
-                            <MenuItem Header="{x:Static p:Resources.DynamoViewViewMenuPreviewNavigate}"
-                                      IsEnabled="{Binding BackgroundPreviewActive}"
-                                      IsChecked="{Binding Path=BackgroundPreviewViewModel.CanNavigateBackground}"
-                                      InputGestureText="Ctrl + B"
-                                      Focusable="False"
-                                      Command="{Binding Path=BackgroundPreviewViewModel.ToggleCanNavigateBackgroundCommand}" />
-                        </MenuItem>-->
                     </MenuItem>
                     <!--Settings-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenu}"
@@ -579,21 +548,6 @@
                               Focusable="False"
                               IsEnabled="True"
                               SubmenuOpened="OnSettingsSubMenuOpened">
-                        <!--<MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReporting}"
-                                  Name="ToggleIsAnalyticsReportingApprovedCommand"
-                                  Command="{Binding Path=ToggleIsAnalyticsReportingApprovedCommand, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  IsChecked="{Binding Path=IsAnalyticsReportingApproved, Mode=OneWay, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  ToolTip="{x:Static p:Resources.DynamoViewSettingMenuEnableSummaryReportingTooltip}"
-                                  Focusable="False"/>
-                        <MenuItem Header="{x:Static p:Resources.DynamoViewSettingMenuEnableDataReporting}"
-                                  Name="ToggleIsUsageReportingApprovedCommand"
-                                  Command="{Binding Path=ToggleIsUsageReportingApprovedCommand, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  CommandParameter="{Binding  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:DynamoView}}}"
-                                  IsChecked="{Binding Path=IsUsageReportingApproved, Mode=OneWay, Source={x:Static service:UsageReportingManager.Instance} }"
-                                  ToolTip="{x:Static p:Resources.DynamoViewSettingMenuEnableDataReportingTooltip}"
-                                  Focusable="False" />-->
-                        <Separator />
                         <MenuItem Focusable="False" 
                                   Name="ShowNodeExecution" 
                                   IsCheckable="True" 
@@ -1250,19 +1204,6 @@
                     <TabControl.ItemTemplate>
 
                         <DataTemplate>
-
-                            <!--<Button>
-
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <ContentPresenter Content="{TemplateBinding Content}"/>
-                                </ControlTemplate>
-                            </Button.Template>
-
-                            <Button.InputBindings>
-                                <MouseBinding Gesture="MiddleClick" Command="{Binding HideCommand}" />
-                            </Button.InputBindings>-->
-
                             <Grid Height="20">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

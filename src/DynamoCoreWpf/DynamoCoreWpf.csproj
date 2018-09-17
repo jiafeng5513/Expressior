@@ -220,7 +220,6 @@
     <Compile Include="NodeViewCustomization\NodeViewCustomizations\DSVarArgFunctionNodeViewCustomization.cs" />
     <Compile Include="NodeViewCustomization\NodeViewCustomizationLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UsageReportingManager.cs" />
     <Compile Include="NodeViewCustomization\NodeViewCustomizations\CodeBlockNodeViewCustomization.cs" />
     <Compile Include="Commands\AutomationSettings.cs" />
     <Compile Include="Commands\ConnectorCommands.cs" />
