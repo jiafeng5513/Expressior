@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyCompany("Autodesk, Inc")]
-[assembly: AssemblyProduct("Dynamo")]
-[assembly: AssemblyCopyright("Copyright © Autodesk, Inc 2017")]
+//[assembly: AssemblyCompany("Autodesk, Inc")]
+[assembly: AssemblyProduct("Expressior")]
+//[assembly: AssemblyCopyright("Copyright © Autodesk, Inc 2017")]
 [assembly: AssemblyTrademark("")]
 
 //In order to begin building localizable applications, set 

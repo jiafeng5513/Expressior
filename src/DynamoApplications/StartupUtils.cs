@@ -68,32 +68,32 @@ namespace Dynamo.Applications
             public static CommandLineArguments Parse(string[] args)
             {
                 // Running Dynamo sandbox with a command file:
-                // DynamoSandbox.exe /c "C:\file path\file.xml"
+                // Expressior.exe /c "C:\file path\file.xml"
                 // 
                 var commandFilePath = string.Empty;
 
                 // Running Dynamo under a different locale setting:
-                // DynamoSandbox.exe /l "ja-JP"
+                // Expressior.exe /l "ja-JP"
                 //
                 var locale = string.Empty;
 
                 // Open Dynamo headless and open file at path
-                // DynamoSandbox.exe /o "C:\file path\graph.dyn"
+                // Expressior.exe /o "C:\file path\graph.dyn"
                 //
                 var openfilepath = string.Empty;
 
                 // import a set of presets from another dyn or presetfile 
-                // DynamoSandbox.exe /o "C:\file path\graph.dyn" /p "C:\states.dyn"
+                // Expressior.exe /o "C:\file path\graph.dyn" /p "C:\states.dyn"
                 //
                 var presetFile = string.Empty;
 
                 // set current opened graph to state by name 
-                // DynamoSandbox.exe /o "C:\file path\graph.dyn" /s "state1"
+                // Expressior.exe /o "C:\file path\graph.dyn" /s "state1"
                 //
                 var presetStateid = string.Empty;
 
                 // print the resulting values of all nodes to the console 
-                // DynamoSandbox.exe /o "C:\file path\graph.dyn" /v "C:\someoutputfilepath.xml"
+                // Expressior.exe /o "C:\file path\graph.dyn" /v "C:\someoutputfilepath.xml"
                 //
                 var verbose = string.Empty;
 

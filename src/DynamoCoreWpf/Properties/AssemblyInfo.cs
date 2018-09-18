@@ -29,7 +29,7 @@ using System.Windows;
 [assembly: InternalsVisibleTo("DynamoCoreWpfTests")]
 [assembly: InternalsVisibleTo("DynamoMSOfficeTests")]
 [assembly: InternalsVisibleTo("CoreNodeModelsWpf")]
-[assembly: InternalsVisibleTo("DynamoSandbox")]
+[assembly: InternalsVisibleTo("Expressior")]
 [assembly: InternalsVisibleTo("WpfVisualizationTests")]
 [assembly: InternalsVisibleTo("DynamoPackagesUITests")]
 [assembly: InternalsVisibleTo("ViewExtensionLibraryTests")]

@@ -127,7 +127,7 @@ namespace DynamoSandbox
             if (MessageBoxResult.OK ==
                 MessageBox.Show(
                     string.Format(
-                        "Dynamo Sandbox {0} is not able to find an installation of " +
+                        "Expressior {0} is not able to find an installation of " +
                         "Dynamo Core version {0} or higher.\n\nWould you like to download the " +
                         "latest version of DynamoCore.msi from http://dynamobim.org now?", shortversion),
                     "Dynamo Core component missing",
