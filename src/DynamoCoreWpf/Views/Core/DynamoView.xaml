@@ -634,6 +634,11 @@
                                   Header="{x:Static p:Resources.DynamoViewSettingMenuManagePackagePath}"
                                   Command="{Binding ManagePackagePathsCommand}"
                                   Name="managePackagePaths" />
+                        <!--打开备份目录-->
+                        <MenuItem Focusable="False"
+                                  Header="{x:Static p:Resources.StartPageBackupLocation}"
+                                  Command="{Binding OpenBackupPathsCommand}"
+                                  Name="openBackupPaths" />
                     </MenuItem>
                     <!--Help-->
                     <MenuItem Header="{x:Static p:Resources.DynamoViewHelpMenu}"

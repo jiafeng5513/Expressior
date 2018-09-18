@@ -1385,6 +1385,11 @@ namespace Dynamo.ViewModels
             OnRequestPackagePathsDialog(this, EventArgs.Empty);
         }
 
+        private void OpnBackupPaths(object parameters)
+        {
+            Process.Start("explorer.exe", Model.PathManager.BackupDirectory);
+        }
+
         /// <summary>
         ///     Change the currently visible workspace to a custom node's workspace
         /// </summary>

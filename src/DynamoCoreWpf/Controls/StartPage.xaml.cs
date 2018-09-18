@@ -108,7 +108,6 @@ namespace Dynamo.UI.Controls
 
         // Dynamic lists that update views on the fly.
         ObservableCollection<StartPageListItem> recentFiles = null;
-        ObservableCollection<StartPageListItem> backupFiles = null;
         internal readonly DynamoViewModel DynamoViewModel;
         private readonly bool isFirstRun;
 
@@ -118,7 +117,6 @@ namespace Dynamo.UI.Controls
             this.isFirstRun = isFirstRun;
 
             this.recentFiles = new ObservableCollection<StartPageListItem>();
-            backupFiles = new ObservableCollection<StartPageListItem>();
 
 
             #region File Operations
@@ -179,7 +177,6 @@ namespace Dynamo.UI.Controls
 
             var dvm = this.DynamoViewModel;
             RefreshRecentFileList(dvm.RecentFiles);
-            RefreshBackupFileList(dvm.Model.PreferenceSettings.BackupFiles);
             dvm.RecentFiles.CollectionChanged += OnRecentFilesChanged;
         }
 
@@ -211,11 +208,6 @@ namespace Dynamo.UI.Controls
             get { return this.fileOperations; }
         }
 
-        public IEnumerable<StartPageListItem> CommunityLinks
-        {
-            get { return this.communityLinks; }
-        }
-
         public IEnumerable<StartPageListItem> ContributeLinks
         {
             get { return this.contributeLinks; }
@@ -231,33 +223,8 @@ namespace Dynamo.UI.Controls
             get { return this.recentFiles; }
         }
 
-        public ObservableCollection<StartPageListItem> BackupFiles
-        {
-            get { return this.backupFiles; }
-        }
-
         #endregion
 
-        //public ObservableCollection<SampleFileEntry> SampleFiles
-        //{
-        //    get { return this.sampleFiles; }
-        //}
-
-        public string BackupTitle
-        {
-            get
-            {
-                if (StabilityUtils.IsLastShutdownClean 
-                    || DynamoViewModel.Model.PreferenceSettings.BackupFiles.Count == 0)
-                {
-                    return Dynamo.Wpf.Properties.Resources.StartPageBackupNoCrash;
-                }
-                else
-                {
-                    return Dynamo.Wpf.Properties.Resources.StartPageBackupOnCrash;
-                }
-            }
-        }
 
         #region Private Class Event Handlers
 
@@ -273,11 +240,6 @@ namespace Dynamo.UI.Controls
         private void RefreshRecentFileList(IEnumerable<string> filePaths)
         {
             RefreshFileList(recentFiles, filePaths);
-        }
-
-        private void RefreshBackupFileList(IEnumerable<string> filePaths)
-        {
-            RefreshFileList(backupFiles, filePaths);
         }
 
         private void RefreshFileList(ObservableCollection<StartPageListItem> files,
@@ -346,7 +308,6 @@ namespace Dynamo.UI.Controls
         public const string NewWorkspace = "NewWorkspace";
         public const string NewCustomNodeWorkspace = "NewCustomNodeWorkspace";
         public const string OpenWorkspace = "OpenWorkspace";
-        public const string ShowGallery = "ShowGallery";
     }
 
     public partial class StartPageView : UserControl
@@ -356,12 +317,6 @@ namespace Dynamo.UI.Controls
         public StartPageView()
         {
             InitializeComponent();
-            if (StabilityUtils.IsLastShutdownClean)
-            {
-                openAll.Visibility = Visibility.Collapsed;
-                backupFilesList.Visibility = Visibility.Collapsed;
-            }
-
             this.Loaded += OnStartPageLoaded;
         }
 
@@ -371,12 +326,9 @@ namespace Dynamo.UI.Controls
         {
             var startPageViewModel = this.DataContext as StartPageViewModel;
             this.dynamoViewModel = startPageViewModel.DynamoViewModel;
-
             this.filesListBox.ItemsSource = startPageViewModel.FileOperations;
-            //this.askListBox.ItemsSource = startPageViewModel.CommunityLinks;
             this.codeListBox.ItemsSource = startPageViewModel.ContributeLinks;
             this.recentListBox.ItemsSource = startPageViewModel.RecentFiles;
-            this.backupFilesList.ItemsSource = startPageViewModel.BackupFiles;
 
             var id = Wpf.Interfaces.ResourceNames.StartPage.Image;
             StartPageLogo.Source = dynamoViewModel.BrandingResourceProvider.GetImageSource(id);
@@ -406,21 +358,9 @@ namespace Dynamo.UI.Controls
         #endregion
 
 
-        private void OpenAllFilesOnCrash(object sender, MouseButtonEventArgs e)
-        {
-            var dvm = dynamoViewModel;
-            foreach (var filePath in dvm.Model.PreferenceSettings.BackupFiles)
-            {
-                if (dvm.OpenCommand.CanExecute(filePath))
-                    dvm.OpenCommand.Execute(filePath);
-            }
-        }
 
-        private void ShowBackupFilesInFolder(object sender, MouseButtonEventArgs e)
-        {
-            var startPageViewModel = this.DataContext as StartPageViewModel;
-            Process.Start("explorer.exe", dynamoViewModel.Model.PathManager.BackupDirectory);
-        }
+
+
 
         private void StartPage_OnDrop(object sender, DragEventArgs e)
         {
