@@ -1,0 +1,13 @@
+
+/.vscode
+*.raw
+*.mhd
+*.npy
+*.hdf5
+*.pyc
+*.h5
+.idea/workspace.xml
+*.B234-ANNA
+*.txt
+Tools
+/ModelDecoder/TensorBoardLog
