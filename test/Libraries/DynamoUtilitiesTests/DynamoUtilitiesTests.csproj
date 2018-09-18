@@ -60,14 +60,14 @@
     <Compile Include="XmlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\DynamoSandbox\Expressior.csproj">
+      <Project>{0efabbf0-2b81-4423-b8e2-6111fbe69b79}</Project>
+      <Name>Expressior</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\DynamoUtilities\DynamoUtilities.csproj">
       <Project>{B5F435CB-0D8A-40B1-A4F7-5ECB3CE792A9}</Project>
       <Name>DynamoUtilities</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Tools\DynamoInstallDetective\DynamoInstallDetective.csproj">
-      <Project>{98692887-b389-4f73-a71a-9fc516738dab}</Project>
-      <Name>DynamoInstallDetective</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
