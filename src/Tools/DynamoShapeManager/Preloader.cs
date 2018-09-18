@@ -110,29 +110,29 @@ namespace DynamoShapeManager
         /// binaries can be preloaded from.</param>
         /// <param name="version">The version of shape manager.</param>
         /// 
-        public Preloader(string rootFolder, string shapeManagerPath, LibraryVersion version)
-        {
-            if (string.IsNullOrEmpty(rootFolder))
-                throw new ArgumentNullException("rootFolder");
-            if (!Directory.Exists(rootFolder))
-                throw new DirectoryNotFoundException(rootFolder);
+        //public Preloader(string rootFolder, string shapeManagerPath, LibraryVersion version)
+        //{
+        //    if (string.IsNullOrEmpty(rootFolder))
+        //        throw new ArgumentNullException("rootFolder");
+        //    if (!Directory.Exists(rootFolder))
+        //        throw new DirectoryNotFoundException(rootFolder);
 
-            if (string.IsNullOrEmpty(shapeManagerPath))
-                throw new ArgumentNullException("shapeManagerPath");
-            if (!Directory.Exists(shapeManagerPath))
-                throw new DirectoryNotFoundException(shapeManagerPath);
+        //    if (string.IsNullOrEmpty(shapeManagerPath))
+        //        throw new ArgumentNullException("shapeManagerPath");
+        //    if (!Directory.Exists(shapeManagerPath))
+        //        throw new DirectoryNotFoundException(shapeManagerPath);
 
-            if (version == LibraryVersion.None)
-                throw new ArgumentOutOfRangeException("version");
+        //    if (version == LibraryVersion.None)
+        //        throw new ArgumentOutOfRangeException("version");
 
-            this.version = version;
-            this.shapeManagerPath = shapeManagerPath;
+        //    this.version = version;
+        //    this.shapeManagerPath = shapeManagerPath;
 
-            var libGFolderName = string.Format("libg_{0}", ((int) version));
-            preloaderLocation = Path.Combine(rootFolder, libGFolderName);
-            geometryFactoryPath = Path.Combine(preloaderLocation,
-                Utilities.GeometryFactoryAssembly);
-        }
+        //    var libGFolderName = string.Format("libg_{0}", ((int) version));
+        //    preloaderLocation = Path.Combine(rootFolder, libGFolderName);
+        //    geometryFactoryPath = Path.Combine(preloaderLocation,
+        //        Utilities.GeometryFactoryAssembly);
+        //}
 
         /// <summary>
         /// Construct a Preloader by specifying a required library version.
