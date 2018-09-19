@@ -1,6 +1,10 @@
 ﻿using Dynamo.Session;
 namespace Dynamo.Events
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="session"></param>
     public delegate void ExecutionStateHandler(IExecutionSession session);
 
     /// <summary>

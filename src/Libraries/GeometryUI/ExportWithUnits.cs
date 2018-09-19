@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using Autodesk.DesignScript.Geometry;
-
-using Dynamo.Models;
 using Dynamo.Utilities;
-using DynamoConversions;
-
 using GeometryUI.Properties;
-
 using ProtoCore.AST.AssociativeAST;
 using System.Xml;
-using System.Globalization;
 using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Newtonsoft.Json;
@@ -49,7 +41,7 @@ namespace GeometryUI
 
 
         [JsonConstructor]
-        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts):base(inPorts, outPorts)
+        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
         {
             //TODO:内部变量的初始化
             ShouldDisplayPreviewCore = true;
@@ -81,7 +73,7 @@ namespace GeometryUI
                 var rhs = AstFactory.BuildIntNode(valueofslider);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
                 var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
                 return new[] { assignment };
-                
+
                 //return new[] {AstFactory.BuildAssignment(new ArgumentSignatureNode(), new ArgumentSignatureNode())};
                 //return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), AstFactory.BuildNullNode()) };
             }
@@ -92,7 +84,7 @@ namespace GeometryUI
             var filePathNode = inputAstNodes[1];
             ;
             AssociativeNode node = AstFactory.BuildStringNode(
-                "In1:" + ((StringNode)geometryListNode).Value+ "\n" +
+                "In1:" + ((StringNode)geometryListNode).Value + "\n" +
                 "In2:" + filePathNode + "\n" +
                 "Slider:" + ValueofsliderOfSlider);
             AstExtensions.ToImperativeAST(geometryListNode);
@@ -103,7 +95,7 @@ namespace GeometryUI
             //            new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
 
             //注意观察多输出怎么写
-            return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node)};
+            return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node) };
         }
 
         #region 重载:序列化和解序列化方法

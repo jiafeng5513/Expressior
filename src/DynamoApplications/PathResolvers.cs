@@ -32,17 +32,12 @@ namespace Dynamo.Applications
             preloadedLibraryPaths = new List<string>
             {
                 "VMDataBridge.dll",
-                //"ProtoGeometry.dll",
                 "DSCoreNodes.dll",
                 "DesignScriptBuiltin.dll",
-                //"DSOffice.dll",
                 "DSIronPython.dll",
                 "FunctionObject.ds",
                 "BuiltIn.ds",
-                //"DynamoConversions.dll",
-                //"DynamoUnits.dll",
-                //"Tessellation.dll",
-                //"Analysis.dll",
+                "DynamoUnits.dll",//下一个拿你开刀
                 "ImageProcess.dll",//注意这个dll的名字
                 "DicomTools.dll",
                 "DeepLearning.dll"
