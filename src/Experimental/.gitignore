@@ -6,8 +6,11 @@
 *.hdf5
 *.pyc
 *.h5
+*.pb
 .idea/workspace.xml
 *.B234-ANNA
 *.txt
 Tools
 /ModelDecoder/TensorBoardLog
+/mnist/input_data
+/mnist/log
