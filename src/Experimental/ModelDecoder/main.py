@@ -1,4 +1,6 @@
 import tensorflow as tf
+from tensorflow.python.framework import graph_util
+from tensorflow.python.framework import tensor_util
 model = '../../../data/optimized_graph.pb'
 model2='../mnist/saved_model.pb'
 
@@ -24,7 +26,9 @@ def ShowInTextFile():
             graph_def.ParseFromString(model_file.read())
             f = open(r'TensorBoardLog/out.txt', 'w')
             print(graph_def, file=f)
+            for n in graph_def.node:
+                print (tensor_util.MakeNdarray(n.attr['value'].tensor),file=f)
 
 if __name__ == '__main__':
-    ShowInTensorBoard()
+    #ShowInTensorBoard()
     ShowInTextFile()
