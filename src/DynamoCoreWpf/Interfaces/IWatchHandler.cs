@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Dynamo.Configuration;
 using Dynamo.ViewModels;
-using DynamoUnits;
+//using DynamoUnits;
 using ProtoCore.DSASM;
 using ProtoCore.Mirror;
 using ProtoCore.Utils;
@@ -123,14 +123,14 @@ namespace Dynamo.Interfaces
             return new WatchViewModel(ToString(value), tag, RequestSelectGeometry);
         }
 
-        private WatchViewModel ProcessThing(SIUnit unit, ProtoCore.RuntimeCore runtimeCore, string tag, bool showRawData, WatchHandlerCallback callback)
-        {
-            return showRawData
-                ? new WatchViewModel(
-                    unit.Value.ToString(preferences.NumberFormat, CultureInfo.InvariantCulture),
-                    tag, RequestSelectGeometry)
-                : new WatchViewModel(unit.ToString(), tag, RequestSelectGeometry);
-        }
+        //private WatchViewModel ProcessThing(SIUnit unit, ProtoCore.RuntimeCore runtimeCore, string tag, bool showRawData, WatchHandlerCallback callback)
+        //{
+        //    return showRawData
+        //        ? new WatchViewModel(
+        //            unit.Value.ToString(preferences.NumberFormat, CultureInfo.InvariantCulture),
+        //            tag, RequestSelectGeometry)
+        //        : new WatchViewModel(unit.ToString(), tag, RequestSelectGeometry);
+        //}
 
         private WatchViewModel ProcessThing(double value, ProtoCore.RuntimeCore runtimeCore, string tag, bool showRawData, WatchHandlerCallback callback)
         {

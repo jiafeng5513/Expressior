@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <controls:UnitToTextConverter x:Key="UnitToTextConverter" />
+            <!--<controls:UnitToTextConverter x:Key="UnitToTextConverter" />-->
             <ResourceDictionary.MergedDictionaries>
                 <ui:SharedResourceDictionary Source="{x:Static ui:SharedDictionaryManager.DynamoModernDictionaryUri}" />
 

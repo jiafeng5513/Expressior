@@ -16,7 +16,7 @@ using Dynamo.Updates;
 using Dynamo.ViewModels;
 using Dynamo.Wpf.Properties;
 using Dynamo.Wpf.ViewModels;
-using DynamoUnits;
+//using DynamoUnits;
 using System.Windows.Controls.Primitives;
 using Dynamo.Configuration;
 using Dynamo.Graph.Nodes;
@@ -32,6 +32,7 @@ using Point = System.Windows.Point;
 using TabControl = System.Windows.Controls.TabControl;
 using Thickness = System.Windows.Thickness;
 using System.Net;
+using DynamoUnits;
 
 namespace Dynamo.Controls
 {
