@@ -8,7 +8,8 @@ import sys
 from tensorflow.examples.tutorials.mnist import input_data
 from tensorflow.python.framework import graph_util
 import tensorflow as tf
-
+from plot_weight import plot_conv_weights,plot_conv_output
+import GlobalVariable
 FLAGS = None
 
 
@@ -32,6 +33,11 @@ def deepnn(x):
     b_conv1 = bias_variable([32], name='b1')
     pre_activation1 = tf.nn.conv2d(x_image, w_conv1, strides=[1, 1, 1, 1], padding='SAME', name='conv1')
     h_conv1 = tf.nn.relu(pre_activation1 + b_conv1, name='activation1')
+
+    "收集一些信息用于画出内部结构,此处是第一卷积层的权重和输出"
+    tf.add_to_collection('conv1_weights', w_conv1)
+    tf.add_to_collection('conv1_output', h_conv1)
+
     "第二层:池化"
     h_pool1 = tf.nn.max_pool(h_conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='pool1')
     "第三层:卷积+relu"
@@ -55,6 +61,7 @@ def deepnn(x):
     h_fc2 = tf.matmul(h_fc1_drop, W_fc2, name='fc2')
     "第七层:softmax 输出"
     y_conv = tf.nn.softmax(h_fc2 + b_fc2, name='out')
+
 
     return y_conv, keep_prob
 
@@ -81,9 +88,8 @@ def main(_):
     correct_prediction = tf.cast(correct_prediction, tf.float32)
     accuracy = tf.reduce_mean(correct_prediction, name='accuracy')
 
-    graph_location = './log'
-    print('Saving graph to: %s' % graph_location)
-    train_writer = tf.summary.FileWriter(graph_location)
+    print('Saving graph to: %s' % GlobalVariable.summary_location)
+    train_writer = tf.summary.FileWriter(GlobalVariable.summary_location)
     train_writer.add_graph(tf.get_default_graph())
 
     with tf.Session() as sess:
@@ -101,8 +107,17 @@ def main(_):
             x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
 
         constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def, ["out"])
-        with tf.gfile.FastGFile('./saved_model.pb', mode='wb') as f:
+        with tf.gfile.FastGFile(GlobalVariable.model_location, mode='wb') as f:
             f.write(constant_graph.SerializeToString())
+
+        "将事先收集的信息画出来,画权重不需要给出输入信息,画输出需要给出输入信息"
+        conv_weights = sess.run([tf.get_collection('conv1_weights')])
+        for i, c in enumerate(conv_weights[0]):
+            plot_conv_weights(c, 'conv{}'.format(i))
+
+        conv_out = sess.run([tf.get_collection('conv1_output')], feed_dict={x: mnist.test.images[:1]})
+        for i, c in enumerate(conv_out[0]):
+            plot_conv_output(c, 'conv{}'.format(i))
 
 
 if __name__ == '__main__':

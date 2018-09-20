@@ -10,7 +10,7 @@
 .idea/workspace.xml
 *.B234-ANNA
 *.txt
-Tools
-/ModelDecoder/TensorBoardLog
 /mnist/input_data
 /mnist/log
+/mnist/out
+/mnist/__pycache__
