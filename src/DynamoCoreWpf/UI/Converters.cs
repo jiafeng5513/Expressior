@@ -1411,9 +1411,9 @@ namespace Dynamo.Controls
             double dbl;
             if (double.TryParse(value as string, NumberStyles.Any, CultureInfo.InvariantCulture, out dbl))
             {
-                return (dbl.ToString(SIUnit.NumberFormat, CultureInfo.InvariantCulture));
+                return (dbl.ToString(NumFormatTransfer.NumberFormat, CultureInfo.InvariantCulture));
             }
-            return value ?? 0.ToString(SIUnit.NumberFormat);
+            return value ?? 0.ToString(NumFormatTransfer.NumberFormat);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -1647,20 +1647,20 @@ namespace Dynamo.Controls
         }
     }
 
-    public class MeasureConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return parameter.ToString();
-        }
+    //public class MeasureConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        return parameter.ToString();
+    //    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var measure = (SIUnit)parameter;
-            measure.SetValueFromString(value.ToString());
-            return measure.Value;
-        }
-    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        var measure = (SIUnit)parameter;
+    //        measure.SetValueFromString(value.ToString());
+    //        return measure.Value;
+    //    }
+    //}
 
     public class IsUpdateAvailableBrushConverter : IValueConverter
     {
@@ -1686,7 +1686,7 @@ namespace Dynamo.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter.ToString() == SIUnit.NumberFormat)
+            if (parameter.ToString() == NumFormatTransfer.NumberFormat)
                 return true;
             return false;
         }
