@@ -29,7 +29,7 @@ def deepnn(x):
     "输入层:"
     x_image = tf.reshape(x, [-1, 28, 28, 1], name="reshape")
     "第一层:卷积+relu"
-    w_conv1 = weight_variable([5, 5, 1, 32], name='w1')
+    w_conv1 = weight_variable([5, 5, 1, 32], name="w1")
     b_conv1 = bias_variable([32], name='b1')
     pre_activation1 = tf.nn.conv2d(x_image, w_conv1, strides=[1, 1, 1, 1], padding='SAME', name='conv1')
     h_conv1 = tf.nn.relu(pre_activation1 + b_conv1, name='activation1')
@@ -74,7 +74,7 @@ def main(_):
     x = tf.placeholder(tf.float32, [None, 784], name='input')
 
     # Define loss and optimizer
-    y_ = tf.placeholder(tf.int64, [None])
+    y_ = tf.placeholder(tf.int64, [None],name="y_")
 
     # Build the graph for the deep net
     y_conv, keep_prob = deepnn(x)
@@ -106,9 +106,19 @@ def main(_):
         print('test accuracy %g' % accuracy.eval(feed_dict={
             x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
 
-        constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def, ["out"])
-        with tf.gfile.FastGFile(GlobalVariable.model_location, mode='wb') as f:
-            f.write(constant_graph.SerializeToString())
+        print('Save Model in File...')
+        var_list = ["w1","b1","conv1","activation1","pool1","w3","b3",
+                    "conv2","activation2","pool2","w5","b5","fc1","Keep_prob",
+                   "w6","b6","fc2","out"]
+        # print(var_list)
+        # constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def, ["out"])
+        # 保存图表并保存变量参数
+        constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def,
+                                                                   output_node_names=
+                                                                   [var_list[i] for i in range(len(var_list))])
+        # with tf.gfile.FastGFile(GlobalVariable.model_location, mode='wb') as f:
+        #     f.write(constant_graph.SerializeToString())
+        tf.train.write_graph(constant_graph, './out/model/', 'saved_model.pb', as_text=False)
 
         "将事先收集的信息画出来,画权重不需要给出输入信息,画输出需要给出输入信息"
         conv_weights = sess.run([tf.get_collection('conv1_weights')])
