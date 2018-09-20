@@ -82,8 +82,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoConversions", "Librar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoShapeManager", "Tools\DynamoShapeManager\DynamoShapeManager.csproj", "{263FA9C1-F81E-4A8E-95E0-8CDAE20F177B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoApplications", "DynamoApplications\DynamoApplications.csproj", "{AA782772-FE61-4226-BAA4-EB529FA1646B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoPackages", "DynamoPackages\DynamoPackages.csproj", "{47533B7C-0E1A-44A4-8511-B438645F052A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonNodeModels", "Libraries\PythonNodeModels\PythonNodeModels.csproj", "{8872CA17-C10D-43B9-8393-5C5A57065EB0}"
@@ -404,18 +402,6 @@ Global
 		{263FA9C1-F81E-4A8E-95E0-8CDAE20F177B}.Release|x64.Build.0 = Release|x64
 		{263FA9C1-F81E-4A8E-95E0-8CDAE20F177B}.Release|x86.ActiveCfg = Release|Any CPU
 		{263FA9C1-F81E-4A8E-95E0-8CDAE20F177B}.Release|x86.Build.0 = Release|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|x64.ActiveCfg = Debug|x64
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|x64.Build.0 = Debug|x64
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Debug|x86.Build.0 = Debug|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|x64.ActiveCfg = Release|x64
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|x64.Build.0 = Release|x64
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|x86.ActiveCfg = Release|Any CPU
-		{AA782772-FE61-4226-BAA4-EB529FA1646B}.Release|x86.Build.0 = Release|Any CPU
 		{47533B7C-0E1A-44A4-8511-B438645F052A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47533B7C-0E1A-44A4-8511-B438645F052A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47533B7C-0E1A-44A4-8511-B438645F052A}.Debug|x64.ActiveCfg = Debug|x64

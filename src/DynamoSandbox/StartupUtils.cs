@@ -11,7 +11,6 @@ using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.Scheduler;
 using Dynamo.Updates;
-using DynamoApplications.Properties;
 using DynamoShapeManager;
 using Microsoft.Win32;
 using NDesk.Options;
