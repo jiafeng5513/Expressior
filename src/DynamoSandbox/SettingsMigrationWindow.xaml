@@ -40,7 +40,9 @@
                      IsReadOnlyCaretVisible="False"
                      HorizontalAlignment="Center"
                      VerticalAlignment="Center"
-                     Margin="95,115,95,25" />
+                     Margin="95,115,95,25">
+                测试测试
+            </TextBox>
             <TextBox Name="TextBoxPrompt"
                      Grid.Row="1"
                      Background="Transparent"

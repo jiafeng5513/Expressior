@@ -153,6 +153,10 @@
       <Name>DynamoCore</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\DynamoSandbox\Expressior.csproj">
+      <Project>{0EFABBF0-2B81-4423-B8E2-6111FBE69B79}</Project>
+      <Name>Expressior</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Engine\ProtoAssociative\ProtoAssociative.csproj">
       <Project>{7318d5e5-9d15-4abe-8a51-92f58d4f0b85}</Project>
       <Name>ProtoAssociative</Name>

@@ -427,7 +427,7 @@ namespace Dynamo.ViewModels
 
         public struct StartConfiguration
         {
-            public string CommandFilePath { get; set; }
+            //public string CommandFilePath { get; set; }
             public IWatchHandler WatchHandler { get; set; }
             public DynamoModel DynamoModel { get; set; }
             public bool ShowLogin { get; set; }
@@ -496,7 +496,7 @@ namespace Dynamo.ViewModels
             SubscribeModelChangedHandlers();
             SubscribeModelBackupFileSaveEvent();
 
-            InitializeAutomationSettings(startConfiguration.CommandFilePath);
+            InitializeAutomationSettings(/*startConfiguration.CommandFilePath*/);
 
             SubscribeLoggerHandlers();
 
@@ -672,13 +672,13 @@ namespace Dynamo.ViewModels
         }
         #endregion
 
-        private void InitializeAutomationSettings(string commandFilePath)
+        private void InitializeAutomationSettings(/*string commandFilePath*/)
         {
-            if (String.IsNullOrEmpty(commandFilePath) || !File.Exists(commandFilePath))
-                commandFilePath = null;
+            //if (String.IsNullOrEmpty(commandFilePath) || !File.Exists(commandFilePath))
+            //    commandFilePath = null;
 
             // Instantiate an AutomationSettings to handle record/playback.
-            automationSettings = new AutomationSettings(this.Model, commandFilePath);
+            automationSettings = new AutomationSettings(this.Model/*, commandFilePath*/);
         }
 
         private void TryDispatcherBeginInvoke(Action action)
@@ -724,24 +724,9 @@ namespace Dynamo.ViewModels
             return Model.CustomNodeManager.Contains((Guid)parameters);
         }
 
-        //public static void ReportABug(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubBugReportingLink));
-        //}
-
-        //public static void ReportABug()
-        //{
-        //    ReportABug(null);
-        //}
-
         internal static void DownloadDynamo()
         {
             Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoDownloadLink));
-        }
-
-        internal bool CanReportABug(object parameter)
-        {
-            return true;
         }
 
         /// <summary>
@@ -755,17 +740,6 @@ namespace Dynamo.ViewModels
         internal bool CanClearLog(object parameter)
         {
             return true;
-        }
-
-
-        void CollectInfoManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "CollectInfoOption":
-                    RaisePropertyChanged("CollectInfoOption");
-                    break;
-            }
         }
 
         private void SelectionOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -1588,29 +1562,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        public void ToggleFullscreenWatchShowing(object parameter)
-        {
-            if (BackgroundPreviewViewModel == null) return;
-            BackgroundPreviewViewModel.Active = !BackgroundPreviewViewModel.Active;
-        }
-
-        internal bool CanToggleFullscreenWatchShowing(object parameter)
-        {
-            return true;
-        }
-
-        public void ToggleBackgroundGridVisibility(object parameter)
-        {
-            if (BackgroundPreviewViewModel == null || !BackgroundPreviewViewModel.Active) return;
-
-            BackgroundPreviewViewModel.IsGridVisible = !BackgroundPreviewViewModel.IsGridVisible;
-        }
-
-        internal bool CanToggleBackgroundGridVisibility(object parameter)
-        {
-            return true;
-        }
-
         public void GoToWorkspace(object parameter)
         {
             if (parameter is Guid && model.CustomNodeManager.Contains((Guid)parameter))
@@ -1772,11 +1723,6 @@ namespace Dynamo.ViewModels
                 return false;
             }
 
-            return true;
-        }
-
-        internal bool CanClear(object parameter)
-        {
             return true;
         }
 
@@ -1969,36 +1915,6 @@ namespace Dynamo.ViewModels
             return true;
         }
 
-        //public void GoToWiki(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoWikiLink));
-        //}
-
-        //internal bool CanGoToWiki(object parameter)
-        //{
-        //    return true;
-        //}
-
-        //public void GoToSourceCode(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.GitHubDynamoLink));
-        //}
-
-        //internal bool CanGoToSourceCode(object parameter)
-        //{
-        //    return true;
-        //}
-
-        //public void GoToDictionary(object parameter)
-        //{
-        //    Process.Start(new ProcessStartInfo("explorer.exe", Configurations.DynamoDictionary));
-        //}
-
-        //internal bool CanGoToDictionary(object parameter)
-        //{
-        //    return true;
-        //}
-
         private void DisplayStartPage(object parameter)
         {
             this.ShowStartPage = true;
@@ -2156,42 +2072,6 @@ namespace Dynamo.ViewModels
         }
 
         internal bool CanEscape(object parameter)
-        {
-            return true;
-        }
-
-        internal bool CanShowInfoBubble(object parameter)
-        {
-            return true;
-        }
-
-        private void ExportToSTL(object parameter)
-        {
-            FileDialog _fileDialog = null ?? new SaveFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".stl",
-                FileName = Resources.FileDialogDefaultSTLModelName,
-                Filter = string.Format(Resources.FileDialogSTLModels, "*.stl"),
-                Title = Resources.SaveModelToSTLDialogTitle,
-            };
-
-            // if you've got the current space path, use it as the inital dir
-            if (!string.IsNullOrEmpty(model.CurrentWorkspace.FileName))
-            {
-                var fi = new FileInfo(model.CurrentWorkspace.FileName);
-                _fileDialog.InitialDirectory = fi.DirectoryName;
-            }
-
-            if (_fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                BackgroundPreviewViewModel.ExportToSTL(_fileDialog.FileName, HomeSpace.Name);
-
-                Dynamo.Logging.Analytics.TrackCommandEvent("ExportToSTL");
-            }
-        }
-
-        internal bool CanExportToSTL(object parameter)
         {
             return true;
         }

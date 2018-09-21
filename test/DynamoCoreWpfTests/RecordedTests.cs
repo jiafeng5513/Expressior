@@ -208,7 +208,7 @@ namespace DynamoCoreWpfTests
             this.ViewModel = DynamoViewModel.Start(
                 new DynamoViewModel.StartConfiguration()
                 {
-                    CommandFilePath = commandFilePath,
+                   
                     DynamoModel = model
                 });
 

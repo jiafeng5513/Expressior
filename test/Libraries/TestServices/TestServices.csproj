@@ -69,6 +69,10 @@
       <Project>{7858fa8c-475f-4b8e-b468-1f8200778cf8}</Project>
       <Name>DynamoCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\DynamoSandbox\Expressior.csproj">
+      <Project>{0EFABBF0-2B81-4423-B8E2-6111FBE69B79}</Project>
+      <Name>Expressior</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\DynamoUtilities\DynamoUtilities.csproj">
       <Project>{b5f435cb-0d8a-40b1-a4f7-5ecb3ce792a9}</Project>
       <Name>DynamoUtilities</Name>

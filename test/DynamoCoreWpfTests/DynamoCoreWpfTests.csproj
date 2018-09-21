@@ -202,6 +202,10 @@
       <Name>DynamoPackages</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\DynamoSandbox\Expressior.csproj">
+      <Project>{0EFABBF0-2B81-4423-B8E2-6111FBE69B79}</Project>
+      <Name>Expressior</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Engine\GraphLayout\GraphLayout.csproj">
       <Project>{c2595b04-856d-40ae-8b99-4804c7a70708}</Project>
       <Name>GraphLayout</Name>

@@ -161,7 +161,7 @@ namespace SystemTestServices
 
         protected virtual void StartDynamo(TestSessionConfiguration testConfig)
         {
-            preloader = new Preloader(testConfig.DynamoCorePath, testConfig.RequestedLibraryVersion);
+            preloader = new Preloader(testConfig.DynamoCorePath);
             preloader.Preload();
 
             var preloadedLibraries = new List<string>();

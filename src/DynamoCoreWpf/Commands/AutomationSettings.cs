@@ -150,7 +150,7 @@ namespace Dynamo.ViewModels
 
         #region Class Operational Methods
 
-        internal AutomationSettings(DynamoModel dynamoModel, string commandFilePath)
+        internal AutomationSettings(DynamoModel dynamoModel/*, string commandFilePath*/)
         {
             CommandInterval = 20; // 20ms between two consecutive commands.
             PauseAfterPlayback = 10; // 10ms after playback is done.
@@ -160,18 +160,10 @@ namespace Dynamo.ViewModels
             CurrentCommand = null;
 
             CurrentState = State.None;
-            CommandFileName = string.Empty;
-            if (LoadCommandFromFile(commandFilePath))
-            {
-                ChangeStateInternal(State.Loaded);
-                CommandFileName = Path.GetFileNameWithoutExtension(commandFilePath);
-            }
-            else
-            {
-                ChangeStateInternal(State.Recording);
-                recordedCommands = new List<DynamoModel.RecordableCommand>();
-            }
 
+            ChangeStateInternal(State.Recording);
+            recordedCommands = new List<DynamoModel.RecordableCommand>();
+            
             owningDynamoModel = dynamoModel;
             if (null == owningDynamoModel)
                 throw new ArgumentNullException("dynamoModel");
@@ -277,62 +269,6 @@ namespace Dynamo.ViewModels
         #endregion
 
         #region Private Class Helper Methods
-
-        private bool LoadCommandFromFile(string commandFilePath)
-        {
-            if (string.IsNullOrEmpty(commandFilePath))
-                return false;
-            if (File.Exists(commandFilePath) == false)
-                return false;
-
-            if (null != loadedCommands)
-            {
-                throw new InvalidOperationException(
-                    "Internal error: 'LoadCommandFromFile' called twice");
-            }
-
-            try
-            {
-                // Attempt to load the XML from the specified path.
-                var document = new XmlDocument();
-                document.Load(commandFilePath);
-
-                // Get to the root node of this Xml document.
-                var commandRoot = document.FirstChild as XmlElement;
-                if (null == commandRoot)
-                    return false;
-
-                // Read in optional attributes from the command root element.
-                var helper = new XmlElementHelper(commandRoot);
-                ExitAfterPlayback = helper.ReadBoolean(EXIT_ATTRIB_NAME, true);
-                PauseAfterPlayback = helper.ReadInteger(PAUSE_ATTRIB_NAME, 10);
-                CommandInterval = helper.ReadInteger(INTERVAL_ATTRIB_NAME, 20);
-
-                loadedCommands = new List<DynamoModel.RecordableCommand>();
-                foreach (
-                    DynamoModel.RecordableCommand command in
-                        commandRoot.ChildNodes.Cast<XmlNode>()
-                            .Select(
-                                node => DynamoModel.RecordableCommand.Deserialize(
-                                    node as XmlElement))
-                            .Where(command => null != command))
-                {
-                    loadedCommands.Add(command);
-                }
-            }
-            catch (Exception)
-            {
-                // Something is wrong with the Xml file, invalidate the 
-                // data member that points to it, and return from here.
-                return false;
-            }
-
-            // Even though the Xml file can properly be loaded, it is still 
-            // possible that the loaded content did not result in any useful 
-            // commands. In this case simply return false, indicating failure.
-            // 
-            return (null != loadedCommands && (loadedCommands.Count > 0));
-        }
 
         private void PauseCommandPlayback(int pauseDurationInMs)
         {

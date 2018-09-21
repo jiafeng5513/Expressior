@@ -126,50 +126,7 @@ namespace DynamoShapeManager
             Debug.WriteLine("Successfully loaded ASM binaries");
         }
 
-        /// <summary>
-        /// Call this method to resolve full path to GeometryFactoryAssembly 
-        /// assembly, given the root folder and the version. This method throws 
-        /// an exception if either of the folders/assembly cannot be found.
-        /// </summary>
-        /// <param name="rootFolder">Full path of the directory that contains 
-        /// LibG_xxx folder, where 'xxx' represents the library version. In a 
-        /// typical setup this would be the same directory that contains Dynamo 
-        /// core modules. This must represent a valid directory.</param>
-        /// <param name="version">Version number of the targeted geometry library.
-        /// If the resulting folder does not exist, this method throws an 
-        /// FileNotFoundException.</param>
-        /// <returns>The full path to GeometryFactoryAssembly assembly.</returns>
-        /// 
-        public static string GetGeometryFactoryPath(string rootFolder, LibraryVersion version)
-        {
-            if (string.IsNullOrEmpty(rootFolder))
-                throw new ArgumentNullException("rootFolder");
 
-            if (!Directory.Exists(rootFolder))
-            {
-                // Root directory must be specified and valid.
-                throw new DirectoryNotFoundException(string.Format(
-                    "Directory not found: {0}", rootFolder));
-            }
-
-            var libGFolderName = string.Format("libg_{0}", ((int) version));
-            var libGFolder = Path.Combine(rootFolder, libGFolderName);
-            if (!Directory.Exists(libGFolder))
-            {
-                // LibG_xxx folder must be valid.
-                throw new DirectoryNotFoundException(string.Format(
-                    "Directory not found: {0}", libGFolder));
-            }
-
-            var assemblyPath = Path.Combine(libGFolder, GeometryFactoryAssembly);
-            if (!File.Exists(assemblyPath))
-            {
-                throw new FileNotFoundException(string.Format(
-                    "File not found: {0}", assemblyPath));
-            }
-
-            return assemblyPath;
-        }
 
         private static IEnumerable GetAsmInstallations(string rootFolder)
         {
