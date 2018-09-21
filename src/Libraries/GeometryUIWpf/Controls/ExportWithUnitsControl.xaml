@@ -7,13 +7,12 @@
              xmlns:ui="clr-namespace:Dynamo.UI;assembly=DynamoCoreWpf"
              xmlns:controls="clr-namespace:Dynamo.Controls;assembly=CoreNodeModelsWpf"
              xmlns:p="clr-namespace:Dynamo.Wpf.Properties;assembly=DynamoCoreWpf"
-             xmlns:conversions="clr-namespace:DynamoConversions;assembly=DynamoConversions"
              xmlns:configuration="clr-namespace:Dynamo.Configuration;assembly=DynamoCore"
              mc:Ignorable="d" Width="250" Height="Auto">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <controls:UnitToTextConverter x:Key="UnitToTextConverter" />
+            <!--<controls:UnitToTextConverter x:Key="UnitToTextConverter" />-->
             <ResourceDictionary.MergedDictionaries>
                 <ui:SharedResourceDictionary Source="{x:Static ui:SharedDictionaryManager.DynamoModernDictionaryUri}" />
 

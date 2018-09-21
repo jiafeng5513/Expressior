@@ -105,11 +105,6 @@
       <Name>CoreNodeModelsWpf</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\DynamoConversions\DynamoConversions.csproj">
-      <Project>{67cf6cf2-cd6a-442c-babe-864f896dd8ea}</Project>
-      <Name>DynamoConversions</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\GeometryUI\GeometryUI.csproj">
       <Project>{e674f1a1-be83-475a-9cc9-f55cadbec448}</Project>
       <Name>GeometryUI</Name>

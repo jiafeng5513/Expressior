@@ -143,7 +143,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UndoRedoRecorderTests.cs" />
-    <Compile Include="UnitsOfMeasureTests.cs" />
     <Compile Include="UtilityTests.cs" />
     <Compile Include="XmlDocumentationTests.cs" />
     <Compile Include="XmlHelperTests.cs" />
@@ -183,10 +182,6 @@
       <Name>DynamoUtilities</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Libraries\DynamoUnits\Units.csproj">
-      <Project>{6e0a079e-85f1-45a1-ad5b-9855e4344809}</Project>
-      <Name>Units</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Libraries\PythonNodeModelsWpf\PythonNodeModelsWpf.csproj">
       <Project>{01de9b06-0bcb-4d8a-862e-e8170f5d6b4f}</Project>
       <Name>PythonNodeModelsWpf</Name>
@@ -201,10 +196,6 @@
       <Project>{ef879a10-041d-4c68-83e7-3192685f1bae}</Project>
       <Name>DynamoServices</Name>
       <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Tools\DynamoShapeManager\DynamoShapeManager.csproj">
-      <Project>{263fa9c1-f81e-4a8e-95e0-8cdae20f177b}</Project>
-      <Name>DynamoShapeManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\SystemTestServices\SystemTestServices.csproj">
       <Project>{89563cd0-509b-40a5-8728-9d3ec6fe8410}</Project>

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("DynamoCore")]
 
-[assembly: InternalsVisibleTo("DynamoSandbox")]
+[assembly: InternalsVisibleTo("Expressior")]
 [assembly: InternalsVisibleTo("DynamoCoreWpf")]
 [assembly: InternalsVisibleTo("DynamoCoreTests")]
 [assembly: InternalsVisibleTo("DynamoCoreWpfTests")]
