@@ -3,7 +3,7 @@ from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import tensor_util
 from tensorflow.python import pywrap_tensorflow
 import GlobalVariable
-import numpy as np
+
 model = GlobalVariable.model_location
 
 """
@@ -30,8 +30,8 @@ def ShowInTextFile():
             graph_def.ParseFromString(model_file.read())
             f = open(GlobalVariable.model_spectext_location, 'w')
             print(graph_def, file=f)
-            for n in graph_def.node:
-                print (tensor_util.MakeNdarray(n.attr['value'].tensor),file=f)
+            # for n in graph_def.node:
+            #     print (tensor_util.MakeNdarray(n.attr['value'].tensor),file=f)
 
 """
 使用check_point文件输出tensor
