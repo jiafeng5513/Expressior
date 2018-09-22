@@ -142,7 +142,7 @@ namespace Dynamo.Wpf.ViewModels.Watch3D
             set
             {
                 canNavigateBackground = value;
-                Dynamo.Logging.Analytics.TrackScreenView(canNavigateBackground ? "Geometry" : "Nodes");
+                //Dynamo.Logging.Analytics.TrackScreenView(canNavigateBackground ? "Geometry" : "Nodes");
                 RaisePropertyChanged("CanNavigateBackground");
             }
         }

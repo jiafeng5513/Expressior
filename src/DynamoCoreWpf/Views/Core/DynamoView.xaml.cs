@@ -469,8 +469,6 @@ namespace Dynamo.Controls
 
             //Backing up IsFirstRun to determine whether to show Gallery
             var isFirstRun = dynamoViewModel.Model.PreferenceSettings.IsFirstRun;
-            // If first run, Collect Info Prompt will appear
-            //UsageReportingManager.Instance.CheckIsFirstRun(this, dynamoViewModel.BrandingResourceProvider);
 
             WorkspaceTabs.SelectedIndex = 0;
             dynamoViewModel = (DataContext as DynamoViewModel);
@@ -480,13 +478,8 @@ namespace Dynamo.Controls
             _timer.Stop();
             dynamoViewModel.Model.Logger.Log(String.Format(Wpf.Properties.Resources.MessageLoadingTime,
                                                                      _timer.Elapsed, dynamoViewModel.BrandingResourceProvider.ProductName));
-            //InitializeLogin();
             InitializeShortcutBar();
             InitializeStartPage(isFirstRun);
-
-#if !__NO_SAMPLES_MENU
-            //LoadSamplesMenu();
-#endif
 
             #region Package manager
 
@@ -526,9 +519,6 @@ namespace Dynamo.Controls
             //ABOUT WINDOW
             dynamoViewModel.RequestAboutWindow += DynamoViewModelRequestAboutWindow;
 
-            //SHOW or HIDE GALLERY
-            //dynamoViewModel.RequestShowHideGallery += DynamoViewModelRequestShowHideGallery;
-
             LoadNodeViewCustomizations();
             SubscribeNodeViewCustomizationEvents();
 
@@ -538,8 +528,6 @@ namespace Dynamo.Controls
             var loadedParams = new ViewLoadedParams(this, dynamoViewModel);
 
             this.DynamoLoadedViewExtensionHandler(loadedParams, viewExtensionManager.ViewExtensions);
-
-            TrackStartupAnalytics();
 
             // In native host scenario (e.g. Revit), the "Application.Current" will be "null". Therefore, the InCanvasSearchControl.OnRequestShowInCanvasSearch
             // will not work. Instead, we have to check if the Owner Window (DynamoView) is deactivated or not.  
@@ -559,21 +547,6 @@ namespace Dynamo.Controls
             var workspace = this.ChildOfType<WorkspaceView>();
             if (workspace != null)
                 workspace.HidePopUp();
-        }
-
-        private void TrackStartupAnalytics()
-        {
-            if (!Analytics.ReportingAnalytics) return;
-
-            string packages = string.Empty;
-            var pkgExtension = dynamoViewModel.Model.GetPackageManagerExtension();
-            if (pkgExtension != null)
-            {
-                packages = pkgExtension.PackageLoader.LocalPackages
-                    .Select(p => string.Format("{0} {1}", p.Name, p.VersionName))
-                    .Aggregate(String.Empty, (x, y) => string.Format("{0}, {1}", x, y));
-            }
-            Analytics.TrackTimedEvent(Categories.Performance, "ViewStartup", dynamoViewModel.Model.stopwatch.Elapsed, packages);
         }
 
         private void DynamoView_Unloaded(object sender, RoutedEventArgs e)
@@ -963,9 +936,6 @@ namespace Dynamo.Controls
 
             //ABOUT WINDOW
             dynamoViewModel.RequestAboutWindow -= DynamoViewModelRequestAboutWindow;
-
-            //SHOW or HIDE GALLERY
-            //dynamoViewModel.RequestShowHideGallery -= DynamoViewModelRequestShowHideGallery;
 
             foreach (var ext in viewExtensionManager.ViewExtensions)
             {

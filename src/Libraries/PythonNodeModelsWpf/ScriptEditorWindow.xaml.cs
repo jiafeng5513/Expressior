@@ -35,7 +35,6 @@ namespace PythonNodeModelsWpf
             var view = FindUpVisualTree<DynamoView>(this);
             Owner = view;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            Dynamo.Logging.Analytics.TrackScreenView("Python");
         }
 
         internal void Initialize(Guid nodeGuid, string propName, string propValue)

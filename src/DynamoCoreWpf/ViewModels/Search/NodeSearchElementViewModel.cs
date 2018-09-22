@@ -238,7 +238,7 @@ namespace Dynamo.Wpf.ViewModels
                 var nodeModel = Model.CreateNode();
                 Clicked(nodeModel, Position);
 
-                Analytics.LogPiiInfo("Search-NodeAdded", FullName);
+                //Analytics.LogPiiInfo("Search-NodeAdded", FullName);
             }
         }
 

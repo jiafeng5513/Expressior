@@ -644,7 +644,7 @@ namespace Dynamo.UI.Controls
             catch (DivideByZeroException ex)
             {
                 //Log this exception as non-fatal exception.
-                Logging.Analytics.TrackException(ex, false);
+                //Logging.Analytics.TrackException(ex, false);
 
                 //MAGN-10528, thrown from UpdateLayout call while measuring the size.
                 //Most likely it doesn't have any content, so use condensed content size.

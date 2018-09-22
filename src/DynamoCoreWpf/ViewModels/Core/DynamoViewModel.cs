@@ -229,7 +229,6 @@ namespace Dynamo.ViewModels
                 }
 
                 showStartPage = value;
-                if (showStartPage) Logging.Analytics.TrackScreenView("StartPage");
 
                 RaisePropertyChanged("ShowStartPage");
                 if (DisplayStartPageCommand != null)
@@ -496,7 +495,7 @@ namespace Dynamo.ViewModels
             SubscribeModelChangedHandlers();
             SubscribeModelBackupFileSaveEvent();
 
-            InitializeAutomationSettings(/*startConfiguration.CommandFilePath*/);
+            InitializeAutomationSettings();
 
             SubscribeLoggerHandlers();
 
@@ -1745,9 +1744,6 @@ namespace Dynamo.ViewModels
         public void SaveImage(object parameters)
         {
             OnRequestSaveImage(this, new ImageSaveEventArgs(parameters.ToString()));
-
-            Dynamo.Logging.Analytics.TrackCommandEvent("ImageCapture",
-                "NodeCount", CurrentSpace.Nodes.Count());
         }
 
         private void Save3DImage(object parameters)

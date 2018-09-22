@@ -17,19 +17,9 @@ namespace DynamoSandbox
     {
         private SettingsMigrationWindow migrationWindow;
         private DynamoViewModel viewModel = null;
-        //private string commandFilePath;
-        private Stopwatch startupTimer = Stopwatch.StartNew();
 
-        //[DllImport("msvcrt.dll")]
-        //public static extern int _putenv(string env);
 
-        public DynamoCoreSetup(string[] args)
-        {
-            //var cmdLineArgs = StartupUtils.CommandLineArguments.Parse(args);
-            //var locale = StartupUtils.SetLocale(cmdLineArgs);
-            //_putenv(locale);
-            //commandFilePath = cmdLineArgs.CommandFilePath;
-        }
+        public DynamoCoreSetup(string[] args){}
 
         public void RunApplication(Application app)
         {
@@ -67,7 +57,7 @@ namespace DynamoSandbox
 #endif
 
                     DynamoModel.IsCrashing = true;
-                    Dynamo.Logging.Analytics.TrackException(e, true);
+                    //Dynamo.Logging.Analytics.TrackException(e, true);
 
                     if (viewModel != null)
                     {
@@ -92,7 +82,6 @@ namespace DynamoSandbox
         void OnDynamoViewLoaded(object sender, RoutedEventArgs e)
         {
             CloseMigrationWindow();
-            Analytics.TrackStartupTime("DynamoSandbox", startupTimer.Elapsed);
         }
 
         private void CloseMigrationWindow()

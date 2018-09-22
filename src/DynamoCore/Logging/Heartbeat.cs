@@ -94,15 +94,15 @@ namespace Dynamo.Logging
                     String usage = PackFrequencyDict(ComputeNodeFrequencies());
                     String errors = PackFrequencyDict(ComputeErrorFrequencies());
 
-                    Analytics.LogPiiInfo("Node-usage", usage);
-                    Analytics.LogPiiInfo("Nodes-with-errors", errors);
+                    //Analytics.LogPiiInfo("Node-usage", usage);
+                    //Analytics.LogPiiInfo("Nodes-with-errors", errors);
 
                     DynamoModel.OnRequestDispatcherInvoke(
                         () =>
                         {
                             string workspace = dynamoModel.CurrentWorkspace == null ? string.Empty :
                                 dynamoModel.CurrentWorkspace.GetStringRepOfWorkspace();
-                            Analytics.LogPiiInfo("Workspace", workspace);
+                            //Analytics.LogPiiInfo("Workspace", workspace);
                         });
 
                 }

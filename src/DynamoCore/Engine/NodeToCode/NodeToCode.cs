@@ -2,10 +2,8 @@
 using System.Linq;
 using Dynamo.Models;
 using System;
-using Autodesk.DesignScript.Geometry;
 using ProtoCore.AST.AssociativeAST;
 using ProtoCore.DSASM;
-using Dynamo.Utilities;
 using ProtoCore.SyntaxAnalysis;
 using ProtoCore.Mirror;
 using ProtoCore.Utils;

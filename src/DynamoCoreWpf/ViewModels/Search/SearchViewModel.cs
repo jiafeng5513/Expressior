@@ -191,7 +191,6 @@ namespace Dynamo.ViewModels
             FilteredResults = searchResults.Where(x => allowedCategories
                                                                        .Select(cat => cat.Name)
                                                                        .Contains(x.Category));
-
             // Report selected categories to instrumentation
             StringBuilder strBuilder = new StringBuilder();
             foreach (var category in SearchCategories)
@@ -208,8 +207,6 @@ namespace Dynamo.ViewModels
                 }
                 strBuilder.Append(", ");
             }
-
-            Analytics.LogPiiInfo("Filter-categories", strBuilder.ToString().Trim());
         }
 
         /// <summary>
@@ -809,7 +806,6 @@ namespace Dynamo.ViewModels
             if (Visible != true)
                 return;
 
-            Analytics.LogPiiInfo("Search", query);
 
             // if the search query is empty, go back to the default treeview
             if (string.IsNullOrEmpty(query))
@@ -924,30 +920,30 @@ namespace Dynamo.ViewModels
             return target;
         }
 
-        private static string MakeShortCategoryString(string fullCategoryName)
-        {
-            var catName = fullCategoryName.Replace(".", " > ");
+        //private static string MakeShortCategoryString(string fullCategoryName)
+        //{
+        //    var catName = fullCategoryName.Replace(".", " > ");
 
-            if (catName.Length <= 50)
-                return catName;
+        //    if (catName.Length <= 50)
+        //        return catName;
 
-            // if the category name is too long, we strip off the interior categories
-            var s = catName.Split('>').Select(x => x.Trim()).ToList();
-            if (s.Count() <= 4)
-                return catName;
+        //    // if the category name is too long, we strip off the interior categories
+        //    var s = catName.Split('>').Select(x => x.Trim()).ToList();
+        //    if (s.Count() <= 4)
+        //        return catName;
 
-            s = new List<string>
-            {
-                s[0],
-                "...",
-                s[s.Count - 3],
-                s[s.Count - 2],
-                s[s.Count - 1]
-            };
-            catName = string.Join(" > ", s);
+        //    s = new List<string>
+        //    {
+        //        s[0],
+        //        "...",
+        //        s[s.Count - 3],
+        //        s[s.Count - 2],
+        //        s[s.Count - 1]
+        //    };
+        //    catName = string.Join(" > ", s);
 
-            return catName;
-        }
+        //    return catName;
+        //}
 
         #endregion
 
@@ -961,15 +957,15 @@ namespace Dynamo.ViewModels
         /// <summary>
         /// Executes selected item in search UI.
         /// </summary>
-        public void ExecuteSelectedItem()
-        {
-            var selected = FilteredResults.FirstOrDefault(item => item.IsSelected);
+        //public void ExecuteSelectedItem()
+        //{
+        //    var selected = FilteredResults.FirstOrDefault(item => item.IsSelected);
 
-            if (selected != null)
-            {
-                selected.ClickedCommand.Execute(null);
-            }
-        }
+        //    if (selected != null)
+        //    {
+        //        selected.ClickedCommand.Execute(null);
+        //    }
+        //}
 
         /// <summary>
         /// When down key is pressed, selected element should move forward.
@@ -1008,10 +1004,10 @@ namespace Dynamo.ViewModels
         ///     last character.  If the SearchText property is empty or null
         ///     return doing nothing.
         /// </summary>
-        public void RemoveLastPartOfSearchText()
-        {
-            SearchText = RemoveLastPartOfText(SearchText);
-        }
+        //public void RemoveLastPartOfSearchText()
+        //{
+        //    SearchText = RemoveLastPartOfText(SearchText);
+        //}
 
         /// <summary>
         ///     If there's a period in the argument, remove text

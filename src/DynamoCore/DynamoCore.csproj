@@ -72,12 +72,6 @@ limitations under the License.
     <DefineConstants>$(DefineConstants);USE_DSENGINE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Analytics.NET.Core">
-      <HintPath>..\..\extern\Analytics.NET\Analytics.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Analytics.NET.Google">
-      <HintPath>..\..\extern\Analytics.NET\Analytics.NET.Google.dll</HintPath>
-    </Reference>
     <Reference Include="Greg, Version=1.0.6176.18754, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Greg.1.0.6176.18754\lib\net45\Greg.dll</HintPath>
       <Private>True</Private>
@@ -103,7 +97,6 @@ limitations under the License.
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -128,9 +121,6 @@ limitations under the License.
     <Compile Include="Graph\Workspaces\UndoRedo.cs" />
     <Compile Include="Extensions\IServiceManager.cs" />
     <Compile Include="Interfaces\DynamoLookUp.cs" />
-    <Compile Include="Logging\AnalyticsService.cs" />
-    <Compile Include="Logging\DynamoAnalyticsClient.cs" />
-    <Compile Include="Logging\IAnalyticsSession.cs" />
     <Compile Include="Logging\NotificationMessage.cs" />
     <Compile Include="Scheduler\Disposable.cs" />
     <Compile Include="Engine\LinkedListOfList.cs" />

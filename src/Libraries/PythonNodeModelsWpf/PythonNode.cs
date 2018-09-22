@@ -40,8 +40,7 @@ namespace PythonNodeModelsWpf
 
         private void EditScriptContent()
         {
-            using (var cmd = Dynamo.Logging.Analytics.TrackCommandEvent("PythonEdit"))
-            {
+
                 var editWindow = new ScriptEditorWindow(dynamoViewModel);
                 editWindow.Initialize(model.GUID, "ScriptContent", model.Script);
                 bool? acceptChanged = editWindow.ShowDialog();
@@ -50,7 +49,7 @@ namespace PythonNodeModelsWpf
                     // Mark node for update
                     model.OnNodeModified();
                 }
-            }
+
         }
     }
 }

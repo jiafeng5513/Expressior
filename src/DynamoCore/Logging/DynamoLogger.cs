@@ -179,10 +179,6 @@ namespace Dynamo.Logging
         {
             lock (this.guardMutex)
             {
-                //Don't overwhelm the logging system
-                if (debugSettings.VerboseLogging)
-                    Analytics.LogPiiInfo("LogMessage-" + level.ToString(), message);
-
                 switch (level)
                 {
                         //write to the console

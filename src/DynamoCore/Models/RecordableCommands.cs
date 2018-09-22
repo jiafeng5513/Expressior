@@ -308,7 +308,7 @@ namespace Dynamo.Models
             /// This method provides derived class implementation of analytics
             /// tracking, and only gets called if analytics tracking is enabled.
             /// </summary>
-            internal virtual void TrackAnalytics() { }
+            //internal virtual void TrackAnalytics() { }
 
             #endregion
         }
@@ -522,26 +522,26 @@ namespace Dynamo.Models
                 helper.SetAttribute("XmlFilePath", FilePath);
             }
 
-            internal override void TrackAnalytics()
-            {
-                // Log file open action and the number of nodes in the opened workspace
-                Dynamo.Logging.Analytics.TrackFileOperationEvent(
-                    FilePath,
-                    Logging.Actions.Open,
-                    dynamoModel.CurrentWorkspace.Nodes.Count());
+            //internal override void TrackAnalytics()
+            //{
+            //    // Log file open action and the number of nodes in the opened workspace
+            //    Dynamo.Logging.Analytics.TrackFileOperationEvent(
+            //        FilePath,
+            //        Logging.Actions.Open,
+            //        dynamoModel.CurrentWorkspace.Nodes.Count());
 
-                // If there are unresolved nodes in the opened workspace, log the node names and count
-                var unresolvedNodes = dynamoModel.CurrentWorkspace.Nodes.OfType<DummyNode>();
-                if (unresolvedNodes != null && unresolvedNodes.Any())
-                {
-                    Dynamo.Logging.Analytics.TrackEvent(
-                        Logging.Actions.Unresolved,
-                        Logging.Categories.NodeOperations,
-                        unresolvedNodes.Select(n => string.Format("{0}:{1}", n.LegacyAssembly, n.LegacyFullName))
-                            .Aggregate((x, y) => string.Format("{0}, {1}", x, y)),
-                        unresolvedNodes.Count());
-                }
-            }
+            //    // If there are unresolved nodes in the opened workspace, log the node names and count
+            //    var unresolvedNodes = dynamoModel.CurrentWorkspace.Nodes.OfType<DummyNode>();
+            //    if (unresolvedNodes != null && unresolvedNodes.Any())
+            //    {
+            //        Dynamo.Logging.Analytics.TrackEvent(
+            //            Logging.Actions.Unresolved,
+            //            Logging.Categories.NodeOperations,
+            //            unresolvedNodes.Select(n => string.Format("{0}:{1}", n.LegacyAssembly, n.LegacyFullName))
+            //                .Aggregate((x, y) => string.Format("{0}, {1}", x, y)),
+            //            unresolvedNodes.Count());
+            //    }
+            //}
 
             #endregion
         }
@@ -767,13 +767,13 @@ namespace Dynamo.Models
                 }
             }
 
-            internal override void TrackAnalytics()
-            {
-                Dynamo.Logging.Analytics.TrackEvent(
-                    Logging.Actions.Create,
-                    Logging.Categories.NodeOperations,
-                    (Node != null) ? Node.GetOriginalName() : Name ?? "");
-            }
+            //internal override void TrackAnalytics()
+            //{
+            //    Dynamo.Logging.Analytics.TrackEvent(
+            //        Logging.Actions.Create,
+            //        Logging.Categories.NodeOperations,
+            //        (Node != null) ? Node.GetOriginalName() : Name ?? "");
+            //}
 
             #endregion
         }
@@ -1540,11 +1540,11 @@ namespace Dynamo.Models
                 helper.SetAttribute("CmdOperation", ((int)CmdOperation));
             }
 
-            internal override void TrackAnalytics()
-            {
-                Dynamo.Logging.Analytics.TrackCommandEvent(
-                    CmdOperation.ToString()); // "Undo" or "Redo"
-            }
+            //internal override void TrackAnalytics()
+            //{
+            //    Dynamo.Logging.Analytics.TrackCommandEvent(
+            //        CmdOperation.ToString()); // "Undo" or "Redo"
+            //}
 
             #endregion
         }
@@ -2279,37 +2279,4 @@ namespace Dynamo.Models
             #endregion
         }
     }
-
-    // public class XxxYyyCommand : RecordableCommand
-    // {
-    //     #region Public Class Methods
-    //
-    //     public XxxYyyCommand()
-    //     {
-    //     }
-    //
-    //     internal static XxxYyyCommand DeserializeCore(XmlElement element)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    //
-    //     #endregion
-    //
-    //     #region Public Command Properties
-    //     #endregion
-    //
-    //     #region Protected Overridable Methods
-    //
-    //     protected override void ExecuteCore(DynamoModel dynamoModel)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    //
-    //     protected override void SerializeCore(XmlElement element)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    //
-    //     #endregion
-    // }
 }

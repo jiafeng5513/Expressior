@@ -451,7 +451,7 @@ namespace Dynamo.Models
             ShutDownCore(shutdownHost);
             PostShutdownCore(shutdownHost);
 
-            AnalyticsService.ShutDown();
+            //AnalyticsService.ShutDown();
 
             OnShutdownCompleted(); // Notify possible event handlers.
         }
@@ -904,21 +904,21 @@ namespace Dynamo.Models
                         long end = e.Task.ExecutionEndTime.TickCount;
                         var executionTimeSpan = new TimeSpan(end - start);
 
-                        if (Logging.Analytics.ReportingAnalytics)
-                        {
-                            var modifiedNodes = "";
-                            if (updateTask.ModifiedNodes != null && updateTask.ModifiedNodes.Any())
-                            {
-                                modifiedNodes = updateTask.ModifiedNodes
-                                    .Select(n => n.GetOriginalName())
-                                    .Aggregate((x, y) => string.Format("{0}, {1}", x, y));
-                            }
+                        //if (Logging.Analytics.ReportingAnalytics)
+                        //{
+                        //    var modifiedNodes = "";
+                        //    if (updateTask.ModifiedNodes != null && updateTask.ModifiedNodes.Any())
+                        //    {
+                        //        modifiedNodes = updateTask.ModifiedNodes
+                        //            .Select(n => n.GetOriginalName())
+                        //            .Aggregate((x, y) => string.Format("{0}, {1}", x, y));
+                        //    }
 
-                            Dynamo.Logging.Analytics.TrackTimedEvent(
-                                Categories.Performance,
-                                e.Task.GetType().Name,
-                                executionTimeSpan, modifiedNodes);
-                        }
+                        //    Dynamo.Logging.Analytics.TrackTimedEvent(
+                        //        Categories.Performance,
+                        //        e.Task.GetType().Name,
+                        //        executionTimeSpan, modifiedNodes);
+                        //}
 
                         Debug.WriteLine(String.Format(Resources.EvaluationCompleted, executionTimeSpan));
 
@@ -1185,7 +1185,7 @@ namespace Dynamo.Models
         {
             if (!IsHeadless)
             {
-                AnalyticsService.Start(this);
+                //AnalyticsService.Start(this);
             }
         }
 
@@ -2309,8 +2309,8 @@ namespace Dynamo.Models
             var xmlDummyNodeCount = this.CurrentWorkspace.Nodes.OfType<DummyNode>().
                  Where(node => node.OriginalNodeContent is XmlElement).Count();
 
-            Logging.Analytics.LogPiiInfo("XmlDummyNodeWarning",
-                xmlDummyNodeCount.ToString());
+            //Logging.Analytics.LogPiiInfo("XmlDummyNodeWarning",
+            //    xmlDummyNodeCount.ToString());
 
             string summary = Resources.UnresolvedNodesWarningShortMessage;
             var description = Resources.UnresolvedNodesWarningMessage;
@@ -2344,9 +2344,9 @@ namespace Dynamo.Models
             var fileVer = ((fileVersion != null) ? fileVersion.ToString() : "Unknown");
             var currVer = ((currVersion != null) ? currVersion.ToString() : "Unknown");
 
-            Logging.Analytics.LogPiiInfo(
-                "ObsoleteFileMessage",
-                fullFilePath + " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
+            //Logging.Analytics.LogPiiInfo(
+            //    "ObsoleteFileMessage",
+            //    fullFilePath + " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
 
             string summary = Resources.FileCannotBeOpened;
             var description =
@@ -2376,12 +2376,12 @@ namespace Dynamo.Models
         /// <param name="exception">The exception to display.</param>
         private TaskDialogEventArgs DisplayEngineFailureMessage(Exception exception)
         {
-            Dynamo.Logging.Analytics.TrackEvent(Actions.EngineFailure, Categories.Stability);
+            //Dynamo.Logging.Analytics.TrackEvent(Actions.EngineFailure, Categories.Stability);
 
-            if (exception != null)
-            {
-                Dynamo.Logging.Analytics.TrackException(exception, false);
-            }
+            //if (exception != null)
+            //{
+            //    Dynamo.Logging.Analytics.TrackException(exception, false);
+            //}
 
             string summary = Resources.UnhandledExceptionSummary;
 
@@ -2417,8 +2417,8 @@ namespace Dynamo.Models
             var fileVer = ((fileVersion != null) ? fileVersion.ToString() : Resources.UnknownVersion);
             var currVer = ((currVersion != null) ? currVersion.ToString() : Resources.UnknownVersion);
 
-            Logging.Analytics.LogPiiInfo("FutureFileMessage", fullFilePath +
-                " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
+            //Logging.Analytics.LogPiiInfo("FutureFileMessage", fullFilePath +
+            //    " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
 
             string summary = Resources.FutureFileSummary;
             var description = string.Format(Resources.FutureFileDescription, fullFilePath, fileVersion, currVersion);
