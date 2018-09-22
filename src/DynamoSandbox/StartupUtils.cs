@@ -19,24 +19,6 @@ namespace Dynamo.Applications
 {
     public class StartupUtils
     {
-        /// <summary>
-        /// 在注册表中查找软件的安装位置
-        /// </summary>
-        internal class SandboxLookUp : DynamoLookUp
-        {
-            public override IEnumerable<string> GetDynamoInstallLocations()
-            {
-                const string regKey64 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\";
-                //Open HKLM for 64bit registry
-                var regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                //Open Windows/CurrentVersion/Uninstall registry key
-                regKey = regKey.OpenSubKey(regKey64);
-
-                //Get "InstallLocation" value as string for all the subkey that starts with "Dynamo"
-                return regKey.GetSubKeyNames().Where(s => s.StartsWith("Dynamo")).Select(
-                    (s) => regKey.OpenSubKey(s).GetValue("InstallLocation") as string);
-            }
-        }
 
         public static void PreloadShapeManager(ref string geometryFactoryPath, ref string preloaderLocation)
         {

@@ -114,7 +114,6 @@ namespace Dynamo.Models
         private WorkspaceModel currentWorkspace;
         private Timer backupFilesTimer;
         private Dictionary<Guid, string> backupFilesDict = new Dictionary<Guid, string>();
-        internal readonly Stopwatch stopwatch = Stopwatch.StartNew();
         #endregion
 
         #region events
@@ -271,11 +270,6 @@ namespace Dynamo.Models
         /// Name of the Host (i.e. DynamoRevit/DynamoStudio)
         /// </summary>
         public string HostName { get; set; }
-
-        /// <summary>
-        /// UpdateManager to handle automatic upgrade to higher version.
-        /// </summary>
-        //public IUpdateManager UpdateManager { get; private set; }
 
         /// <summary>
         ///     The path manager that configures path information required for
@@ -488,8 +482,6 @@ namespace Dynamo.Models
             string DynamoHostPath { get; set; }
             IPreferences Preferences { get; set; }
             IPathResolver PathResolver { get; set; }
-            //bool StartInTestMode { get; set; }
-            //IUpdateManager UpdateManager { get; set; }
             ISchedulerThread SchedulerThread { get; set; }
             string GeometryFactoryPath { get; set; }
             IAuthProvider AuthProvider { get; set; }
@@ -513,8 +505,6 @@ namespace Dynamo.Models
             public string DynamoHostPath { get; set; }
             public IPreferences Preferences { get; set; }
             public IPathResolver PathResolver { get; set; }
-            //public bool StartInTestMode { get; set; }
-            //public IUpdateManager UpdateManager { get; set; }
             public ISchedulerThread SchedulerThread { get; set; }
             public string GeometryFactoryPath { get; set; }
             public IAuthProvider AuthProvider { get; set; }
@@ -566,7 +556,6 @@ namespace Dynamo.Models
             pathManager.EnsureDirectoryExistence(exceptions);
 
             Context = config.Context;
-            //IsTestMode = config.StartInTestMode;
             IsHeadless = config.IsHeadless;
 
             DebugSettings = new DebugSettings();
@@ -784,15 +773,6 @@ namespace Dynamo.Models
             return extensions;
         }
 
-        private void RemoveExtension(IExtension ext)
-        {
-            ExtensionManager.Remove(ext);
-
-            var logSource = ext as ILogSource;
-            if (logSource != null)
-                logSource.MessageLogged -= LogMessage;
-        }
-
         private void EngineController_TraceReconcliationComplete(TraceReconciliationEventArgs obj)
         {
             Debug.WriteLine("TRACE RECONCILIATION: {0} total serializables were orphaned.", obj.CallsiteToOrphanMap.SelectMany(kvp => kvp.Value).Count());
@@ -860,10 +840,6 @@ namespace Dynamo.Models
             // Override in derived classes to deal with orphaned serializables.
         }
 
-        void UpdateManager_Log(LogEventArgs args)
-        {
-            Logger.Log(args.Message, args.Level);
-        }
 
         /// <summary>
         /// LibraryLoaded event handler.
@@ -904,22 +880,6 @@ namespace Dynamo.Models
                         long end = e.Task.ExecutionEndTime.TickCount;
                         var executionTimeSpan = new TimeSpan(end - start);
 
-                        //if (Logging.Analytics.ReportingAnalytics)
-                        //{
-                        //    var modifiedNodes = "";
-                        //    if (updateTask.ModifiedNodes != null && updateTask.ModifiedNodes.Any())
-                        //    {
-                        //        modifiedNodes = updateTask.ModifiedNodes
-                        //            .Select(n => n.GetOriginalName())
-                        //            .Aggregate((x, y) => string.Format("{0}, {1}", x, y));
-                        //    }
-
-                        //    Dynamo.Logging.Analytics.TrackTimedEvent(
-                        //        Categories.Performance,
-                        //        e.Task.GetType().Name,
-                        //        executionTimeSpan, modifiedNodes);
-                        //}
-
                         Debug.WriteLine(String.Format(Resources.EvaluationCompleted, executionTimeSpan));
 
                         ExecutionEvents.OnGraphPostExecution(new ExecutionSession(updateTask, this, geometryFactoryPath));
@@ -942,7 +902,6 @@ namespace Dynamo.Models
             LibraryServices.Dispose();
             LibraryServices.LibraryManagementCore.Cleanup();
 
-            //UpdateManager.Log -= UpdateManager_Log;
             Logger.Dispose();
 
             EngineController.Dispose();
@@ -1030,7 +989,7 @@ namespace Dynamo.Models
         private void InitializeIncludedNodes()
         {
             var customNodeData = new TypeLoadData(typeof(Function));
-            NodeFactory.AddLoader(new CustomNodeLoader(CustomNodeManager/*, IsTestMode*/));
+            NodeFactory.AddLoader(new CustomNodeLoader(CustomNodeManager));
             NodeFactory.AddAlsoKnownAs(customNodeData.Type, customNodeData.AlsoKnownAs);
 
             var dsFuncData = new TypeLoadData(typeof(DSFunction));
@@ -2217,32 +2176,6 @@ namespace Dynamo.Models
             SearchModel.Add(new NodeModelSearchElement(typeLoadData));
         }
 
-        /// <summary>
-        /// This method updates the node search library to either hide or unhide nodes that belong
-        /// to a specified assembly name and namespace. These nodes will be hidden from the node
-        /// library sidebar and from the node search.
-        /// </summary>
-        /// <param name="hide">Set to true to hide, set to false to unhide.</param>
-        /// <param name="library">The assembly name of the library.</param>
-        /// <param name="namespc">The namespace of the nodes to be hidden.</param>
-        internal void HideUnhideNamespace(bool hide, string library, string namespc)
-        {
-            var str = library + ':' + namespc;
-            var namespaces = PreferenceSettings.NamespacesToExcludeFromLibrary;
-
-            if (hide)
-            {
-                if (!namespaces.Contains(str))
-                {
-                    namespaces.Add(str);
-                }
-            }
-            else // unhide
-            {
-                namespaces.Remove(str);
-            }
-        }
-
         private void AddZeroTouchNodesToSearch(IEnumerable<FunctionGroup> functionGroups)
         {
             foreach (var funcGroup in functionGroups)
@@ -2306,12 +2239,6 @@ namespace Dynamo.Models
         }
         private void DisplayXmlDummyNodeWarning()
         {
-            var xmlDummyNodeCount = this.CurrentWorkspace.Nodes.OfType<DummyNode>().
-                 Where(node => node.OriginalNodeContent is XmlElement).Count();
-
-            //Logging.Analytics.LogPiiInfo("XmlDummyNodeWarning",
-            //    xmlDummyNodeCount.ToString());
-
             string summary = Resources.UnresolvedNodesWarningShortMessage;
             var description = Resources.UnresolvedNodesWarningMessage;
             const string imageUri = "/DynamoCoreWpf;component/UI/Images/task_dialog_future_file.png";
@@ -2341,13 +2268,6 @@ namespace Dynamo.Models
         /// <param name="currVersion">Current version of the Dynamo.</param>
         private void DisplayObsoleteFileMessage(string fullFilePath, Version fileVersion, Version currVersion)
         {
-            var fileVer = ((fileVersion != null) ? fileVersion.ToString() : "Unknown");
-            var currVer = ((currVersion != null) ? currVersion.ToString() : "Unknown");
-
-            //Logging.Analytics.LogPiiInfo(
-            //    "ObsoleteFileMessage",
-            //    fullFilePath + " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
-
             string summary = Resources.FileCannotBeOpened;
             var description =
                 string.Format(
@@ -2376,13 +2296,6 @@ namespace Dynamo.Models
         /// <param name="exception">The exception to display.</param>
         private TaskDialogEventArgs DisplayEngineFailureMessage(Exception exception)
         {
-            //Dynamo.Logging.Analytics.TrackEvent(Actions.EngineFailure, Categories.Stability);
-
-            //if (exception != null)
-            //{
-            //    Dynamo.Logging.Analytics.TrackException(exception, false);
-            //}
-
             string summary = Resources.UnhandledExceptionSummary;
 
             string description = Resources.DisplayEngineFailureMessageDescription;
@@ -2414,12 +2327,6 @@ namespace Dynamo.Models
         /// <returns> true if the file must be opened and false otherwise </returns>
         private bool DisplayFutureFileMessage(string fullFilePath, Version fileVersion, Version currVersion)
         {
-            var fileVer = ((fileVersion != null) ? fileVersion.ToString() : Resources.UnknownVersion);
-            var currVer = ((currVersion != null) ? currVersion.ToString() : Resources.UnknownVersion);
-
-            //Logging.Analytics.LogPiiInfo("FutureFileMessage", fullFilePath +
-            //    " :: fileVersion:" + fileVer + " :: currVersion:" + currVer);
-
             string summary = Resources.FutureFileSummary;
             var description = string.Format(Resources.FutureFileDescription, fullFilePath, fileVersion, currVersion);
 
