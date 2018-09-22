@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using DynamoInstallDetective;
 
 
 namespace DynamoShapeManager
@@ -130,25 +131,40 @@ namespace DynamoShapeManager
 
         private static IEnumerable GetAsmInstallations(string rootFolder)
         {
-            var assemblyPath = Path.Combine(Path.Combine(rootFolder, "DynamoInstallDetective.dll"));
-            if (!File.Exists(assemblyPath))
-                throw new FileNotFoundException(assemblyPath);
+            //var assemblyPath = Path.Combine(Path.Combine(rootFolder, "DynamoInstallDetective.dll"));
+            //if (!File.Exists(assemblyPath))
+            //    throw new FileNotFoundException(assemblyPath);
 
-            var assembly = Assembly.LoadFrom(assemblyPath);
+            //var assembly = Assembly.LoadFrom(assemblyPath);
 
-            var type = assembly.GetType("DynamoInstallDetective.Utilities");
+            //var type = assembly.GetType("DynamoInstallDetective.Utilities");
+            ////运行时从程序集中加载方法并调用.
+            //var installationsMethod = type.GetMethod(
+            //    "FindProductInstallations",
+            //    BindingFlags.Public | BindingFlags.Static);
 
-            var installationsMethod = type.GetMethod(
-                "FindProductInstallations",
-                BindingFlags.Public | BindingFlags.Static);
+            //if (installationsMethod == null)
+            //{
+            //    throw new MissingMethodException("Method 'DynamoInstallDetective.Utilities.FindProductInstallations' not found");
+            //}
 
-            if (installationsMethod == null)
-            {
-                throw new MissingMethodException("Method 'DynamoInstallDetective.Utilities.FindProductInstallations' not found");
-            }
+            //var methodParams = new object[] { "Revit", "ASMAHL*.dll" };
+            return FindProductInstallations("Revit", "ASMAHL*.dll");
+           // return installationsMethod.Invoke(null, methodParams) as IEnumerable;
 
-            var methodParams = new object[] { "Revit", "ASMAHL*.dll" };
-            return installationsMethod.Invoke(null, methodParams) as IEnumerable;
+        }
+
+        public static IEnumerable FindProductInstallations(string productSearchPattern, string fileSearchPattern)
+        {
+            var installs = new InstalledProducts();
+            installs.LookUpAndInitProducts(new InstalledProductLookUp(productSearchPattern, fileSearchPattern));
+
+            return
+                installs.Products.Select(
+                    p =>
+                        new KeyValuePair<string, Tuple<int, int, int, int>>(
+                            p.InstallLocation,
+                            p.VersionInfo));
         }
     }
 }

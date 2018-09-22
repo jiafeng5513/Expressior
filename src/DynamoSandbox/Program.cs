@@ -2,8 +2,6 @@
 using System.Windows;
 using System.Reflection;
 using System.IO;
-using System.Linq;
-using System.Diagnostics;
 
 namespace DynamoSandbox
 {

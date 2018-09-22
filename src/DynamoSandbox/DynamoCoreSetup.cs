@@ -4,12 +4,8 @@ using System.Windows;
 using Dynamo.Controls;
 using Dynamo.Models;
 using Dynamo.ViewModels;
-using Dynamo.Logging;
 using Dynamo.Core;
-using Dynamo.Wpf.ViewModels.Watch3D;
 using Dynamo.DynamoSandbox;
-using Dynamo.Applications;
-using System.Runtime.InteropServices;
 
 namespace DynamoSandbox
 {

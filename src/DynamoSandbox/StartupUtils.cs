@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.Scheduler;
-using Dynamo.Updates;
 using DynamoShapeManager;
-using Microsoft.Win32;
-using NDesk.Options;
 
 namespace Dynamo.Applications
 {

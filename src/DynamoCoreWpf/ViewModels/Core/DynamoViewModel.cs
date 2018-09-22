@@ -11,7 +11,6 @@ using Dynamo.Models;
 using Dynamo.PackageManager;
 using Dynamo.Selection;
 using Dynamo.UI;
-using Dynamo.Updates;
 using Dynamo.Utilities;
 using Dynamo.Visualization;
 using Dynamo.Wpf.Interfaces;
@@ -426,7 +425,6 @@ namespace Dynamo.ViewModels
 
         public struct StartConfiguration
         {
-            //public string CommandFilePath { get; set; }
             public IWatchHandler WatchHandler { get; set; }
             public DynamoModel DynamoModel { get; set; }
             public bool ShowLogin { get; set; }
