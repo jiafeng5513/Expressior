@@ -164,7 +164,7 @@ namespace Dynamo.Models
             // And if that didn't work, then it must be a custom node.
             if (Guid.TryParse(name, out customNodeId))
             {
-                node = CustomNodeManager.CreateCustomNodeInstance(customNodeId, null, false);
+                node = CustomNodeManager.CreateCustomNodeInstance(customNodeId, null);
                 node.GUID = nodeId;
                 return node;
             }

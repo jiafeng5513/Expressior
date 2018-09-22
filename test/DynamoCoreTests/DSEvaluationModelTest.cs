@@ -1184,140 +1184,140 @@ namespace Dynamo.Tests
             base.GetLibrariesToPreload(libraries);
         }
 
-        [Test]
-        public void CustomNodeNoInput01()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //[Test]
+        //public void CustomNodeNoInput01()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
-                    Path.Combine(examplePath, "NoInput.dyf"),
-                    true,
-                    out info));
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
+        //            Path.Combine(examplePath, "NoInput.dyf"),
+        //            true,
+        //            out info));
 
-            string openPath = Path.Combine(examplePath, "TestNoInput.dyn");
-            //model.Open(openPath);
+        //    string openPath = Path.Combine(examplePath, "TestNoInput.dyn");
+        //    //model.Open(openPath);
 
-            RunModel(openPath);
+        //    RunModel(openPath);
 
-            // check all the nodes and connectors are loaded
-            Assert.AreEqual(1, CurrentDynamoModel.CurrentWorkspace.Connectors.Count());
-            Assert.AreEqual(2, CurrentDynamoModel.CurrentWorkspace.Nodes.Count());
+        //    // check all the nodes and connectors are loaded
+        //    Assert.AreEqual(1, CurrentDynamoModel.CurrentWorkspace.Connectors.Count());
+        //    Assert.AreEqual(2, CurrentDynamoModel.CurrentWorkspace.Nodes.Count());
 
-            AssertPreviewValue("f9c6aa7f-3fb4-40df-b4c5-6694e8c437cd",
-                new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
-        }
-        [Test]
-        public void CustomNodeWithInput02()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //    AssertPreviewValue("f9c6aa7f-3fb4-40df-b4c5-6694e8c437cd",
+        //        new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+        //}
+        //[Test]
+        //public void CustomNodeWithInput02()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
-                    Path.Combine(examplePath, "CNWithInput.dyf"),
-                    true,
-                    out info));
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
+        //            Path.Combine(examplePath, "CNWithInput.dyf"),
+        //            true,
+        //            out info));
 
-            string openPath = Path.Combine(examplePath, "TestCNWithInput.dyn");
-            //model.Open(openPath);
+        //    string openPath = Path.Combine(examplePath, "TestCNWithInput.dyn");
+        //    //model.Open(openPath);
 
-            RunModel(openPath);
+        //    RunModel(openPath);
 
-            // check all the nodes and connectors are loaded
+        //    // check all the nodes and connectors are loaded
 
 
-            AssertPreviewValue("1bee0f0f-5c93-48b3-a90d-f8761fa6e221", 3);
-        }
-        [Test, Category("Failure")]
-        public void CustomNodeWithCBNAndGeometry()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //    AssertPreviewValue("1bee0f0f-5c93-48b3-a90d-f8761fa6e221", 3);
+        //}
+        //[Test, Category("Failure")]
+        //public void CustomNodeWithCBNAndGeometry()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
-                    Path.Combine(examplePath, "Centroid.dyf"),
-                    true,
-                    out info));
-            string openPath = Path.Combine(examplePath, "TestCentroid.dyn");
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
+        //            Path.Combine(examplePath, "Centroid.dyf"),
+        //            true,
+        //            out info));
+        //    string openPath = Path.Combine(examplePath, "TestCentroid.dyn");
 
-            RunModel(openPath);
+        //    RunModel(openPath);
 
-            AssertPreviewValue("6ad5aa92-b3f5-492f-aa7c-4ae307587967", 5.5);
-            AssertPreviewValue("7095a283-62e8-4f95-b1bf-f8919b700c96", 3.0);
-            AssertPreviewValue("7a4b9510-c64c-48cb-81c7-24616cec56fc", 0.0);
-        }
+        //    AssertPreviewValue("6ad5aa92-b3f5-492f-aa7c-4ae307587967", 5.5);
+        //    AssertPreviewValue("7095a283-62e8-4f95-b1bf-f8919b700c96", 3.0);
+        //    AssertPreviewValue("7a4b9510-c64c-48cb-81c7-24616cec56fc", 0.0);
+        //}
 
-        [Test]
-        public void CustomNodeWithSimpleGeometry()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //[Test]
+        //public void CustomNodeWithSimpleGeometry()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
-                    Path.Combine(examplePath, "Point.dyf"),
-                    true,
-                    out info));
-            string openPath = Path.Combine(examplePath, "TestPoint.dyn");
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(
+        //            Path.Combine(examplePath, "Point.dyf"),
+        //            true,
+        //            out info));
+        //    string openPath = Path.Combine(examplePath, "TestPoint.dyn");
 
-            RunModel(openPath);
+        //    RunModel(openPath);
 
-            AssertPreviewValue("5ed80f52-ea60-4a07-8dd0-514f0eb70a28", 2);
-        }
+        //    AssertPreviewValue("5ed80f52-ea60-4a07-8dd0-514f0eb70a28", 2);
+        //}
 
-        [Test, Category("Failure")]
-        public void CustomNodeMultipleInGraph()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //[Test, Category("Failure")]
+        //public void CustomNodeMultipleInGraph()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            var dyfPath = Path.Combine(examplePath, "Poly.dyf");
-            CustomNodeInfo info;
-            Assert.IsTrue(CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(dyfPath, true, out info));
+        //    var dyfPath = Path.Combine(examplePath, "Poly.dyf");
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(dyfPath, true, out info));
 
-            RunModel(Path.Combine(examplePath, "TestPoly.dyn"));
+        //    RunModel(Path.Combine(examplePath, "TestPoly.dyn"));
 
-            AssertPreviewValue("8453b5c7-2efc-4ff2-a8f3-7c376d22c240", 5.5);
-            AssertPreviewValue("a9868848-0443-431b-bedd-9f63c25157e0", 3.0);
-            AssertPreviewValue("9b569c4f-1f09-4ffb-a621-d0341f1fe890", 0.0);
-        }
+        //    AssertPreviewValue("8453b5c7-2efc-4ff2-a8f3-7c376d22c240", 5.5);
+        //    AssertPreviewValue("a9868848-0443-431b-bedd-9f63c25157e0", 3.0);
+        //    AssertPreviewValue("9b569c4f-1f09-4ffb-a621-d0341f1fe890", 0.0);
+        //}
 
-        [Test]
-        public void CustomNodeConditional()
-        {
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //[Test]
+        //public void CustomNodeConditional()
+        //{
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(Path.Combine(examplePath, "Conditional.dyf"), true, out info));
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(Path.Combine(examplePath, "Conditional.dyf"), true, out info));
 
-            string openPath = Path.Combine(examplePath, "TestConditional.dyn");
+        //    string openPath = Path.Combine(examplePath, "TestConditional.dyn");
 
-            RunModel(openPath);
+        //    RunModel(openPath);
             
-            AssertPreviewValue("ec2e79de-35ed-44ad-9dea-4bedc526c612", false);
-            AssertPreviewValue("7be13594-8d09-4377-98aa-d3cf1c716288", true);
-        }
+        //    AssertPreviewValue("ec2e79de-35ed-44ad-9dea-4bedc526c612", false);
+        //    AssertPreviewValue("7be13594-8d09-4377-98aa-d3cf1c716288", true);
+        //}
 
-        [Test]
-        public void TestProxyCustomNode()
-        {
-            // foobar.dyn reference to bar.dyf, bar.dyf references to foo.dyf
-            // which cannot be found, so foo.dyf would be a proxy custom node,
-            // as opening a dyn file will compile all custom nodes, the 
-            // compilation of that proxy custom node should have any problem.
-            var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
+        //[Test]
+        //public void TestProxyCustomNode()
+        //{
+        //    // foobar.dyn reference to bar.dyf, bar.dyf references to foo.dyf
+        //    // which cannot be found, so foo.dyf would be a proxy custom node,
+        //    // as opening a dyn file will compile all custom nodes, the 
+        //    // compilation of that proxy custom node should have any problem.
+        //    var examplePath = Path.Combine(TestDirectory, @"core\CustomNodes\");
 
-            CustomNodeInfo info;
-            Assert.IsTrue(
-                CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(Path.Combine(examplePath, "bar.dyf"), true, out info));
+        //    CustomNodeInfo info;
+        //    Assert.IsTrue(
+        //        CurrentDynamoModel.CustomNodeManager.AddUninitializedCustomNode(Path.Combine(examplePath, "bar.dyf"), true, out info));
 
-            string openPath = Path.Combine(examplePath, "foobar.dyn");
+        //    string openPath = Path.Combine(examplePath, "foobar.dyn");
 
-            Assert.DoesNotThrow(() => RunModel(openPath));
-        }
+        //    Assert.DoesNotThrow(() => RunModel(openPath));
+        //}
 
         [Test, Category("Failure")]
         public void Regress_Magn_4837()

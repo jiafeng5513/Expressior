@@ -14,12 +14,12 @@ namespace Dynamo.Graph.Nodes.NodeLoaders
     internal class CustomNodeLoader : INodeLoader<Function>
     {
         private readonly ICustomNodeSource customNodeManager;
-        private readonly bool isTestMode;
+        //private readonly bool isTestMode;
 
-        public CustomNodeLoader(ICustomNodeSource customNodeManager, bool isTestMode = false)
+        public CustomNodeLoader(ICustomNodeSource customNodeManager/*, bool isTestMode = false*/)
         {
             this.customNodeManager = customNodeManager;
-            this.isTestMode = isTestMode;
+            //this.isTestMode = isTestMode;
         }
         
         public Function CreateNodeFromXml(XmlElement nodeElement, SaveContext context, ElementResolver resolver)
@@ -39,14 +39,14 @@ namespace Dynamo.Graph.Nodes.NodeLoaders
             if (!Guid.TryParse(id, out funcId))
                 funcId = GuidUtility.Create(GuidUtility.UrlNamespace, name);
 
-            var node = customNodeManager.CreateCustomNodeInstance(funcId, name, isTestMode);
+            var node = customNodeManager.CreateCustomNodeInstance(funcId, name/*, isTestMode*/);
             node.Deserialize(nodeElement, context);
             return node;
         }
 
         public Function CreateProxyNode(Guid funcId, string name, Guid nodeId, int inputNum, int outputNum)
         {
-            var node = customNodeManager.CreateCustomNodeInstance(funcId, name, isTestMode);
+            var node = customNodeManager.CreateCustomNodeInstance(funcId, name/*, isTestMode*/);
             // create its definition and add inputs and outputs
             node.LoadNode(nodeId, inputNum, outputNum);
             return node;

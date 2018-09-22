@@ -145,7 +145,7 @@ namespace Dynamo.Migration
         /// <param name="isTestMode">Indicates if current code is running in tests</param>
         /// <param name="factory">Factory to create nodes</param>
         /// <returns>True if the workspace is migrated successfully</returns>
-        public bool ProcessWorkspace(WorkspaceInfo workspaceInfo, XmlDocument xmlDoc, bool isTestMode, NodeFactory factory)
+        public bool ProcessWorkspace(WorkspaceInfo workspaceInfo, XmlDocument xmlDoc, /*bool isTestMode,*/ NodeFactory factory)
         {
             Version fileVersion = VersionFromString(workspaceInfo.Version);
 
@@ -164,7 +164,7 @@ namespace Dynamo.Migration
             }
 
             var decision = ProcessWorkspace(
-                xmlDoc, fileVersion, currentVersion, workspaceInfo.FileName, isTestMode, factory);
+                xmlDoc, fileVersion, currentVersion, workspaceInfo.FileName, factory);
 
             if (decision != Decision.Abort) 
                 return true;
@@ -175,15 +175,15 @@ namespace Dynamo.Migration
 
         private Decision ProcessWorkspace(
             XmlDocument xmlDoc, Version fileVersion, Version currentVersion, string xmlPath,
-            bool isTestMode, NodeFactory factory)
+            /*bool isTestMode,*/ NodeFactory factory)
         {
-            switch (ShouldMigrateFile(fileVersion, currentVersion, isTestMode))
+            switch (ShouldMigrateFile(fileVersion, currentVersion/*, isTestMode*/))
             {
                 case Decision.Abort:
                     return Decision.Abort;
                 case Decision.Migrate:
                     string backupPath = String.Empty;
-                    if (!isTestMode && BackupOriginalFile(xmlPath, ref backupPath))
+                    if ( BackupOriginalFile(xmlPath, ref backupPath))
                     {
                         string message = String.Format(
                             Properties.Resources.BackUpOriginalFileMessage,
@@ -544,16 +544,16 @@ namespace Dynamo.Migration
         /// <param name="isTestMode"></param>
         /// <returns>Returns the decision if the migration should take place or 
         /// not. See "Decision" enumeration for details of each field.</returns>
-        internal static Decision ShouldMigrateFile(Version fileVersion, Version currVersion, bool isTestMode)
+        internal static Decision ShouldMigrateFile(Version fileVersion, Version currVersion/*, bool isTestMode*/)
         {
             // We currently enable migration for testing scenario. This is to 
             // avoid large number of test failures with this change, and also 
             // ensure that our tests continue to exercise migration code changes.
             // 
-            if (isTestMode)
-            {
-                return fileVersion < currVersion ? Decision.Migrate : Decision.Retain;
-            }
+            //if (isTestMode)
+            //{
+            //    return fileVersion < currVersion ? Decision.Migrate : Decision.Retain;
+            //}
 
             if(fileVersion < new Version(0, 7, 1, 0))
                 return Decision.Abort;

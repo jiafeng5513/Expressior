@@ -216,7 +216,7 @@ namespace Dynamo.PackageManager
         {
             foreach (var path in loadPackageParams.Preferences.CustomPackageFolders)
             {
-                customNodeManager.AddUninitializedCustomNodesInPath(path, false, false);
+                customNodeManager.AddUninitializedCustomNodesInPath(path, false);
                 if (!this.packagesDirectories.Contains(path))
                 {
                     this.packagesDirectories.Add(path);

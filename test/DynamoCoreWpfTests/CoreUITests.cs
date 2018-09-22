@@ -568,45 +568,6 @@ namespace DynamoCoreWpfTests
             resultSetting = PreferenceSettings.Load(tempPath);
             Assert.True(resultSetting.ShowEdges);
         }
-
-        private void RestartTestSetup(bool startInTestMode)
-        {
-            // Shutdown Dynamo and restart it
-            View.Close();
-            View = null;
-
-            if (ViewModel != null)
-            {
-                var shutdownParams = new DynamoViewModel.ShutdownParams(
-                    shutdownHost: false, allowCancellation: false);
-
-                ViewModel.PerformShutdownSequence(shutdownParams);
-                ViewModel = null;
-            }
-
-            // Setup Temp PreferenceSetting Location for testing
-            PreferenceSettings.DynamoTestPath = Path.Combine(TempFolder, "UserPreferenceTest.xml");
-
-            Model = DynamoModel.Start(
-                new DynamoModel.DefaultStartConfiguration()
-                {
-                    StartInTestMode = startInTestMode,
-                    ProcessMode = startInTestMode 
-                        ? TaskProcessMode.Synchronous 
-                        : TaskProcessMode.Asynchronous
-                });
-
-            ViewModel = DynamoViewModel.Start(
-                new DynamoViewModel.StartConfiguration()
-                {
-                    DynamoModel = Model
-                });
-
-            //create the view
-            View = new DynamoView(ViewModel);
-
-            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-        }
         #endregion
 
         #region InfoBubble

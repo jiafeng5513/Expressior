@@ -69,7 +69,7 @@ namespace Dynamo.Applications
                       ProcessMode = TaskProcessMode.Asynchronous
                   };
 
-            config.StartInTestMode = false;
+            //config.StartInTestMode = false;
             config.PathResolver = new SandboxPathResolver(preloaderLocation) as IPathResolver ;
 
             var model = DynamoModel.Start(config);

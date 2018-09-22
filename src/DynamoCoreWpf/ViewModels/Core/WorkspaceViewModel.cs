@@ -1349,7 +1349,7 @@ namespace Dynamo.ViewModels
 
             DynamoViewModel.Model.AddCustomNodeWorkspace(
                 DynamoViewModel.Model.CustomNodeManager.Collapse(selectedNodes,
-                selectedNotes, Model, DynamoModel.IsTestMode, args));
+                selectedNotes, Model, args));
 
             Dynamo.Logging.Analytics.TrackCommandEvent("NewCustomNode",
                 "NodeCount", selectedNodes.Count());

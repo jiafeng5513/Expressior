@@ -215,7 +215,7 @@ namespace Dynamo.Models
         /// with the assumption that the entire test will be wrapped in an
         /// idle thread call.
         /// </summary>
-        public static bool IsTestMode { get; set; }
+        //public static bool IsTestMode { get; set; }
 
         /// <summary>
         /// Flag to indicate that there is no UI on this process, and things
@@ -488,7 +488,7 @@ namespace Dynamo.Models
             string DynamoHostPath { get; set; }
             IPreferences Preferences { get; set; }
             IPathResolver PathResolver { get; set; }
-            bool StartInTestMode { get; set; }
+            //bool StartInTestMode { get; set; }
             //IUpdateManager UpdateManager { get; set; }
             ISchedulerThread SchedulerThread { get; set; }
             string GeometryFactoryPath { get; set; }
@@ -513,7 +513,7 @@ namespace Dynamo.Models
             public string DynamoHostPath { get; set; }
             public IPreferences Preferences { get; set; }
             public IPathResolver PathResolver { get; set; }
-            public bool StartInTestMode { get; set; }
+            //public bool StartInTestMode { get; set; }
             //public IUpdateManager UpdateManager { get; set; }
             public ISchedulerThread SchedulerThread { get; set; }
             public string GeometryFactoryPath { get; set; }
@@ -566,7 +566,7 @@ namespace Dynamo.Models
             pathManager.EnsureDirectoryExistence(exceptions);
 
             Context = config.Context;
-            IsTestMode = config.StartInTestMode;
+            //IsTestMode = config.StartInTestMode;
             IsHeadless = config.IsHeadless;
 
             DebugSettings = new DebugSettings();
@@ -597,32 +597,6 @@ namespace Dynamo.Models
 
             InitializeInstrumentationLogger();
 
-            if (!IsTestMode && PreferenceSettings.IsFirstRun)
-            {
-                //DynamoMigratorBase migrator = null;
-
-                //try
-                //{
-                //    var dynamoLookup = config.UpdateManager != null && config.UpdateManager.Configuration != null
-                //        ? config.UpdateManager.Configuration.DynamoLookUp : null;
-
-                //    migrator = DynamoMigratorBase.MigrateBetweenDynamoVersions(pathManager, dynamoLookup);
-                //}
-                //catch (Exception e)
-                //{
-                //    Logger.Log(e.Message);
-                //}
-
-                //if (migrator != null)
-                //{
-                //    var isFirstRun = PreferenceSettings.IsFirstRun;
-                //    PreferenceSettings = migrator.PreferenceSettings;
-
-                //    // Preserve the preference settings for IsFirstRun as this needs to be set
-                //    // only by UsageReportingManager
-                //    PreferenceSettings.IsFirstRun = isFirstRun;
-                //}
-            }
             InitializePreferences(PreferenceSettings);
 
             // At this point, pathManager.PackageDirectories only has 1 element which is the directory
@@ -705,27 +679,6 @@ namespace Dynamo.Models
             AddHomeWorkspace();
 
             AuthenticationManager = new AuthenticationManager(config.AuthProvider);
-
-            //UpdateManager = config.UpdateManager ?? new DefaultUpdateManager(null);
-
-            //var hostUpdateManager = config.UpdateManager;
-
-            //if (hostUpdateManager != null)
-            //{
-            //    HostName = hostUpdateManager.HostName;
-            //    HostVersion = hostUpdateManager.HostVersion == null ? null : hostUpdateManager.HostVersion.ToString();
-            //}
-            //else
-            //{
-            //    HostName = string.Empty;
-            //    HostVersion = null;
-            //}
-
-            //UpdateManager.Log += UpdateManager_Log;
-            //if (!IsTestMode && !IsHeadless)
-            //{
-            //    DefaultUpdateManager.CheckForProductUpdate(UpdateManager);
-            //}
 
             Logger.Log(string.Format("Dynamo -- Build {0}",
                                         Assembly.GetExecutingAssembly().GetName().Version));
@@ -1077,7 +1030,7 @@ namespace Dynamo.Models
         private void InitializeIncludedNodes()
         {
             var customNodeData = new TypeLoadData(typeof(Function));
-            NodeFactory.AddLoader(new CustomNodeLoader(CustomNodeManager, IsTestMode));
+            NodeFactory.AddLoader(new CustomNodeLoader(CustomNodeManager/*, IsTestMode*/));
             NodeFactory.AddAlsoKnownAs(customNodeData.Type, customNodeData.AlsoKnownAs);
 
             var dsFuncData = new TypeLoadData(typeof(DSFunction));
@@ -1163,8 +1116,7 @@ namespace Dynamo.Models
 
             // Import Zero Touch libs
             var functionGroups = LibraryServices.GetAllFunctionGroups();
-            if (!IsTestMode)
-                AddZeroTouchNodesToSearch(functionGroups);
+            AddZeroTouchNodesToSearch(functionGroups);
 #if DEBUG_LIBRARY
             DumpLibrarySnapshot(functionGroups);
 #endif
@@ -1195,10 +1147,10 @@ namespace Dynamo.Models
                 }
 
                 // Otherwise it is a custom node
-                CustomNodeManager.AddUninitializedCustomNodesInPath(path, IsTestMode);
+                CustomNodeManager.AddUninitializedCustomNodesInPath(path);
             }
 
-            CustomNodeManager.AddUninitializedCustomNodesInPath(pathManager.CommonDefinitions, IsTestMode);
+            CustomNodeManager.AddUninitializedCustomNodesInPath(pathManager.CommonDefinitions);
         }
 
         internal void LoadNodeLibrary(Assembly assem)
@@ -1231,7 +1183,7 @@ namespace Dynamo.Models
 
         private void InitializeInstrumentationLogger()
         {
-            if (!IsTestMode && !IsHeadless)
+            if (!IsHeadless)
             {
                 AnalyticsService.Start(this);
             }
@@ -1520,18 +1472,17 @@ namespace Dynamo.Models
             {
                 //save the file before it is migrated to JSON.
                 //if in test mode, don't save the file in backup
-                if (!IsTestMode)
+
+                if (!pathManager.BackupXMLFile(xmlDoc, filePath))
                 {
-                    if (!pathManager.BackupXMLFile(xmlDoc, filePath))
-                    {
-                        Logger.Log("File is not saved in the backup folder {0}: ", pathManager.BackupDirectory);
-                    }
+                    Logger.Log("File is not saved in the backup folder {0}: ", pathManager.BackupDirectory);
                 }
+                
 
                 WorkspaceInfo workspaceInfo;
-                if (WorkspaceInfo.FromXmlDocument(xmlDoc, filePath, IsTestMode, forceManualExecutionMode, Logger, out workspaceInfo))
+                if (WorkspaceInfo.FromXmlDocument(xmlDoc, filePath, forceManualExecutionMode, Logger, out workspaceInfo))
                 {
-                    if (MigrationManager.ProcessWorkspace(workspaceInfo, xmlDoc, IsTestMode, NodeFactory))
+                    if (MigrationManager.ProcessWorkspace(workspaceInfo, xmlDoc, NodeFactory))
                     {
                         WorkspaceModel ws;
                         if (OpenXmlFile(workspaceInfo, xmlDoc, out ws))
@@ -1605,8 +1556,7 @@ namespace Dynamo.Models
           out WorkspaceModel workspace)
         {
             CustomNodeManager.AddUninitializedCustomNodesInPath(
-                Path.GetDirectoryName(filePath),
-                IsTestMode);
+                Path.GetDirectoryName(filePath));
 
             // TODO, QNTM-1108: WorkspaceModel.FromJson does not check a schema and so will not fail as long
             // as the fileContents are valid JSON, regardless of if all required data is present or not
@@ -1616,7 +1566,6 @@ namespace Dynamo.Models
                 EngineController,
                 Scheduler,
                 NodeFactory,
-                IsTestMode,
                 false,
                 CustomNodeManager);
 
@@ -1656,11 +1605,10 @@ namespace Dynamo.Models
         private bool OpenXmlFile(WorkspaceInfo workspaceInfo, XmlDocument xmlDoc, out WorkspaceModel workspace)
         {
             CustomNodeManager.AddUninitializedCustomNodesInPath(
-                Path.GetDirectoryName(workspaceInfo.FileName),
-                IsTestMode);
+                Path.GetDirectoryName(workspaceInfo.FileName));
 
             var result = workspaceInfo.IsCustomNodeWorkspace
-                ? CustomNodeManager.OpenCustomNodeWorkspace(xmlDoc, workspaceInfo, IsTestMode, out workspace)
+                ? CustomNodeManager.OpenCustomNodeWorkspace(xmlDoc, workspaceInfo,out workspace)
                 : OpenXmlHomeWorkspace(xmlDoc, workspaceInfo, out workspace);
 
             workspace.OnCurrentOffsetChanged(
@@ -1688,9 +1636,7 @@ namespace Dynamo.Models
                 nodeGraph.Presets,
                 nodeGraph.ElementResolver,
                 workspaceInfo,
-                DebugSettings.VerboseLogging,
-                IsTestMode
-               );
+                DebugSettings.VerboseLogging);
 
             RegisterHomeWorkspace(newWorkspace);
 
@@ -1759,8 +1705,6 @@ namespace Dynamo.Models
         {
             // When running test cases, the dispatcher may be null which will cause the timer to
             // introduce a lot of threads. So the timer will not be started if test cases are running.
-            if (IsTestMode)
-                return;
 
             if (backupFilesTimer != null)
             {
@@ -1896,7 +1840,7 @@ namespace Dynamo.Models
                 Scheduler,
                 NodeFactory,
                 DebugSettings.VerboseLogging,
-                IsTestMode, string.Empty);
+                string.Empty);
 
             RegisterHomeWorkspace(defaultWorkspace);
             AddWorkspace(defaultWorkspace);
@@ -1937,7 +1881,7 @@ namespace Dynamo.Models
         public bool OpenCustomNodeWorkspace(Guid guid)
         {
             CustomNodeWorkspaceModel customNodeWorkspace;
-            if (CustomNodeManager.TryGetFunctionWorkspace(guid, IsTestMode, out customNodeWorkspace))
+            if (CustomNodeManager.TryGetFunctionWorkspace(guid, out customNodeWorkspace))
             {
                 if (!Workspaces.OfType<CustomNodeWorkspaceModel>().Contains(customNodeWorkspace))
                     AddWorkspace(customNodeWorkspace);
@@ -2354,10 +2298,9 @@ namespace Dynamo.Models
                   Resources.UnresolvedNodesWarningTitle,
                   Resources.UnresolvedNodesWarningShortMessage,
                   Resources.UnresolvedNodesWarningMessage);
-                if (!IsTestMode)
-                {
-                    DisplayXmlDummyNodeWarning();
-                }
+
+                  DisplayXmlDummyNodeWarning();
+                
                 //raise a window as well so the user is clearly alerted to this state.
             }
         }

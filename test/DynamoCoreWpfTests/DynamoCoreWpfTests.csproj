@@ -143,17 +143,14 @@
     <Compile Include="NoteViewTests.cs" />
     <Compile Include="NodeViewTests.cs" />
     <Compile Include="NodeExecutionUITest.cs" />
-    <Compile Include="CustomNodeTests.cs" />
     <Compile Include="DateTimeTests.cs" />
     <Compile Include="ElementResolverTests.cs" />
     <Compile Include="GraphLayoutTests.cs" />
     <Compile Include="NodeToCodeTests.cs" />
     <Compile Include="PackageManagerExtensionLoadingTests.cs" />
-    <Compile Include="PackageManagerViewExtensionTests.cs" />
     <Compile Include="PresetPromptTests.cs" />
     <Compile Include="AnnotationViewModelTests.cs" />
     <Compile Include="AnnotationViewTests.cs" />
-    <Compile Include="CodeBlockNodeTests.cs" />
     <Compile Include="ColorRangeTests.cs" />
     <Compile Include="ConverterTests.cs" />
     <Compile Include="CoreUITests.cs" />
@@ -172,7 +169,6 @@
     <Compile Include="PreviewBubbleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecentFileTests.cs" />
-    <Compile Include="RecordedTests.cs" />
     <Compile Include="RunSettingsTests.cs" />
     <Compile Include="SearchSideEffects.cs" />
     <Compile Include="SearchViewModelTests.cs" />
@@ -185,7 +181,6 @@
     <Compile Include="WatchNodeTests.cs" />
     <Compile Include="WorkspaceGeneralOperations.cs" />
     <Compile Include="WorkspaceOpeningTests.cs" />
-    <Compile Include="WorkspaceSaving.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\DynamoCoreWpf\DynamoCoreWpf.csproj">

@@ -512,7 +512,7 @@ namespace Dynamo.Controls
             var preview = sender as PreviewControl;
             // If the preview is in a transition, return directly to avoid another
             // transition
-            if (preview == null || preview.IsInTransition || DynCmd.IsTestMode)
+            if (preview == null || preview.IsInTransition )
             {
                 return;
             }
@@ -560,7 +560,7 @@ namespace Dynamo.Controls
         /// </summary>
         private void BringToFront()
         {
-            if (!IsMouseOver && !PreviewControl.IsMouseOver && !DynCmd.IsTestMode) return;
+            if (!IsMouseOver && !PreviewControl.IsMouseOver ) return;
 
             if (NodeViewModel.StaticZIndex == int.MaxValue)
             {

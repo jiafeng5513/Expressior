@@ -32,12 +32,9 @@ namespace Dynamo.LibraryUI
 
         public void Loaded(ViewLoadedParams p)
         {
-            if (!DynamoModel.IsTestMode)
-            {
-                viewLoadedParams = p;
-                controller = new LibraryViewController(p.DynamoWindow, p.CommandExecutive, customization);
-                controller.AddLibraryView();
-            }
+            viewLoadedParams = p;
+            controller = new LibraryViewController(p.DynamoWindow, p.CommandExecutive, customization);
+            controller.AddLibraryView();
         }
 
         public void Shutdown()

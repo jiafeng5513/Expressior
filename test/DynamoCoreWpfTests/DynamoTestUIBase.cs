@@ -87,7 +87,7 @@ namespace DynamoCoreWpfTests
             return new DynamoModel.DefaultStartConfiguration()
             {
                 PathResolver = pathResolver,
-                StartInTestMode = true,
+                //StartInTestMode = true,
                 GeometryFactoryPath = preloader.GeometryFactoryPath,
                 ProcessMode = TaskProcessMode.Synchronous
             };

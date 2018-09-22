@@ -42,9 +42,7 @@ namespace Dynamo.Wpf
             // Check if the workspace is read-only or not, disable editPropertiesItem accordingly
             CustomNodeWorkspaceModel ws;
             dynamoViewModel.Model.CustomNodeManager.TryGetFunctionWorkspace(
-                functionNodeModel.Definition.FunctionId,
-                DynamoModel.IsTestMode,
-                out ws);
+                functionNodeModel.Definition.FunctionId,out ws);
 
             if (ws != null && ws.IsReadOnly)
             {
@@ -95,9 +93,7 @@ namespace Dynamo.Wpf
             {
                 CustomNodeWorkspaceModel ws;
                 model.CustomNodeManager.TryGetFunctionWorkspace(
-                    functionNodeModel.Definition.FunctionId,
-                    DynamoModel.IsTestMode,
-                    out ws);
+                    functionNodeModel.Definition.FunctionId,out ws);
                 ws.SetInfo(args.Name, args.Category, args.Description);
 
                 if (!string.IsNullOrEmpty(ws.FileName))

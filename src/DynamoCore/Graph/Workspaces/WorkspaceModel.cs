@@ -1634,7 +1634,7 @@ namespace Dynamo.Graph.Workspaces
         /// <param name="manager"></param>
         public static WorkspaceModel FromJson(string json, LibraryServices libraryServices,
             EngineController engineController, DynamoScheduler scheduler, NodeFactory factory,
-            bool isTestMode, bool verboseLogging, CustomNodeManager manager)
+            bool verboseLogging, CustomNodeManager manager)
         {
             var logger = engineController != null ? engineController.AsLogger() : null;
 
@@ -1651,8 +1651,8 @@ namespace Dynamo.Graph.Workspaces
                 Culture = CultureInfo.InvariantCulture,
                 Converters = new List<JsonConverter>{
                         new ConnectorConverter(logger),
-                        new WorkspaceReadConverter(engineController, scheduler, factory, isTestMode, verboseLogging),
-                        new NodeReadConverter(manager, libraryServices,isTestMode),
+                        new WorkspaceReadConverter(engineController, scheduler, factory,  verboseLogging),
+                        new NodeReadConverter(manager, libraryServices),
                         new TypedParameterConverter()
                     },
                 ReferenceResolverProvider = () => { return new IdReferenceResolver(); }

@@ -127,7 +127,7 @@ namespace Dynamo.UI.Controls
             // 
             // If Dynamo is in test mode, preview control is not loaded.
             // You should RaiseEvent inside test manually in order to test this control.
-            if (IsLoaded || DynamoModel.IsTestMode)
+            if (IsLoaded)
                 BeginNextTransition();
         }
 
@@ -530,13 +530,6 @@ namespace Dynamo.UI.Controls
         {
             if (!IsHidden)
             {
-                return;
-            }
-
-            // do not use delay in tests
-            if (DynamoModel.IsTestMode)
-            {
-                ProcessFadeIn();
                 return;
             }
 

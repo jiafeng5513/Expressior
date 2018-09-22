@@ -44,7 +44,7 @@ namespace Dynamo.Graph.Workspaces
             HasRunWithoutCrash = true;
         }
 
-        internal static bool FromXmlDocument(XmlDocument xmlDoc, string path, bool isTestMode, 
+        internal static bool FromXmlDocument(XmlDocument xmlDoc, string path/*, bool isTestMode*/, 
             bool forceManualExecutionMode, ILogger logger, out WorkspaceInfo workspaceInfo)
         {
             try
@@ -142,11 +142,6 @@ namespace Dynamo.Graph.Workspaces
                 logger.Log(Properties.Resources.OpenWorkbenchError);
                 logger.Log(ex);
                 Debug.WriteLine(ex.Message + ":" + ex.StackTrace);
-
-                //TODO(Steve): Need a better way to handle this kind of thing. -- MAGN-5712
-                if (isTestMode)
-                    throw; // Rethrow for NUnit.
-
                 workspaceInfo = null;
                 return false;
             }
@@ -162,7 +157,7 @@ namespace Dynamo.Graph.Workspaces
         /// <param name="logger">Dynamo logger</param>
         /// <param name="workspaceInfo">Return object</param>
         /// <returns>A boolean indicating success</returns>
-        internal static bool FromJsonDocument(String jsonDoc, string path, bool isTestMode,
+        internal static bool FromJsonDocument(String jsonDoc, string path,/* bool isTestMode,*/
             bool forceManualExecutionMode, ILogger logger, out WorkspaceInfo workspaceInfo)
         {
             var jObject = (JObject)JsonConvert.DeserializeObject(jsonDoc);
@@ -241,9 +236,6 @@ namespace Dynamo.Graph.Workspaces
                 logger.Log(Properties.Resources.OpenWorkbenchError);
                 logger.Log(ex);
                 Debug.WriteLine(ex.Message + ":" + ex.StackTrace);
-
-                if (isTestMode)
-                    throw; // Rethrow for NUnit.
 
                 workspaceInfo = null;
                 return false;

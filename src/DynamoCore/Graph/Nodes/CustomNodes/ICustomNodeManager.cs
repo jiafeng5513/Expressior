@@ -7,8 +7,8 @@ namespace Dynamo.Graph.Nodes.CustomNodes
 {
     public interface ICustomNodeManager
     {
-        IEnumerable<CustomNodeInfo> AddUninitializedCustomNodesInPath(string path, bool isTestMode, bool isPackageMember = false);
+        IEnumerable<CustomNodeInfo> AddUninitializedCustomNodesInPath(string path, bool isPackageMember = false);
         Guid GuidFromPath(string path);
-        bool TryGetFunctionWorkspace(Guid id, bool isTestMode, out ICustomNodeWorkspaceModel ws);
+        bool TryGetFunctionWorkspace(Guid id, out ICustomNodeWorkspaceModel ws);
     }
 }

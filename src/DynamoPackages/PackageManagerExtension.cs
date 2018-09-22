@@ -99,7 +99,7 @@ namespace Dynamo.PackageManager
             PackageLoader.MessageLogged += OnMessageLogged;
             RequestLoadNodeLibraryHandler = startupParams.LibraryLoader.LoadNodeLibrary;
             RequestLoadCustomNodeDirectoryHandler = (dir) => startupParams.CustomNodeManager
-                    .AddUninitializedCustomNodesInPath(dir, DynamoModel.IsTestMode, true);
+                    .AddUninitializedCustomNodesInPath(dir, true);
 
             //raise the public events on this extension when the package loader requests.
             PackageLoader.RequestLoadExtension += RequestLoadExtension;

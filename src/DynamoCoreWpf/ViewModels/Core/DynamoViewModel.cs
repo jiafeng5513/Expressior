@@ -475,7 +475,7 @@ namespace Dynamo.ViewModels
             this.SearchViewModel = new SearchViewModel(this);
 
             // Start page should not show up during test mode.
-            this.ShowStartPage = !DynamoModel.IsTestMode;
+            this.ShowStartPage = true;
 
             this.BrandingResourceProvider = startConfiguration.BrandingResourceProvider ?? new DefaultBrandingResourceProvider();
 
@@ -1113,36 +1113,34 @@ namespace Dynamo.ViewModels
                 {
                     filePath = parameters as string;
                 }
+
                 ExecuteCommand(new DynamoModel.OpenFileCommand(filePath, forceManualMode));
             }
             catch (Exception e)
             {
-                if (!DynamoModel.IsTestMode)
+
+
+                string commandString = String.Format(Resources.MessageErrorOpeningFileGeneral);
+                string errorMsgString;
+                // Catch all the IO exceptions and file access here. The message provided by .Net is clear enough to indicate the problem in this case.
+                if (e is IOException || e is UnauthorizedAccessException)
                 {
-                    string commandString = String.Format(Resources.MessageErrorOpeningFileGeneral);
-                    string errorMsgString;
-                    // Catch all the IO exceptions and file access here. The message provided by .Net is clear enough to indicate the problem in this case.
-                    if (e is IOException || e is UnauthorizedAccessException)
-                    {
-                        errorMsgString = String.Format(e.Message, filePath);
-                    }
-                    else if (e is System.Xml.XmlException || e is Newtonsoft.Json.JsonReaderException)
-                    {
-                        errorMsgString = String.Format(Resources.MessageFailedToOpenCorruptedFile, filePath);
-                    }
-                    else
-                    {
-                        errorMsgString = String.Format(Resources.MessageUnkownErrorOpeningFile, filePath);
-                    }
-                    model.Logger.LogNotification("Dynamo", commandString, errorMsgString, e.ToString());
-                    System.Windows.MessageBox.Show(errorMsgString);
+                    errorMsgString = String.Format(e.Message, filePath);
+                }
+                else if (e is System.Xml.XmlException || e is Newtonsoft.Json.JsonReaderException)
+                {
+                    errorMsgString = String.Format(Resources.MessageFailedToOpenCorruptedFile, filePath);
                 }
                 else
                 {
-                    throw (e);
+                    errorMsgString = String.Format(Resources.MessageUnkownErrorOpeningFile, filePath);
                 }
+
+                model.Logger.LogNotification("Dynamo", commandString, errorMsgString, e.ToString());
+                System.Windows.MessageBox.Show(errorMsgString);
                 return;
             }
+
             this.ShowStartPage = false; // Hide start page if there's one.
         }
 

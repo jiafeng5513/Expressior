@@ -41,11 +41,6 @@ namespace Dynamo.Graph.Workspaces
         [JsonIgnore]
         public EngineController EngineController { get; private set; }
 
-        /// <summary>
-        ///     Flag specifying if this workspace is operating in "test mode".
-        /// </summary>
-        [JsonIgnore]
-        public bool IsTestMode { get; set; }
 
         /// <summary>
         ///     Indicates whether a run has completed successfully.   
@@ -190,7 +185,7 @@ namespace Dynamo.Graph.Workspaces
         /// <param name="isTestMode">Indicates if current code is running in tests</param>
         /// <param name="fileName">Name of file where the workspace is saved</param>
         public HomeWorkspaceModel(EngineController engine, DynamoScheduler scheduler,
-            NodeFactory factory, bool verboseLogging, bool isTestMode, string fileName = "")
+            NodeFactory factory, bool verboseLogging, string fileName = "")
             : this(engine,
                 scheduler,
                 factory,
@@ -201,8 +196,7 @@ namespace Dynamo.Graph.Workspaces
                 Enumerable.Empty<PresetModel>(),
                 new ElementResolver(),
                 new WorkspaceInfo() { FileName = fileName, Name = "Home" },
-                verboseLogging,
-                isTestMode) { }
+                verboseLogging) { }
 
         public HomeWorkspaceModel(Guid guid, EngineController engine,
             DynamoScheduler scheduler,
@@ -214,9 +208,8 @@ namespace Dynamo.Graph.Workspaces
             IEnumerable<PresetModel> presets,
             ElementResolver resolver,
             WorkspaceInfo info,
-            bool verboseLogging,
-            bool isTestMode):this(engine, scheduler, factory, traceData, nodes, notes, 
-                annotations, presets, resolver, info, verboseLogging, isTestMode)
+            bool verboseLogging):this(engine, scheduler, factory, traceData, nodes, notes, 
+                annotations, presets, resolver, info, verboseLogging)
         { Guid = guid; }
 
         /// <summary>
@@ -247,8 +240,7 @@ namespace Dynamo.Graph.Workspaces
             IEnumerable<PresetModel> presets,
             ElementResolver resolver,
             WorkspaceInfo info, 
-            bool verboseLogging,
-            bool isTestMode)
+            bool verboseLogging)
             : base(nodes, notes,annotations, info, factory,presets, resolver)
         {
             Debug.WriteLine("Creating a home workspace...");
@@ -269,7 +261,6 @@ namespace Dynamo.Graph.Workspaces
 
             this.scheduler = scheduler;
             this.verboseLogging = verboseLogging;
-            IsTestMode = isTestMode;
             EngineController = engine;
 
             // The first time the preloaded trace data is set, we cache
@@ -587,7 +578,7 @@ namespace Dynamo.Graph.Workspaces
             // ISchedulerThread (for Revit's case, it is the idle thread).
             // Dispatch the failure message display for execution on UI thread.
             // 
-            EvaluationCompletedEventArgs e = task.Exception == null || IsTestMode
+            EvaluationCompletedEventArgs e = task.Exception == null 
                 ? new EvaluationCompletedEventArgs(true)
                 : new EvaluationCompletedEventArgs(true, task.Exception);
 

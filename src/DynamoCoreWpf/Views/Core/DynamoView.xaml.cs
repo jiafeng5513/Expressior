@@ -428,8 +428,6 @@ namespace Dynamo.Controls
         /// </param>
         private void InitializeStartPage(bool isFirstRun)
         {
-            if (DynamoModel.IsTestMode) // No start screen in unit testing.
-                return;
 
             if (startPage == null)
             {
@@ -897,14 +895,6 @@ namespace Dynamo.Controls
 
         private bool PerformShutdownSequenceOnViewModel()
         {
-            // Test cases that make use of views (e.g. recorded tests) have 
-            // their own tear down logic as part of the test set-up (mainly 
-            // because DynamoModel should stay long enough for verification
-            // code to verify data much later than the window closing).
-            // 
-            if (DynamoModel.IsTestMode)
-                return false;
-
             var sp = new DynamoViewModel.ShutdownParams(
                 shutdownHost: false,
                 allowCancellation: true,
@@ -926,7 +916,7 @@ namespace Dynamo.Controls
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
-            if (!PerformShutdownSequenceOnViewModel() && !DynamoModel.IsTestMode)
+            if (!PerformShutdownSequenceOnViewModel() )
             {
                 e.Cancel = true;
             }

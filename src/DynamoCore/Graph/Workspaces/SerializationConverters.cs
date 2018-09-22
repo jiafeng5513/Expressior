@@ -128,8 +128,8 @@ namespace Dynamo.Graph.Workspaces
 
                 CustomNodeDefinition def = null;
                 CustomNodeInfo info = null;
-                bool isUnresolved = !manager.TryGetCustomNodeData(functionId, null, false, out def, out info);
-                Function function = manager.CreateCustomNodeInstance(functionId, null, false, def, info);
+                bool isUnresolved = !manager.TryGetCustomNodeData(functionId, null,  out def, out info);
+                Function function = manager.CreateCustomNodeInstance(functionId, null,  def, info);
                 node = function;
 
                 if (isUnresolved)
@@ -310,16 +310,14 @@ namespace Dynamo.Graph.Workspaces
         DynamoScheduler scheduler;
         EngineController engine;
         NodeFactory factory;
-        bool isTestMode;
         bool verboseLogging;
 
         public WorkspaceReadConverter(EngineController engine, 
-            DynamoScheduler scheduler, NodeFactory factory, bool isTestMode, bool verboseLogging)
+            DynamoScheduler scheduler, NodeFactory factory,  bool verboseLogging)
         {
             this.scheduler = scheduler;
             this.engine = engine;
             this.factory = factory;
-            this.isTestMode = isTestMode;
             this.verboseLogging = verboseLogging;
         }
 
@@ -503,7 +501,7 @@ namespace Dynamo.Graph.Workspaces
                 ws = new HomeWorkspaceModel(guid, engine, scheduler, factory,
                     loadedTraceData, nodes, notes, annotations, 
                     Enumerable.Empty<PresetModel>(), elementResolver, 
-                    info, verboseLogging, isTestMode);
+                    info, verboseLogging);
             }
 
             return ws;

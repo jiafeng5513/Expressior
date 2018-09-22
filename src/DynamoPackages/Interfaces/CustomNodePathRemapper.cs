@@ -28,12 +28,10 @@ namespace Dynamo.PackageManager
     internal class CustomNodePathRemapper : IPathRemapper
     {
         private readonly ICustomNodeManager customNodeManager;
-        private readonly bool isTestMode;
 
-        internal CustomNodePathRemapper(ICustomNodeManager customNodeManager, bool isTestMode)
+        internal CustomNodePathRemapper(ICustomNodeManager customNodeManager)
         {
             this.customNodeManager = customNodeManager;
-            this.isTestMode = isTestMode;
         }
 
         public bool SetPath(string originalPath, string newDirectoryPath)
@@ -41,7 +39,7 @@ namespace Dynamo.PackageManager
             var id = customNodeManager.GuidFromPath(originalPath);
 
             ICustomNodeWorkspaceModel def;
-            var res = customNodeManager.TryGetFunctionWorkspace(id, this.isTestMode, out def);
+            var res = customNodeManager.TryGetFunctionWorkspace(id, out def);
 
             if (!res) return false;
 
