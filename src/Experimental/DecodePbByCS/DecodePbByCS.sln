@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecodePbByCS", "DecodePbByCS\DecodePbByCS.csproj", "{B1827BF4-63E0-4E2F-AFE4-AD6FCD01E6CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1827BF4-63E0-4E2F-AFE4-AD6FCD01E6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1827BF4-63E0-4E2F-AFE4-AD6FCD01E6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1827BF4-63E0-4E2F-AFE4-AD6FCD01E6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1827BF4-63E0-4E2F-AFE4-AD6FCD01E6CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31206CC0-A104-454A-93BD-B85BA45DCAF3}
+	EndGlobalSection
+EndGlobal

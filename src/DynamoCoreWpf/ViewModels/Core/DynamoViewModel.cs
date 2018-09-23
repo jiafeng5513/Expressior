@@ -514,6 +514,7 @@ namespace Dynamo.ViewModels
             WatchHandler.RequestSelectGeometry += BackgroundPreviewViewModel.AddLabelForPath;
             RegisterWatch3DViewModel(BackgroundPreviewViewModel, RenderPackageFactoryViewModel.Factory);
             model.ComputeModelDeserialized += model_ComputeModelDeserialized;
+            //model.HideUnhideNamespace(false, "DeepLearning.dll", "org.tensorflow.framework");
         }
 
         /// <summary>

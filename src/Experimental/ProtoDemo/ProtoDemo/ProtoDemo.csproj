@@ -4,67 +4,73 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BEBF0FCC-11A9-45F5-A076-BDDDEC452D59}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeepLearning</RootNamespace>
-    <AssemblyName>DeepLearning</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <ProjectGuid>{4F4926D3-E612-4B5D-A759-EC0E88F1D5E9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ProtoDemo</RootNamespace>
+    <AssemblyName>ProtoDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\bin\AnyCPU\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\bin\AnyCPU\Debug\DeepLearning.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\bin\AnyCPU\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\bin\AnyCPU\Release\DeepLearning.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Emgu.TF.Models, Version=1.8.0.203, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EMGU.TF.MODELS.1.8.0.203\lib\net46\Emgu.TF.Models.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.TF.World, Version=1.8.0.203, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EMGU.TF.1.8.0.203\lib\net35\Emgu.TF.World.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Visible\Example.cs" />
-    <Compile Include="Inside\ModelDeploy.cs" />
+    <Compile Include="AttrValue.cs" />
+    <Compile Include="Function.cs" />
+    <Compile Include="Graph.cs" />
+    <Compile Include="NodeDef.cs" />
+    <Compile Include="OpDef.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceHandle.cs" />
+    <Compile Include="Tensor.cs" />
+    <Compile Include="TensorShape.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="Versions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\NodeServices\DynamoServices.csproj">
-      <Project>{EF879A10-041D-4C68-83E7-3192685F1BAE}</Project>
-      <Name>DynamoServices</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets" Condition="Exists('..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets')" />
+  <Import Project="..\packages\TensorFlowSharp.1.10.0\build\net45\TensorFlowSharp.targets" Condition="Exists('..\packages\TensorFlowSharp.1.10.0\build\net45\TensorFlowSharp.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets'))" />
+    <Error Condition="!Exists('..\packages\TensorFlowSharp.1.10.0\build\net45\TensorFlowSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\TensorFlowSharp.1.10.0\build\net45\TensorFlowSharp.targets'))" />
   </Target>
 </Project>

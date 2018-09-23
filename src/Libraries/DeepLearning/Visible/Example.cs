@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Emgu.TF;
 using Emgu.TF.Models;
 
@@ -15,7 +11,7 @@ namespace DeepLearning
 
         public static string Predict(string ModelFile = " ", string LabelFile=" ", string inputFile=" ")
         {
-            ModelDecoder modelDecoderGraph = new ModelDecoder(  );
+            ModelDeploy modelDecoderGraph = new ModelDeploy(  );
             modelDecoderGraph.Init(new string[] { ModelFile, LabelFile }, "Mul", "final_result");
 
             Tensor imageTensor = ImageIO.ReadTensorFromImageFile(inputFile, 299, 299, 128.0f, 1.0f / 128.0f);

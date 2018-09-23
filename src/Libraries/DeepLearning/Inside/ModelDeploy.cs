@@ -5,7 +5,7 @@ using Buffer = Emgu.TF.Buffer;
 
 namespace DeepLearning
 {
-    class ModelDecoder
+    class ModelDeploy
     {
         //private FileDownloadManager _downloadManager;
         private Graph _graph = null;
@@ -15,7 +15,7 @@ namespace DeepLearning
         private String _labelFile = null;
         private String _outputName = null;
 
-        public ModelDecoder(Status status = null)
+        public ModelDeploy(Status status = null)
         {
             _status = status;
         }

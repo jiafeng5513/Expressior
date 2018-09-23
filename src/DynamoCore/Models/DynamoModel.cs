@@ -1683,7 +1683,29 @@ namespace Dynamo.Models
         {
             Logger.Log(Resources.WelcomeMessage);
         }
+        /// <summary>
+        /// 隐藏或显示指定的命名空间
+        /// </summary>
+        /// <param name="hide"></param>
+        /// <param name="library"></param>
+        /// <param name="namespc"></param>
+        internal void HideUnhideNamespace(bool hide, string library, string namespc)
+        {
+            var str = library + ':' + namespc;
+            var namespaces = PreferenceSettings.NamespacesToExcludeFromLibrary;
 
+            if (hide)
+            {
+                if (!namespaces.Contains(str))
+                {
+                    namespaces.Add(str);
+                }
+            }
+            else // unhide
+            {
+                namespaces.Remove(str);
+            }
+        }
         internal void DeleteModelInternal(List<ModelBase> modelsToDelete)
         {
             if (null == CurrentWorkspace)
