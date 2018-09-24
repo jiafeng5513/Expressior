@@ -33,6 +33,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using Dynamo.Wpf.Extensions;
 using ISelectable = Dynamo.Selection.ISelectable;
 
 namespace Dynamo.ViewModels
@@ -1479,7 +1480,17 @@ namespace Dynamo.ViewModels
         {
             CurrentSpaceViewModel.CollapseSelectedNodes();
         }
-
+        /// <summary>
+        /// 代码创建一个节点
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void CreatANodeByHand(object parameter)
+        {
+            string nodeName = "String";
+           
+            var cmd = new DynamoModel.CreateNodeCommand(Guid.NewGuid().ToString(), nodeName, -1, -1, true, false);
+            this.ExecuteCommand(cmd);
+        }
 
         private static bool CanCreateNodeFromSelection(object parameter)
         {

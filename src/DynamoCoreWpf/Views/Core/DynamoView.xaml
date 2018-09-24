@@ -660,6 +660,10 @@
                                   IsChecked="{Binding VerboseLogging}"
                                   Header="{x:Static p:Resources.DynamoViewDebugMenuVerboseLogging}" />
                         <!--anchor-->
+                        <MenuItem Focusable="False"
+                                  Name="ShowANode"
+                                  Command="{Binding CreateANodeCommand}"
+                                  Header="代码创建一个节点" />
                     </MenuItem>
                 </Menu>
 
