@@ -10,7 +10,7 @@ using Dynamo.Models;
 using Dynamo.ViewModels;
 using Dynamo.Wpf.Controls;
 
-using GeometryUI;
+using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf.NodeViewCustomizations
 {

@@ -5,7 +5,7 @@ using Dynamo.Graph.Nodes;
 using Dynamo.UI.Commands;
 using Dynamo.ViewModels;
 
-using GeometryUI;
+using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf
 {

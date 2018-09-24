@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Dynamo.Controls;
 
-using GeometryUI;
+using ModelAnalyzerUI;
 
 
 namespace Dynamo.Wpf.Controls

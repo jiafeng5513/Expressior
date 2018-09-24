@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dynamo.Utilities;
-using GeometryUI.Properties;
+using GeometryUIWpf.Properties;
 using ProtoCore.AST.AssociativeAST;
 using System.Xml;
 using Dynamo.Graph;
@@ -15,13 +15,13 @@ using Newtonsoft.Json;
  * 4.属性说明:
  *       [NodeName("ExportToSAT")]Node的名字
  */
-namespace GeometryUI
+namespace ModelAnalyzerUI
 {
     [NodeCategory(BuiltinNodeCategories.GEOMETRY)]
     [NodeName("MUL")]
     //[InPortTypes("string")]
-    [NodeDescription("ExportToSATDescripiton", typeof(GeometryUI.Properties.Resources))]
-    [NodeSearchTags("ExportWithUnitsSearchTags", typeof(GeometryUI.Properties.Resources))]
+    [NodeDescription("ExportToSATDescripiton", typeof(Resources))]
+    [NodeSearchTags("ExportWithUnitsSearchTags", typeof(Resources))]
     [IsDesignScriptCompatible]
     public class ExportWithUnits : NodeModel
     {
