@@ -113,7 +113,6 @@ namespace Dynamo.LibraryUI
                 var cmd = new DynamoModel.CreateNodeCommand(Guid.NewGuid().ToString(), nodeName, -1, -1, true, false);
                 commandExecutive.ExecuteCommand(cmd, Guid.NewGuid().ToString(), ViewExtension.ExtensionName);
             }));
-            
         }
 
         /// <summary>

@@ -37,10 +37,10 @@ namespace Dynamo.Configuration
         /// </summary>
         /// <param name="parameter">Name of session parameter</param>
         /// <returns>Session parameter value as object</returns>
-        //public object GetParameterValue(string parameter)
-        //{
-        //    return parameters[parameter];
-        //}
+        public object GetParameterValue(string parameter)
+        {
+            return parameters[parameter];
+        }
 
         /// <summary>
         /// Returns list of session parameter keys available in the session.
