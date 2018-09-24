@@ -9,8 +9,8 @@
     <ProjectGuid>{C068DE76-0651-4F6C-8807-B90EF749D104}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeometryUIWpf</RootNamespace>
-    <AssemblyName>GeometryUIWpf</AssemblyName>
+    <RootNamespace>ModelAnalyzer</RootNamespace>
+    <AssemblyName>ModelAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

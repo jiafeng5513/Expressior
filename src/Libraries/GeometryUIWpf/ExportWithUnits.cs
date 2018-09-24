@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dynamo.Utilities;
-using GeometryUIWpf.Properties;
+using ModelAnalyzer.Properties;
 using ProtoCore.AST.AssociativeAST;
 using System.Xml;
 using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Newtonsoft.Json;
+using ModelAnalyzer;
 /*
  * 带客制化界面的元素的节点API
  * 1.输出到bin/node中.
