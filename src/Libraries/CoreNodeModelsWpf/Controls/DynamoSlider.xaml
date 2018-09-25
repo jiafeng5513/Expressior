@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui1="clr-namespace:Dynamo.UI;assembly=DynamoCoreWpf"
-             xmlns:ui2="clr-namespace:Dynamo.UI;assembly=DynamoCore"
              xmlns:nodes1="clr-namespace:Dynamo.Nodes;assembly=DynamoCoreWpf"
              xmlns:configuration="clr-namespace:Dynamo.Configuration;assembly=DynamoCore"
              mc:Ignorable="d" 

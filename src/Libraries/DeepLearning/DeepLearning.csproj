@@ -53,12 +53,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\NodeServices\DynamoServices.csproj">
-      <Project>{EF879A10-041D-4C68-83E7-3192685F1BAE}</Project>
-      <Name>DynamoServices</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets" Condition="Exists('..\..\packages\EMGU.TF.1.8.0.203\build\EMGU.TF.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

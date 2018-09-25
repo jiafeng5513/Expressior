@@ -49,8 +49,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -102,16 +100,6 @@
     <ProjectReference Include="..\..\Engine\ProtoCore\ProtoCore.csproj">
       <Project>{7a9e0314-966f-4584-baa3-7339cbb849d1}</Project>
       <Name>ProtoCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NodeServices\DynamoServices.csproj">
-      <Project>{ef879a10-041d-4c68-83e7-3192685f1bae}</Project>
-      <Name>DynamoServices</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\CoreNodeModelsWpf\CoreNodeModelsWpf.csproj">
-      <Project>{f5932f7d-8e34-4787-80b8-e7f9d996edff}</Project>
-      <Name>CoreNodeModelsWpf</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

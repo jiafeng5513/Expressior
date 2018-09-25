@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui2="clr-namespace:Dynamo.UI;assembly=DynamoCore"
              xmlns:ui="clr-namespace:Dynamo.UI;assembly=DynamoCoreWpf"
-             xmlns:controls="clr-namespace:Dynamo.Controls;assembly=CoreNodeModelsWpf"
              xmlns:p="clr-namespace:Dynamo.Wpf.Properties;assembly=DynamoCoreWpf"
              xmlns:configuration="clr-namespace:Dynamo.Configuration;assembly=DynamoCore"
              mc:Ignorable="d" Width="250" Height="Auto">

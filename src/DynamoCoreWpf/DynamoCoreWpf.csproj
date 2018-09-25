@@ -50,9 +50,8 @@
     <Reference Include="FontAwesome.WPF">
       <HintPath>..\..\extern\FontAwesome\FontAwesome.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Greg, Version=1.0.6176.18754, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Greg.1.0.6176.18754\lib\net45\Greg.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Greg, Version=1.0.6816.34065, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Greg.1.0.6816.34065\lib\net45\Greg.dll</HintPath>
     </Reference>
     <Reference Include="HelixToolkit, Version=2015.1.629.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.2015.1.629\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
@@ -77,9 +76,8 @@
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\..\extern\prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -422,6 +420,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.zh-CN.resx" />
     <EmbeddedResource Include="UI\Resources\DesignScript.Resources.SyntaxHighlighting.xshd" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="UI\Fonts\OpenSans-Bold.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1135,17 +1134,9 @@
       <Project>{7A9E0314-966F-4584-BAA3-7339CBB849D1}</Project>
       <Name>ProtoCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Libraries\CoreNodes\CoreNodes.csproj">
-      <Project>{87550b2b-6cb8-461e-8965-dfafe3aafb5c}</Project>
-      <Name>CoreNodes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Libraries\DesignScriptBuiltin\DesignScriptBuiltin.csproj">
       <Project>{c0d6dee5-5532-4345-9c66-4c00d7fdb8be}</Project>
       <Name>DesignScriptBuiltin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Libraries\VMDataBridge\VMDataBridge.csproj">
-      <Project>{ccb6e56b-2da1-4eba-a1f9-e8510e129d12}</Project>
-      <Name>VMDataBridge</Name>
     </ProjectReference>
     <ProjectReference Include="..\NodeServices\DynamoServices.csproj">
       <Project>{ef879a10-041d-4c68-83e7-3192685f1bae}</Project>
