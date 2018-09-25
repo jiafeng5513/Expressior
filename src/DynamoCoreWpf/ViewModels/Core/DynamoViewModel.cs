@@ -1479,7 +1479,15 @@ namespace Dynamo.ViewModels
         {
             CurrentSpaceViewModel.CollapseSelectedNodes();
         }
-
+        /// <summary>
+        /// 创建一个节点
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void CreateANode(object parameter)
+        {
+            var cmd = new DynamoModel.CreateNodeCommand(Guid.NewGuid().ToString(), "String", -1, -1, true, false);
+            this.ExecuteCommand(cmd);
+        }
 
         private static bool CanCreateNodeFromSelection(object parameter)
         {
