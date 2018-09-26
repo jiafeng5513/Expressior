@@ -1316,7 +1316,7 @@
       "elementType": "category",
       "include": [
         {
-          "path": "DeepLearning.Core.ModelAgent"
+          "path": "GUINode.Sample.CustomNode"
         }
       ],
       "childElements": []
