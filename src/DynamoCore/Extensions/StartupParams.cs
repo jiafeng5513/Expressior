@@ -1,6 +1,5 @@
 ﻿using Dynamo.Core;
 using Dynamo.Interfaces;
-using Greg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +15,6 @@ namespace Dynamo.Extensions
     /// </summary>
     public class StartupParams
     {
-        /// <summary>
-        /// Returns <see cref="IAuthProvider"/> for DynamoModel
-        /// </summary>
-        public IAuthProvider AuthProvider { get { return authProvider; } }
-        private readonly IAuthProvider authProvider;
-
         /// <summary>
         /// Returns <see cref="IPreferences"/> for DynamoModel
         /// </summary>
@@ -61,11 +54,10 @@ namespace Dynamo.Extensions
         /// <param name="customNodeManager"><see cref="ICustomNodeManager"/> for DynamoModel</param>
         /// <param name="dynamoVersion"><see cref="Version"/> for DynamoModel</param>
         /// <param name="preferences"><see cref="IPreferences"/> for DynamoModel</param>
-        public StartupParams(IAuthProvider provider, IPathManager pathManager,
+        public StartupParams(IPathManager pathManager,
             ILibraryLoader libraryLoader, ICustomNodeManager customNodeManager,
             Version dynamoVersion, IPreferences preferences)
         {
-            this.authProvider = provider;
             this.pathManager = pathManager;
             this.libraryLoader = libraryLoader;
             this.customNodeManager = customNodeManager;

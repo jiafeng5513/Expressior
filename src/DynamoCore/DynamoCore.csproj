@@ -72,9 +72,6 @@ limitations under the License.
     <DefineConstants>$(DefineConstants);USE_DSENGINE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Greg, Version=1.0.6816.34065, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Greg.1.0.6816.34065\lib\net45\Greg.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
       <Private>True</Private>
@@ -164,7 +161,6 @@ limitations under the License.
     <Compile Include="Search\SearchElements\NodeModelSearchElementBase.cs" />
     <Compile Include="Search\SearchElements\NodeSearchElement.cs" />
     <Compile Include="Search\SearchElements\ZeroTouchSearchElement.cs" />
-    <Compile Include="Core\AuthenticationManager.cs" />
     <Compile Include="Graph\Nodes\NodeModelExtensions.cs" />
     <Compile Include="Search\ISource.cs" />
     <Compile Include="Models\RecordableCommands.cs" />

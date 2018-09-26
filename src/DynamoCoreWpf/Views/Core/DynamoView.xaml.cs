@@ -17,13 +17,11 @@ using Dynamo.Utilities;
 using Dynamo.ViewModels;
 using Dynamo.Views;
 using Dynamo.Wpf;
-using Dynamo.Wpf.Authentication;
 using Dynamo.Wpf.Controls;
 using Dynamo.Wpf.Extensions;
 using Dynamo.Wpf.Interfaces;
 using Dynamo.Wpf.Utilities;
 using Dynamo.Wpf.ViewModels.Core;
-//using Dynamo.Wpf.Views.Gallery;
 using Dynamo.Wpf.Views.PackageManager;
 using System;
 using System.Collections.Generic;
@@ -60,8 +58,6 @@ namespace Dynamo.Controls
         private readonly Stopwatch _timer;
         private StartPageViewModel startPage;
         private int tabSlidingWindowStart, tabSlidingWindowEnd;
-        //private GalleryView galleryView;
-        private readonly LoginService loginService;
         internal ViewExtensionManager viewExtensionManager = new ViewExtensionManager();
         private ShortcutToolbar shortcutBar;
         private bool loaded = false;
@@ -128,11 +124,6 @@ namespace Dynamo.Controls
 
             _workspaceResizeTimer.Tick += _resizeTimer_Tick;
 
-            if (dynamoViewModel.Model.AuthenticationManager.HasAuthProvider)
-            {
-                loginService = new LoginService(this, new System.Windows.Forms.WindowsFormsSynchronizationContext());
-                dynamoViewModel.Model.AuthenticationManager.AuthProvider.RequestLogin += loginService.ShowLogin;
-            }
 
             var viewExtensions = new List<IViewExtension>();
             foreach (var dir in dynamoViewModel.Model.PathManager.ViewExtensionsDirectories)
@@ -1432,10 +1423,6 @@ namespace Dynamo.Controls
                 {
                     Log(ext.Name + ": " + exc.Message);
                 }
-            }
-            if (dynamoViewModel.Model.AuthenticationManager.HasAuthProvider && loginService != null)
-            {
-                dynamoViewModel.Model.AuthenticationManager.AuthProvider.RequestLogin -= loginService.ShowLogin;
             }
         }
     }

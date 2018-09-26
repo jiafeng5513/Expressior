@@ -8,7 +8,7 @@ using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.Logging;
 
-using Greg;
+//using Greg;
 using System.Reflection;
 
 namespace Dynamo.PackageManager
@@ -42,7 +42,7 @@ namespace Dynamo.PackageManager
         /// <summary>
         ///     Dynamo Package Manager Instance.
         /// </summary>
-        public PackageManagerClient PackageManagerClient { get; private set; }
+        //public PackageManagerClient PackageManagerClient { get; private set; }
 
         #endregion
 

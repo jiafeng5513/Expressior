@@ -35,12 +35,9 @@ using Dynamo.Updates;
 using Dynamo.Utilities;
 using DynamoServices;
 using DynamoUnits;
-using Greg;
 using ProtoCore;
 using ProtoCore.Runtime;
 using Compiler = ProtoAssociative.Compiler;
-// Dynamo package manager
-//using DefaultUpdateManager = Dynamo.Updates.UpdateManager;
 using FunctionGroup = Dynamo.Engine.FunctionGroup;
 using Utils = Dynamo.Graph.Nodes.Utilities;
 
@@ -415,7 +412,7 @@ namespace Dynamo.Models
         /// <summary>
         /// Returns authentication manager object for oxygen authentication.
         /// </summary>
-        public AuthenticationManager AuthenticationManager { get; set; }
+        //public AuthenticationManager AuthenticationManager { get; set; }
 
         #endregion
 
@@ -484,7 +481,6 @@ namespace Dynamo.Models
             IPathResolver PathResolver { get; set; }
             ISchedulerThread SchedulerThread { get; set; }
             string GeometryFactoryPath { get; set; }
-            IAuthProvider AuthProvider { get; set; }
             IEnumerable<IExtension> Extensions { get; set; }
             TaskProcessMode ProcessMode { get; set; }
 
@@ -507,7 +503,6 @@ namespace Dynamo.Models
             public IPathResolver PathResolver { get; set; }
             public ISchedulerThread SchedulerThread { get; set; }
             public string GeometryFactoryPath { get; set; }
-            public IAuthProvider AuthProvider { get; set; }
             public IEnumerable<IExtension> Extensions { get; set; }
             public TaskProcessMode ProcessMode { get; set; }
             public bool IsHeadless { get; set; }
@@ -667,7 +662,6 @@ namespace Dynamo.Models
 
             AddHomeWorkspace();
 
-            AuthenticationManager = new AuthenticationManager(config.AuthProvider);
 
             Logger.Log(string.Format("Dynamo -- Build {0}",
                                         Assembly.GetExecutingAssembly().GetName().Version));
@@ -676,8 +670,8 @@ namespace Dynamo.Models
 
             if (extensions.Any())
             {
-                var startupParams = new StartupParams(config.AuthProvider,
-                    pathManager, new ExtensionLibraryLoader(this), CustomNodeManager,
+                var startupParams = new StartupParams(pathManager, 
+                    new ExtensionLibraryLoader(this), CustomNodeManager,
                     GetType().Assembly.GetName().Version, PreferenceSettings);
 
                 foreach (var ext in extensions)
