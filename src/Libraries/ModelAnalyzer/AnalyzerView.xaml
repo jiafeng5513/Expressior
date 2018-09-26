@@ -14,11 +14,8 @@
             <!--<controls:UnitToTextConverter x:Key="UnitToTextConverter" />-->
             <ResourceDictionary.MergedDictionaries>
                 <ui:SharedResourceDictionary Source="{x:Static ui:SharedDictionaryManager.DynamoModernDictionaryUri}" />
-
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
-
     </UserControl.Resources>
 
 
@@ -27,26 +24,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--<TextBlock 
-            Text=""
-            Grid.Row="0"
-            Margin="0,0,0,0"
-            VerticalAlignment="Center"
-            FontSize="12"
-            FontFamily="{StaticResource OpenSansSemibold}"
-            Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>
-
-        <TextBlock 
-            Text=""
-            Grid.Row="1"
-            Margin="0,0,0,0"
-            VerticalAlignment="Center"
-            FontSize="12"
-            FontFamily="{StaticResource OpenSansSemibold}"
-            Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>-->
-
+        <!--row 0-->
         <Grid Grid.Row="0">
 
             <Grid.ColumnDefinitions>
@@ -72,6 +53,7 @@
                 Margin="0,2,6,3">
             </ComboBox>
         </Grid>
+        <!--row 1-->
         <Grid Grid.Row="1" HorizontalAlignment="Right" Width="250">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -95,6 +77,17 @@
                 IsSnapToTickEnabled="True"
                 TickPlacement="Both"
                 Height ="{x:Static configuration:Configurations.PortHeightInPixels}" Margin="0,2,0,3"/>
+        </Grid>
+        <!--row 2-->
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="5,5,5,5" Name="ExexploreButtton" Content="Exexplore" />
+            <Button Grid.Column="1" Margin="5,5,5,5" Name="ExexploreButtton2" Content="retract" />
+            <Button Grid.Column="2" Margin="5,5,5,5" Name="ExexploreButtton3" Content="Tensor" />
         </Grid>
     </Grid>
 </UserControl>
