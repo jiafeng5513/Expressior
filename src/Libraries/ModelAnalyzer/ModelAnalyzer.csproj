@@ -57,6 +57,7 @@
     <Compile Include="..\..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
+    <Compile Include="AnalyzerDelegateCommands.cs" />
     <Compile Include="AnalyzerView.xaml.cs">
       <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>

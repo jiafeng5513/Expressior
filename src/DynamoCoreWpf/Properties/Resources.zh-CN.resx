@@ -2122,4 +2122,7 @@ Want to publish a different package?</value>
   <data name="RerunButtonToolTip" xml:space="preserve">
     <value>Rerun the graph.</value>
   </data>
+  <data name="Functionss" xml:space="preserve">
+    <value>Funcs:</value>
+  </data>
 </root>

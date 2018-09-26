@@ -56,7 +56,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock 
-            Text="{x:Static p:Resources.Units}"       
+            Text="{x:Static p:Resources.Functionss}"       
             Grid.Column="0"
             Margin="5,5,5,0"
             VerticalAlignment="Center"

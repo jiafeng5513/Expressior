@@ -7,6 +7,9 @@
              xmlns:ui="clr-namespace:Dynamo.UI;assembly=DynamoCoreWpf"
              xmlns:p="clr-namespace:Dynamo.Wpf.Properties;assembly=DynamoCoreWpf"
              xmlns:configuration="clr-namespace:Dynamo.Configuration;assembly=DynamoCore"
+             xmlns:viewModels="clr-namespace:Dynamo.ViewModels;assembly=DynamoCoreWpf"
+             xmlns:wpf="clr-namespace:Dynamo.Wpf"
+             d:DataContext="{d:DesignInstance wpf:AnalyzerViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" Width="250" Height="Auto">
 
     <UserControl.Resources>
@@ -14,11 +17,10 @@
             <!--<controls:UnitToTextConverter x:Key="UnitToTextConverter" />-->
             <ResourceDictionary.MergedDictionaries>
                 <ui:SharedResourceDictionary Source="{x:Static ui:SharedDictionaryManager.DynamoModernDictionaryUri}" />
+                <ui:SharedResourceDictionary Source="{x:Static ui:SharedDictionaryManager.DynamoConvertersDictionaryUri}" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-
     <Grid Width="Auto" Height="Auto">
 
         <Grid.RowDefinitions>
@@ -37,7 +39,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock 
-            Text="{x:Static p:Resources.Units}"       
+            Text="{x:Static p:Resources.Functionss}"       
             Grid.Column="0"
             Margin="5,5,5,0"
             VerticalAlignment="Center"
@@ -57,37 +59,26 @@
         <Grid Grid.Row="1" HorizontalAlignment="Right" Width="250">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="83*"/>
-                <ColumnDefinition Width="117*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Num: "
+            <TextBlock Text="Keys:"
                        Grid.Column="0"
                        Margin="5,5,5,0"
                        VerticalAlignment="Center"
                        FontSize="13"
                        FontWeight="SemiBold"
                        Height ="{x:Static configuration:Configurations.PortHeightInPixels}"/>
-
-            <Slider 
-                Grid.Column="1" 
-                Grid.ColumnSpan="2" 
-                Value="{Binding SliderValue}"
-                Maximum="100"
-                Minimum="0"
-                IsSnapToTickEnabled="True"
-                TickPlacement="Both"
-                Height ="{x:Static configuration:Configurations.PortHeightInPixels}" Margin="0,2,0,3"/>
+            <Button Grid.Column="1" Margin="7,5,3,5" 
+                    Name="ExexploreButtton" Content="Explore" 
+                    Command="{Binding ExploreCommand}"/>
+            <Button Grid.Column="2" Margin="2,5,8,5" 
+                    Name="ExexploreButtton2" Content="Predict" 
+                    Command="{Binding PredictCommand}"/>
         </Grid>
         <!--row 2-->
         <Grid Grid.Row="2" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="5,5,5,5" Name="ExexploreButtton" Content="Exexplore" />
-            <Button Grid.Column="1" Margin="5,5,5,5" Name="ExexploreButtton2" Content="retract" />
-            <Button Grid.Column="2" Margin="5,5,5,5" Name="ExexploreButtton3" Content="Tensor" />
+            <ProgressBar IsIndeterminate="True" Visibility="{Binding CanSeeProgressBar, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="5"/>
         </Grid>
     </Grid>
 </UserControl>

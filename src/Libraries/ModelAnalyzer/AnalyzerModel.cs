@@ -99,6 +99,9 @@ namespace ModelAnalyzerUI
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node) };
         }
 
+
+
+
         #region 重载:序列化和解序列化方法
         protected override void SerializeCore(XmlElement element, SaveContext context)
         {

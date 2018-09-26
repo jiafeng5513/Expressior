@@ -9,7 +9,7 @@ using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf
 {
-    public class AnalyzerViewModel : NotificationObject 
+    public partial class AnalyzerViewModel : NotificationObject 
     {
         private readonly AnalyzerModel _analyzerModelModel;
         public DelegateCommand ToggleButtonClick { get; set; }
@@ -21,30 +21,15 @@ namespace Dynamo.Wpf
             get { return _analyzerModelModel.ValueofsliderOfSlider; }
             set { _analyzerModelModel.ValueofsliderOfSlider = value; }
         }
-        //public ConversionUnit SelectedExportedUnit
-        //{
-        //    get { return _analyzerModelModel.SelectedExportedUnit; }
-        //    set
-        //    {
-        //        _analyzerModelModel.SelectedExportedUnit = value;                             
-        //    }
-        //}
 
-        //public List<ConversionUnit> SelectedExportedUnitsSource
-        //{
-        //    get { return _analyzerModelModel.SelectedExportedUnitsSource; }
-        //    set
-        //    {
-        //        _analyzerModelModel.SelectedExportedUnitsSource = value;               
-        //    }
-        //}
 
         public AnalyzerViewModel(AnalyzerModel modelModel, NodeView nodeView)
         {
             _analyzerModelModel = modelModel;           
             nodeViewModel = nodeView.ViewModel;
             nodeModel = nodeView.ViewModel.NodeModel;
-            modelModel.PropertyChanged +=model_PropertyChanged;      
+            modelModel.PropertyChanged +=model_PropertyChanged;
+            InitializeDelegateCommands();
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -54,6 +39,26 @@ namespace Dynamo.Wpf
                 case "ValueofsliderOfSlider":
                     RaisePropertyChanged("ValueofsliderOfSlider");
                     break;
+            }
+        }
+        #region DelegateCommand
+
+        private void Explore(object parameters)
+        {
+            CanSeeProgressBar = !CanSeeProgressBar;
+        }
+        private void Predict(object parameters)
+        {
+
+        }
+        #endregion
+
+        private bool canSeeProgressBar=false;
+        public bool CanSeeProgressBar
+        {
+            get { return canSeeProgressBar; }
+            set { canSeeProgressBar = value;
+                RaisePropertyChanged("CanSeeProgressBar");
             }
         }
     }
