@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-
 using Dynamo.Extensions;
-using Dynamo.Interfaces;
 using Dynamo.Models;
 using Dynamo.Logging;
-
-//using Greg;
 using System.Reflection;
 
 namespace Dynamo.PackageManager
@@ -39,10 +35,6 @@ namespace Dynamo.PackageManager
 
         public IEnumerable<IExtension> RequestedExtensions => this.PackageLoader.RequestedExtensions;
 
-        /// <summary>
-        ///     Dynamo Package Manager Instance.
-        /// </summary>
-        //public PackageManagerClient PackageManagerClient { get; private set; }
 
         #endregion
 
@@ -107,9 +99,7 @@ namespace Dynamo.PackageManager
 
             PackageLoader.RequestLoadNodeLibrary += RequestLoadNodeLibraryHandler;
             PackageLoader.RequestLoadCustomNodeDirectory += RequestLoadCustomNodeDirectoryHandler;
-               
 
-            LoadPackages(startupParams.Preferences, startupParams.PathManager);
         }
 
         public void Ready(ReadyParams sp) { }
@@ -123,16 +113,6 @@ namespace Dynamo.PackageManager
 
         #region Private helper methods
 
-        private void LoadPackages(IPreferences preferences, IPathManager pathManager)
-        {
-            // Load Packages
-            PackageLoader.DoCachedPackageUninstalls(preferences);
-            PackageLoader.LoadAll(new LoadPackageParams
-            {
-                Preferences = preferences,
-                PathManager = pathManager
-            });
-        }
 
         private void OnMessageLogged(ILogMessage msg)
         {

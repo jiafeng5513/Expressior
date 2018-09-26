@@ -319,26 +319,26 @@ namespace Dynamo.Core
         ///     it. Otherwise, it will be set to null.
         /// </param>
         /// <returns>True on success, false if the file could not be read properly.</returns>
-        public bool AddUninitializedCustomNode(string file, out CustomNodeInfo info)
-        {
-            if (TryGetInfoFromPath(file, out info))
-            {
-                SetNodeInfo(info);
-                return true;
-            }
-            return false;
-        }
+        //public bool AddUninitializedCustomNode(string file, out CustomNodeInfo info)
+        //{
+        //    if (TryGetInfoFromPath(file, out info))
+        //    {
+        //        SetNodeInfo(info);
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         ///     Attempts to remove all traces of a particular custom node from Dynamo, assuming the node is not in a loaded workspace.
         /// </summary>
         /// <param name="guid">Custom node identifier.</param>
-        public void Remove(Guid guid)
-        {
-            Uninitialize(guid);
-            NodeInfos.Remove(guid);
-            OnCustomNodeRemoved(guid);
-        }
+        //public void Remove(Guid guid)
+        //{
+        //    Uninitialize(guid);
+        //    NodeInfos.Remove(guid);
+        //    OnCustomNodeRemoved(guid);
+        //}
 
         /// <summary>
         ///     Uninitialized a custom node. The information for the node is still retained, but the next time
