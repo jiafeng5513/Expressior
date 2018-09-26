@@ -16,8 +16,7 @@
         d:DesignHeight="300"
         d:DesignWidth="300"
         Background="#515151"
-        Style="{DynamicResource DynamoWindowStyle}"
-        d:DataContext="{d:DesignInstance ViewModels:InstalledPackagesViewModel, IsDesignTimeCreatable=False}">
+        Style="{DynamicResource DynamoWindowStyle}">
 
     <Window.Resources>
         <ResourceDictionary>

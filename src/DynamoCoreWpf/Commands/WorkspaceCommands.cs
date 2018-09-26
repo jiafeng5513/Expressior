@@ -3,7 +3,6 @@ using Dynamo.Graph.Nodes;
 using Dynamo.Graph.Workspaces;
 using Dynamo.Selection;
 using Dynamo.UI.Commands;
-using Dynamo.Utilities;
 using Newtonsoft.Json;
 
 namespace Dynamo.ViewModels

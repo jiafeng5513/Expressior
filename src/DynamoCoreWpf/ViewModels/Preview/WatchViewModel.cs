@@ -4,7 +4,6 @@ using System.Linq;
 using Dynamo.UI.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
-using Dynamo.Utilities;
 
 namespace Dynamo.ViewModels
 {

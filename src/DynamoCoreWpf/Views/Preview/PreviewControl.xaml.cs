@@ -7,7 +7,6 @@ using Dynamo.Utilities;
 using Dynamo.Scheduler;
 using Dynamo.ViewModels;
 using Dynamo.Wpf.Utilities;
-using ProtoCore.Mirror;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +14,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media.Animation;
 using Dynamo.Configuration;
-using Dynamo.Extensions;
 using Dynamo.Models;
 using System.Threading.Tasks;
 

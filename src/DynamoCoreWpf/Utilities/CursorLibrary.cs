@@ -1,11 +1,7 @@
-﻿using Dynamo.UI;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Resources;
-using Dynamo.Wpf.UI;
 
 namespace Dynamo.Wpf.Utilities
 {

@@ -1,6 +1,4 @@
 ﻿using Dynamo.Wpf.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Dynamo.Wpf.Extensions

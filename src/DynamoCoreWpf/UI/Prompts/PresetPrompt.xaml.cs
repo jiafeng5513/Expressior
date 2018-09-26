@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using Dynamo.Controls;
-using Dynamo.Utilities; 
-using System;
+using Dynamo.Utilities;
 using System.Windows.Controls;
 using Dynamo.ViewModels;
 using Dynamo.Graph.Workspaces;

@@ -1,6 +1,5 @@
 ﻿using Dynamo.Controls;
 using Dynamo.Graph.Nodes;
-using Dynamo.Utilities;
 using Dynamo.ViewModels;
 using Dynamo.Wpf.Views;
 using ICSharpCode.AvalonEdit.CodeCompletion;

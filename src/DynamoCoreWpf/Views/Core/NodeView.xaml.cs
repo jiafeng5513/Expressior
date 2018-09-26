@@ -19,7 +19,6 @@ using System.Windows.Threading;
 using DynCmd = Dynamo.Models.DynamoModel;
 
 using Dynamo.UI.Controls;
-using Dynamo.Nodes;
 
 namespace Dynamo.Controls
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Dynamo.Models;
-using Dynamo.PackageManager;
 
 namespace Dynamo.ViewModels
 {

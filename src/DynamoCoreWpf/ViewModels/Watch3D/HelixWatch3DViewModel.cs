@@ -26,7 +26,6 @@ using Dynamo.Wpf.Properties;
 using Dynamo.Wpf.Rendering;
 using Dynamo.Visualization;
 using DynamoUtilities;
-using HelixToolkit.Wpf;
 using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Core;
 using SharpDX;
