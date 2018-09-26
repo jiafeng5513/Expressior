@@ -57,12 +57,12 @@
     <Compile Include="..\..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="Controls\ExportWithUnitsControl.xaml.cs">
-      <DependentUpon>ExportWithUnitsControl.xaml</DependentUpon>
+    <Compile Include="AnalyzerView.xaml.cs">
+      <DependentUpon>AnalyzerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExportWithUnits.cs" />
-    <Compile Include="ExportWithUnitsViewModel.cs" />
-    <Compile Include="NodeViewCustomizations\ExportWithUnitsNodeViewCustomization.cs" />
+    <Compile Include="AnalyzerModel.cs" />
+    <Compile Include="AnalyzerViewModel.cs" />
+    <Compile Include="AnalyzerViewCustomization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -76,7 +76,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\ExportWithUnitsControl.xaml">
+    <Page Include="AnalyzerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,12 +111,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProtoGeometryImages.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!-- Get System.Drawing.dll -->
@@ -127,8 +127,5 @@
     <GetAssemblyIdentity AssemblyFiles="$(OutDir)..\ProtoGeometry.dll">
       <Output TaskParameter="Assemblies" ItemName="ProtoGeometryInfo" />
     </GetAssemblyIdentity>
-    <!-- Generate customization dll for ProtoGeometry -->
-    <GenerateResource UseSourcePath="true" Sources="$(ProjectDir)ProtoGeometryImages.resx" OutputResources="$(ProjectDir)ProtoGeometryImages.resources" References="$(FrameworkAssembliesPath)System.Drawing.dll" />
-    <AL TargetType="library" EmbedResources="$(ProjectDir)ProtoGeometryImages.resources" OutputAssembly="$(OutDir)..\ProtoGeometry.customization.dll" Version="%(ProtoGeometryInfo.Version)" />
   </Target>
 </Project>

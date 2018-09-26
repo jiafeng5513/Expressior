@@ -9,42 +9,42 @@ using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf
 {
-    public class ExportWithUnitsViewModel : NotificationObject 
+    public class AnalyzerViewModel : NotificationObject 
     {
-        private readonly ExportWithUnits exportWithUnitsModel;
+        private readonly AnalyzerModel _analyzerModelModel;
         public DelegateCommand ToggleButtonClick { get; set; }
         private readonly NodeViewModel nodeViewModel;
         private readonly NodeModel nodeModel;
 
         public int SliderValue
         {
-            get { return exportWithUnitsModel.ValueofsliderOfSlider; }
-            set { exportWithUnitsModel.ValueofsliderOfSlider = value; }
+            get { return _analyzerModelModel.ValueofsliderOfSlider; }
+            set { _analyzerModelModel.ValueofsliderOfSlider = value; }
         }
         //public ConversionUnit SelectedExportedUnit
         //{
-        //    get { return exportWithUnitsModel.SelectedExportedUnit; }
+        //    get { return _analyzerModelModel.SelectedExportedUnit; }
         //    set
         //    {
-        //        exportWithUnitsModel.SelectedExportedUnit = value;                             
+        //        _analyzerModelModel.SelectedExportedUnit = value;                             
         //    }
         //}
 
         //public List<ConversionUnit> SelectedExportedUnitsSource
         //{
-        //    get { return exportWithUnitsModel.SelectedExportedUnitsSource; }
+        //    get { return _analyzerModelModel.SelectedExportedUnitsSource; }
         //    set
         //    {
-        //        exportWithUnitsModel.SelectedExportedUnitsSource = value;               
+        //        _analyzerModelModel.SelectedExportedUnitsSource = value;               
         //    }
         //}
 
-        public ExportWithUnitsViewModel(ExportWithUnits model, NodeView nodeView)
+        public AnalyzerViewModel(AnalyzerModel modelModel, NodeView nodeView)
         {
-            exportWithUnitsModel = model;           
+            _analyzerModelModel = modelModel;           
             nodeViewModel = nodeView.ViewModel;
             nodeModel = nodeView.ViewModel.NodeModel;
-            model.PropertyChanged +=model_PropertyChanged;      
+            modelModel.PropertyChanged +=model_PropertyChanged;      
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -131,6 +131,6 @@
   </data>
   <data name="UINodeExampleSearchTags" xml:space="preserve">
     <value>UI;Example</value>
-    <comment>Search tags for ExportWithUnits node. During translation, localized keywords can be appended to the end of these tags to provide localized search terms in addition to the existing ones.</comment>
+    <comment>Search tags for AnalyzerModel node. During translation, localized keywords can be appended to the end of these tags to provide localized search terms in addition to the existing ones.</comment>
   </data>
 </root>

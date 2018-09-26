@@ -18,13 +18,13 @@ using ModelAnalyzer;
  */
 namespace ModelAnalyzerUI
 {
-    [NodeCategory(BuiltinNodeCategories.GEOMETRY)]
-    [NodeName("MUL")]
+    [NodeCategory("DeepLearning.Core")]
+    [NodeName("ModelAgent")]
     //[InPortTypes("string")]
     [NodeDescription("ExportToSATDescripiton", typeof(Resources))]
     [NodeSearchTags("ExportWithUnitsSearchTags", typeof(Resources))]
     [IsDesignScriptCompatible]
-    public class ExportWithUnits : NodeModel
+    public class AnalyzerModel : NodeModel
     {
         private int valueofslider = 50;
 
@@ -42,13 +42,13 @@ namespace ModelAnalyzerUI
 
 
         [JsonConstructor]
-        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
+        private AnalyzerModel(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
         {
             //TODO:内部变量的初始化
             ShouldDisplayPreviewCore = true;
         }
 
-        public ExportWithUnits()
+        public AnalyzerModel()
         {
 
 

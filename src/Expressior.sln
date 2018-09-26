@@ -100,7 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufTools", "Utilities\ProtobufTools\ProtobufTools.csproj", "{14B2ADFE-54A0-46D3-B400-8F9333C1F96B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelAnalyzer", "Libraries\GeometryUIWpf\ModelAnalyzer.csproj", "{C068DE76-0651-4F6C-8807-B90EF749D104}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelAnalyzer", "Libraries\ModelAnalyzer\ModelAnalyzer.csproj", "{C068DE76-0651-4F6C-8807-B90EF749D104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
