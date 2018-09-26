@@ -42,10 +42,7 @@ namespace Dynamo.ViewModels
         public event EventHandler<PackagePathEventArgs> RequestShowFileDialog;
         public virtual void OnRequestShowFileDialog(object sender, PackagePathEventArgs e)
         {
-            if (RequestShowFileDialog != null)
-            {
-                RequestShowFileDialog(sender, e);
-            }
+            RequestShowFileDialog?.Invoke(sender, e);
         }
 
         private IPreferences setting
@@ -79,25 +76,6 @@ namespace Dynamo.ViewModels
 
             SelectedIndex = 0;
         }
-        /// <summary>
-        /// This constructor overload has been added for backwards comptability.
-        /// </summary>
-        /// <param name="setting"></param>
-        public PackagePathViewModel(IPreferences setting)
-        {
-
-            RootLocations = new ObservableCollection<string>(setting.CustomPackageFolders);
-
-            AddPathCommand = new DelegateCommand(p => InsertPath());
-            DeletePathCommand = new DelegateCommand(p => RemovePathAt((int)p), CanDelete);
-            MovePathUpCommand = new DelegateCommand(p => SwapPath((int)p, ((int)p) - 1), CanMoveUp);
-            MovePathDownCommand = new DelegateCommand(p => SwapPath((int)p, ((int)p) + 1), CanMoveDown);
-            UpdatePathCommand = new DelegateCommand(p => UpdatePathAt((int)p));
-            SaveSettingCommand = new DelegateCommand(CommitChanges);
-
-            SelectedIndex = 0;
-        }
-
 
         private void RaiseCanExecuteChanged()
         {
