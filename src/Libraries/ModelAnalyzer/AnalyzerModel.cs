@@ -8,14 +8,15 @@ using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Newtonsoft.Json;
 using ModelAnalyzer;
+
 /*
- * 带客制化界面的元素的节点API
- * 1.输出到bin/node中.
- * 2.不需要在PathResolvers.cs中加载DLL,node目录中的dll是由NodeModelAssemblyLoader.cs加载的
- * 3.与zerotouchlibrary的编写有较大的区别,不是通过函数的访问控制符来控制Node是否出现在list中的.
- * 4.属性说明:
- *       [NodeName("ExportToSAT")]Node的名字
- */
+* 带客制化界面的元素的节点API
+* 1.输出到bin/node中.
+* 2.不需要在PathResolvers.cs中加载DLL,node目录中的dll是由NodeModelAssemblyLoader.cs加载的
+* 3.与zerotouchlibrary的编写有较大的区别,不是通过函数的访问控制符来控制Node是否出现在list中的.
+* 4.属性说明:
+*       [NodeName("ExportToSAT")]Node的名字
+*/
 namespace ModelAnalyzerUI
 {
     [NodeCategory("DeepLearning.Core")]
@@ -38,9 +39,9 @@ namespace ModelAnalyzerUI
 
         public AnalyzerModel()
         {
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Model File", Resources.InputPort1Description, new StringNode())));
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Label File", Resources.InputPort2Description, new StringNode())));
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Input File", Resources.InputPort2Description, new StringNode())));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Model_File", "输入1", new StringNode())));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Label_File", "输入2", new StringNode())));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Input_File", "输入3", new StringNode())));
             OutPorts.Add(new PortModel(PortType.Output, this, new PortData("Result", "输出")));
 
             ShouldDisplayPreviewCore = true;
@@ -54,34 +55,37 @@ namespace ModelAnalyzerUI
         /// <returns></returns>
         public override IEnumerable<AssociativeNode> BuildOutputAst(List<AssociativeNode> inputAstNodes)
         {
-            if (!InPorts[0].IsConnected || !InPorts[1].IsConnected)
+            if (!InPorts[0].IsConnected || !InPorts[1].IsConnected|| !InPorts[2].IsConnected)
             {
                 //如果在没有连接输入节点的情况下连接了输出节点,应当有默认输出
-                var rhs = AstFactory.BuildIntNode(0);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
-                var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
-                return new[] { assignment };
+                return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), AstFactory.BuildNullNode()) };
             }
 
             //double unitsMM = Conversions.ConversionDictionary[SelectedExportedUnit]*1000.0;
 
-            var geometryListNode = inputAstNodes[0];
-            var filePathNode = inputAstNodes[1];
-            ;
-            AssociativeNode node = AstFactory.BuildStringNode(
-                "In1:" + ((StringNode)geometryListNode).Value + "\n" +
-                "In2:" + filePathNode + "\n" +
-                "Slider:" );
-            AstExtensions.ToImperativeAST(geometryListNode);
+            var input1 = inputAstNodes[0];
+            var input2 = inputAstNodes[1];
+            var input3 = inputAstNodes[2];
+            
+            //AssociativeNode node = AstFactory.BuildStringNode(
+            //    "In1:" + ((StringNode)geometryListNode).Value + "\n" +
+            //    "In2:" + filePathNode + "\n" +
+            //    "Slider:" );
+            //AstExtensions.ToImperativeAST(geometryListNode);
 
-
-            //node = AstFactory.BuildFunctionCall(
-            //            new Func<IEnumerable<Geometry>, string, double, string>(Geometry.ExportToSAT),
-            //            new List<AssociativeNode> { geometryListNode, filePathNode, unitsMMNode });
+            AssociativeNode node = null;
+            node = AstFactory.BuildFunctionCall(
+                        new Func<IEnumerable<string>, string, string, string>(ProtobufTools.ProtoTools.TestFunc),
+                        new List<AssociativeNode> { input1, input2, input3 });
 
             //注意观察多输出怎么写
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node) };
         }
 
+        private static string TestFunc(int a, int b, int c)
+        {
+            return (a + b + c).ToString();
+        }
 
 
 

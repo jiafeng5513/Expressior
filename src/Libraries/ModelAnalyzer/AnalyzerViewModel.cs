@@ -12,15 +12,17 @@ namespace Dynamo.Wpf
     public partial class AnalyzerViewModel : NotificationObject 
     {
         private readonly AnalyzerModel _analyzerModelModel;
-       
+        private readonly NodeViewModel nodeViewModel;
+        private readonly NodeModel nodeModel;
 
 
 
 
         public AnalyzerViewModel(AnalyzerModel modelModel, NodeView nodeView)
         {
-            _analyzerModelModel = modelModel;           
-
+            _analyzerModelModel = modelModel;
+            nodeViewModel = nodeView.ViewModel;
+            nodeModel = nodeView.ViewModel.NodeModel;
             modelModel.PropertyChanged +=model_PropertyChanged;
             InitializeDelegateCommands();
         }
@@ -38,6 +40,7 @@ namespace Dynamo.Wpf
 
         private void Explore(object parameters)
         {
+            
             CanSeeProgressBar = !CanSeeProgressBar;
         }
         private void Predict(object parameters)

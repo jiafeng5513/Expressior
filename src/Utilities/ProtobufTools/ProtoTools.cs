@@ -18,5 +18,13 @@ namespace ProtobufTools
         {
 
         }
+        public static string TestFunc(int a, int b, int c)
+        {
+            return (a + b + c).ToString();
+        }
+        public static string TestFunc(IEnumerable<string> a, string b, string c)
+        {
+            return (Int16.Parse(b) + Int16.Parse(b) + Int16.Parse(c)).ToString();
+        }
     }
 }
