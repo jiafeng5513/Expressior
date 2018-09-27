@@ -78,7 +78,9 @@
         </Grid>
         <!--row 2-->
         <Grid Grid.Row="2" >
-            <ProgressBar IsIndeterminate="True" Visibility="{Binding CanSeeProgressBar, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="5"/>
+            <ProgressBar IsIndeterminate="True" 
+                         Visibility="{Binding CanSeeProgressBar, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
+                         Height="16"/>
         </Grid>
     </Grid>
 </UserControl>

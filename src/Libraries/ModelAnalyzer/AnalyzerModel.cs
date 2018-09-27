@@ -26,19 +26,7 @@ namespace ModelAnalyzerUI
     [IsDesignScriptCompatible]
     public class AnalyzerModel : NodeModel
     {
-        private int valueofslider = 50;
 
-
-        public int ValueofsliderOfSlider
-        {
-            get { return valueofslider; }
-            set
-            {
-                valueofslider = value;
-                this.OnNodeModified();
-                RaisePropertyChanged("ValueofsliderOfSlider");
-            }
-        }
 
 
         [JsonConstructor]
@@ -50,12 +38,10 @@ namespace ModelAnalyzerUI
 
         public AnalyzerModel()
         {
-
-
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("output1", Resources.InputPort1Description)));
-            InPorts.Add(new PortModel(PortType.Input, this, new PortData("filePath", Resources.InputPort2Description, new StringNode())));
-            //OutPorts.Add(new PortModel(PortType.Output, this, new PortData("string", Resources.OutputPort1Description)));
-            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("Test", "看到就是成功")));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Model File", Resources.InputPort1Description, new StringNode())));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Label File", Resources.InputPort2Description, new StringNode())));
+            InPorts.Add(new PortModel(PortType.Input, this, new PortData("Input File", Resources.InputPort2Description, new StringNode())));
+            OutPorts.Add(new PortModel(PortType.Output, this, new PortData("Result", "输出")));
 
             ShouldDisplayPreviewCore = true;
             RegisterAllPorts();
@@ -71,12 +57,9 @@ namespace ModelAnalyzerUI
             if (!InPorts[0].IsConnected || !InPorts[1].IsConnected)
             {
                 //如果在没有连接输入节点的情况下连接了输出节点,应当有默认输出
-                var rhs = AstFactory.BuildIntNode(valueofslider);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
+                var rhs = AstFactory.BuildIntNode(0);//TODO:AstFactory.BuildIntNode,向其中注入类型:Mat
                 var assignment = AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), rhs);
                 return new[] { assignment };
-
-                //return new[] {AstFactory.BuildAssignment(new ArgumentSignatureNode(), new ArgumentSignatureNode())};
-                //return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), AstFactory.BuildNullNode()) };
             }
 
             //double unitsMM = Conversions.ConversionDictionary[SelectedExportedUnit]*1000.0;
@@ -87,7 +70,7 @@ namespace ModelAnalyzerUI
             AssociativeNode node = AstFactory.BuildStringNode(
                 "In1:" + ((StringNode)geometryListNode).Value + "\n" +
                 "In2:" + filePathNode + "\n" +
-                "Slider:" + ValueofsliderOfSlider);
+                "Slider:" );
             AstExtensions.ToImperativeAST(geometryListNode);
 
 
@@ -108,7 +91,7 @@ namespace ModelAnalyzerUI
             base.SerializeCore(element, context); // Base implementation must be called.
 
             var helper = new XmlElementHelper(element);
-            helper.SetAttribute("UINodeExample", valueofslider.ToString());//把slider的值存起来
+            helper.SetAttribute("UINodeExample",0);//把slider的值存起来
         }
 
         protected override void DeserializeCore(XmlElement element, SaveContext context)
@@ -117,7 +100,7 @@ namespace ModelAnalyzerUI
             var helper = new XmlElementHelper(element);
             var exportedUnit = helper.ReadString("UINodeExample");
 
-            valueofslider = int.Parse(exportedUnit) is int ? int.Parse(exportedUnit) : 0;
+            //valueofslider = int.Parse(exportedUnit) is int ? int.Parse(exportedUnit) : 0;
         }
 
         #endregion

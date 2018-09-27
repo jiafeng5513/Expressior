@@ -12,22 +12,15 @@ namespace Dynamo.Wpf
     public partial class AnalyzerViewModel : NotificationObject 
     {
         private readonly AnalyzerModel _analyzerModelModel;
-        public DelegateCommand ToggleButtonClick { get; set; }
-        private readonly NodeViewModel nodeViewModel;
-        private readonly NodeModel nodeModel;
+       
 
-        public int SliderValue
-        {
-            get { return _analyzerModelModel.ValueofsliderOfSlider; }
-            set { _analyzerModelModel.ValueofsliderOfSlider = value; }
-        }
+
 
 
         public AnalyzerViewModel(AnalyzerModel modelModel, NodeView nodeView)
         {
             _analyzerModelModel = modelModel;           
-            nodeViewModel = nodeView.ViewModel;
-            nodeModel = nodeView.ViewModel.NodeModel;
+
             modelModel.PropertyChanged +=model_PropertyChanged;
             InitializeDelegateCommands();
         }
