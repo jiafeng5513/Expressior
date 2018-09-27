@@ -10,9 +10,9 @@ namespace Dynamo.Wpf.Controls
     /// <summary>
     /// Interaction logic for ExportAsSATControl.xaml
     /// </summary>
-    public partial class ExportWithUnitsControl : UserControl
+    public partial class GuiNodeSampleView : UserControl
     {
-        public ExportWithUnitsControl(ExportWithUnits Model, NodeView nodeView)
+        public GuiNodeSampleView(GuiNodeSampleModel Model, NodeView nodeView)
         {
             InitializeComponent();
         }

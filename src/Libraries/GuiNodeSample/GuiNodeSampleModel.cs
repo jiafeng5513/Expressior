@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dynamo.Utilities;
-using ModelAnalyzer.Properties;
+using GuiNodeSample.Properties;
 using ProtoCore.AST.AssociativeAST;
 using System.Xml;
 using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Newtonsoft.Json;
-using ModelAnalyzer;
+using GuiNodeSample;
 /*
  * 带客制化界面的元素的节点API
  * 1.输出到bin/node中.
@@ -18,13 +18,13 @@ using ModelAnalyzer;
  */
 namespace ModelAnalyzerUI
 {
-    [NodeCategory(BuiltinNodeCategories.GEOMETRY)]
-    [NodeName("MUL")]
+    [NodeCategory("GUINode.Sample")]
+    [NodeName("CustomNode")]
     //[InPortTypes("string")]
     [NodeDescription("ExportToSATDescripiton", typeof(Resources))]
     [NodeSearchTags("ExportWithUnitsSearchTags", typeof(Resources))]
     [IsDesignScriptCompatible]
-    public class ExportWithUnits : NodeModel
+    public class GuiNodeSampleModel : NodeModel
     {
         private int valueofslider = 50;
 
@@ -42,13 +42,13 @@ namespace ModelAnalyzerUI
 
 
         [JsonConstructor]
-        private ExportWithUnits(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
+        private GuiNodeSampleModel(IEnumerable<PortModel> inPorts, IEnumerable<PortModel> outPorts) : base(inPorts, outPorts)
         {
             //TODO:内部变量的初始化
             ShouldDisplayPreviewCore = true;
         }
 
-        public ExportWithUnits()
+        public GuiNodeSampleModel()
         {
 
 

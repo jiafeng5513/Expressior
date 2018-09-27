@@ -9,42 +9,42 @@ using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf
 {
-    public class ExportWithUnitsViewModel : NotificationObject 
+    public class GuiNodeSampleViewModel : NotificationObject 
     {
-        private readonly ExportWithUnits exportWithUnitsModel;
+        private readonly GuiNodeSampleModel _guiNodeSampleModelModel;
         public DelegateCommand ToggleButtonClick { get; set; }
         private readonly NodeViewModel nodeViewModel;
         private readonly NodeModel nodeModel;
 
         public int SliderValue
         {
-            get { return exportWithUnitsModel.ValueofsliderOfSlider; }
-            set { exportWithUnitsModel.ValueofsliderOfSlider = value; }
+            get { return _guiNodeSampleModelModel.ValueofsliderOfSlider; }
+            set { _guiNodeSampleModelModel.ValueofsliderOfSlider = value; }
         }
         //public ConversionUnit SelectedExportedUnit
         //{
-        //    get { return exportWithUnitsModel.SelectedExportedUnit; }
+        //    get { return _guiNodeSampleModelModel.SelectedExportedUnit; }
         //    set
         //    {
-        //        exportWithUnitsModel.SelectedExportedUnit = value;                             
+        //        _guiNodeSampleModelModel.SelectedExportedUnit = value;                             
         //    }
         //}
 
         //public List<ConversionUnit> SelectedExportedUnitsSource
         //{
-        //    get { return exportWithUnitsModel.SelectedExportedUnitsSource; }
+        //    get { return _guiNodeSampleModelModel.SelectedExportedUnitsSource; }
         //    set
         //    {
-        //        exportWithUnitsModel.SelectedExportedUnitsSource = value;               
+        //        _guiNodeSampleModelModel.SelectedExportedUnitsSource = value;               
         //    }
         //}
 
-        public ExportWithUnitsViewModel(ExportWithUnits model, NodeView nodeView)
+        public GuiNodeSampleViewModel(GuiNodeSampleModel modelModel, NodeView nodeView)
         {
-            exportWithUnitsModel = model;           
+            _guiNodeSampleModelModel = modelModel;           
             nodeViewModel = nodeView.ViewModel;
             nodeModel = nodeView.ViewModel.NodeModel;
-            model.PropertyChanged +=model_PropertyChanged;      
+            modelModel.PropertyChanged +=model_PropertyChanged;      
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

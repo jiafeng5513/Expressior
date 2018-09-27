@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Dynamo.Wpf.Controls.ExportWithUnitsControl"
+﻿<UserControl x:Class="Dynamo.Wpf.Controls.GuiNodeSampleView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -56,7 +56,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock 
-            Text="{x:Static p:Resources.Units}"       
+            Text="{x:Static p:Resources.Functionss}"       
             Grid.Column="0"
             Margin="5,5,5,0"
             VerticalAlignment="Center"

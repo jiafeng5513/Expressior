@@ -14,26 +14,26 @@ using ModelAnalyzerUI;
 
 namespace Dynamo.Wpf.NodeViewCustomizations
 {
-    public class ExportWithUnitsNodeViewCustomization : INodeViewCustomization<ExportWithUnits>
+    public class AnalyzerViewCustomization : INodeViewCustomization<AnalyzerModel>
     {
         private NodeModel nodeModel;
-        private ExportWithUnitsControl exporterControl;
+        private AnalyzerView exporterControl;
         private NodeViewModel nodeViewModel;
-        private ExportWithUnits convertModel;
-        private ExportWithUnitsViewModel exporterViewModel;
+        private AnalyzerModel convertModel;
+        private AnalyzerViewModel exporterViewModel;
 
-        public void CustomizeView(ExportWithUnits model, NodeView nodeView)
+        public void CustomizeView(AnalyzerModel model, NodeView nodeView)
         {
             nodeModel = nodeView.ViewModel.NodeModel;
             nodeViewModel = nodeView.ViewModel;
             convertModel = model;
             
-            exporterControl = new ExportWithUnitsControl(model, nodeView)
+            exporterControl = new AnalyzerView(model, nodeView)
             {
-                DataContext = new ExportWithUnitsViewModel(model, nodeView),
+                DataContext = new AnalyzerViewModel(model, nodeView),
             };
 
-            exporterViewModel = exporterControl.DataContext as ExportWithUnitsViewModel;
+            exporterViewModel = exporterControl.DataContext as AnalyzerViewModel;
             nodeView.inputGrid.Children.Add(exporterControl);
             exporterControl.Loaded += converterControl_Loaded;
             //exporterControl.SelectExportedUnit.PreviewMouseUp += SelectExportedUnit_PreviewMouseUp;

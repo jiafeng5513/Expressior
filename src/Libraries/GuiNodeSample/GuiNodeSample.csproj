@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C068DE76-0651-4F6C-8807-B90EF749D104}</ProjectGuid>
+    <ProjectGuid>{10BFAA25-3ECD-4512-B1FD-5935444085B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ModelAnalyzer</RootNamespace>
-    <AssemblyName>ModelAnalyzer</AssemblyName>
+    <RootNamespace>GuiNodeSample</RootNamespace>
+    <AssemblyName>GuiNodeSample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -57,12 +57,12 @@
     <Compile Include="..\..\AssemblySharedInfoGenerator\AssemblySharedInfo.cs">
       <Link>Properties\AssemblySharedInfo.cs</Link>
     </Compile>
-    <Compile Include="Controls\ExportWithUnitsControl.xaml.cs">
-      <DependentUpon>ExportWithUnitsControl.xaml</DependentUpon>
+    <Compile Include="GuiNodeSampleView.xaml.cs">
+      <DependentUpon>GuiNodeSampleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExportWithUnits.cs" />
-    <Compile Include="ExportWithUnitsViewModel.cs" />
-    <Compile Include="NodeViewCustomizations\ExportWithUnitsNodeViewCustomization.cs" />
+    <Compile Include="GuiNodeSampleModel.cs" />
+    <Compile Include="GuiNodeSampleViewModel.cs" />
+    <Compile Include="GuiNodeSampleViewCustomization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -76,7 +76,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\ExportWithUnitsControl.xaml">
+    <Page Include="GuiNodeSampleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -106,17 +106,19 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.en-US.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProtoGeometryImages.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <!-- Get System.Drawing.dll -->
@@ -127,8 +129,5 @@
     <GetAssemblyIdentity AssemblyFiles="$(OutDir)..\ProtoGeometry.dll">
       <Output TaskParameter="Assemblies" ItemName="ProtoGeometryInfo" />
     </GetAssemblyIdentity>
-    <!-- Generate customization dll for ProtoGeometry -->
-    <GenerateResource UseSourcePath="true" Sources="$(ProjectDir)ProtoGeometryImages.resx" OutputResources="$(ProjectDir)ProtoGeometryImages.resources" References="$(FrameworkAssembliesPath)System.Drawing.dll" />
-    <AL TargetType="library" EmbedResources="$(ProjectDir)ProtoGeometryImages.resources" OutputAssembly="$(OutDir)..\ProtoGeometry.customization.dll" Version="%(ProtoGeometryInfo.Version)" />
   </Target>
 </Project>
