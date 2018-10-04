@@ -15,7 +15,7 @@ namespace Dynamo.UI.Controls
     public partial class ShortcutToolbar : UserControl
     {
         private readonly ObservableCollection<ShortcutBarItem> shortcutBarItems;
-        //private readonly ObservableCollection<ShortcutBarItem> shortcutBarRightSideItems;
+        private readonly ObservableCollection<ShortcutBarItem> shortcutBarRightSideItems;
 
         /// <summary>
         /// A collection of <see cref="ShortcutBarItem"/>.
@@ -28,19 +28,19 @@ namespace Dynamo.UI.Controls
         /// <summary>
         /// A collection of <see cref="ShortcutBarItems"/> for the right hand side of the shortcut bar.
         /// </summary>
-        //public ObservableCollection<ShortcutBarItem> ShortcutBarRightSideItems
-        //{
-        //    get { return shortcutBarRightSideItems; }
-        //}
+        public ObservableCollection<ShortcutBarItem> ShortcutBarRightSideItems
+        {
+            get { return shortcutBarRightSideItems; }
+        }
 
         /// <summary>
         /// Construct a ShortcutToolbar.
         /// </summary>
-        /// <param name="updateManager"></param>
+        // <param name = "updateManager" ></ param >
         public ShortcutToolbar(/*IUpdateManager updateManager*/)
         {
             shortcutBarItems = new ObservableCollection<ShortcutBarItem>();
-            //shortcutBarRightSideItems = new ObservableCollection<ShortcutBarItem>();    
+            shortcutBarRightSideItems = new ObservableCollection<ShortcutBarItem>();
 
             InitializeComponent();
             //UpdateControl.DataContext = updateManager;
@@ -97,12 +97,26 @@ namespace Dynamo.UI.Controls
         {
             get
             {
-                return Wpf.Properties.Resources.DynamoViewToolbarExportButtonTooltip;
+                return vm.BackgroundPreviewViewModel == null || !vm.BackgroundPreviewViewModel.CanNavigateBackground
+                    ? Wpf.Properties.Resources.DynamoViewToolbarExportButtonTooltip
+                    : Wpf.Properties.Resources.DynamoViewToolbarExport3DButtonTooltip;
             }
             set
             {
                 shortcutToolTip = value;
             }
+        }
+
+        public ImageExportShortcutBarItem(DynamoViewModel viewModel)
+        {
+            vm = viewModel;
+            vm.BackgroundPreviewViewModel.PropertyChanged += BackgroundPreviewViewModel_PropertyChanged;
+        }
+
+        private void BackgroundPreviewViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "CanNavigateBackground") return;
+            RaisePropertyChanged("ShortcutToolTip");
         }
     }
 }

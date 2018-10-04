@@ -94,5 +94,9 @@ namespace DynamoConversions
             var returnval =  convertValue * conversion;
             return returnval;
         }
+        public static string TestFunc(string a, string b, string c)
+        {
+            return "Fuckiing succeed!";
+        }
     }
 }

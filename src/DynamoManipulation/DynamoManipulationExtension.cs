@@ -133,6 +133,7 @@ namespace Dynamo.Manipulation
             viewLoadedParams = p;
 
             WorkspaceModel = p.CurrentWorkspaceModel;
+            BackgroundPreviewViewModel = p.BackgroundPreviewViewModel;
             RenderPackageFactory = p.RenderPackageFactory;
             CommandExecutive = p.CommandExecutive;
 

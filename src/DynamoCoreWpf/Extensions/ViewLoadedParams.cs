@@ -7,8 +7,10 @@ using Dynamo.Controls;
 using Dynamo.ViewModels;
 using Dynamo.Utilities;
 using Dynamo.Extensions;
+using Dynamo.Interfaces;
 using Dynamo.Selection;
 using Dynamo.Visualization;
+using Dynamo.Wpf.ViewModels.Watch3D;
 
 namespace Dynamo.Wpf.Extensions
 {
@@ -33,6 +35,12 @@ namespace Dynamo.Wpf.Extensions
                 return viewStartupParams;
             }
         }
+
+        /// <summary>
+        /// A reference to the background preview viewmodel for geometry selection,
+        /// hit testing, mouse and keyboard event handling for events in the background preview 
+        /// </summary>
+        public IWatch3DViewModel BackgroundPreviewViewModel { get { return dynamoViewModel.BackgroundPreviewViewModel; } }
 
         /// <summary>
         /// A reference to the factory for creating render packages in the extension
@@ -65,23 +73,11 @@ namespace Dynamo.Wpf.Extensions
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="menuItem"></param>
-        /// <param name="index"></param>
         public void AddMenuItem(MenuBarType type, MenuItem menuItem, int index = -1)
         {
             AddItemToMenu(type, menuItem, index);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="separatorObj"></param>
-        /// <param name="index"></param>
         public void AddSeparator(MenuBarType type, Separator separatorObj, int index = -1)
         {
             AddItemToMenu(type, separatorObj, index);

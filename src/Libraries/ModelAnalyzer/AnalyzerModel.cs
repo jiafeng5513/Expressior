@@ -8,6 +8,7 @@ using Dynamo.Graph;
 using Dynamo.Graph.Nodes;
 using Newtonsoft.Json;
 using ModelAnalyzer;
+using DynamoConversions;
 
 /*
 * 带客制化界面的元素的节点API
@@ -67,25 +68,16 @@ namespace ModelAnalyzerUI
             var input2 = inputAstNodes[1];
             var input3 = inputAstNodes[2];
             
-            //AssociativeNode node = AstFactory.BuildStringNode(
-            //    "In1:" + ((StringNode)geometryListNode).Value + "\n" +
-            //    "In2:" + filePathNode + "\n" +
-            //    "Slider:" );
-            //AstExtensions.ToImperativeAST(geometryListNode);
 
             AssociativeNode node = null;
             node = AstFactory.BuildFunctionCall(
-                        new Func<IEnumerable<string>, string, string, string>(ProtobufTools.ProtoTools.TestFunc),
+                        new Func<string, string, string, string>(Conversions.TestFunc),
                         new List<AssociativeNode> { input1, input2, input3 });
 
-            //注意观察多输出怎么写
             return new[] { AstFactory.BuildAssignment(GetAstIdentifierForOutputIndex(0), node) };
         }
 
-        private static string TestFunc(int a, int b, int c)
-        {
-            return (a + b + c).ToString();
-        }
+
 
 
 

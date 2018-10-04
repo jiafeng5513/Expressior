@@ -47,7 +47,7 @@ namespace Dynamo.Controls
     {
         // This is used to determine whether ESC key is being held down
         private bool IsEscKeyPressed = false;
-
+        public const string BackgroundPreviewName = "BackgroundPreview";
         private readonly NodeViewCustomizationLibrary nodeViewCustomizationLibrary;
         private DynamoViewModel dynamoViewModel;
         private readonly Stopwatch _timer;
@@ -56,7 +56,7 @@ namespace Dynamo.Controls
         internal ViewExtensionManager viewExtensionManager = new ViewExtensionManager();
         private ShortcutToolbar shortcutBar;
         private bool loaded = false;
-
+        internal Watch3DView BackgroundPreview { get; private set; }
         // This is to identify whether the PerformShutdownSequenceOnViewModel() method has been
         // called on the view model and the process is not cancelled
         private bool isPSSCalledOnViewModelNoCancel = false;
@@ -433,6 +433,34 @@ namespace Dynamo.Controls
             Dispatcher.Invoke(new Action(UpdateLayout), DispatcherPriority.Render, null);
         }
 
+        private void DynamoViewModelRequestViewOperation(ViewOperationEventArgs e)
+        {
+            if (dynamoViewModel.BackgroundPreviewViewModel.CanNavigateBackground == false)
+                return;
+
+            switch (e.ViewOperation)
+            {
+                case ViewOperationEventArgs.Operation.FitView:
+                    if (dynamoViewModel.BackgroundPreviewViewModel != null)
+                    {
+                        dynamoViewModel.BackgroundPreviewViewModel.ZoomToFitCommand.Execute(null);
+                        return;
+                    }
+                    BackgroundPreview.View.ZoomExtents();
+                    break;
+
+                case ViewOperationEventArgs.Operation.ZoomIn:
+                    var camera1 = BackgroundPreview.View.CameraController;
+                    camera1.Zoom(-0.5 * BackgroundPreview.View.ZoomSensitivity);
+                    break;
+
+                case ViewOperationEventArgs.Operation.ZoomOut:
+                    var camera2 = BackgroundPreview.View.CameraController;
+                    camera2.Zoom(0.5 * BackgroundPreview.View.ZoomSensitivity);
+                    break;
+            }
+        }
+
         private void DynamoLoadedViewExtensionHandler(ViewLoadedParams loadedParams, IEnumerable<IViewExtension> extensions)
         {
             foreach (var ext in extensions)
@@ -514,6 +542,19 @@ namespace Dynamo.Controls
             var loadedParams = new ViewLoadedParams(this, dynamoViewModel);
 
             this.DynamoLoadedViewExtensionHandler(loadedParams, viewExtensionManager.ViewExtensions);
+
+            //BackgroundPreview = new Watch3DView { Name = BackgroundPreviewName };
+            //background_grid.Children.Add(BackgroundPreview);
+            //BackgroundPreview.DataContext = dynamoViewModel.BackgroundPreviewViewModel;
+            //BackgroundPreview.Margin = new System.Windows.Thickness(0, 20, 0, 0);
+            //var vizBinding = new Binding
+            //{
+            //    Source = dynamoViewModel.BackgroundPreviewViewModel,
+            //    Path = new PropertyPath("Active"),
+            //    Mode = BindingMode.TwoWay,
+            //    Converter = new BooleanToVisibilityConverter()
+            //};
+            //BackgroundPreview.SetBinding(VisibilityProperty, vizBinding);
 
             // In native host scenario (e.g. Revit), the "Application.Current" will be "null". Therefore, the InCanvasSearchControl.OnRequestShowInCanvasSearch
             // will not work. Instead, we have to check if the Owner Window (DynamoView) is deactivated or not.  
